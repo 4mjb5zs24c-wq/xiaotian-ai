@@ -200,7 +200,7 @@ export default function MainLayout() {
         </aside>
 
         {/* ── Main Content Area ── */}
-        <main className="flex-1 overflow-hidden ml-3 min-w-0">
+        <main className="flex-1 overflow-y-auto ml-3 min-w-0">
           <Outlet />
         </main>
       </div>

@@ -7,7 +7,7 @@ import {
   Edit3, Zap, ChevronLeft, Play,
 } from 'lucide-react'
 import { useAIStore } from '../ai/store'
-import { runAISearch } from '../ai/controller/aiTaskController'
+import { matchNewSearch } from '../ai/search-new/searchEngine'
 import { matchIntent } from '../ai/workflows'
 import { runWorkflowRunner } from '../ai/engine'
 import type { RunnerResult, RunnerStatus } from '../ai/engine'
@@ -16,14 +16,18 @@ import { generateHomeInsights } from '../ai/insights/insightRules'
 import type { InsightItem } from '../ai/insights/insightTypes'
 import { generateTeachingInsight } from '../ai/insights/teachingInsightGenerator'
 import type { TeachingInsightType } from '../ai/insights/teachingInsightTypes'
+import { MOCK_VOCAB_CONCERN_CARDS } from '../ai/insights/mockVocabularyInsight'
+import { MOCK_WRITING_CONCERN_CARDS } from '../ai/insights/mockWritingInsight'
 
 // Map insight module to TeachingInsight type + panel
-function getInsightMapping(insight: InsightItem): { panel: string; insightType: TeachingInsightType } {
+function getInsightMapping(insight: InsightItem): { panel: string; insightType: TeachingInsightType; isPage?: boolean } {
   switch (insight.module) {
     case 'home_wrong_word': return { panel: 'vocabStageInsight', insightType: 'vocabulary' }
     case 'home_listening_speaking': return { panel: 'listeningStageInsight', insightType: 'listeningSpeaking' }
     case 'home_writing': return { panel: 'writingStageInsight', insightType: 'writing' }
     case 'exam_reminder': return { panel: 'practiceStageInsight', insightType: 'practiceStage' }
+    case 'vocabulary_insight': return { panel: '', insightType: 'vocabulary', isPage: true }
+    case 'writing_insight': return { panel: '', insightType: 'writing', isPage: true }
     default: return { panel: 'vocabStageInsight', insightType: 'vocabulary' }
   }
 }
@@ -92,7 +96,53 @@ const resourceModules: ResourceModule[] = [
   { label: '时文阅读', desc: '热点话题阅读', color: '#3dbfc4' },
 ]
 
-const homeInsights = generateHomeInsights()
+const homeInsights = generateHomeInsights({ disabledModules: ['home_wrong_word', 'home_writing'] })
+
+// Add vocabulary insight cards to home insights
+const vocabConcernCards: InsightItem[] = MOCK_VOCAB_CONCERN_CARDS.filter(c => c.type === 'vocabulary_insight').map(c => ({
+  insightId: c.id,
+  module: 'vocabulary_insight' as InsightItem['module'],
+  title: c.summary,
+  riskLevel: c.status === '需关注' ? 'high' as const : 'medium' as const,
+  priority: c.status === '需关注' ? 1 : 2,
+  tags: ['词汇洞察'],
+  detail: '',
+  summary: c.summary,
+  suggestion: '',
+  actionLabel: '查看详情',
+  evidence: { summary: c.summary, details: [] },
+  analysis: '',
+  actions: [],
+  sourceData: {},
+  sampleInfo: { totalStudents: 42, sampleCount: 42, sampleRatio: 1, isSampleTooSmall: false },
+  createdAt: String(Date.now()),
+  status: 'active' as const,
+  scope: { type: 'class' as const, className: '初一 1 班' },
+}))
+
+// Add writing insight cards to home insights
+const writingConcernCards: InsightItem[] = MOCK_WRITING_CONCERN_CARDS.filter(c => c.type === 'writing_insight').map(c => ({
+  insightId: c.id,
+  module: 'writing_insight' as InsightItem['module'],
+  title: c.summary,
+  riskLevel: c.status === '需关注' ? 'high' as const : 'medium' as const,
+  priority: c.status === '需关注' ? 1 : 2,
+  tags: ['写作洞察'],
+  detail: '',
+  summary: c.summary,
+  suggestion: '',
+  actionLabel: '查看详情',
+  evidence: { summary: c.summary, details: [] },
+  analysis: '',
+  actions: [],
+  sourceData: {},
+  sampleInfo: { totalStudents: 42, sampleCount: 42, sampleRatio: 1, isSampleTooSmall: false },
+  createdAt: String(Date.now()),
+  status: 'active' as const,
+  scope: { type: 'class' as const, className: '初一 1 班' },
+}))
+
+const allHomeInsights = [...vocabConcernCards.slice(0, 1), ...writingConcernCards.slice(0, 1), ...homeInsights] // 词汇 → 写作 → 听力/听说
 
 const recentReports: ReportItem[] = [
   { title: '个性化词汇练习', className: '初一1班', groupName: '全班', done: 2, total: 43, date: '2026-05-25', canRemind: true, hasReport: true },
@@ -118,17 +168,20 @@ export default function HomePage() {
   // ── AI search ──
   const [aiQuery, setAiQuery] = useState('')
   const setAIDrawerPanel = useAIStore((s) => s.setAIDrawerPanel)
+  const setNewSearchResult = useAIStore((s) => s.setNewSearchResult)
 
-  const openAISearch = async (query?: string) => {
+  const openAISearch = (query?: string) => {
     if (query) {
-      const result = await runAISearch(query, 'homepage_input', {
+      const ctx = {
         textbook: teacherContext.textbook,
         unit: teacherContext.unit,
         grade: teacherContext.grade,
         className: teacherContext.className,
         studentCount: teacherContext.studentCount,
-      })
-      setAIDrawerPanel('searchResult', { searchResult: result, query })
+      }
+      const result = matchNewSearch(query, ctx)
+      setNewSearchResult(result)
+      setAIDrawerPanel('searchResultNew', { query })
     } else {
       navigate('/ai-search')
     }
@@ -344,10 +397,10 @@ export default function HomePage() {
               <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden shrink-0">
                 <div className="px-4 py-2 border-b border-[#f0f4f8] flex items-center justify-between">
                   <h3 className="text-[12px] font-semibold text-[#3a4f66]">教学关注</h3>
-                  <span className="text-[10px] text-[#8aabcc]">{homeInsights.length} 条</span>
+                  <span className="text-[10px] text-[#8aabcc]">{allHomeInsights.length} 条</span>
                 </div>
                 <div className="p-2 grid grid-cols-3 gap-2">
-                  {homeInsights.map((insight) => {
+                  {allHomeInsights.map((insight) => {
                     const isHigh = insight.riskLevel === 'high'
                     const isMedium = insight.riskLevel === 'medium'
                     const badgeLabel = isHigh ? '需关注' : isMedium ? '建议关注' : '一般关注'
@@ -366,6 +419,11 @@ export default function HomePage() {
                         key={insight.insightId}
                         onClick={() => {
                           const mapping = getInsightMapping(insight)
+                          if (mapping.isPage) {
+                            if (insight.module === 'writing_insight') navigate('/writing-insight')
+                            else navigate('/vocabulary-insight')
+                            return
+                          }
                           const teachingInsight = generateTeachingInsight(mapping.insightType)
                           useAIStore.getState().setAIDrawerPanel(mapping.panel, { insight: teachingInsight } as Record<string, unknown>)
                         }}

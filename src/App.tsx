@@ -24,6 +24,8 @@ import AssignCustomReviewPage from './pages/AssignCustomReviewPage'
 import AssignReadingPage from './pages/AssignReadingPage'
 import ManualComposePage from './pages/ManualComposePage'
 import WordTeachingPage from './pages/WordTeachingPage'
+import VocabularyInsightPage from './pages/VocabularyInsightPage'
+import WritingInsightPage from './pages/WritingInsightPage'
 
 export default function App() {
   return (
@@ -44,6 +46,8 @@ export default function App() {
           <Route path="search" element={<SearchPage />} />
           <Route path="ai-search" element={<SearchPage />} />
           <Route path="manual-compose" element={<ManualComposePage />} />
+          <Route path="vocabulary-insight" element={<VocabularyInsightPage />} />
+          <Route path="writing-insight" element={<WritingInsightPage />} />
         </Route>
         {/* Immersive pages — no sidebar */}
         <Route path="vocabulary-pk" element={<VocabularyPkPage />} />

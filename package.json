@@ -6,13 +6,17 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:bg": "nohup vite > /dev/null 2>&1 & echo $! > .vite-pid && sleep 1 && echo '✅ Dev server started at http://localhost:5173/'",
+    "dev:stop": "kill $(cat .vite-pid 2>/dev/null) 2>/dev/null && rm -f .vite-pid && echo '✅ Dev server stopped' || echo '⚠️  No running dev server found'"
   },
   "devDependencies": {
+    "netlify-cli": "^26.1.0",
     "typescript": "~6.0.2",
     "vite": "^8.0.12"
   },
   "dependencies": {
+    "@playwright/test": "^1.60.0",
     "@tailwindcss/vite": "^4.3.0",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",

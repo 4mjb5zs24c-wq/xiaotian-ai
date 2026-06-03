@@ -1,163 +1,284 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Search, Clock, TrendingUp, Sparkles, X } from 'lucide-react'
+import { Search, Clock, TrendingUp, Sparkles, X, BookOpen } from 'lucide-react'
 import { useAIStore } from '../ai/store'
-import { runAISearch } from '../ai/controller/aiTaskController'
-import AISearchResultRenderer from '../ai/components/AISearchResultRenderer'
-import type { AISearchResult } from '../ai/controller/aiTaskController'
-import type { EntrySource } from '../ai/router/intentMap'
+import { matchNewSearch, mockOpenPreview, mockOpenAssignDialog, mockAddToLessonPrep, mockOpenFunction } from '../ai/search-new/searchEngine'
+import { SearchResultView, PaperBasketBadge } from '../ai/components/search-new'
+import type {
+  NewSearchResult,
+  ResourceItem,
+  FunctionEntry,
+  AssignmentDraft,
+  QuickEntry,
+  PaperBasketItem,
+  SearchContext,
+} from '../ai/search-new/types'
 
 // ── Mock data for suggestions ──
 
-const recentSearches = ['Unit3 词汇默写', '八上阅读理解', '中考听力训练', '作文问题', '同步资源']
-const trendingSearches = ['课前导入视频', 'Unit3 高频错词', '阅读理解训练', '听说模拟', '词汇PK', '快速制卡']
-const searchPlaceholders = ['试试：生成Unit3词汇听写、查同步资源、来一篇阅读理解', '试试：找一个听说训练、智能组卷、快速制卡', '试试：看一下练习情况、作文主要问题、错词分析']
+const recentSearches = ['Unit 1 资源', '同步词汇', '山东省24年中考真题', '听力练习', '同步练习']
+const trendingSearches = ['Unit 1 综合练习', '快速制卡', '词汇听写', '阅读理解', '单元检测', '模拟题']
 
 export default function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const teacherContext = useAIStore((s) => s.teacherContext)
+  const paperBasket = useAIStore((s) => s.paperBasket)
+  const addToPaperBasket = useAIStore((s) => s.addToPaperBasket)
+  const setNewSearchResult = useAIStore((s) => s.setNewSearchResult)
   const setAIDrawerPanel = useAIStore((s) => s.setAIDrawerPanel)
+  const setPendingAssignments = useAIStore((s) => s.setPendingAssignments)
 
   const [query, setQuery] = useState('')
   const [searching, setSearching] = useState(false)
-  const [result, setResult] = useState<AISearchResult | null>(null)
+  const [result, setResult] = useState<NewSearchResult | null>(null)
+  const [toast, setToast] = useState<string | null>(null)
 
-  // Prevent double execution in React StrictMode
   const autoRunRef = useRef<string | null>(null)
 
-  const placeholder = searchPlaceholders[Math.floor(Math.random() * searchPlaceholders.length)]
+  const showToast = (msg: string) => {
+    setToast(msg)
+    setTimeout(() => setToast(null), 2500)
+  }
 
-  // Handle URL query param on mount — with autoRun support
+  const ctx: SearchContext = {
+    textbook: teacherContext.textbook,
+    unit: teacherContext.unit,
+    grade: teacherContext.grade,
+    className: teacherContext.className,
+    studentCount: teacherContext.studentCount,
+  }
+
   useEffect(() => {
     const q = searchParams.get('query')
     const autoRun = searchParams.get('autoRun')
     if (q) {
       setQuery(q)
       if (autoRun === '1') {
-        // Dedup: only execute if this query hasn't been auto-run yet
         if (autoRunRef.current !== q) {
           autoRunRef.current = q
-          doSearch(q, 'search_input')
+          doSearch(q)
         }
       }
-      // Clear params from URL
       setSearchParams({}, { replace: true })
     }
   }, [])
 
-  const context = {
-    className: teacherContext.className,
-    textbook: teacherContext.textbook,
-    unit: teacherContext.unit,
-    grade: teacherContext.grade,
-  }
-
-  const doSearch = useCallback(async (q: string, source: EntrySource = 'search_input') => {
+  const doSearch = useCallback((q: string) => {
     const sq = q.trim()
     if (!sq) return
     setSearching(true)
 
-    const res = await runAISearch(sq, source, {
-      textbook: teacherContext.textbook,
-      unit: teacherContext.unit,
-      grade: teacherContext.grade,
-      className: teacherContext.className,
-      studentCount: teacherContext.studentCount,
-    })
-
-    setResult(res)
-    setSearching(false)
+    setTimeout(() => {
+      const res = matchNewSearch(sq, ctx)
+      setResult(res)
+      setNewSearchResult(res)
+      setSearching(false)
+    }, 400)
   }, [teacherContext])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') doSearch(query)
   }
 
-  const handleTagClick = (term: string, source: EntrySource = 'ai_search_suggestion') => {
+  const handleTagClick = (term: string) => {
     setQuery(term)
-    doSearch(term, source)
+    doSearch(term)
+  }
+
+  // Action handlers
+  const handlePreview = (item: ResourceItem) => {
+    showToast(mockOpenPreview(item).message)
+  }
+
+  const handleAssign = (item: ResourceItem) => {
+    showToast(mockOpenAssignDialog(item).message)
+  }
+
+  const handleAddToPaperBasket = (item: ResourceItem) => {
+    const basketItem: PaperBasketItem = {
+      id: `pb-${item.id}-${Date.now()}`,
+      resourceId: item.id,
+      title: item.title,
+      type: item.type,
+      addedAt: Date.now(),
+    }
+    addToPaperBasket(basketItem)
+  }
+
+  const handleAddToLessonPrep = (item: ResourceItem) => {
+    showToast(mockAddToLessonPrep(item).message)
+  }
+
+  const handleOpenFunction = (entry: FunctionEntry) => {
+    showToast(mockOpenFunction(entry).message)
+  }
+
+  const handleGenerateAssignments = (assignments: AssignmentDraft[]) => {
+    setPendingAssignments(assignments)
+    setAIDrawerPanel('assignmentConfirmNew', { assignments })
+  }
+
+  const handleQuickEntry = (entry: QuickEntry) => {
+    setQuery(entry.searchQuery)
+    doSearch(entry.searchQuery)
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 h-full overflow-y-auto">
+    <div className="max-w-6xl mx-auto py-6 px-6 space-y-5 h-full overflow-y-auto">
+      {/* ── Top context bar ── */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 text-xs text-slate-400">
+          <BookOpen size={12} />
+          <span>{teacherContext.textbook} · {teacherContext.grade} · {teacherContext.unit} · {teacherContext.className}</span>
+        </div>
+        <PaperBasketBadge
+          count={paperBasket.length}
+          onClick={() => setAIDrawerPanel('basket')}
+        />
+      </div>
+
       {/* ── Search Box ── */}
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden">
         <div className="p-5">
           <div className="relative">
-            <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={placeholder}
-              className="w-full pl-11 pr-10 py-3 text-sm text-slate-800 placeholder-slate-400 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
+              placeholder="搜索教学资源、试卷名称或功能入口..."
+              className="w-full pl-11 pr-10 py-3 text-[15px] text-slate-800 placeholder-slate-400
+                bg-slate-50 border border-slate-200 rounded-xl
+                outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:bg-white
+                transition-all duration-200"
               autoFocus
             />
             {query && (
-              <button onClick={() => { setQuery(''); setResult(null) }} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
-                <X size={15} />
+              <button
+                onClick={() => { setQuery(''); setResult(null) }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors"
+              >
+                <X size={14} />
               </button>
             )}
           </div>
 
-          <div className="flex items-center gap-2 mt-3 flex-wrap">
-            <span className="text-[10px] text-slate-400">试试：</span>
-            {['生成 Unit3 词汇默写', '来一篇阅读理解', '找一个听说训练', '看一下练习情况'].map((term) => (
-              <button key={term} onClick={() => handleTagClick(term)} className="text-[11px] text-blue-500 hover:text-blue-700 hover:bg-blue-50 px-2.5 py-1 rounded-md transition-colors">{term}</button>
+          {/* Quick tags */}
+          <div className="flex items-center gap-2 mt-3.5 flex-wrap">
+            <span className="text-[11px] text-slate-400 font-medium">快速搜索：</span>
+            {['Unit 1 资源', '同步词汇', '听力练习', '快速制卡'].map((term) => (
+              <button
+                key={term}
+                onClick={() => handleTagClick(term)}
+                className="text-[13px] text-slate-500 hover:text-blue-600 hover:bg-blue-50
+                  px-3 py-1 rounded-lg transition-colors"
+              >
+                {term}
+              </button>
             ))}
           </div>
         </div>
 
-        <div className="border-t border-slate-100 px-5 py-3 flex items-center gap-6">
-          <div className="flex items-center gap-2"><Clock size={12} className="text-slate-400" /><span className="text-[10px] text-slate-400 font-medium">近期搜索</span></div>
-          <div className="flex items-center gap-2 flex-wrap">
-            {recentSearches.map((s) => (
-              <button key={s} onClick={() => handleTagClick(s, 'ai_search_recent')} className="text-[10px] text-slate-500 hover:text-blue-600 transition-colors">{s}</button>
-            ))}
+        {/* Recent searches */}
+        <div className="border-t border-slate-100 px-5 py-3">
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-1.5 text-[11px] font-medium text-slate-400 shrink-0">
+              <Clock size={11} />
+              近期搜索
+            </span>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {recentSearches.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => handleTagClick(s)}
+                  className="text-[12px] text-slate-500 hover:text-blue-600 hover:bg-slate-50
+                    px-2.5 py-1 rounded-md transition-colors"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="border-t border-slate-50 px-5 py-2.5 flex items-center gap-2">
-          <TrendingUp size={12} className="text-slate-400" />
-          <span className="text-[10px] text-slate-400">大家都在搜：</span>
-          {trendingSearches.slice(0, 5).map((s) => (
-            <button key={s} onClick={() => handleTagClick(s)} className="text-[10px] text-slate-500 hover:text-blue-600 transition-colors">{s}</button>
-          ))}
+
+        {/* Trending */}
+        <div className="border-t border-slate-50 px-5 py-2.5">
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-1.5 text-[11px] font-medium text-slate-400 shrink-0">
+              <TrendingUp size={11} />
+              大家都在搜
+            </span>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {trendingSearches.slice(0, 5).map((s) => (
+                <button
+                  key={s}
+                  onClick={() => handleTagClick(s)}
+                  className="text-[12px] text-slate-500 hover:text-blue-600 hover:bg-slate-50
+                    px-2.5 py-1 rounded-md transition-colors"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* ── Searching ── */}
+      {/* ── Searching state ── */}
       {searching && (
-        <div className="flex items-center justify-center py-12">
-          <div className="flex items-center gap-3 text-slate-400">
-            <Sparkles size={18} className="animate-pulse text-blue-400" />
-            <span className="text-sm">小天正在理解你的意图...</span>
+        <div className="flex items-center justify-center py-16">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+              <Sparkles size={15} className="text-blue-500 animate-pulse" />
+            </div>
+            <span className="text-sm text-slate-400">小天正在理解你的意图...</span>
           </div>
         </div>
       )}
 
-      {/* ── Results via unified renderer ── */}
+      {/* ── Results ── */}
       {result && !searching && (
-        <div className="bg-white border border-slate-200 rounded-xl p-5">
-          <AISearchResultRenderer
-            result={result}
-            context={context}
-            onPanelChange={(state) => setAIDrawerPanel(state.type, state.data)}
-            isLoading={false}
-          />
-        </div>
+        <SearchResultView
+          result={result}
+          paperBasket={paperBasket}
+          onPreview={handlePreview}
+          onAssign={handleAssign}
+          onAddToPaperBasket={handleAddToPaperBasket}
+          onAddToLessonPrep={handleAddToLessonPrep}
+          onOpenFunction={handleOpenFunction}
+          onGenerateAssignments={handleGenerateAssignments}
+          onQuickEntry={handleQuickEntry}
+        />
       )}
 
       {/* ── Empty state ── */}
       {!result && !searching && (
-        <div className="text-center py-16">
-          <Sparkles size={32} className="text-blue-300 mx-auto mb-4" />
-          <p className="text-sm text-slate-500">输入教学问题，小天帮你找到最好的教学资源</p>
-          <div className="flex flex-wrap justify-center gap-2 mt-4">
-            {['八年级 unit3 课件', '中考完形填空', '词汇默写', '口语热身活动', '环保时文'].map((t) => (
-              <button key={t} onClick={() => handleTagClick(t)} className="text-xs text-blue-500 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors">{t}</button>
+        <div className="text-center py-20">
+          <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
+            <Sparkles size={22} className="text-blue-400" />
+          </div>
+          <p className="text-sm text-slate-500 font-medium">输入教学问题，小天帮你找到最好的教学资源</p>
+          <p className="text-xs text-slate-400 mt-1.5">支持资源类型、试卷名称、功能入口等搜索</p>
+          <div className="flex flex-wrap justify-center gap-2 mt-5">
+            {['Unit 1 资源', '同步练习', '山东省中考真题', '词汇听写', '模拟题'].map((t) => (
+              <button
+                key={t}
+                onClick={() => handleTagClick(t)}
+                className="text-xs text-slate-500 hover:text-blue-600 bg-slate-50 hover:bg-blue-50
+                  border border-slate-200 hover:border-blue-200 px-3.5 py-1.5 rounded-lg transition-all"
+              >
+                {t}
+              </button>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* ── Toast ── */}
+      {toast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] bg-slate-800 text-white text-sm px-5 py-2.5 rounded-xl shadow-lg">
+          {toast}
         </div>
       )}
     </div>

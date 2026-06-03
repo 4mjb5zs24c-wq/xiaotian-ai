@@ -11,6 +11,8 @@ export type InsightModule =
   | 'home_listening_speaking'
   | 'home_writing'
   | 'exam_reminder'
+  | 'vocabulary_insight'
+  | 'writing_insight'
 
 export interface InsightScope {
   className: string
