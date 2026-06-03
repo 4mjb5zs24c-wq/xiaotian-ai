@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import {
   Download, ChevronDown,
   RotateCcw, Monitor, Gamepad2, Mic, PenLine, FileText,
-  BookOpen, Users, Circle, CheckCircle, ChevronRight,
+  BookOpen, Users, Circle, CheckCircle, ChevronRight, Sparkles,
 } from 'lucide-react'
-import SpecializedInsightEntry from '../ai/components/SpecializedInsightEntry'
 
 // ── Types ──────────────────────────────────────────────
 
@@ -142,6 +141,7 @@ function WordCard({
 
 export default function WrongWordPage() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const tabParam = searchParams.get('tab')
   const [activeTab, setActiveTab] = useState<'class' | 'student'>(
@@ -228,8 +228,14 @@ export default function WrongWordPage() {
                 学生个性化词本
               </button>
             </div>
-            {/* Specialized Insight Entry */}
-            <SpecializedInsightEntry type={activeTab === 'student' ? 'vocabulary-student' : 'vocabulary'} />
+            {/* AI 词汇洞察入口 */}
+            <button
+              onClick={() => navigate('/vocabulary-insight')}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-lg text-xs font-medium text-blue-600 hover:bg-blue-100 transition-colors ml-2"
+            >
+              <Sparkles size={12} />
+              AI 词汇洞察
+            </button>
           </div>
 
           {/* Export button */}

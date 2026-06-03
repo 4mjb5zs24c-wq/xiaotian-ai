@@ -3,8 +3,6 @@ import {
   ChevronDown, Search, Play, Pause, Plus, ShoppingBag,
   BookOpen, FileText, ChevronLeft,
 } from 'lucide-react'
-import SpecializedInsightEntry from '../ai/components/SpecializedInsightEntry'
-
 // ── Types ──────────────────────────────────────────────
 
 interface QuestionOption {
@@ -288,11 +286,6 @@ export default function WrongQuestionPage() {
           >
             学生错题
           </button>
-
-          {/* Specialized Insight Entry */}
-          <div className="flex-1 min-w-0 mx-3">
-            <SpecializedInsightEntry type="vocabulary" />
-          </div>
 
           {/* Right actions in tab bar */}
           <div className="ml-auto flex items-center gap-2 pr-4">
