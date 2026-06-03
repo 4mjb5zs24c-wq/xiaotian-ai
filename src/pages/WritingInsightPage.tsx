@@ -2,7 +2,6 @@ import { useState, useRef } from 'react'
 import type { WritingInsightData, TimeRange } from '../ai/insights/writingInsightTypes'
 import { MOCK_WRITING_INSIGHT, MOCK_WRITING_INTERVENTION_RECORDS } from '../ai/insights/mockWritingInsight'
 import {
-  mockOpenEssayRevision,
   mockOpenFullEssay,
   mockOpenAnswerSheet,
   markAsReferenceEssay,
@@ -59,18 +58,6 @@ export default function WritingInsightPage() {
     setData({ ...data, timeRange: range })
   }
 
-  // Essay revision
-  const handleEssayRevision = () => {
-    const result = mockOpenEssayRevision({
-      classId: data.classId,
-      studentIds: data.weakStudents.map(s => s.id),
-      essayIds: data.weakStudents.flatMap(s => s.fullEssayIds),
-      problemTypes: data.problemTypes.slice(0, 3).map(p => p.label),
-      targetScope: 'custom',
-    })
-    showToast(result.message)
-  }
-
   // Full essay view
   const handleViewFullEssay = (idOrItem: string | WritingIssueItem) => {
     const id = typeof idOrItem === 'string' ? idOrItem : idOrItem.fullEssayId
@@ -119,9 +106,9 @@ export default function WritingInsightPage() {
   const isInBasket = (r: RecommendedWritingResource) => paperBasket.some(pb => pb.resourceId === r.id)
 
   return (
-    <>
+    <div className="flex justify-center px-6">
       <InsightSideNav items={NAV_ITEMS} />
-      <div className="max-w-6xl mx-auto py-5 px-6 space-y-4">
+      <div className="flex-1 w-full py-5 space-y-4 max-w-[1600px]">
         <WritingInsightHeader
           timeRange={timeRange}
           onTimeRangeChange={handleTimeRangeChange}
@@ -134,7 +121,6 @@ export default function WritingInsightPage() {
             summary={data.summary}
             mainProblemTypes={data.problemTypes.slice(0, 3).map(p => p.label)}
             affectedStudentCount={data.metrics.weakStudentCount}
-            onEssayRevision={handleEssayRevision}
             onRecommendResources={() => resourcesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
             onGenerateSamples={() => setShowSampleGenerator(true)}
           />
@@ -206,6 +192,6 @@ export default function WritingInsightPage() {
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 }

@@ -1,16 +1,15 @@
-import { Lightbulb, FileText, BookOpen, Sparkles } from 'lucide-react'
+import { Lightbulb, BookOpen, Sparkles } from 'lucide-react'
 
 interface Props {
   summary: string
   mainProblemTypes: string[]
   affectedStudentCount: number
-  onEssayRevision: () => void
   onRecommendResources: () => void
   onGenerateSamples: () => void
 }
 
 export default function WritingAISummaryCard({
-  summary, onEssayRevision, onRecommendResources, onGenerateSamples,
+  summary, onRecommendResources, onGenerateSamples,
 }: Props) {
   return (
     <div className="relative bg-gradient-to-r from-blue-50/60 to-white rounded-2xl p-5 border border-blue-100/60 shadow-sm">
@@ -24,21 +23,12 @@ export default function WritingAISummaryCard({
 
           <div className="flex items-center gap-2 mt-3 flex-wrap">
             <button
-              onClick={onEssayRevision}
+              onClick={onRecommendResources}
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600
                 text-white text-xs font-semibold hover:from-blue-600 hover:to-blue-700
                 transition-all duration-200 shadow-sm shadow-blue-200"
             >
-              <FileText size={13} />
-              作文订正
-            </button>
-            <button
-              onClick={onRecommendResources}
-              className="inline-flex items-center gap-1 px-3 py-2 rounded-lg bg-slate-50 text-xs font-medium
-                text-slate-600 border border-slate-200 hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50/50
-                transition-all duration-200"
-            >
-              <BookOpen size={12} />
+              <BookOpen size={13} />
               推荐写作练习
             </button>
             <button

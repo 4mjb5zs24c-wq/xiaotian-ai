@@ -94,9 +94,12 @@ const resourceModules: ResourceModule[] = [
   { label: '听说专项突破', desc: '情景对话+模仿朗读', color: '#8b7cf0', tag: '热门' },
   { label: '主题视频', desc: '课前导入素材', color: '#e85d8b' },
   { label: '时文阅读', desc: '热点话题阅读', color: '#3dbfc4' },
+  { label: '语法专项', desc: '名词/动词/从句', color: '#6b7db3' },
+  { label: '阅读理解', desc: '完形+阅读训练', color: '#5bb878' },
+  { label: '写作素材', desc: '高分句型积累', color: '#e8a83a' },
 ]
 
-const homeInsights = generateHomeInsights({ disabledModules: ['home_wrong_word', 'home_writing'] })
+const homeInsights = generateHomeInsights({ disabledModules: ['home_wrong_word', 'home_writing', 'home_listening_speaking'], enableExamReminder: true })
 
 // Add vocabulary insight cards to home insights
 const vocabConcernCards: InsightItem[] = MOCK_VOCAB_CONCERN_CARDS.filter(c => c.type === 'vocabulary_insight').map(c => ({
@@ -149,6 +152,9 @@ const recentReports: ReportItem[] = [
   { title: '冲刺训练（四十一）', className: '初一1班', groupName: '指定分组', done: 1, total: 1, date: '2026-05-24', canRemind: false, hasReport: true, hasFullscreenExplain: true },
   { title: '冲刺训练（一）（新）', className: '初一1班', groupName: '指定分组', done: 0, total: 7, date: '2026-05-23', canRemind: false, hasReport: true, hasFullscreenExplain: true, isNew: true },
   { title: '试题（六）', className: '初一1班', groupName: '全班', done: 0, total: 43, date: '2026-05-22', canRemind: true, hasReport: true },
+  { title: 'Unit2 语法专项测评', className: '初一1班', groupName: '全班', done: 8, total: 43, date: '2026-05-18', canRemind: true, hasReport: true },
+  { title: '期中模拟检测', className: '初一1班', groupName: '全班', done: 10, total: 43, date: '2026-05-15', canRemind: false, hasReport: true, hasFullscreenExplain: true },
+  { title: '句式转换练习', className: '初一1班', groupName: '指定分组', done: 0, total: 12, date: '2026-05-12', canRemind: true, hasReport: true },
   { title: 'Unit3 词汇听写练习', className: '初一1班', groupName: '全班', done: 5, total: 43, date: '2026-05-20', canRemind: true, hasReport: true },
 ]
 
@@ -233,7 +239,7 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-5 gap-3 h-full overflow-hidden">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-5 gap-3 h-full overflow-hidden">
             {/* ── LEFT ~62% ── */}
             <div className="lg:col-span-3 flex flex-col space-y-2.5 h-full min-h-0">
 
@@ -284,65 +290,65 @@ export default function HomePage() {
 
               {/* 课堂教学 — flex-1 fills available height */}
               <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden flex flex-col flex-1 min-h-0">
-                <div className="px-4 py-2.5 border-b border-[#f0f4f8] shrink-0">
-                  <h3 className="text-[13px] font-semibold text-[#3a4f66]">课堂教学</h3>
+                <div className="px-4 py-2.5 border-b border-purple-100/60 shrink-0">
+                  <h3 className="text-[13px] font-semibold text-slate-700">课堂教学</h3>
                 </div>
                 <div className="p-4 grid grid-cols-4 gap-3 flex-1 min-h-0">
                   {teachingModules.map((m) => (
                     <button
                       key={m.label}
                       onClick={() => navigate(m.route)}
-                      className={`relative flex flex-col justify-between p-5 rounded-2xl bg-gradient-to-br ${m.gradient} text-white overflow-hidden group hover:shadow-lg transition-shadow h-full`}
+                      className="relative flex flex-col justify-between p-5 rounded-2xl bg-gradient-to-br from-purple-100 via-purple-50 to-indigo-50 border border-purple-200 overflow-hidden group hover:shadow-md hover:border-purple-300 transition-all h-full"
                     >
                       <div className="text-left">
-                        <p className="text-[13px] font-semibold">{m.label}</p>
-                        <p className="text-[10px] text-white/70 mt-0.5">{m.subtitle}</p>
+                        <p className="text-[13px] font-semibold text-slate-700">{m.label}</p>
+                        <p className="text-[10px] text-slate-500 mt-0.5">{m.subtitle}</p>
                       </div>
-                      <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/20 self-end">
-                        <m.icon size={22} />
+                      <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-purple-200/50 self-end">
+                        <m.icon size={22} className="text-purple-500" />
                       </div>
-                      <div className="absolute -right-3 -bottom-3 w-16 h-16 rounded-full bg-white/8" />
+                      <div className="absolute -right-3 -bottom-3 w-16 h-16 rounded-full bg-purple-100/40" />
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* 更多课本 */}
-              <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden shrink-0">
-                <div className="px-4 py-2.5 border-b border-[#f0f4f8] flex items-center justify-between">
-                  <h3 className="text-[13px] font-semibold text-[#3a4f66]">更多课本</h3>
+              <div className="bg-gradient-to-b from-amber-50/60 to-yellow-50/40 rounded-2xl border border-amber-100 shadow-sm overflow-hidden shrink-0">
+                <div className="px-4 py-2.5 border-b border-amber-100/60 flex items-center justify-between">
+                  <h3 className="text-[13px] font-semibold text-slate-700">更多课本</h3>
                   <div className="flex items-center gap-1">
-                    <button onClick={() => scroll('left')} className="p-1.5 rounded-lg hover:bg-[#f0f4f8] text-[#8aabcc] hover:text-[#4a6b8a] transition-colors">
+                    <button onClick={() => scroll('left')} className="p-1.5 rounded-lg hover:bg-blue-100 text-slate-400 hover:text-blue-500 transition-colors">
                       <ChevronLeft size={15} />
                     </button>
-                    <button onClick={() => scroll('right')} className="p-1.5 rounded-lg hover:bg-[#f0f4f8] text-[#8aabcc] hover:text-[#4a6b8a] transition-colors">
+                    <button onClick={() => scroll('right')} className="p-1.5 rounded-lg hover:bg-blue-100 text-slate-400 hover:text-blue-500 transition-colors">
                       <ChevronRight size={15} />
                     </button>
                   </div>
                 </div>
                 <div className="p-3 pb-3">
                   <div ref={scrollRef} className="flex gap-3 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
-                    {resourceModules.map((m) => (
+                    {resourceModules.map((m, i) => (
                       <div
                         key={m.label}
-                        className="flex-none w-[155px] rounded-2xl border border-[#e8eef4] overflow-hidden hover:shadow-md transition-shadow group text-left"
+                        className={`flex-none w-[155px] rounded-2xl border border-amber-100 overflow-hidden hover:shadow-md transition-shadow group text-left bg-white ${i >= 5 ? 'hidden xl:flex' : ''}`}
                       >
-                        <div className="h-[72px] flex items-center justify-center relative" style={{ backgroundColor: m.color }}>
-                          <Play size={24} className="text-white/50" />
+                        <div className="h-[72px] flex items-center justify-center relative bg-gradient-to-br from-amber-400 to-amber-500">
+                          <Play size={24} className="text-white/40" />
                           {m.tag && (
-                            <span className="absolute top-2 right-2 text-[9px] bg-white/90 text-[#4a6b8a] px-1.5 py-0.5 rounded-full font-medium">
+                            <span className="absolute top-2 right-2 text-[9px] bg-white/90 text-amber-700 px-1.5 py-0.5 rounded-full font-medium">
                               {m.tag}
                             </span>
                           )}
                         </div>
-                        <div className="p-3 bg-white">
-                          <p className="text-[11px] font-medium text-[#3a4f66]">{m.label}</p>
-                          <p className="text-[10px] text-[#8aabcc] mt-0.5">{m.desc}</p>
+                        <div className="p-3">
+                          <p className="text-[11px] font-medium text-slate-700">{m.label}</p>
+                          <p className="text-[10px] text-slate-400 mt-0.5">{m.desc}</p>
                           <div className="flex items-center gap-2 mt-2">
-                            <button className="text-[10px] text-[#4b9fe8] bg-[#eaf2fb] hover:bg-[#d6e6f7] px-2.5 py-1 rounded-lg font-medium transition-colors">
+                            <button className="text-[10px] text-blue-500 bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-lg font-medium transition-colors">
                               布置
                             </button>
-                            <button className="text-[10px] text-[#4b9fe8] font-medium group-hover:underline">
+                            <button className="text-[10px] text-blue-500 font-medium group-hover:underline">
                               进入
                             </button>
                           </div>
@@ -459,7 +465,7 @@ export default function HomePage() {
                 </div>
                 <div className="p-2 space-y-2 flex-1 overflow-y-auto">
                   {recentReports.map((r, i) => (
-                    <div key={i} className="rounded-lg border border-[#eef2f6] overflow-hidden">
+                    <div key={i} className={`rounded-lg border border-[#eef2f6] overflow-hidden ${i >= 3 ? 'hidden xl:block' : ''}`}>
                       {/* Title bar */}
                       <div className="flex items-center justify-between px-3.5 py-2.5 bg-[#f7f9fc] border-b border-[#eef2f6]">
                         <div className="flex items-center gap-1.5 min-w-0">

@@ -39,7 +39,7 @@ export default function InsightSideNav({ items }: Props) {
   }
 
   return (
-    <nav className="fixed left-[max(155px,calc((100vw-72rem-147px)/2+15px))] top-28 w-32 space-y-0.5 z-30 max-xl:hidden">
+    <nav className="hidden xl:block sticky top-28 w-32 shrink-0 space-y-0.5 self-start -mr-2">
       <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2 px-1">页面导航</p>
       {items.map((item) => {
         const isActive = activeId === item.id

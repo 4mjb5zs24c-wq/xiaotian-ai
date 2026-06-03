@@ -79,9 +79,9 @@ export default function VocabularyInsightPage() {
   }
 
   return (
-    <>
+    <div className="flex justify-center px-6">
       <InsightSideNav items={NAV_ITEMS} />
-      <div className="max-w-6xl mx-auto py-5 px-6 space-y-4">
+      <div className="flex-1 w-full py-5 space-y-4 max-w-[1600px]">
         <VocabularyInsightHeader
           timeRange={timeRange}
           onTimeRangeChange={handleTimeRangeChange}
@@ -165,6 +165,6 @@ export default function VocabularyInsightPage() {
           <ReviewPlanWizard onClose={() => setShowReviewPlan(false)} />
         )}
       </div>
-    </>
+    </div>
   )
 }
