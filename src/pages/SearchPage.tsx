@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { Search, Clock, TrendingUp, Sparkles, X, BookOpen } from 'lucide-react'
+import { useSearchParams, useNavigate } from 'react-router-dom'
+import { Search, Clock, Sparkles, X, BookOpen } from 'lucide-react'
 import { useAIStore } from '../ai/store'
 import { matchNewSearch, mockOpenPreview, mockOpenAssignDialog, mockAddToLessonPrep, mockOpenFunction } from '../ai/search-new/searchEngine'
 import { SearchResultView, PaperBasketBadge } from '../ai/components/search-new'
@@ -17,9 +17,9 @@ import type {
 // ── Mock data for suggestions ──
 
 const recentSearches = ['Unit 1 资源', '同步词汇', '山东省24年中考真题', '听力练习', '同步练习']
-const trendingSearches = ['Unit 1 综合练习', '快速制卡', '词汇听写', '阅读理解', '单元检测', '模拟题']
 
 export default function SearchPage() {
+  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const teacherContext = useAIStore((s) => s.teacherContext)
   const paperBasket = useAIStore((s) => s.paperBasket)
@@ -63,6 +63,11 @@ export default function SearchPage() {
     }
   }, [])
 
+  // Check if query is a single English word
+  const isSingleEnglishWord = (q: string): boolean => {
+    return /^[a-zA-Z]+$/.test(q.trim()) && q.trim().length >= 2
+  }
+
   const doSearch = useCallback((q: string) => {
     const sq = q.trim()
     if (!sq) return
@@ -70,6 +75,19 @@ export default function SearchPage() {
 
     setTimeout(() => {
       const res = matchNewSearch(sq, ctx)
+      // If searching a single English word, inject 讲词 function entry
+      if (isSingleEnglishWord(sq)) {
+        const wordTeachEntry: FunctionEntry = {
+          id: 'func-word-teach',
+          name: '讲词',
+          keywords: [sq],
+          category: '词汇教学',
+          recommendReason: `打开「${sq}」全屏讲词页，查看词义、例句、搭配和教学资源`,
+          actionType: 'open_page',
+          openTarget: `/word-teaching/${encodeURIComponent(sq)}`,
+        }
+        res.functionEntries = [wordTeachEntry, ...res.functionEntries]
+      }
       setResult(res)
       setNewSearchResult(res)
       setSearching(false)
@@ -110,6 +128,10 @@ export default function SearchPage() {
   }
 
   const handleOpenFunction = (entry: FunctionEntry) => {
+    if (entry.actionType === 'open_page' && entry.openTarget) {
+      navigate(entry.openTarget)
+      return
+    }
     showToast(mockOpenFunction(entry).message)
   }
 
@@ -135,6 +157,19 @@ export default function SearchPage() {
           count={paperBasket.length}
           onClick={() => setAIDrawerPanel('basket')}
         />
+      </div>
+
+      {/* ── Description text ── */}
+      <div className="text-center pt-2">
+        <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center mx-auto mb-3">
+          <Sparkles size={18} className="text-blue-400" />
+        </div>
+        <p className="text-sm text-slate-600 font-medium">
+          输入教学问题，小天帮你找到最好的教学资源
+        </p>
+        <p className="text-xs text-slate-400 mt-1">
+          支持资源类型、试卷名称、功能入口等搜索
+        </p>
       </div>
 
       {/* ── Search Box ── */}
@@ -201,33 +236,11 @@ export default function SearchPage() {
             </div>
           </div>
         </div>
-
-        {/* Trending */}
-        <div className="border-t border-slate-50 px-5 py-2.5">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-[11px] font-medium text-slate-400 shrink-0">
-              <TrendingUp size={11} />
-              大家都在搜
-            </span>
-            <div className="flex items-center gap-1.5 flex-wrap">
-              {trendingSearches.slice(0, 5).map((s) => (
-                <button
-                  key={s}
-                  onClick={() => handleTagClick(s)}
-                  className="text-[12px] text-slate-500 hover:text-blue-600 hover:bg-slate-50
-                    px-2.5 py-1 rounded-md transition-colors"
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* ── Searching state ── */}
       {searching && (
-        <div className="flex items-center justify-center py-16">
+        <div className="flex items-center justify-center py-12">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
               <Sparkles size={15} className="text-blue-500 animate-pulse" />
@@ -250,29 +263,6 @@ export default function SearchPage() {
           onGenerateAssignments={handleGenerateAssignments}
           onQuickEntry={handleQuickEntry}
         />
-      )}
-
-      {/* ── Empty state ── */}
-      {!result && !searching && (
-        <div className="text-center py-20">
-          <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
-            <Sparkles size={22} className="text-blue-400" />
-          </div>
-          <p className="text-sm text-slate-500 font-medium">输入教学问题，小天帮你找到最好的教学资源</p>
-          <p className="text-xs text-slate-400 mt-1.5">支持资源类型、试卷名称、功能入口等搜索</p>
-          <div className="flex flex-wrap justify-center gap-2 mt-5">
-            {['Unit 1 资源', '同步练习', '山东省中考真题', '词汇听写', '模拟题'].map((t) => (
-              <button
-                key={t}
-                onClick={() => handleTagClick(t)}
-                className="text-xs text-slate-500 hover:text-blue-600 bg-slate-50 hover:bg-blue-50
-                  border border-slate-200 hover:border-blue-200 px-3.5 py-1.5 rounded-lg transition-all"
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-        </div>
       )}
 
       {/* ── Toast ── */}
