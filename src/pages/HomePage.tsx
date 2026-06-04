@@ -152,10 +152,15 @@ const recentReports: ReportItem[] = [
   { title: '冲刺训练（四十一）', className: '初一1班', groupName: '指定分组', done: 1, total: 1, date: '2026-05-24', canRemind: false, hasReport: true, hasFullscreenExplain: true },
   { title: '冲刺训练（一）（新）', className: '初一1班', groupName: '指定分组', done: 0, total: 7, date: '2026-05-23', canRemind: false, hasReport: true, hasFullscreenExplain: true, isNew: true },
   { title: '试题（六）', className: '初一1班', groupName: '全班', done: 0, total: 43, date: '2026-05-22', canRemind: true, hasReport: true },
+  { title: 'Unit3 词汇听写练习', className: '初一1班', groupName: '全班', done: 5, total: 43, date: '2026-05-20', canRemind: true, hasReport: true },
   { title: 'Unit2 语法专项测评', className: '初一1班', groupName: '全班', done: 8, total: 43, date: '2026-05-18', canRemind: true, hasReport: true },
   { title: '期中模拟检测', className: '初一1班', groupName: '全班', done: 10, total: 43, date: '2026-05-15', canRemind: false, hasReport: true, hasFullscreenExplain: true },
   { title: '句式转换练习', className: '初一1班', groupName: '指定分组', done: 0, total: 12, date: '2026-05-12', canRemind: true, hasReport: true },
-  { title: 'Unit3 词汇听写练习', className: '初一1班', groupName: '全班', done: 5, total: 43, date: '2026-05-20', canRemind: true, hasReport: true },
+  { title: 'Unit4 单词默写', className: '初一1班', groupName: '全班', done: 3, total: 43, date: '2026-05-10', canRemind: true, hasReport: true },
+  { title: '阶段性综合测评', className: '初一1班', groupName: '全班', done: 12, total: 43, date: '2026-05-08', canRemind: false, hasReport: true, hasFullscreenExplain: true },
+  { title: '听力选择题专项训练', className: '初一1班', groupName: '指定分组', done: 0, total: 15, date: '2026-05-05', canRemind: true, hasReport: true, isNew: true },
+  { title: '完形填空（十二）', className: '初一1班', groupName: '全班', done: 6, total: 43, date: '2026-05-02', canRemind: true, hasReport: true },
+  { title: '阅读理解推断题练习', className: '初一1班', groupName: '指定分组', done: 2, total: 20, date: '2026-04-28', canRemind: true, hasReport: true },
 ]
 
 // ── Main Component ─────────────────────────────────────
@@ -314,8 +319,8 @@ export default function HomePage() {
               </div>
 
               {/* 更多课本 */}
-              <div className="bg-gradient-to-b from-amber-50/60 to-yellow-50/40 rounded-2xl border border-amber-100 shadow-sm overflow-hidden shrink-0">
-                <div className="px-4 py-2.5 border-b border-amber-100/60 flex items-center justify-between">
+              <div className="bg-gradient-to-b from-blue-50/60 to-blue-50/30 rounded-2xl border border-blue-100 shadow-sm overflow-hidden shrink-0">
+                <div className="px-4 py-2.5 border-b border-blue-100/60 flex items-center justify-between">
                   <h3 className="text-[13px] font-semibold text-slate-700">更多课本</h3>
                   <div className="flex items-center gap-1">
                     <button onClick={() => scroll('left')} className="p-1.5 rounded-lg hover:bg-blue-100 text-slate-400 hover:text-blue-500 transition-colors">
@@ -331,12 +336,12 @@ export default function HomePage() {
                     {resourceModules.map((m, i) => (
                       <div
                         key={m.label}
-                        className={`flex-none w-[155px] rounded-2xl border border-amber-100 overflow-hidden hover:shadow-md transition-shadow group text-left bg-white ${i >= 5 ? 'hidden xl:flex' : ''}`}
+                        className={`flex-none w-[155px] rounded-2xl border border-blue-100 overflow-hidden hover:shadow-md transition-shadow group text-left bg-white ${i >= 5 ? 'hidden xl:block' : ''}`}
                       >
-                        <div className="h-[72px] flex items-center justify-center relative bg-gradient-to-br from-amber-400 to-amber-500">
+                        <div className="h-[72px] flex items-center justify-center relative bg-gradient-to-br from-blue-400 to-blue-500">
                           <Play size={24} className="text-white/40" />
                           {m.tag && (
-                            <span className="absolute top-2 right-2 text-[9px] bg-white/90 text-amber-700 px-1.5 py-0.5 rounded-full font-medium">
+                            <span className="absolute top-2 right-2 text-[9px] bg-white/90 text-blue-700 px-1.5 py-0.5 rounded-full font-medium">
                               {m.tag}
                             </span>
                           )}
@@ -345,10 +350,10 @@ export default function HomePage() {
                           <p className="text-[11px] font-medium text-slate-700">{m.label}</p>
                           <p className="text-[10px] text-slate-400 mt-0.5">{m.desc}</p>
                           <div className="flex items-center gap-2 mt-2">
-                            <button className="text-[10px] text-blue-500 bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-lg font-medium transition-colors">
+                            <button className="text-[10px] text-blue-600 bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-lg font-medium transition-colors">
                               布置
                             </button>
-                            <button className="text-[10px] text-blue-500 font-medium group-hover:underline">
+                            <button className="text-[10px] text-blue-600 font-medium group-hover:underline">
                               进入
                             </button>
                           </div>
@@ -465,7 +470,7 @@ export default function HomePage() {
                 </div>
                 <div className="p-2 space-y-2 flex-1 overflow-y-auto">
                   {recentReports.map((r, i) => (
-                    <div key={i} className={`rounded-lg border border-[#eef2f6] overflow-hidden ${i >= 3 ? 'hidden xl:block' : ''}`}>
+                    <div key={i} className={`rounded-lg border border-[#eef2f6] overflow-hidden ${i >= 5 ? 'hidden xl:block' : ''}`}>
                       {/* Title bar */}
                       <div className="flex items-center justify-between px-3.5 py-2.5 bg-[#f7f9fc] border-b border-[#eef2f6]">
                         <div className="flex items-center gap-1.5 min-w-0">
