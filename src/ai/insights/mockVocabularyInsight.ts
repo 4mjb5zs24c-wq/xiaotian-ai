@@ -844,6 +844,15 @@ export function getReviewPlanConfig(goal: ReviewGoal): ReviewPlanConfig {
       strategy: '个人薄弱词默写 + 错词复练 + 听音识词/语块专项 + 小组补练',
       aiReason: '8 名薄弱学生各有不同的弱项，需根据个人错误类型分配合适的练习。张晓明、陈思雨重点练听写，赵子涵重点练语块。',
     },
+    custom: {
+      goal: 'custom',
+      dayCount: 7,
+      wordsPerDay: 50,
+      reviewScope: '自选词汇范围',
+      targetStudents: '全班',
+      strategy: '根据老师自定义的词汇范围和复习频次灵活配置，支持错词滚动复现。',
+      aiReason: '自定义规划可以灵活搭配词汇来源和复习节奏，适合有特定教学目标的场景。',
+    },
   }
   return meta[goal]
 }
@@ -874,6 +883,12 @@ export function getReviewPlanTasks(goal: ReviewGoal): ReviewPlanTask[] {
       { id: 'ws-2', checked: true, name: '个人错词复练', contentScope: '默写中仍错的词', taskType: '错词复练', targetType: 'student', targetName: '张晓明、陈思雨等 8 人', scheduledTime: '第 3 天 15:00', deadline: '第 4 天 08:00', editable: true },
       { id: 'ws-3', checked: true, name: '听音识词 / 语块专项', contentScope: '听不准词 6 个 + 语块 4 个', taskType: '听音识词', targetType: 'student', targetName: '张晓明、陈思雨、赵子涵', scheduledTime: '第 5 天 15:00', deadline: '第 6 天 08:00', editable: true },
       { id: 'ws-4', checked: true, name: '小组补练任务', contentScope: '每人最后薄弱词', taskType: '词表识记', targetType: 'group', targetName: '4 人/组 × 2 组', scheduledTime: '第 7 天 09:00', deadline: '第 7 天 20:00', editable: true },
+    ],
+    custom: [
+      { id: 'cu-1', checked: true, name: '自选词汇第一轮', contentScope: '自选词汇范围 50 个', taskType: '词表识记', targetType: 'class', targetName: '初一 1 班', scheduledTime: '第 1 天 09:00', deadline: '第 2 天 08:00', editable: true },
+      { id: 'cu-2', checked: true, name: '自选词汇第二轮', contentScope: '自选词汇范围 + 前轮错词', taskType: '默写', targetType: 'class', targetName: '初一 1 班', scheduledTime: '第 3 天 09:00', deadline: '第 4 天 08:00', editable: true },
+      { id: 'cu-3', checked: true, name: '语境应用练习', contentScope: '自选词汇应用', taskType: '语境填词', targetType: 'class', targetName: '初一 1 班', scheduledTime: '第 5 天 09:00', deadline: '第 6 天 08:00', editable: true },
+      { id: 'cu-4', checked: true, name: '综合检测', contentScope: '全部词汇 + 滚动错词', taskType: '组卷检测', targetType: 'class', targetName: '初一 1 班', scheduledTime: '第 7 天 09:00', deadline: '第 7 天 20:00', editable: true },
     ],
   }
   return taskMap[goal]

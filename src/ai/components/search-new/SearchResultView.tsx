@@ -81,9 +81,26 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
 
   // No results at all
   if (result.isNoResults || result.isUnrecognizable) {
+    // If we have function entries (e.g. single-word search → 讲词), just show those
+    if (result.functionEntries.length > 0) {
+      return (
+        <div className="space-y-4">
+          <SearchIntentSummary intent={result.intent} />
+          <div className="space-y-2">
+            {result.functionEntries.map((entry) => (
+              <FunctionEntryCard
+                key={entry.id}
+                entry={entry}
+                onClick={onOpenFunction}
+              />
+            ))}
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className="space-y-4">
-        <SearchIntentSummary intent={result.intent} />
         <NoResultsView
           alternatives={result.alternatives}
           quickEntries={result.quickEntries}

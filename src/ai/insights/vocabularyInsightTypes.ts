@@ -154,14 +154,45 @@ export interface EffectSummary {
 
 // ── Review Plan ─────────────────────────────────────────
 
-export type ReviewGoal = 'quick_fix' | 'current_unit' | 'stage_exam' | 'weak_student'
+export type ReviewGoal = 'quick_fix' | 'current_unit' | 'stage_exam' | 'weak_student' | 'custom'
 
 export const REVIEW_GOAL_META: Record<ReviewGoal, { label: string; desc: string; defaultDays: number; defaultWordCount: number }> = {
   quick_fix: { label: '快速巩固近期错词', desc: '集中巩固近期的薄弱词汇和语块，快速提升掌握率。', defaultDays: 3, defaultWordCount: 30 },
   current_unit: { label: '当前单元词汇复习', desc: '针对当前教学单元的课标词和非课标词进行系统复习。', defaultDays: 7, defaultWordCount: 50 },
   stage_exam: { label: '阶段 / 考前词汇复习', desc: '覆盖多单元和课标词汇的阶段性综合复习，适合期中期末或考前冲刺。', defaultDays: 14, defaultWordCount: 80 },
   weak_student: { label: '薄弱学生补练', desc: '针对词汇掌握率偏低的学生进行个性化补练和强化训练。', defaultDays: 7, defaultWordCount: 30 },
+  custom: { label: '自定义复习规划', desc: '自由组合词汇范围、练习频次和复习策略，满足个性化教学需求。', defaultDays: 7, defaultWordCount: 50 },
 }
+
+// ── Vocabulary Scope ────────────────────────────────────
+
+export type VocabScopeId = 'error_words' | 'sync_unit' | 'platform_extended'
+
+export const VOCAB_SCOPE_OPTIONS: { id: VocabScopeId; label: string; desc: string }[] = [
+  { id: 'error_words',       label: '错词时间范围',  desc: '基于选定时间段内的错词' },
+  { id: 'sync_unit',         label: '同步单元词汇',  desc: '选择教学单元对应的课标词及非课标词' },
+  { id: 'platform_extended', label: '拓展词汇',      desc: '平台上的词汇专题和考纲词表' },
+]
+
+// ── Extended Vocab Sub-Options ─────────────────────────
+
+export const EXTENDED_VOCAB_OPTIONS = [
+  '不规则动词',
+  '中考必会词汇和短语',
+  '中考课标1600词话题分类',
+  '课标3500词',
+] as const
+
+export type ExtendedVocabItem = typeof EXTENDED_VOCAB_OPTIONS[number]
+
+// ── Sync Units ─────────────────────────────────────────
+
+export const SYNC_UNITS = [
+  'Unit 1', 'Unit 2', 'Unit 3', 'Unit 4',
+  'Unit 5', 'Unit 6', 'Unit 7', 'Unit 8',
+] as const
+
+export type SyncUnit = typeof SYNC_UNITS[number]
 
 export interface ReviewPlanConfig {
   goal: ReviewGoal

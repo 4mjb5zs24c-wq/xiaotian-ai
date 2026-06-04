@@ -99,6 +99,7 @@ export default function SearchPage() {
   }
 
   const handleTagClick = (term: string) => {
+    setResult(null)
     setQuery(term)
     doSearch(term)
   }
@@ -160,15 +161,12 @@ export default function SearchPage() {
       </div>
 
       {/* ── Description text ── */}
-      <div className="text-center pt-2">
-        <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center mx-auto mb-3">
-          <Sparkles size={18} className="text-blue-400" />
+      <div className="flex items-center justify-center gap-2.5 pt-2">
+        <div className="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
+          <Sparkles size={15} className="text-blue-400" />
         </div>
-        <p className="text-sm text-slate-600 font-medium">
+        <p className="text-sm text-slate-500 font-medium">
           输入教学问题，小天帮你找到最好的教学资源
-        </p>
-        <p className="text-xs text-slate-400 mt-1">
-          支持资源类型、试卷名称、功能入口等搜索
         </p>
       </div>
 

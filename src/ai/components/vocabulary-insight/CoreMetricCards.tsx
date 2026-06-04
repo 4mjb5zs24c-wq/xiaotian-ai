@@ -14,10 +14,6 @@ interface MetricDef {
 
 const METRICS: MetricDef[] = [
   {
-    key: 'masteryRate', label: '词汇综合掌握率', suffix: '%',
-    trend: 'down', trendLabel: '低于目标 12%',
-  },
-  {
     key: 'practicedWordCount', label: '已练词汇数', suffix: '个',
   },
   {
@@ -42,7 +38,7 @@ const TREND_STYLES: Record<string, { icon: React.ReactNode; className: string }>
 
 export default function CoreMetricCards({ metrics, onWeakWordsClick, onWeakStudentsClick }: Props) {
   return (
-    <div className="grid grid-cols-5 gap-3">
+    <div className="grid grid-cols-4 gap-3">
       {METRICS.map(({ key, label, suffix, clickable, trend, trendLabel }) => {
         const val = metrics[key]
         const isStr = typeof val === 'string'

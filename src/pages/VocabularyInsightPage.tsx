@@ -31,7 +31,6 @@ export default function VocabularyInsightPage() {
   const [expandedStudentId, setExpandedStudentId] = useState<string | null>(null)
   const [showAllWords, setShowAllWords] = useState(false)
   const [showAllWeakStudents, setShowAllWeakStudents] = useState(false)
-  const [activeStudentTab, setActiveStudentTab] = useState<'weak' | 'good'>('weak')
   const [showReviewPlan, setShowReviewPlan] = useState(false)
 
   const filteredWeakWords = filterVocabularyItems(data.weakWords)
@@ -102,7 +101,6 @@ export default function VocabularyInsightPage() {
             metrics={data.metrics}
             onWeakWordsClick={() => wordsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
             onWeakStudentsClick={() => {
-              setActiveStudentTab('weak')
               studentsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
             }}
           />
@@ -136,8 +134,6 @@ export default function VocabularyInsightPage() {
           <StudentInsightSection
             weakStudents={data.weakStudents}
             goodStudents={data.goodStudents}
-            activeTab={activeStudentTab}
-            onTabChange={setActiveStudentTab}
             selectedIds={new Set()}
             showAllWeak={showAllWeakStudents}
             expandedStudentId={expandedStudentId}
