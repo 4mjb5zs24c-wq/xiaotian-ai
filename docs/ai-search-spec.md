@@ -74,13 +74,15 @@ mindmap
 
 ```mermaid
 flowchart TD
-    Q["用户输入 query"] --> NQ["normalizeQuery(q)<br/>转小写·去空格·去标点"]
+    Q["用户输入 query"] --> EMPTY{"空输入/无意义?<br/>纯数字|纯符号|<2字符"}
+    EMPTY -- 是 --> S15
+    EMPTY -- 否 --> NQ["normalizeQuery(q)<br/>转小写·去空格·去标点"]
     NQ --> P1
 
-    P1{"P1: 功能入口关键词?<br/>三方卡|制卡|听写|批改|导入试卷|自定义"}
+    P1{"P1: 功能入口关键词?<br/>制卡|听写|批改|讲词|词表<br/>导入试卷|自定义"}
     P1 -- 是 --> F1["tryFunctionEntryMatch()"]
     F1 --> S12["S12: function_entry<br/>S13: wordlist"]
-    S12 --> R["返回 NewSearchResult<br/>searchType='function_entry'"]
+    S12 --> R["返回 NewSearchResult"]
 
     P1 -- 否 --> P2
 
@@ -109,16 +111,30 @@ flowchart TD
 
     P4 -- 否 --> P5
 
-    P5{"P5: 资源类型?"}
+    P5{"P5: 资源类型? (11种)"}
     P5 --> P5a{"关键词匹配"}
+
+    P5a -- "写作|作文|应用文|读后续写|书面表达" --> S16["S16: writing"]
+    P5a -- "词汇练习|单词|单词拼写|词形变化" --> S17["S17: vocab_practice"]
+    P5a -- "语法|语法填空|完形填空|选词填空" --> S19["S19: grammar"]
+    P5a -- "阅读|阅读理解|阅读七选五|任务型阅读" --> S18["S18: reading"]
+    P5a -- "听力模拟|听力模考" --> S21["S21: listening_mock"]
     P5a -- "听力(非听说)" --> S5["S5: listening"]
     P5a -- "听说" --> P5b{"地区不支持?"}
     P5b -- 是 --> S6["S6: no_speaking_region"]
     P5b -- 否 --> S5
     P5a -- "同步练习|同步训练|单元练习" --> S7["S7: sync_practice"]
-    P5a -- "专项|专项训练|词汇专项|语法专项" --> S8["S8: special_topic"]
-    P5a -- "模拟|模拟卷|模拟题|单元检测|阶段测试|考前冲刺" --> S9["S9: mock_exam"]
-    P5a -- "阅读理解|阅读练习|阅读训练" --> S7
+    P5a -- "真题|真题资源|区域精选" --> S20["S20: real_exam"]
+    P5a -- "专项|专项训练" --> S8["S8: special_topic"]
+    P5a -- "模拟|检测|考试|期中|期末|考前冲刺" --> S9["S9: mock_exam"]
+    P5a -- "配音|同步视频|视频资源" --> S1["S1: comprehensive"]
+
+    S16 --> R
+    S17 --> R
+    S18 --> R
+    S19 --> R
+    S20 --> R
+    S21 --> R
     S5 --> R
     S6 --> R
     S7 --> R
@@ -127,13 +143,25 @@ flowchart TD
 
     P5 -- 否 --> P6
 
-    P6{"P6: 综合搜索?<br/>Unit N|资源|综合|练习"}
-    P6 -- 是 --> S1["S1: unit1_comprehensive"]
-    S1 --> R
+    P6{"P6: Unit N + 具体类型组合?"}
+    P6 --> P6a{"提取 Unit 编号 + 类型词"}
+    P6a -- "听力|听说" --> S5
+    P6a -- "词汇|单词|词表" --> S17
+    P6a -- "语法" --> S19
+    P6a -- "写作|作文" --> S16
+    P6a -- "阅读" --> S18
+    P6a -- "课文" --> S3
+    P6a -- "模拟|检测|测试|考试" --> S9
+    P6a -- "真题" --> S20
+    P6a -- "专项" --> S8
+    P6a -- "无类型词" --> S1["S1: unit1_comprehensive"]
 
-    P6 -- 否 --> P7
+    P6 -- 否 --> P6b{"泛化: 资源|综合|练习?"}
+    P6b -- 是 --> S1
 
-    P7{"P7: 模糊搜索?<br/>有没有|帮我找|有什么|查询 ≤3字"}
+    P6b -- 否 --> P7
+
+    P7{"P7: 模糊/短查询?<br/>有没有|帮我找|有什么<br/>中文短查询(2-4字)"}
     P7 -- 是 --> S1
 
     P7 -- 否 --> P8["P8: 无法识别"]
@@ -238,16 +266,62 @@ flowchart TD
 
 ## 6. 8 级搜索匹配规则
 
+### 6.1 规则总览
+
 | 优先级 | 规则 | 触发条件 | 场景 |
 |--------|------|---------|------|
-| P1 | 功能入口 | `三方卡\|制卡\|听写\|批改\|导入试卷\|自定义` | `function_entry` / `wordlist` |
+| P1 | 功能入口 | `制卡\|听写\|批改\|讲词\|词表\|导入试卷\|自定义` | `function_entry` / `wordlist` |
 | P2 | 试卷名称 | 省份+年份+考试类型（≥2个信号） | `paper_exact` / `paper_near` |
-| P3 | 同步词汇 | `同步词汇\|词汇表\|单词表\|课标词汇` | `sync_vocab` |
+| P3 | 同步词汇 | `同步词汇\|词汇表\|单词表\|课标词汇\|单词列表` | `sync_vocab` |
 | P4 | 同步课文 | `同步课文\|课文内容\|课文原文\|课文跟读` | `sync_text_structured` / `sync_text_flat` |
-| P5 | 资源类型 | `听力\|听说\|同步练习\|专项\|模拟\|阅读理解` | `listening` / `sync_practice` / `special_topic` / `mock_exam` 等 |
-| P6 | 综合搜索 | `Unit N\|Unit N 资源\|资源\|综合\|练习` | `unit1_comprehensive` |
-| P7 | 模糊搜索 | `有没有\|帮我找\|有什么\|短查询(≤3字)` | `unit1_comprehensive` |
-| P8 | 无法识别 | 以上均不匹配 | `unrecognizable` |
+| P5 | 资源类型（11种） | 见下表 | 见下表 |
+| P6 | Unit N + 类型组合 | `Unit N` / `第N单元` + 类型词（听力/词汇/语法/写作/阅读/课文/模拟/真题/专项） | 按类型词分发 |
+| P7 | 模糊搜索 | `有没有\|帮我找\|有什么` / 中文短查询(2-4字) | `unit1_comprehensive` |
+| P8 | 无法识别 | 以上均不匹配 / 纯数字 / 纯符号 / 空输入 | `unrecognizable` |
+
+### 6.2 P5 资源类型——11种子规则
+
+| # | 规则 | 关键词（正则） | 场景 |
+|---|------|---------|------|
+| 5a | 写作练习 | `写作练习\|作文\|应用文\|读后续写\|书面表达` | S16 `writing` |
+| 5b | 词汇练习 | `词汇练习\|单词\|单词拼写\|词形变化\|单词默写\|单词听写` | S17 `vocab_practice` |
+| 5c | 语法练习 | `语法\|语法填空\|完形填空\|选词填空\|短文填空\|单句语法` | S19 `grammar` |
+| 5d | 阅读练习 | `阅读理解\|阅读练习\|阅读七选五\|任务型阅读\|英语阅读` | S18 `reading` |
+| 5e | 听力模拟 | `听力模拟\|听力模考` | S21 `listening_mock` |
+| 5f | 听力搜索 | `^听力$\|听力资源\|听力练习\|听力训练\|听力素材`（排除"听说"） | S5 `listening` |
+| 5g | 听说搜索 | `听说练习\|听说训练\|听说资源\|听说` | S5 `listening` / S6 `no_speaking_region` |
+| 5h | 同步练习 | `同步练习\|同步训练\|单元练习` | S7 `sync_practice` |
+| 5i | 真题+区域 | `^真题$\|真题资源\|真题库\|历年真题\|区域精选` | S20 `real_exam` |
+| 5j | 专项搜索 | `专项\|专项训练\|…专项` | S8 `special_topic` |
+| 5k | 模拟+考试 | `模拟\|期末\|期中\|摸底\|单元检测\|阶段测试\|考前冲刺` | S9 `mock_exam` |
+| 5l | 配音+视频 | `配音\|同步视频\|视频资源\|趣味配音` | S1 `comprehensive` |
+
+### 6.3 P6 Unit N + 具体类型组合
+
+当查询中包含单元编号（`Unit N` / `第N单元` / `单元`）且同时包含类型词时，按类型词分发到对应场景：
+
+| 类型词 | 分发场景 |
+|--------|---------|
+| 听力、听说 | S5 `listening` |
+| 词汇、单词、词表 | S17 `vocab_practice` |
+| 语法 | S19 `grammar` |
+| 写作、作文 | S16 `writing` |
+| 阅读 | S18 `reading` |
+| 课文 | S3 `sync_text_structured` |
+| 模拟、检测、测试、考试 | S9 `mock_exam` |
+| 真题 | S20 `real_exam` |
+| 专项 | S8 `special_topic` |
+| 无类型词 | S1 `unit1_comprehensive` |
+
+### 6.4 边界处理
+
+| 输入类型 | 处理 |
+|---------|------|
+| 空输入 | → P8 unrecognizable |
+| 纯数字（如 `123`） | → P8 unrecognizable |
+| 纯特殊符号（如 `!!!`） | → P8 unrecognizable |
+| 单个英文字母 | → P8 unrecognizable |
+| 单个英文单词（如 `welcome`） | 引擎返回 unrecognizable → SearchPage 层注入「讲词」FunctionEntry |
 
 ---
 
@@ -444,7 +518,7 @@ const ctx: SearchContext = {
 
 ---
 
-## 12. 15 个 Mock 搜索场景
+## 12. 搜索场景一览（21 种）
 
 | 场景ID | 场景函数 | 说明 |
 |--------|---------|------|
@@ -456,13 +530,19 @@ const ctx: SearchContext = {
 | S6 | `no_speaking_in_region` | 听说练习无结果（地区不支持） |
 | S7 | `sync_practice` | 同步练习搜索 |
 | S8 | `special_topic` | 专项练习搜索 |
-| S9 | `mock_exam` | 模拟题/单元检测/阶段测试 |
+| S9 | `mock_exam` | 模拟题/单元检测/阶段测试/考前冲刺/期末考试 |
 | S10 | `paper_exact` | 试卷精确匹配（如山东2024中考） |
 | S11 | `paper_near` | 试卷近似匹配 |
-| S12 | `function_entry` | 功能入口（制卡/听写/批改等） |
+| S12 | `function_entry` | 功能入口（制卡/听写/批改/讲词等） |
 | S13 | `wordlist` | 词表功能入口 |
 | S14 | `no_results_alternatives` | 无结果替代推荐 |
 | S15 | `unrecognizable` | 完全无法识别 |
+| S16 | `writing` | **新增** 写作练习搜索 |
+| S17 | `vocab_practice` | **新增** 词汇练习搜索 |
+| S18 | `reading` | **新增** 阅读练习搜索 |
+| S19 | `grammar` | **新增** 语法练习搜索 |
+| S20 | `real_exam` | **新增** 真题独立搜索 |
+| S21 | `listening_mock` | **新增** 听力模拟搜索 |
 
 ---
 
