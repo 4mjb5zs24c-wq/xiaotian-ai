@@ -1,0 +1,1119 @@
+{
+  "classId": "class-2023级A11班",
+  "className": "2023级A11班",
+  "unitId": "real-data",
+  "unitName": "平台真实数据",
+  "timeRange": "30d",
+  "updatedAt": "2026-06-11 11:30",
+  "summary": "2023级A11班 共 37 名学生，6447 条应用文批改记录，平均 66.3 分。主要问题「词汇表达弱 / 用词单一」(45.9%)，薄弱学生 3 人。",
+  "metrics": {
+    "averageScore": 66.3,
+    "averageLevel": "B",
+    "reviewedEssayCount": 6447,
+    "mainProblemType": "词汇表达弱 / 用词单一",
+    "weakStudentCount": 3,
+    "excellentEssayCount": 10
+  },
+  "problemTypes": [
+    {
+      "id": "pt-vocabulary_weak",
+      "type": "vocabulary_weak",
+      "label": "词汇表达弱 / 用词单一",
+      "borderColor": "#8e7cc3",
+      "bgColor": "#f6f0fc",
+      "percent": 45.9,
+      "affectedStudentCount": 37,
+      "typicalPerformance": "(2956/6447)",
+      "aiReason": "共2956次，占比45.9%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "Information Technology is the basis of almost all modern institutions, including",
+        "Choosing it not only perfectly fit your habit of coding, but also provide you a ",
+        "Choosing it can help turning environmental challenges into opportunities, like d"
+      ]
+    },
+    {
+      "id": "pt-language_accuracy",
+      "type": "language_accuracy",
+      "label": "语言准确性弱 / 语法错误多",
+      "borderColor": "#7b9cd6",
+      "bgColor": "#f0f4fc",
+      "percent": 41.5,
+      "affectedStudentCount": 37,
+      "typicalPerformance": "(2673/6447)",
+      "aiReason": "共2673次，占比41.5%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "I'm delighted to hear that you're applying for the university.",
+        "As the AI rises, here are some of my suggestions.",
+        "Choosing it not only perfectly fit your habit of coding, but also provide you a "
+      ]
+    },
+    {
+      "id": "pt-structure_unclear",
+      "type": "structure_unclear",
+      "label": "结构不清 / 段落组织弱",
+      "borderColor": "#f0a060",
+      "bgColor": "#fef8f0",
+      "percent": 8.1,
+      "affectedStudentCount": 36,
+      "typicalPerformance": "(519/6447)",
+      "aiReason": "共519次，占比8.1%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "the one who truly understand human The one who succeed in the future must be e r",
+        "With the rising of AI technology, it's true that some careers may be replaced an",
+        "You may question whether math works toward the trend of the new era as a basic s"
+      ]
+    },
+    {
+      "id": "pt-format_issue",
+      "type": "format_issue",
+      "label": "格式规范问题 / 应用文格式",
+      "borderColor": "#9ab3cc",
+      "bgColor": "#f5f7fa",
+      "percent": 4.6,
+      "affectedStudentCount": 37,
+      "typicalPerformance": "(299/6447)",
+      "aiReason": "共299次，占比4.6%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "Given that you're good at coding, why not choose information technology as your ",
+        "the one who truly understand human The one who succeed in the future must be e r",
+        "first, Math is a fundamental subject that lay the ground for almost every scienc"
+      ]
+    }
+  ],
+  "highFrequencyIssues": [
+    {
+      "problemType": "vocabulary_weak",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Information Technology is the basis of almost all modern institutions, including the rising Al.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 Al 换成  AI ",
+          "improvedExample": "Information Technology is the basis of almost all modern institutions, including the rising AI.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Choosing it not only perfectly fit your habit of coding, but also provide you a big chance to catch up the AI era, making it easier for job choosing.",
+          "issueExplanation": "固定搭配错误：固定搭配错误",
+          "revisionSuggestion": "建议在 the 之前插入 with",
+          "improvedExample": "Choosing it not only perfectly fits your habit of coding, but also provides you a big chance to catch up with the AI era, making it easier to choose a job.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Choosing it can help turning environmental challenges into opportunities, like discovering new clean powers and finding new ways to enhance the use rate of the power, not only protect the world, but a",
+          "issueExplanation": "固定搭配错误：固定搭配错误",
+          "revisionSuggestion": "建议把 turning 换成  turn ",
+          "improvedExample": "Choosing it can help turn environmental challenges into opportunities, like discovering new clean energy sources and finding new ways to enhance the utilization rate of power, not only protecting the ",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Choosing it can help turning environmental challenges into opportunities, like discovering new clean powers and finding new ways to enhance the use rate of the power, not only protect the world, but a",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 powers 换成  energy sources ",
+          "improvedExample": "Choosing it can help turn environmental challenges into opportunities, like discovering new clean energy sources and finding new ways to enhance the utilization rate of power, not only protecting the ",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754578",
+          "studentName": "张继朗",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Studying literaoture is quiet a wise choice.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 literaoture 换成  literature ",
+          "improvedExample": "Studying literature is quite a wise choice.",
+          "score": 78.134094,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754578",
+          "studentName": "张继朗",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Studying literaoture is quiet a wise choice.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 quiet 换成  quite ",
+          "improvedExample": "Studying literature is quite a wise choice.",
+          "score": 78.134094,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754569",
+          "studentName": "杨承杰",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Greetings! I've recently heard that you are puzzled about whatth changes can the AI bring in different ocupations.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 whatth changes can the AI 换成  what changes AI can ",
+          "improvedExample": "Greetings! I've recently heard that you are puzzled about what changes AI can bring in different occupations.",
+          "score": 69.95602,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754569",
+          "studentName": "杨承杰",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Greetings! I've recently heard that you are puzzled about whatth changes can the AI bring in different ocupations.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 ocupations 换成  occupations ",
+          "improvedExample": "Greetings! I've recently heard that you are puzzled about what changes AI can bring in different occupations.",
+          "score": 69.95602,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754569",
+          "studentName": "杨承杰",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "I strongly suggest you to choose to study technoligical innovative major which contains new materials, cutting-edged phsical theory or even arititicial intelligence.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 technoligical 换成  a technological ",
+          "improvedExample": "I strongly suggest you choose to study a technological innovative major which contains new materials, cutting-edge physical theory, or even artificial intelligence.",
+          "score": 69.95602,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24754569",
+          "studentName": "杨承杰",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "I strongly suggest you to choose to study technoligical innovative major which contains new materials, cutting-edged phsical theory or even arititicial intelligence.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 edged phsical 换成  edge physical ",
+          "improvedExample": "I strongly suggest you choose to study a technological innovative major which contains new materials, cutting-edge physical theory, or even artificial intelligence.",
+          "score": 69.95602,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "language_accuracy",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "I'm delighted to hear that you're applying for the university.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议删除  the ",
+          "improvedExample": "I'm delighted to hear that you're applying for university.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "As the AI rises, here are some of my suggestions.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议删除  the ",
+          "improvedExample": "As AI rises, here are some of my suggestions.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Choosing it not only perfectly fit your habit of coding, but also provide you a big chance to catch up the AI era, making it easier for job choosing.",
+          "issueExplanation": "主谓一致错误：主谓一致错误",
+          "revisionSuggestion": "建议把 fit 换成  fits ",
+          "improvedExample": "Choosing it not only perfectly fits your habit of coding, but also provides you a big chance to catch up with the AI era, making it easier to choose a job.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Choosing it not only perfectly fit your habit of coding, but also provide you a big chance to catch up the AI era, making it easier for job choosing.",
+          "issueExplanation": "主谓一致错误：主谓一致错误",
+          "revisionSuggestion": "建议把 provide 换成  provides ",
+          "improvedExample": "Choosing it not only perfectly fits your habit of coding, but also provides you a big chance to catch up with the AI era, making it easier to choose a job.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Choosing it not only perfectly fit your habit of coding, but also provide you a big chance to catch up the AI era, making it easier for job choosing.",
+          "issueExplanation": "非谓语动词错误：动词不定式错误",
+          "revisionSuggestion": "建议把 for job choosing 换成  to choose a job ",
+          "improvedExample": "Choosing it not only perfectly fits your habit of coding, but also provides you a big chance to catch up with the AI era, making it easier to choose a job.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Additionally, no matter how rapidly the job choosing change, the environmental issues are still there.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议删除  the ",
+          "improvedExample": "Additionally, no matter how rapidly job choices change, environmental issues are still there.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Additionally, no matter how rapidly the job choosing change, the environmental issues are still there.",
+          "issueExplanation": "词性误用：词性误用",
+          "revisionSuggestion": "建议把 choosing 换成  choices ",
+          "improvedExample": "Additionally, no matter how rapidly job choices change, environmental issues are still there.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Additionally, no matter how rapidly the job choosing change, the environmental issues are still there.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议删除  the ",
+          "improvedExample": "Additionally, no matter how rapidly job choices change, environmental issues are still there.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "So the major of environment protecting is also a choice.",
+          "issueExplanation": "词性误用：词性误用",
+          "revisionSuggestion": "建议把 environment protecting 换成  environmental protection ",
+          "improvedExample": "So the major of environmental protection is also a choice.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Every time we use AI, data centers consume huge amount of electricity.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议在 huge 之前插入 a",
+          "improvedExample": "Every time we use AI, data centers consume a huge amount of electricity.",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "structure_unclear",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754578",
+          "studentName": "张继朗",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "the one who truly understand human The one who succeed in the future must be e ru",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议把 The one who succeed in the future must be e ru 换成  and the one who succeeds in the future must be erudite. ",
+          "improvedExample": "The one who truly understands humans and the one who succeeds in the future must be erudite.",
+          "score": 78.134094,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754581",
+          "studentName": "张梓轩",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "With the rising of AI technology, it's true that some careers may be replaced and disappeared.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 disappeared 换成  disappear ",
+          "improvedExample": "With the rise of AI technology, it's true that some careers may be replaced and disappear.",
+          "score": 80.232124,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754563",
+          "studentName": "王臻易",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "You may question whether math works toward the trend of the new era as a basic subject, and whether the occupation option is clear.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 occupation option is 换成  occupational options are ",
+          "improvedExample": "You may question whether math works toward the trend of the new era as a basic subject, and whether the occupational options are clear.",
+          "score": 83.289314,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754562",
+          "studentName": "王雨阳",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "I recommend you the computer programing subject Frouths subject, you can learn how to code numbers, improve the coupulation of computers and designing apps to benefits people's life.",
+          "issueExplanation": "句子结构错误：错误使用逗号连接两个完整句子",
+          "revisionSuggestion": "建议把 , you 换成  . You ",
+          "improvedExample": "I recommend the computer programming subject, Fourth subject. You can learn how to code, improve the computation of computers, and design apps to benefit people's lives.",
+          "score": 62.427505,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754562",
+          "studentName": "王雨阳",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "I recommend you the computer programing subject Frouths subject, you can learn how to code numbers, improve the coupulation of computers and designing apps to benefits people's life.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 and designing 换成  , and design ",
+          "improvedExample": "I recommend the computer programming subject, Fourth subject. You can learn how to code, improve the computation of computers, and design apps to benefit people's lives.",
+          "score": 62.427505,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754547",
+          "studentName": "梁紫书",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "The incoporated subject using AI as gnassistaint for another subject's study.",
+          "issueExplanation": "句子结构错误：误用非谓语动词作谓语",
+          "revisionSuggestion": "建议把 subject using 换成  subjects use ",
+          "improvedExample": "The incorporated subjects use AI as assistants for another subject's study.",
+          "score": 42.990322,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754558",
+          "studentName": "童雨歆",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "There're my primary thought for your reference.",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议把 thought 换成  thoughts ",
+          "improvedExample": "Here are my primary thoughts for your reference.",
+          "score": 70.00435,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754558",
+          "studentName": "童雨歆",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Above all, it's just my personal perspective, I sicerely hope you could find your suitable expertise and keep chasing ar dream!",
+          "issueExplanation": "句子结构错误：错误使用逗号连接两个完整句子",
+          "revisionSuggestion": "建议把 , 换成  . ",
+          "improvedExample": "Above all, it's just my personal perspective. I sincerely hope you could find your suitable major and keep chasing your dream!",
+          "score": 70.00435,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754544",
+          "studentName": "黄唯",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Greetings! It's common to feel doubts when facing major decision with the here are which be helpful rise of AI, and my suggestions may for you.",
+          "issueExplanation": "句子结构错误：双谓语错误",
+          "revisionSuggestion": "建议删除  here are which be helpful ",
+          "improvedExample": "Greetings! It's common to feel doubts when facing a major decision with the rise of AI, and here are some suggestions which may be helpful for you.",
+          "score": 61.938335,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24754544",
+          "studentName": "黄唯",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Greetings! It's common to feel doubts when facing major decision with the here are which be helpful rise of AI, and my suggestions may for you.",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议把 my 换成  here are some ",
+          "improvedExample": "Greetings! It's common to feel doubts when facing a major decision with the rise of AI, and here are some suggestions which may be helpful for you.",
+          "score": 61.938335,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "format_issue",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754566",
+          "studentName": "许晨辉",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Given that you're good at coding, why not choose information technology as your major?",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 information technology 换成  Information Technology ",
+          "improvedExample": "Given that you're good at coding, why not choose Information Technology as your major?",
+          "score": 73.47744,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754578",
+          "studentName": "张继朗",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "the one who truly understand human The one who succeed in the future must be e ru",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 the 换成  The ",
+          "improvedExample": "The one who truly understands humans and the one who succeeds in the future must be erudite.",
+          "score": 78.134094,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754535",
+          "studentName": "陈可悦",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "first, Math is a fundamental subject that lay the ground for almost every science and technology, so the requirement for Math professionals will keep increasing and won't be replaced.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 first 换成  First ",
+          "improvedExample": "First, Math is a fundamental subject that lays the ground for almost every science and technology, so the requirement for Math professionals will keep increasing and won't be replaced.",
+          "score": 83.83934,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754535",
+          "studentName": "陈可悦",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "What's more, studying Math can improve your logical and critical thinking abilities profoundly, which are exactly key abilities needed in the future and can be expanded to other fields:",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议把 : 换成  . ",
+          "improvedExample": "What's more, studying Math can improve your logical and critical thinking abilities profoundly, which are exactly the key abilities needed in the future and can be expanded to other fields.",
+          "score": 83.83934,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754574",
+          "studentName": "杨晓正",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Also, studying Psychology reinforces your ability of properly interacting no matter with patients or with customers, so you can apply your intellectual ability in various fields.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议把 interacting 换成  , ",
+          "improvedExample": "Also, studying Psychology reinforces your ability to interact properly, no matter with patients or customers, so you can apply your intellectual ability in various fields.",
+          "score": 77.10708,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754565",
+          "studentName": "徐一丁",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "programming r might not suit.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 programming r might not suit 换成  Programming might not suit you ",
+          "improvedExample": "Programming might not suit you.",
+          "score": 76.14919,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754570",
+          "studentName": "杨恩琪",
+          "essayTitle": "4月29日 英语测练",
+          "taskName": "4月29日 英语测练",
+          "writingType": "practical",
+          "originalText": "Last time you referred to your concerns and confusion about the impact AI has on job opportunities.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 you 之前插入 ,",
+          "improvedExample": "Last time, you referred to your concerns and confusion about the impact AI has on job opportunities.",
+          "score": 77.95075,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754558",
+          "studentName": "童雨歆",
+          "essayTitle": "北师大实验中学高三一模冲刺练习",
+          "taskName": "北师大实验中学高三一模冲刺练习",
+          "writingType": "practical",
+          "originalText": "I'm thrilled to tell you The BPAFFc will initiate a nterational video video collection event focusing on \"New technology and New life.\"",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 The BPAFFc 换成  the BPAFFC ",
+          "improvedExample": "I'm thrilled to tell you the BPAFFC will initiate an international video collection event focusing on \"New Technology and New Life.\"",
+          "score": 64.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754558",
+          "studentName": "童雨歆",
+          "essayTitle": "北师大实验中学高三一模冲刺练习",
+          "taskName": "北师大实验中学高三一模冲刺练习",
+          "writingType": "practical",
+          "originalText": "I'm thrilled to tell you The BPAFFc will initiate a nterational video video collection event focusing on \"New technology and New life.\"",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 technology 换成  Technology ",
+          "improvedExample": "I'm thrilled to tell you the BPAFFC will initiate an international video collection event focusing on \"New Technology and New Life.\"",
+          "score": 64.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24754558",
+          "studentName": "童雨歆",
+          "essayTitle": "北师大实验中学高三一模冲刺练习",
+          "taskName": "北师大实验中学高三一模冲刺练习",
+          "writingType": "practical",
+          "originalText": "I'm thrilled to tell you The BPAFFc will initiate a nterational video video collection event focusing on \"New technology and New life.\"",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 life 换成  Life ",
+          "improvedExample": "I'm thrilled to tell you the BPAFFC will initiate an international video collection event focusing on \"New Technology and New Life.\"",
+          "score": 64.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    }
+  ],
+  "weakStudents": [
+    {
+      "id": "24754571",
+      "name": "杨润禾",
+      "averageScore": 51.9,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 60.4
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 27.5
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 8.2
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 3.8
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 75.34931,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.34931,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.34931,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.34931,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.34931,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754547",
+      "name": "梁紫书",
+      "averageScore": 53.3,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 58.2
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 30.2
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 6.5
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 5.1
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 42.990322,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 42.990322,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 42.990322,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 42.990322,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 42.990322,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754540",
+      "name": "高东辰",
+      "averageScore": 54.9,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 52.0
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 41.1
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 4.6
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 2.3
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 59.45359,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 59.45359,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 59.45359,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 59.45359,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 59.45359,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    }
+  ],
+  "excellentWritings": [
+    {
+      "id": "ew-754542",
+      "studentId": "24754542",
+      "studentName": "郭晨曦",
+      "essayTitle": "丰台区2025～2026学年度第一学期期末练习 重练",
+      "taskName": "丰台区2025～2026学年度第一学期期末练习 重练",
+      "writingType": "practical",
+      "score": 90.0,
+      "level": "A",
+      "highlights": "得分90.0分，含佳句",
+      "excerpt": "{Becoming a Better Self\\nI'm writing to contribute to the \\\"Becoming a Better Self\\\" activity. I'd like to share my understanding and practice about the theme.\\nIn my opinion, \\\"becoming a better self\\\" means becoming a well-rounded person, which consists of two parts: a rational brain and a healthy body.\\nTo become a better self, I read philosophy books and study science papers every day. By delving into these works, I not only acquire ample knowledge but also fuel my curiosity and improve crit",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754539",
+      "studentId": "24754539",
+      "studentName": "翟子萱",
+      "essayTitle": "【开学摸底】中国人的日常智慧",
+      "taskName": "【开学摸底】中国人的日常智慧",
+      "writingType": "practical",
+      "score": 87.0,
+      "level": "A",
+      "highlights": "得分87.0分，含佳句",
+      "excerpt": "{I'm glad to know your club is going to hold a sharing activity on the theme of \\\"Wisdom in Chinese Daily Routines.\\\" Here are two representative cases.\\n\\nFirst, there is a well-known saying in China: \\\"Take a hundred steps after a meal, and you'll live to ninety-nine.\\\" This reflects the common habit of taking a walk after meals. In the afternoon, you can see people of all ages walking in schools, around office buildings, and in parks. This practice helps digestion and promotes health, showing",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754551",
+      "studentId": "24754551",
+      "studentName": "欧阳燧",
+      "essayTitle": "4月22日 英语测练",
+      "taskName": "4月22日 英语测练",
+      "writingType": "practical",
+      "score": 86.96486,
+      "level": "A",
+      "highlights": "得分86.96486分",
+      "excerpt": "{Dear Jim,\\n\\nI am delighted to hear that you are going to participate in the UN Youth Forum entitled \\\"Skills Needed for a Sustainable Future,\\\" and I'd like to share my ideas in reply to your consultation about the speech content.\\n\\nFrom my perspective, one of the crucial skills needed for a sustainable future is critical thinking. AI technology is playing an increasingly important role in our lives, but it sometimes provides false information that can mislead us. Therefore, critical thinking",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754563",
+      "studentId": "24754563",
+      "studentName": "王臻易",
+      "essayTitle": "5月21日 英语测练",
+      "taskName": "5月21日 英语测练",
+      "writingType": "practical",
+      "score": 85.476295,
+      "level": "A",
+      "highlights": "得分85.476295分",
+      "excerpt": "{Dear Jim,\\n\\nI'm sorry to hear that you were criticized for using AI tools in your writing homework, and it's normal to feel upset. In my opinion, relying entirely on AI to finish your homework is inappropriate because it means you miss the chance to think deeply and improve your own writing skills.\\n\\nHowever, I suggest you use AI tools in a smart way. For example, you can learn some elegant phrases or interesting examples from AI to enrich your essays, which can broaden your knowledge and hel",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754573",
+      "studentId": "24754573",
+      "studentName": "杨惟翰",
+      "essayTitle": "丰台区2025～2026学年度第一学期期末练习 重练",
+      "taskName": "丰台区2025～2026学年度第一学期期末练习 重练",
+      "writingType": "practical",
+      "score": 85.0,
+      "level": "A",
+      "highlights": "得分85.0分，含佳句",
+      "excerpt": "{Becoming a Better Self\\nWhen it comes to \\\"becoming a better self,\\\" my understanding goes beyond higher scores or a longer list of achievements. To me, it's an inward journey toward self-discovery. It's about understanding my genuine interests, facing my weaknesses, and knowing what I really want in life. This self-awareness is the foundation of real growth.\\nTo walk this path, I've started two simple practices. First, I keep a reflective journal. Every weekend, I write down one thing I did we",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754542",
+      "studentId": "24754542",
+      "studentName": "郭晨曦",
+      "essayTitle": "5月23日 英语测练",
+      "taskName": "5月23日 英语测练",
+      "writingType": "practical",
+      "score": 84.51757,
+      "level": "A",
+      "highlights": "得分84.51757分",
+      "excerpt": "{Warm greetings! I'm writing to reply to your questions about my participation in the \\\"Painting China with Intelligence\\\" technology-enabled original works contest. I'd like to share more details with you.\\n\\nMy artwork has two parts. On one side, I drew the scene of Shougang Park, showing Olympic venues transformed from old steel mills and newly built public green spaces where children play and elderly residents exercise. This part reflects China's efforts toward a sustainable future and its g",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754542",
+      "studentId": "24754542",
+      "studentName": "郭晨曦",
+      "essayTitle": "4月29日 英语测练",
+      "taskName": "4月29日 英语测练",
+      "writingType": "practical",
+      "score": 84.298004,
+      "level": "A",
+      "highlights": "得分84.298004分",
+      "excerpt": "{Dear Jim,\\n\\nI understand that you are confused about choosing a major because of the changes in employment caused by the rise of artificial intelligence. I am glad to give you some advice.\\n\\nI recommend that you choose law as your major. With the popularity of AI, moral and legal issues caused by its use have become common. Studying law will help you gain relevant knowledge to solve these social problems and contribute to a fair society. It will also prepare you to become a professional lawye",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754541",
+      "studentId": "24754541",
+      "studentName": "高子涵",
+      "essayTitle": "丰台区2025～2026学年度第一学期期末练习 重练",
+      "taskName": "丰台区2025～2026学年度第一学期期末练习 重练",
+      "writingType": "practical",
+      "score": 84.0,
+      "level": "A",
+      "highlights": "得分84.0分",
+      "excerpt": "{Becoming a Better Self\\nBecoming a better self is important for each of us. Here are my understanding and practice.\\nTo me, becoming a better self means owning a rational mind, which is closely related to my academic performance. In addition, in a fast-paced world pressured by external standards, we tend to neglect our mental health. That's why I think it is vital to include self-care as a part of becoming a better self.\\nTo develop a rational mind, I not only actively interact with my teachers",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754572",
+      "studentId": "24754572",
+      "studentName": "杨婉桐",
+      "essayTitle": "丰台区2025～2026学年度第一学期期末练习 重练",
+      "taskName": "丰台区2025～2026学年度第一学期期末练习 重练",
+      "writingType": "practical",
+      "score": 84.0,
+      "level": "A",
+      "highlights": "得分84.0分，含佳句",
+      "excerpt": "{Becoming a Better Self\\nLife is a process of going upstairs little by little. So becoming a better self is a core task in our way to growing up. Becoming a better version of ourselves doesn't mean winning awards or outperforming others, as everyone grows at their own pace and our true goal is to improve upon our past selves. Therefore, we need to concentrate on our own progress and strive to maximize it.\\n\\nHere are some ways that I use in my life to become a better self. First, I regularly ref",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754560",
+      "studentId": "24754560",
+      "studentName": "王明辉",
+      "essayTitle": "丰台区2025～2026学年度第一学期期末练习 重练",
+      "taskName": "丰台区2025～2026学年度第一学期期末练习 重练",
+      "writingType": "practical",
+      "score": 84.0,
+      "level": "A",
+      "highlights": "得分84.0分",
+      "excerpt": "{Becoming a Better Self\\n\\nI'm glad to share my view on Becoming a Better Self. To me, it not only means personal excellence but also includes a sense of social responsibility.\\n\\nTo become a well-rounded person, I make efforts to facilitate my academic growth and improve my mental and physical health. By tackling tasks in learning, I gain ample knowledge and build resilience and perseverance, which represent inner strength. Physical activities help me stay physically and mentally balanced, allo",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    }
+  ],
+  "recommendedResources": [
+    {
+      "id": "res-w-1",
+      "title": "应用文写作模板训练",
+      "resourceType": "writing_practice",
+      "tags": [
+        "写作",
+        "应用文"
+      ],
+      "difficulty": "medium",
+      "grade": "高二",
+      "recommendReason": "针对词汇表达弱 / 用词单一设计",
+      "canPreview": true,
+      "canAssign": true,
+      "canAddToPaperBasket": true
+    }
+  ],
+  "generatedSamples": [
+    {
+      "id": "gs-1",
+      "level": "basic",
+      "title": "基础版 — 高东辰的作文",
+      "content": "{Greetings! Hearing about your interest in our school's \\\"Most Respected Laborer\\\" exhibition, I'm more than happy to tell you about it.\\n\\nThere were various works in the show, including photography, paintings, and handmade crafts. Some photos focused on small scenes in our daily life. For example, I saw a picture showing an old cleaner bending his body to sweep dust on the wall, with sunlight gently touching his shoulders. It was so warm and touching. Additionally, there were some bright paintings and handicrafts, such as a painting of a security guard standing behind the school gate and a painting about volunteers working hard in the sun.\\n\\nThese works impressed me most. I learned that many people are working hard for us beyond our attention. Fortunately, there are still grateful hearts among us; they respect and record the laborers, working hard to pass warmth to a larger group of people.\\n\\nWhat do you think about it? I'm looking forward to your reply.}",
+      "highlights": "得分49.0分 | 适合基础薄弱学生参考基本结构",
+      "suitableFor": "20分以下",
+      "editable": true
+    },
+    {
+      "id": "gs-2",
+      "level": "improved",
+      "title": "提升版 — 梁紫书的作文",
+      "content": "{Dear Jim,\\n\\nI am excited to tell you that BPAFFC is going to hold an international short video collection activity with the theme \\\"New Technology, New Life.\\\" I want to invite you to join me in creating a video together.\\n\\nThis activity is for international youth to show how new technology changes our lives. Since we live in different places, your participation will provide a different perspective and make our video more interesting. The video should express our opinions and experiences about technology.\\n\\nI have some initial ideas. AI is becoming very popular worldwide and is changing our lives. We can shoot how we use AI in our daily learning, how it answers our personal questions, and helps us understand knowledge better. Also, new technology is widely used in cities. I suggest we film some high-tech places in your city and mine, showing how technology makes life easier. This fits well with the theme.\\n\\nWhat do you think? Let's discuss and plan how to share the work and make the video together. I look forward to your reply.\\n\\nBest wishes,\\nLi Hua}",
+      "highlights": "得分67.0分 | 展示中等水平如何组织内容和句式",
+      "suitableFor": "20-25分",
+      "editable": true
+    },
+    {
+      "id": "gs-3",
+      "level": "excellent",
+      "title": "优秀版 — 郭晨曦的作文",
+      "content": "{Becoming a Better Self\\nI'm writing to contribute to the \\\"Becoming a Better Self\\\" activity. I'd like to share my understanding and practice about the theme.\\nIn my opinion, \\\"becoming a better self\\\" means becoming a well-rounded person, which consists of two parts: a rational brain and a healthy body.\\nTo become a better self, I read philosophy books and study science papers every day. By delving into these works, I not only acquire ample knowledge but also fuel my curiosity and improve critical thinking, shaping a rational mind. Besides, I insist on jogging every day to build a strong body. Having good health is highly related to becoming a better self because your body is the only tangible carrier of yourself and your life.\\nI believe becoming a better self is a lifelong pursuit, and I will keep striving to be the best version of myself.}",
+      "highlights": "得分90.0分，含佳句 | 展示高分作文的表达水平",
+      "suitableFor": "25+分",
+      "editable": true
+    }
+  ],
+  "interventionRecords": []
+}

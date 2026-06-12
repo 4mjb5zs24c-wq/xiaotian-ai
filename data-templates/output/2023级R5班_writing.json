@@ -1,0 +1,1878 @@
+{
+  "classId": "class-2023级R5班",
+  "className": "2023级R5班",
+  "unitId": "real-data",
+  "unitName": "平台真实数据",
+  "timeRange": "30d",
+  "updatedAt": "2026-06-11 11:30",
+  "summary": "2023级R5班 共 34 名学生，6271 条应用文批改记录，平均 59.6 分。主要问题「词汇表达弱 / 用词单一」(45.4%)，薄弱学生 14 人。",
+  "metrics": {
+    "averageScore": 59.6,
+    "averageLevel": "C",
+    "reviewedEssayCount": 6271,
+    "mainProblemType": "词汇表达弱 / 用词单一",
+    "weakStudentCount": 14,
+    "excellentEssayCount": 10
+  },
+  "problemTypes": [
+    {
+      "id": "pt-vocabulary_weak",
+      "type": "vocabulary_weak",
+      "label": "词汇表达弱 / 用词单一",
+      "borderColor": "#8e7cc3",
+      "bgColor": "#f6f0fc",
+      "percent": 45.4,
+      "affectedStudentCount": 34,
+      "typicalPerformance": "(2846/6271)",
+      "aiReason": "共2846次，占比45.4%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "Greetings! I'm delighted to hear that you're interested in our school's activity",
+        "The first part, all the school students participated in the formal sports meetin",
+        "Everyone who made it to the podium received a well-designed medal to reward thei"
+      ]
+    },
+    {
+      "id": "pt-language_accuracy",
+      "type": "language_accuracy",
+      "label": "语言准确性弱 / 语法错误多",
+      "borderColor": "#7b9cd6",
+      "bgColor": "#f0f4fc",
+      "percent": 41.7,
+      "affectedStudentCount": 34,
+      "typicalPerformance": "(2612/6271)",
+      "aiReason": "共2612次，占比41.7%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "The first part, all the school students participated in the formal sports meetin",
+        "The first part, all the school students participated in the formal sports meetin",
+        "The whole activity made m hausted but contented."
+      ]
+    },
+    {
+      "id": "pt-structure_unclear",
+      "type": "structure_unclear",
+      "label": "结构不清 / 段落组织弱",
+      "borderColor": "#f0a060",
+      "bgColor": "#fef8f0",
+      "percent": 8.4,
+      "affectedStudentCount": 34,
+      "typicalPerformance": "(525/6271)",
+      "aiReason": "共525次，占比8.4%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "The whole activity made m hausted but contented.",
+        "5-Do you have any activity similar?",
+        "We should never let our attempt stays in fantasy, but to actually make it into r"
+      ]
+    },
+    {
+      "id": "pt-format_issue",
+      "type": "format_issue",
+      "label": "格式规范问题 / 应用文格式",
+      "borderColor": "#9ab3cc",
+      "bgColor": "#f5f7fa",
+      "percent": 4.6,
+      "affectedStudentCount": 34,
+      "typicalPerformance": "(288/6271)",
+      "aiReason": "共288次，占比4.6%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "During the first day, we stayed in our campus to play longy-rope jumping which i",
+        "Through the process of discussion people can share their thoughts and discuss to",
+        "Also it can be a process of cooperation, helping tue problem-solving more effect"
+      ]
+    }
+  ],
+  "highFrequencyIssues": [
+    {
+      "problemType": "vocabulary_weak",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Greetings! I'm delighted to hear that you're interested in our school's activity \"When sports meet youth held last week.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 sports meet youth 换成  Sports Meet Youth\" ",
+          "improvedExample": "Greetings! I'm delighted to hear that you're interested in our school's activity \"When Sports Meet Youth\" held last week.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "The first part, all the school students participated in the formal sports meeting, competing for the champions of 5 traditional sports like sprints and high jumping.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 champions 换成  championship ",
+          "improvedExample": "In the first part, all the school students participated in the formal sports meeting, competing for the championship of 5 traditional sports like sprints and high jump.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Everyone who made it to the podium received a well-designed medal to reward their strength and preserverea",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 preserverea 换成  perseverance. ",
+          "improvedExample": "Everyone who made it to the podium received a well-designed medal to reward their strength and perseverance.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "After the sports meeting, we were led to the experience section to try some sports that differ to our daily exercise.",
+          "issueExplanation": "固定搭配错误：固定搭配错误",
+          "revisionSuggestion": "建议把 to 换成  from ",
+          "improvedExample": "After the sports meeting, we were led to the experience section to try some sports that differ from our daily exercise.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "The whole activity made m hausted but contented.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 hausted 换成  exhausted ",
+          "improvedExample": "The whole activity made me exhausted but content.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Although I failed to obtain a medal in sprint, I experienced the feeling to be all in for the game and devoted to my goal.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 sprint 换成  sprinting ",
+          "improvedExample": "Although I failed to obtain a medal in sprinting, I experienced the feeling of being all in for the game and devoted to my goal.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "5-Do you have any activity similar?",
+          "issueExplanation": "表达错误：表达冗余",
+          "revisionSuggestion": "建议删除  5- ",
+          "improvedExample": "Do you have any similar activities?",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "It's vital to actively taking actions in order to solve problems.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 taking 换成  take ",
+          "improvedExample": "It's vital to actively take actions in order to solve problems.",
+          "score": 63.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Though it's important to analyze the problems in our minds, putting your efforts into real life actions is the only way to test whether your assumption is effective or not.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把   换成  - ",
+          "improvedExample": "Though it's important to analyze the problems in our minds, putting your efforts into real-life actions is the only way to test whether your assumption is effective or not.",
+          "score": 63.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "We should never let our attempt stays in fantasy, but to actually make it into reality without the fear of making mistakes.",
+          "issueExplanation": "表达错误：表达冗余",
+          "revisionSuggestion": "建议删除  to ",
+          "improvedExample": "We should never let our attempt stay in fantasy, but actually make it into reality without the fear of making mistakes.",
+          "score": 63.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "language_accuracy",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "The first part, all the school students participated in the formal sports meeting, competing for the champions of 5 traditional sports like sprints and high jumping.",
+          "issueExplanation": "词法错误：介词错误",
+          "revisionSuggestion": "建议把 The 换成  In the ",
+          "improvedExample": "In the first part, all the school students participated in the formal sports meeting, competing for the championship of 5 traditional sports like sprints and high jump.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "The first part, all the school students participated in the formal sports meeting, competing for the champions of 5 traditional sports like sprints and high jumping.",
+          "issueExplanation": "词性误用：词性误用",
+          "revisionSuggestion": "建议把 jumping 换成  jump ",
+          "improvedExample": "In the first part, all the school students participated in the formal sports meeting, competing for the championship of 5 traditional sports like sprints and high jump.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "The whole activity made m hausted but contented.",
+          "issueExplanation": "词性误用：词性误用",
+          "revisionSuggestion": "建议把 contented 换成  content ",
+          "improvedExample": "The whole activity made me exhausted but content.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Although I failed to obtain a medal in sprint, I experienced the feeling to be all in for the game and devoted to my goal.",
+          "issueExplanation": "非谓语动词错误：动名词错误",
+          "revisionSuggestion": "建议把 to be 换成  of being ",
+          "improvedExample": "Although I failed to obtain a medal in sprinting, I experienced the feeling of being all in for the game and devoted to my goal.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Additionally, I tried to play tennis for the first time, but it has become my new passion these days.",
+          "issueExplanation": "非谓语动词错误：动名词错误",
+          "revisionSuggestion": "建议把 to play 换成  playing ",
+          "improvedExample": "Additionally, I tried playing tennis for the first time, and it has become my new passion these days.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Additionally, I tried to play tennis for the first time, but it has become my new passion these days.",
+          "issueExplanation": "词法错误：连词错误",
+          "revisionSuggestion": "建议把 but 换成  and ",
+          "improvedExample": "Additionally, I tried playing tennis for the first time, and it has become my new passion these days.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24747517",
+          "studentName": "刘琨奕",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "I'm so thrilled to hear that you are interest in our \"Sport Meet Youth\" event.",
+          "issueExplanation": "词性误用：词性误用",
+          "revisionSuggestion": "建议把 interest 换成  interested ",
+          "improvedExample": "I'm so thrilled to hear that you are interested in our \"Sport Meet Youth\" event.",
+          "score": 13.333334,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24747545",
+          "studentName": "周泽睿",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "It included basketball shooting challenge, 3V3 football match, and so on.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议在 basketball 之前插入 a",
+          "improvedExample": "It included a basketball shooting challenge, a 3v3 football match, and so on.",
+          "score": 58.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24747545",
+          "studentName": "周泽睿",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "It included basketball shooting challenge, 3V3 football match, and so on.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议把 3V3 换成  a 3v3 ",
+          "improvedExample": "It included a basketball shooting challenge, a 3v3 football match, and so on.",
+          "score": 58.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24747545",
+          "studentName": "周泽睿",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "The games weren't big, but bring a lot of happiness and laughters arosed our playground.",
+          "issueExplanation": "单复数错误：单复数错误",
+          "revisionSuggestion": "建议把 laughters 换成  laughter ",
+          "improvedExample": "The games weren't big, but brought a lot of happiness and laughter across our playground.",
+          "score": 58.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "structure_unclear",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "The whole activity made m hausted but contented.",
+          "issueExplanation": "句子结构错误：宾语错误",
+          "revisionSuggestion": "建议把 m 换成  me ",
+          "improvedExample": "The whole activity made me exhausted but content.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "5-Do you have any activity similar?",
+          "issueExplanation": "句子结构错误：语序错误",
+          "revisionSuggestion": "建议把 activity similar 换成  similar activities ",
+          "improvedExample": "Do you have any similar activities?",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24747547",
+          "studentName": "庄田",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "We should never let our attempt stays in fantasy, but to actually make it into reality without the fear of making mistakes.",
+          "issueExplanation": "句子结构错误：宾语补足语错误",
+          "revisionSuggestion": "建议把 stays 换成  stay ",
+          "improvedExample": "We should never let our attempt stay in fantasy, but actually make it into reality without the fear of making mistakes.",
+          "score": 63.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24747545",
+          "studentName": "周泽睿",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "The games weren't big, but bring a lot of happiness and laughters arosed our playground.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 bring 换成  brought ",
+          "improvedExample": "The games weren't big, but brought a lot of happiness and laughter across our playground.",
+          "score": 58.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24747545",
+          "studentName": "周泽睿",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "In the end, the school invited an expert in sport field and hold a QQ A session.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 hold 换成  held ",
+          "improvedExample": "In the end, the school invited an expert in the sports field and held a Q&A session.",
+          "score": 58.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24747545",
+          "studentName": "周泽睿",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "The whole event isn't long, but offered me with unforgettable moments during the games.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 is 换成  was ",
+          "improvedExample": "The whole event wasn't long, but offered me unforgettable moments during the games.",
+          "score": 58.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24747505",
+          "studentName": "崔健坤",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "However, the ture story is they had observed bird for years and did many times experiments, and finally reach the goal after several falure trying, that's the real problem-solving characters.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 reach 换成  reached ",
+          "improvedExample": "However, the true story is that they have observed birds for years and have done many experiments, and finally reached the goal after several failures, which shows the real problem-solving character.",
+          "score": 7.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24747534",
+          "studentName": "杨明涵",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "This event helps us to relieve the stress of academic challenges, left a joyful memory of our campus life, which benefits me a lot.",
+          "issueExplanation": "句子结构错误：错误使用逗号连接两个完整句子",
+          "revisionSuggestion": "建议把 , 换成  and ",
+          "improvedExample": "This event helped us to relieve the stress of academic challenges and left a joyful memory of our campus life, which benefits me a lot.",
+          "score": 64.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24747534",
+          "studentName": "杨明涵",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "It also stimulates inspirations of people and give everyone the opportunity to show their talent.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 give 换成  gives ",
+          "improvedExample": "It also stimulates inspirations of people and gives everyone the opportunity to show their talent.",
+          "score": 42.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24747510",
+          "studentName": "蒋逸晗",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "I'm thrilled to hear that you're interested in our school's \"Sports me come across youth and let me share ome details.",
+          "issueExplanation": "句子结构错误：宾语补足语错误",
+          "revisionSuggestion": "建议把 me come across youth and let me share ome 换成  meet youth\" and let me share some ",
+          "improvedExample": "I'm thrilled to hear that you're interested in our school's \"Sports meet youth\" and let me share some details.",
+          "score": 55.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "format_issue",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24747505",
+          "studentName": "崔健坤",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "During the first day, we stayed in our campus to play longy-rope jumping which involved all 5 classmates.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 which 之前插入 ,",
+          "improvedExample": "During the first day, we stayed on our campus to play long rope jumping, which involved all 5 classmates.",
+          "score": 49.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24747510",
+          "studentName": "蒋逸晗",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Through the process of discussion people can share their thoughts and discuss togetter, we can get different angles of a same problem, which extends our mindset.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 people 之前插入 ,",
+          "improvedExample": "Through the process of discussion, people can share their thoughts and discuss together; we can get different angles of the same problem, which extends our mindset.",
+          "score": 34.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24747510",
+          "studentName": "蒋逸晗",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Also it can be a process of cooperation, helping tue problem-solving more effective.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 it 之前插入 ,",
+          "improvedExample": "Also, it can be a process of cooperation, helping the problem-solving become more effective.",
+          "score": 34.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24747512",
+          "studentName": "李宇泽",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Such as I chose the 'running 1 km' so I need to run 2km everyda",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 so 之前插入 ,",
+          "improvedExample": "For example, I chose 'running 1 km', so I need to run 2 km every day.",
+          "score": 43.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24747543",
+          "studentName": "赵玉琪",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "I'm delighted to hear that you are interested in the \"sports encounter Youth\" activity held in our school last week.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 sports encounter 换成  Sports Encounter ",
+          "improvedExample": "I'm delighted to hear that you are interested in the \"Sports Encounter Youth\" activity held in our school last week.",
+          "score": 72.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24747543",
+          "studentName": "赵玉琪",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "On Monday 5 and Wednesday, our school held all kinds of sports competition, including basketball, badminton, etc.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议把 5 换成  , Wednesday, ",
+          "improvedExample": "On Monday, Wednesday, and Friday, our school held all kinds of sports competitions, including basketball, badminton, etc.",
+          "score": 72.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24747520",
+          "studentName": "吕正泽",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "I' thuihed to hear that you are interested in \"Exercises meet youth\" end I'm glad to g offer you some details.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 youth 换成  Youth ",
+          "improvedExample": "I'm thrilled to hear that you are interested in \"Exercises meet Youth\" and I'm glad to offer you some details.",
+          "score": 43.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24747520",
+          "studentName": "吕正泽",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Besides, Cooperation is also helps because we can gather our views end discuss to make problem-soling more effiency.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 Cooperation 换成  cooperation ",
+          "improvedExample": "Besides, cooperation also helps because we can gather our views and discuss to make problem-solving more efficient.",
+          "score": 19.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24747507",
+          "studentName": "范家瑜",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "Here are some sit-atoms, last week, we held diverse eyes indludy trek races, 5 badunton watches, and greg run goes.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议把 , 换成  : ",
+          "improvedExample": "Here are some situations: last week, we held diverse events including track races, 5 badminton matches, and group run games.",
+          "score": 43.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24747509",
+          "studentName": "姜纾雯",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测",
+          "writingType": "practical",
+          "originalText": "0 Through this event, I ave gained a deep insight into excercise, it is not only a perfect way to build a strong body by boost muscles, but also a way to relieve mental stress.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议删除  0 ",
+          "improvedExample": "Through this event, I have gained a deep insight into exercise; it is not only a perfect way to build a strong body by boosting muscles, but also a way to relieve mental stress.",
+          "score": 61.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    }
+  ],
+  "weakStudents": [
+    {
+      "id": "24747507",
+      "name": "范家瑜",
+      "averageScore": 43.4,
+      "level": "D",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 76.8
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 16.8
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 5.2
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 1.2
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747502",
+      "name": "白昀凡",
+      "averageScore": 44.1,
+      "level": "D",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 42.5
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 42.5
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 9.8
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 5.2
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 34.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 34.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 34.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 34.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 34.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747520",
+      "name": "吕正泽",
+      "averageScore": 47.0,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 55.6
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 32.1
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 6.6
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 5.6
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747525",
+      "name": "王婧涵",
+      "averageScore": 49.0,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 55.3
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 33.2
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 8.3
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 3.2
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747512",
+      "name": "李宇泽",
+      "averageScore": 50.4,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 52.4
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 30.4
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 13.2
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.0
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747505",
+      "name": "崔健坤",
+      "averageScore": 51.6,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 46.6
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 39.5
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 7.1
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 6.8
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747538",
+      "name": "张浩然",
+      "averageScore": 53.7,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 46.4
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 35.9
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 9.9
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 7.7
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 74.21071,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 74.21071,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 74.21071,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 74.21071,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 74.21071,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747519",
+      "name": "卢子萌",
+      "averageScore": 55.4,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 46.0
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 41.0
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 10.0
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 3.0
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 49.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 49.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 49.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 49.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 49.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747527",
+      "name": "王彦苏",
+      "averageScore": 56.5,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 52.3
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 38.9
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 4.7
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.0
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 46.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 46.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 46.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 46.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 46.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747504",
+      "name": "陈佳静",
+      "averageScore": 56.9,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 50.4
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 39.7
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 7.0
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 2.9
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 45.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 45.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 45.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 45.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 45.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747531",
+      "name": "魏梓洲",
+      "averageScore": 57.1,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 52.5
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 35.1
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 7.9
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.5
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747540",
+      "name": "张湑",
+      "averageScore": 58.2,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 51.4
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 37.5
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 6.3
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.7
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 28.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 28.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 28.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 28.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 28.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747533",
+      "name": "杨鲁宁",
+      "averageScore": 58.6,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 49.8
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 38.9
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 8.1
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 3.3
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747517",
+      "name": "刘琨奕",
+      "averageScore": 59.4,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 48.6
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 40.8
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 5.6
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.9
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 13.333334,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 13.333334,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 13.333334,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 31.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 31.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    }
+  ],
+  "excellentWritings": [
+    {
+      "id": "ew-747537",
+      "studentId": "24747537",
+      "studentName": "张偲怡",
+      "essayTitle": "5月23日 英语测练",
+      "taskName": "5月23日 英语测练",
+      "writingType": "practical",
+      "score": 88.68975,
+      "level": "A",
+      "highlights": "得分88.68975分",
+      "excerpt": "{Dear Jim,\\n\\nThank you for your letter and your interest in the \\\"Painting China with Intelligence\\\" technology-enabled original works contest. I'm excited to tell you about my project.\\n\\nMy original work is a digital animation created using AI painting and motion design tools. I combined traditional Chinese ink-wash aesthetics with advanced technology to bring new life to a timeless icon. Using generative AI, I recreated celestial figures like the Dunhuang Flying Apsaras, who dance gracefully",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747524",
+      "studentId": "24747524",
+      "studentName": "王晨希",
+      "essayTitle": "4月22日 英语测练-作文",
+      "taskName": "4月22日 英语测练-作文",
+      "writingType": "practical",
+      "score": 87.79199,
+      "level": "A",
+      "highlights": "得分87.79199分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI'm writing to reply to your question about the speech content for the UN Youth Forum themed \\\"Skills Needed for a Sustainable Future.\\\" I'm glad to share my thoughts with you.\\n\\nTo build a sustainable future, I believe two sets of skills are very important. First, technological innovation is the backbone of progress. Cutting-edge research allows us to tackle pressing challenges from climate change to public health. Second, empathy and compassion are also essential to ensure that ",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747503",
+      "studentId": "24747503",
+      "studentName": "蔡欣怡",
+      "essayTitle": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "taskName": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "writingType": "practical",
+      "score": 87.0,
+      "level": "A",
+      "highlights": "得分87.0分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI'm glad to share with you my insight on \\\"The Color of A City\\\". When it comes to my choice of the color of a city, green Beijing pops into my mind without any doubt.\\n\\nFirst and foremost, numerous trees planted along the roads represent Beijing's vibrant green appearance. Walking into this city, you will be greeted by its lush greenery. More urban parks are emerging, breathing a steady stream of green life into this bustling city and embodying the city's commitment to ecological",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747537",
+      "studentId": "24747537",
+      "studentName": "张偲怡",
+      "essayTitle": "4月29日 英语测练",
+      "taskName": "4月29日 英语测练",
+      "writingType": "practical",
+      "score": 85.37534,
+      "level": "A",
+      "highlights": "得分85.37534分",
+      "excerpt": "{Subject: Advice on Choosing a Major\\n\\nDear Jim,\\n\\nI heard that you are struggling with choosing a major because of the changes in employment caused by the rise of artificial intelligence. I'd like to offer you some suggestions.\\n\\nFrom my perspective, Smart Environment is a good choice. It is an interdisciplinary field that uses big data and AI to tackle environmental challenges while requiring global cooperation. I believe this path will help you build a meaningful career that serves both th",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747544",
+      "studentId": "24747544",
+      "studentName": "郑乐言",
+      "essayTitle": "4月22日 英语测练",
+      "taskName": "4月22日 英语测练",
+      "writingType": "practical",
+      "score": 85.12253,
+      "level": "A",
+      "highlights": "得分85.12253分，含佳句",
+      "excerpt": "{Hi Jim,\\n\\nThanks for your email asking about the skills needed for the \\\"Skills Needed for a Sustainable Future\\\" forum. I'm happy to share my thoughts with you.\\n\\nI believe that creativity and lifelong learning are very important skills for a sustainable future. We live in a constantly changing world, so being creative helps us find new ways to solve problems like global warming. For example, instead of just following the \\\"three-Rs\\\" principle, we can upcycle used items or invent more effic",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-906857",
+      "studentId": "27906857",
+      "studentName": "陈录妍",
+      "essayTitle": "4月29日 英语测练",
+      "taskName": "4月29日 英语测练",
+      "writingType": "practical",
+      "score": 85.0967,
+      "level": "A",
+      "highlights": "得分85.0967分，含佳句",
+      "excerpt": "{Subject: Advice on Choosing a Major\\n\\nDear Jim,\\n\\nI'm glad to hear from you and understand that you feel confused about choosing a major because of the changes AI is bringing to employment. Since you asked for my advice, I'd like to share my thoughts.\\n\\nI strongly recommend you choose law as your major. With the rise of AI, many new legal challenges are appearing, such as privacy issues, intellectual property disputes, and ethical problems. Society desperately needs sharp legal minds who und",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747524",
+      "studentId": "24747524",
+      "studentName": "王晨希",
+      "essayTitle": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "taskName": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "writingType": "practical",
+      "score": 85.0,
+      "level": "A",
+      "highlights": "得分85.0分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI'm thrilled to hear you're interested in my article for The Color of a City. It's my great pleasure to share my idea with you.\\n\\nThe city I want to write about is Beijing, and its representative color is red. Red perfectly blends Beijing's profound traditional culture and vibrant modern energy. When wandering in the ancient Hutongs, I'm always struck by the classic red walls and gates, along with locals in elegant red Hanfu. These scenes carry the city's long history and unique c",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747534",
+      "studentId": "24747534",
+      "studentName": "杨明涵",
+      "essayTitle": "5月23日 英语测练",
+      "taskName": "5月23日 英语测练",
+      "writingType": "practical",
+      "score": 84.02716,
+      "level": "A",
+      "highlights": "得分84.02716分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nThank you for your letter and your interest in my participation in the \\\"Painting China with Intelligence\\\" technology-driven original works contest. I am happy to share with you some details about my project.\\n\\nMy work is a short video created with the help of AI, showing the transformations of China over thousands of years. It highlights how technology is deeply integrated into our daily lives, with AI quietly becoming a part of everyday experiences. The video presents a seamles",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747534",
+      "studentId": "24747534",
+      "studentName": "杨明涵",
+      "essayTitle": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "taskName": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "writingType": "practical",
+      "score": 84.0,
+      "level": "A",
+      "highlights": "得分84.0分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI'm more than delighted to hear you're interested in my essay \\\"The Color of a City.\\\" Born and raised in Beijing, I feel a deep sense of belonging to this city. So I chose Beijing and its vibrant green color as the theme.\\n\\nAs the capital of China, Beijing has made great efforts to tackle environmental issues and build a greener city. With the support of the government, more and more urban parks have been established recently, bringing a gush of green into this vibrant city. Furt",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747544",
+      "studentId": "24747544",
+      "studentName": "郑乐言",
+      "essayTitle": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "taskName": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "writingType": "practical",
+      "score": 84.0,
+      "level": "A",
+      "highlights": "得分84.0分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nHow lovely to know you're interested in my essay \\\"The Color of A City,\\\" and I'd love to tell you more about it.\\n\\nI chose Brisbane, a city that lies on the coast of Australia. I featured it through the lens of green.\\n\\nBrisbane wears green like its second skin. Its rivers are flanked by verdant riverfront parks, while rainforests on the outskirts hold lush ferns and broad-leafed plants. This green isn't just visual; it's the feeling of fresh sea breezes carrying the scent of gr",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    }
+  ],
+  "recommendedResources": [
+    {
+      "id": "res-w-1",
+      "title": "应用文写作模板训练",
+      "resourceType": "writing_practice",
+      "tags": [
+        "写作",
+        "应用文"
+      ],
+      "difficulty": "medium",
+      "grade": "高二",
+      "recommendReason": "针对词汇表达弱 / 用词单一设计",
+      "canPreview": true,
+      "canAssign": true,
+      "canAddToPaperBasket": true
+    }
+  ],
+  "generatedSamples": [
+    {
+      "id": "gs-1",
+      "level": "basic",
+      "title": "基础版 — 吕正泽的作文",
+      "content": "{Subject: Advice on Choosing a Major\\n\\nDear Jim,\\n\\nI hope this email finds you well. I understand that you are confused about choosing a major because of the changes in employment caused by the rise of artificial intelligence. I would like to offer you some advice.\\n\\nI really recommend you choose Environmental Science as your major. It is an interdisciplinary field that uses big data and AI to tackle environmental challenges and requires global cooperation.\\n\\nThere are several reasons for this choice. First, it helps develop data literacy and environmental responsibility, which are important skills for promoting green consumption and sustainable development. Second, it fosters cross-cultural empathy, as understanding people from different cultural backgrounds is essential in this field.\\n\\nWhat are your thoughts? I look forward to your reply.\\n\\nBest regards,\\nLi Hua}",
+      "highlights": "得分49.671837分 | 适合基础薄弱学生参考基本结构",
+      "suitableFor": "20分以下",
+      "editable": true
+    },
+    {
+      "id": "gs-2",
+      "level": "improved",
+      "title": "提升版 — 王梓瑶的作文",
+      "content": "{Greetings! I'm glad to hear that you're going to participate in the UN Youth Forum. As the theme is \\\"Skills Needed for a Sustainable Future,\\\" here are my ideas.\\n\\nI think critical thinking is an important skill because it can help us consider things from both sides. For example, when we talk about sustainable development, it's not only important to develop the economy and build a stronger country, but also to pay attention to the environment and use green resources. Besides, speaking skills are also needed in order to express what we're thinking and make people understand and support us.\\n\\nI hope these skills can help you prepare for your speech. What do you think of my ideas? Looking forward to your reply.}",
+      "highlights": "得分65.745544分 | 展示中等水平如何组织内容和句式",
+      "suitableFor": "20-25分",
+      "editable": true
+    },
+    {
+      "id": "gs-3",
+      "level": "excellent",
+      "title": "优秀版 — 张偲怡的作文",
+      "content": "{Dear Jim,\\n\\nThank you for your letter and your interest in the \\\"Painting China with Intelligence\\\" technology-enabled original works contest. I'm excited to tell you about my project.\\n\\nMy original work is a digital animation created using AI painting and motion design tools. I combined traditional Chinese ink-wash aesthetics with advanced technology to bring new life to a timeless icon. Using generative AI, I recreated celestial figures like the Dunhuang Flying Apsaras, who dance gracefully with flowing silk ribbons against a soft, starry background.\\n\\nParticipating in this contest was a rewarding experience. I realized that technology is not only about coding but also a powerful bridge connecting the past and the present. Seeing these traditional figures come alive in a new form filled me with pride in our culture, and I hope to share more of our heritage with the world through such innovative ways.\\n\\nLooking forward to hearing from you soon!\\n\\nBest wishes,\\nLi Hua}",
+      "highlights": "得分88.68975分 | 展示高分作文的表达水平",
+      "suitableFor": "25+分",
+      "editable": true
+    }
+  ],
+  "interventionRecords": []
+}

@@ -1037,6 +1037,342 @@ export function scenarioWordlistSearch(
 }
 
 // ═══════════════════════════════════════════════════════════
+// S16: 写作练习搜索
+// ═══════════════════════════════════════════════════════════
+
+export function scenarioWritingSearch(
+  query: string,
+  ctx: SearchContext = CTX_1_1,
+): NewSearchResult {
+  const u = unitStr(ctx)
+  const intent: SearchIntentInfo = {
+    query,
+    recognizedIntent: '写作练习搜索',
+    searchType: 'resource',
+    context: ctxStr(ctx),
+    matchedTypes: ['writing_practice'],
+    expandedTypes: ['writing_practice'],
+    foldedTypes: ['vocab_practice', 'reading_practice', 'grammar_practice'],
+    message: `已为你找到 ${u} 写作相关资源，包括同步作文、应用文和读后续写练习。也可搭配词汇和语法练习巩固基础。`,
+  }
+
+  const groups: ResourceGroup[] = [
+    {
+      groupId: 'writing-primary',
+      groupName: `精准匹配 — ${u} 写作资源`,
+      groupType: 'resource',
+      isPrimaryMatch: true,
+      defaultExpanded: true,
+      displayLimit: 3,
+      recommendationText: `以下写作资源与 ${u} 话题匹配。`,
+      items: findResources([
+        'res-writing-practice-1', 'res-special-writing-1',
+      ]),
+    },
+    {
+      groupId: 'writing-rec',
+      groupName: '推荐资源 — 配套练习',
+      groupType: 'resource',
+      isPrimaryMatch: false,
+      defaultExpanded: false,
+      displayLimit: 3,
+      recommendationText: '写作需要词汇和语法基础，以下为相关强化练习。',
+      items: findResources([
+        'res-vocab-practice-1', 'res-grammar-practice-1', 'res-reading-practice-1',
+      ]),
+    },
+  ]
+
+  const filterTabs: FilterTab[] = [
+    { category: 'all', label: '全部', count: 5 },
+    { category: 'writing_practice', label: '写作练习', count: 2 },
+    { category: 'vocab_practice', label: '词汇练习', count: 1 },
+    { category: 'grammar_practice', label: '语法专项', count: 1 },
+    { category: 'reading_practice', label: '阅读练习', count: 1 },
+  ]
+
+  return { intent, filterTabs, resourceGroups: groups, functionEntries: [], isNoResults: false, isUnrecognizable: false }
+}
+
+// ═══════════════════════════════════════════════════════════
+// S17: 词汇练习搜索
+// ═══════════════════════════════════════════════════════════
+
+export function scenarioVocabPracticeSearch(
+  query: string,
+  ctx: SearchContext = CTX_1_1,
+): NewSearchResult {
+  const u = unitStr(ctx)
+  const intent: SearchIntentInfo = {
+    query,
+    recognizedIntent: '词汇练习搜索',
+    searchType: 'resource',
+    context: ctxStr(ctx),
+    matchedTypes: ['vocab_practice', 'sync_vocab'],
+    expandedTypes: ['vocab_practice', 'sync_vocab'],
+    foldedTypes: ['grammar_practice', 'writing_practice'],
+    message: `已为你找到 ${u} 词汇相关资源，包括词汇练习和同步词汇。`,
+  }
+
+  const groups: ResourceGroup[] = [
+    {
+      groupId: 'vocab-practice-primary',
+      groupName: `精准匹配 — ${u} 词汇资源`,
+      groupType: 'resource',
+      isPrimaryMatch: true,
+      defaultExpanded: true,
+      displayLimit: 3,
+      items: findResources([
+        'res-vocab-practice-1', 'res-special-vocab-1',
+      ]),
+    },
+    {
+      groupId: 'vocab-practice-rec',
+      groupName: '推荐资源',
+      groupType: 'resource',
+      isPrimaryMatch: false,
+      defaultExpanded: false,
+      displayLimit: 3,
+      items: findResources([
+        'res-grammar-practice-1', 'res-writing-practice-1', 'res-reading-practice-1',
+      ]),
+    },
+  ]
+
+  const filterTabs: FilterTab[] = [
+    { category: 'all', label: '全部', count: 5 },
+    { category: 'vocab_practice', label: '词汇练习', count: 2 },
+    { category: 'grammar_practice', label: '语法专项', count: 1 },
+    { category: 'writing_practice', label: '写作练习', count: 1 },
+    { category: 'reading_practice', label: '阅读练习', count: 1 },
+  ]
+
+  return { intent, filterTabs, resourceGroups: groups, functionEntries: [], isNoResults: false, isUnrecognizable: false }
+}
+
+// ═══════════════════════════════════════════════════════════
+// S18: 阅读练习搜索
+// ═══════════════════════════════════════════════════════════
+
+export function scenarioReadingSearch(
+  query: string,
+  ctx: SearchContext = CTX_1_1,
+): NewSearchResult {
+  const u = unitStr(ctx)
+  const intent: SearchIntentInfo = {
+    query,
+    recognizedIntent: '阅读练习搜索',
+    searchType: 'resource',
+    context: ctxStr(ctx),
+    matchedTypes: ['reading_practice'],
+    expandedTypes: ['reading_practice'],
+    foldedTypes: ['vocab_practice', 'grammar_practice', 'comprehensive'],
+    message: `已为你找到 ${u} 阅读相关资源，包括阅读理解和阅读七选五练习。`,
+  }
+
+  const groups: ResourceGroup[] = [
+    {
+      groupId: 'reading-primary',
+      groupName: `精准匹配 — ${u} 阅读资源`,
+      groupType: 'resource',
+      isPrimaryMatch: true,
+      defaultExpanded: true,
+      displayLimit: 3,
+      items: findResources([
+        'res-reading-practice-1', 'res-mock-reading-writing-1',
+      ]),
+    },
+    {
+      groupId: 'reading-rec',
+      groupName: '推荐资源',
+      groupType: 'resource',
+      isPrimaryMatch: false,
+      defaultExpanded: false,
+      displayLimit: 3,
+      items: findResources([
+        'res-vocab-practice-1', 'res-comprehensive-1', 'res-grammar-practice-1',
+      ]),
+    },
+  ]
+
+  const filterTabs: FilterTab[] = [
+    { category: 'all', label: '全部', count: 5 },
+    { category: 'reading_practice', label: '阅读练习', count: 2 },
+    { category: 'vocab_practice', label: '词汇练习', count: 1 },
+    { category: 'comprehensive', label: '综合练习', count: 1 },
+    { category: 'grammar_practice', label: '语法专项', count: 1 },
+  ]
+
+  return { intent, filterTabs, resourceGroups: groups, functionEntries: [], isNoResults: false, isUnrecognizable: false }
+}
+
+// ═══════════════════════════════════════════════════════════
+// S19: 语法练习搜索
+// ═══════════════════════════════════════════════════════════
+
+export function scenarioGrammarSearch(
+  query: string,
+  ctx: SearchContext = CTX_1_1,
+): NewSearchResult {
+  const u = unitStr(ctx)
+  const intent: SearchIntentInfo = {
+    query,
+    recognizedIntent: '语法练习搜索',
+    searchType: 'resource',
+    context: ctxStr(ctx),
+    matchedTypes: ['grammar_practice'],
+    expandedTypes: ['grammar_practice'],
+    foldedTypes: ['vocab_practice', 'writing_practice', 'reading_practice'],
+    message: `已为你找到 ${u} 语法相关资源，包括语法填空和单句语法填空练习。`,
+  }
+
+  const groups: ResourceGroup[] = [
+    {
+      groupId: 'grammar-primary',
+      groupName: `精准匹配 — ${u} 语法资源`,
+      groupType: 'resource',
+      isPrimaryMatch: true,
+      defaultExpanded: true,
+      displayLimit: 3,
+      items: findResources([
+        'res-grammar-practice-1', 'res-grammar-practice-2', 'res-special-grammar-1',
+      ]),
+    },
+    {
+      groupId: 'grammar-rec',
+      groupName: '推荐资源',
+      groupType: 'resource',
+      isPrimaryMatch: false,
+      defaultExpanded: false,
+      displayLimit: 3,
+      items: findResources([
+        'res-vocab-practice-1', 'res-writing-practice-1', 'res-reading-practice-1',
+      ]),
+    },
+  ]
+
+  const filterTabs: FilterTab[] = [
+    { category: 'all', label: '全部', count: 6 },
+    { category: 'grammar_practice', label: '语法专项', count: 3 },
+    { category: 'vocab_practice', label: '词汇练习', count: 1 },
+    { category: 'writing_practice', label: '写作练习', count: 1 },
+    { category: 'reading_practice', label: '阅读练习', count: 1 },
+  ]
+
+  return { intent, filterTabs, resourceGroups: groups, functionEntries: [], isNoResults: false, isUnrecognizable: false }
+}
+
+// ═══════════════════════════════════════════════════════════
+// S20: 真题独立搜索
+// ═══════════════════════════════════════════════════════════
+
+export function scenarioRealExamSearch(
+  query: string,
+  ctx: SearchContext = CTX_1_1,
+): NewSearchResult {
+  const intent: SearchIntentInfo = {
+    query,
+    recognizedIntent: '真题资源搜索',
+    searchType: 'resource',
+    context: ctxStr(ctx),
+    matchedTypes: ['real_exam', 'mock_exam', 'exam_sprint'],
+    expandedTypes: ['real_exam'],
+    foldedTypes: ['mock_exam', 'exam_sprint'],
+    message: '已为你找到历年真题资源。精确匹配的真题已默认展开，模拟题和考前冲刺作为推荐资源已折叠。',
+  }
+
+  const groups: ResourceGroup[] = [
+    {
+      groupId: 'exam-real',
+      groupName: '真题资源',
+      groupType: 'resource',
+      isPrimaryMatch: true,
+      defaultExpanded: true,
+      displayLimit: 5,
+      recommendationText: '以下为中高考真题，来源可靠，适合阶段性检测使用。',
+      items: findResources([
+        'res-real-exam-sd-2024', 'res-real-exam-bj-2024', 'res-real-exam-sd-2023',
+      ]),
+    },
+    {
+      groupId: 'exam-rec',
+      groupName: '推荐资源 — 模拟卷及冲刺',
+      groupType: 'resource',
+      isPrimaryMatch: false,
+      defaultExpanded: false,
+      displayLimit: 3,
+      items: findResources([
+        'res-mock-sd-2024', 'res-mock-exam-1', 'res-mock-exam-2', 'res-exam-sprint-1',
+      ]),
+    },
+  ]
+
+  const filterTabs: FilterTab[] = [
+    { category: 'all', label: '全部', count: 7 },
+    { category: 'real_exam', label: '真题', count: 3 },
+    { category: 'mock_exam', label: '模拟题', count: 3 },
+    { category: 'exam_sprint', label: '考前冲刺', count: 1 },
+  ]
+
+  return { intent, filterTabs, resourceGroups: groups, functionEntries: [], isNoResults: false, isUnrecognizable: false }
+}
+
+// ═══════════════════════════════════════════════════════════
+// S21: 听力模拟独立搜索
+// ═══════════════════════════════════════════════════════════
+
+export function scenarioListeningMockSearch(
+  query: string,
+  ctx: SearchContext = CTX_1_1,
+): NewSearchResult {
+  const u = unitStr(ctx)
+  const intent: SearchIntentInfo = {
+    query,
+    recognizedIntent: '听力模拟搜索',
+    searchType: 'resource',
+    context: ctxStr(ctx),
+    matchedTypes: ['listening_mock', 'listening_practice', 'sync_listening'],
+    expandedTypes: ['listening_mock', 'listening_practice'],
+    foldedTypes: ['sync_listening'],
+    message: `已为你找到听力模拟和练习资源。听力模拟适合阶段性检测，同步听力适合单元同步训练。`,
+  }
+
+  const groups: ResourceGroup[] = [
+    {
+      groupId: 'listening-mock-primary',
+      groupName: '听力模拟及练习',
+      groupType: 'resource',
+      isPrimaryMatch: true,
+      defaultExpanded: true,
+      displayLimit: 3,
+      items: findResources([
+        'res-listening-mock-1', 'res-listening-practice-1', 'res-listening-practice-2',
+      ]),
+    },
+    {
+      groupId: 'listening-mock-rec',
+      groupName: `推荐资源 — ${u} 同步听力`,
+      groupType: 'resource',
+      isPrimaryMatch: false,
+      defaultExpanded: false,
+      displayLimit: 3,
+      items: findResources([
+        'res-sync-listening-1a', 'res-sync-listening-1b', 'res-sync-listening-1c',
+      ]),
+    },
+  ]
+
+  const filterTabs: FilterTab[] = [
+    { category: 'all', label: '全部', count: 6 },
+    { category: 'listening_mock', label: '听力模拟', count: 1 },
+    { category: 'listening_practice', label: '听力练习', count: 2 },
+    { category: 'sync_listening', label: '同步听力', count: 3 },
+  ]
+
+  return { intent, filterTabs, resourceGroups: groups, functionEntries: [], isNoResults: false, isUnrecognizable: false }
+}
+
+// ═══════════════════════════════════════════════════════════
 // Scenario Map
 // ═══════════════════════════════════════════════════════════
 
@@ -1056,6 +1392,12 @@ export type ScenarioName =
   | 'no_results_alternatives'
   | 'unrecognizable'
   | 'wordlist'
+  | 'writing'
+  | 'vocab_practice'
+  | 'reading'
+  | 'grammar'
+  | 'real_exam'
+  | 'listening_mock'
 
 export const SCENARIO_MAP: Record<ScenarioName, (query: string, ctx?: SearchContext) => NewSearchResult> = {
   unit1_comprehensive: scenarioUnit1Comprehensive,
@@ -1073,4 +1415,10 @@ export const SCENARIO_MAP: Record<ScenarioName, (query: string, ctx?: SearchCont
   no_results_alternatives: scenarioNoResultsWithAlternatives,
   unrecognizable: scenarioCompletelyUnrecognizable,
   wordlist: scenarioWordlistSearch,
+  writing: scenarioWritingSearch,
+  vocab_practice: scenarioVocabPracticeSearch,
+  reading: scenarioReadingSearch,
+  grammar: scenarioGrammarSearch,
+  real_exam: scenarioRealExamSearch,
+  listening_mock: scenarioListeningMockSearch,
 }

@@ -115,6 +115,27 @@ interface AIStore {
   pendingAssignments: AssignmentDraft[]
   setPendingAssignments: (assignments: AssignmentDraft[]) => void
   clearPendingAssignments: () => void
+
+  // Vocabulary Draft Basket (word-level review draft basket, per-class)
+  vocabDraftBasket: VocabDraftItem[]
+  addToVocabDraft: (item: Omit<VocabDraftItem, 'addedAt' | 'expireAt'>) => void
+  removeFromVocabDraft: (wordId: string) => void
+  removeVocabDrafts: (wordIds: string[]) => void
+  clearVocabDraft: () => void
+}
+
+// ── Vocab Draft Basket Types ────────────────────────────
+
+export interface VocabDraftItem {
+  wordId: string
+  wordText: string
+  mainType: string  // '生词' | '读不准' | '不会写' | '不会用'
+  sourceTags: string[]  // e.g. ['高频错词', '学生错词']
+  affectedStudentCount: number
+  addedAt: number       // timestamp
+  classId: string
+  expireAt: number      // 7 days after added
+  scoreRate?: number
 }
 
 // ── Paper Basket localStorage Persistence ────────────────
@@ -135,6 +156,33 @@ function savePaperBasket(items: PaperBasketItem[]): void {
   } catch { /* ignore quota errors */ }
 }
 
+// ── Vocab Draft Basket localStorage Persistence ──────────
+
+const DRAFT_BASKET_PREFIX = 'xiaotian_vocab_draft_'
+
+function draftKey(className: string): string {
+  return DRAFT_BASKET_PREFIX + encodeURIComponent(className)
+}
+
+function loadVocabDraft(className: string): VocabDraftItem[] {
+  try {
+    const raw = localStorage.getItem(draftKey(className))
+    if (raw) {
+      const items = JSON.parse(raw) as VocabDraftItem[]
+      const now = Date.now()
+      // Filter out expired items (>7 days)
+      return items.filter(i => i.expireAt > now)
+    }
+  } catch { /* ignore */ }
+  return []
+}
+
+function saveVocabDraft(className: string, items: VocabDraftItem[]): void {
+  try {
+    localStorage.setItem(draftKey(className), JSON.stringify(items))
+  } catch { /* ignore */ }
+}
+
 // ── Store ──────────────────────────────────────────────
 
 export const useAIStore = create<AIStore>((set) => ({
@@ -152,7 +200,7 @@ export const useAIStore = create<AIStore>((set) => ({
     textbook: '人教版',
     unit: 'Unit 3 — Food and Drinks',
     grade: '七年级上',
-    className: '七年级(3)班',
+    className: '2023级A18班',
     studentCount: 42,
   },
   setTeacherContext: (ctx) =>
@@ -240,4 +288,47 @@ export const useAIStore = create<AIStore>((set) => ({
   pendingAssignments: [],
   setPendingAssignments: (assignments) => set({ pendingAssignments: assignments }),
   clearPendingAssignments: () => set({ pendingAssignments: [] }),
+
+  // Vocab Draft Basket
+  vocabDraftBasket: loadVocabDraft('2023级A18班'),
+  addToVocabDraft: (item) =>
+    set((s) => {
+      const now = Date.now()
+      const className = item.classId || s.teacherContext.className
+      const entry: VocabDraftItem = {
+        ...item,
+        addedAt: now,
+        expireAt: now + 7 * 24 * 60 * 60 * 1000, // 7 days
+      }
+      // Dedup by wordId, merge sourceTags
+      const existingIdx = s.vocabDraftBasket.findIndex(i => i.wordId === entry.wordId)
+      let updated: VocabDraftItem[]
+      if (existingIdx >= 0) {
+        updated = [...s.vocabDraftBasket]
+        const existing = updated[existingIdx]
+        const mergedTags = [...new Set([...existing.sourceTags, ...entry.sourceTags])]
+        updated[existingIdx] = { ...existing, sourceTags: mergedTags, expireAt: entry.expireAt }
+      } else {
+        updated = [...s.vocabDraftBasket, entry]
+      }
+      saveVocabDraft(className, updated)
+      return { vocabDraftBasket: updated }
+    }),
+  removeFromVocabDraft: (wordId) =>
+    set((s) => {
+      const updated = s.vocabDraftBasket.filter(i => i.wordId !== wordId)
+      saveVocabDraft(s.teacherContext.className, updated)
+      return { vocabDraftBasket: updated }
+    }),
+  removeVocabDrafts: (wordIds) =>
+    set((s) => {
+      const updated = s.vocabDraftBasket.filter(i => !wordIds.includes(i.wordId))
+      saveVocabDraft(s.teacherContext.className, updated)
+      return { vocabDraftBasket: updated }
+    }),
+  clearVocabDraft: () =>
+    set((s) => {
+      saveVocabDraft(s.teacherContext.className, [])
+      return { vocabDraftBasket: [] }
+    }),
 }))

@@ -1,0 +1,1602 @@
+{
+  "classId": "class-2023级A14班",
+  "className": "2023级A14班",
+  "unitId": "real-data",
+  "unitName": "平台真实数据",
+  "timeRange": "30d",
+  "updatedAt": "2026-06-11 11:30",
+  "summary": "2023级A14班 共 39 名学生，6979 条应用文批改记录，平均 60.8 分。主要问题「词汇表达弱 / 用词单一」(46.7%)，薄弱学生 10 人。",
+  "metrics": {
+    "averageScore": 60.8,
+    "averageLevel": "B",
+    "reviewedEssayCount": 6979,
+    "mainProblemType": "词汇表达弱 / 用词单一",
+    "weakStudentCount": 10,
+    "excellentEssayCount": 10
+  },
+  "problemTypes": [
+    {
+      "id": "pt-vocabulary_weak",
+      "type": "vocabulary_weak",
+      "label": "词汇表达弱 / 用词单一",
+      "borderColor": "#8e7cc3",
+      "bgColor": "#f6f0fc",
+      "percent": 46.7,
+      "affectedStudentCount": 39,
+      "typicalPerformance": "(3262/6979)",
+      "aiReason": "共3262次，占比46.7%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "By doing so, I can not only understand international trends, but also gain insig",
+        "Additionally, I will actively take pare in various volunteer activities and part",
+        "I'm honored to contribute to the article gathering campaign teemed \"Becoming a B"
+      ]
+    },
+    {
+      "id": "pt-language_accuracy",
+      "type": "language_accuracy",
+      "label": "语言准确性弱 / 语法错误多",
+      "borderColor": "#7b9cd6",
+      "bgColor": "#f0f4fc",
+      "percent": 42.3,
+      "affectedStudentCount": 39,
+      "typicalPerformance": "(2953/6979)",
+      "aiReason": "共2953次，占比42.3%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "I in excited to share my thoughts on the school's event \"Becoming a Better Self.",
+        "In my opinion, becoming a better self means the process of broadening our horizo",
+        "Additionally, I will actively take pare in various volunteer activities and part"
+      ]
+    },
+    {
+      "id": "pt-structure_unclear",
+      "type": "structure_unclear",
+      "label": "结构不清 / 段落组织弱",
+      "borderColor": "#f0a060",
+      "bgColor": "#fef8f0",
+      "percent": 7.2,
+      "affectedStudentCount": 38,
+      "typicalPerformance": "(504/6979)",
+      "aiReason": "共504次，占比7.2%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "To me, it not only as physical health, but also means mental strength.",
+        "I think a healthy body is highly related to a better self because it is the most",
+        "Greetings! Glad to know you're interested in our school activity and I'm happy t"
+      ]
+    },
+    {
+      "id": "pt-format_issue",
+      "type": "format_issue",
+      "label": "格式规范问题 / 应用文格式",
+      "borderColor": "#9ab3cc",
+      "bgColor": "#f5f7fa",
+      "percent": 3.7,
+      "affectedStudentCount": 37,
+      "typicalPerformance": "(260/6979)",
+      "aiReason": "共260次，占比3.7%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "This involves actively expanding my knowledge and skills, while linking my own d",
+        "I will also try my best to help the people aroud me, by volunteering regularly i",
+        "I'd like to share my thoughts about \"Becoming a Better Self."
+      ]
+    }
+  ],
+  "highFrequencyIssues": [
+    {
+      "problemType": "vocabulary_weak",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754604",
+          "studentName": "屈楷博",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "By doing so, I can not only understand international trends, but also gain insights from different perspectives, learning from both contemporary and past scholars, which helps expland my vision.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 expland 换成  expand ",
+          "improvedExample": "By doing so, I can not only understand international trends, but also gain insights from different perspectives, learning from both contemporary and past scholars, which helps expand my vision.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754604",
+          "studentName": "屈楷博",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "Additionally, I will actively take pare in various volunteer activities and participate in social works in our community during my leisure time.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 pare 换成  part ",
+          "improvedExample": "Additionally, I will actively take part in various volunteer activities and participate in social work in our community during my leisure time.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24747760",
+          "studentName": "董彦德",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "I'm honored to contribute to the article gathering campaign teemed \"Becoming a Better Self,\" and I can't wast to share my insights to you.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 teemed 换成  titled ",
+          "improvedExample": "I'm honored to contribute to the article gathering campaign titled \"Becoming a Better Self,\" and I can't wait to share my insights with you.",
+          "score": 76.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24747760",
+          "studentName": "董彦德",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "I'm honored to contribute to the article gathering campaign teemed \"Becoming a Better Self,\" and I can't wast to share my insights to you.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 wast 换成  wait ",
+          "improvedExample": "I'm honored to contribute to the article gathering campaign titled \"Becoming a Better Self,\" and I can't wait to share my insights with you.",
+          "score": 76.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24747760",
+          "studentName": "董彦德",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "In my appreciation, \"becoming a better self\" means becoming a well-rouunded person, which consists of two parts: a rational brain and an empathetic heart.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 rouunded 换成  rounded ",
+          "improvedExample": "In my appreciation, \"becoming a better self\" means becoming a well-rounded person, which consists of two parts: a rational brain and an empathetic heart.",
+          "score": 76.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24747760",
+          "studentName": "董彦德",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "To nuture an empathetic heart, I constantly participate in volunteer work.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 nuture 换成  nurture ",
+          "improvedExample": "To nurture an empathetic heart, I constantly participate in volunteer work.",
+          "score": 76.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24747756",
+          "studentName": "陈安祺",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "To me, it not only as physical health, but also means mental strength.",
+          "issueExplanation": "表达错误：表达冗余",
+          "revisionSuggestion": "建议删除  means ",
+          "improvedExample": "To me, it not only means physical health, but also mental strength.",
+          "score": 73.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24747756",
+          "studentName": "陈安祺",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "To develop my physical health, I can spend thirty minutes to do some aerobic sports every day, which can help me to resist the anxious and tension from school and academic.",
+          "issueExplanation": "固定搭配错误：固定搭配错误",
+          "revisionSuggestion": "建议把 to do 换成  doing ",
+          "improvedExample": "To develop my physical health, I can spend thirty minutes doing some aerobic sports every day, which can help me to resist the anxiety and tension from school and academics.",
+          "score": 73.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24747756",
+          "studentName": "陈安祺",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "To increase my mental strength, I read classical books to gain the guidance of life and read specialized scientific articles to cultivate a clearer mind.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 the guidance of 换成  guidance in ",
+          "improvedExample": "To increase my mental strength, I read classical books to gain guidance in life and read specialized scientific articles to cultivate a clearer mind.",
+          "score": 73.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24747756",
+          "studentName": "陈安祺",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "These can give me the ability to think in multiple concepts and build a stable inner world for me.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 concepts 换成  ways ",
+          "improvedExample": "These can give me the ability to think in multiple ways and build a stable inner world for me.",
+          "score": 73.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "language_accuracy",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754619",
+          "studentName": "闫宇成",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "I in excited to share my thoughts on the school's event \"Becoming a Better Self.\"",
+          "issueExplanation": "非谓语动词错误：动词不定式错误",
+          "revisionSuggestion": "建议把 in 换成  am ",
+          "improvedExample": "I am excited to share my thoughts on the school's event \"Becoming a Better Self.\"",
+          "score": 72.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754604",
+          "studentName": "屈楷博",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "In my opinion, becoming a better self means the process of broadening our horizon and forming the right core values.",
+          "issueExplanation": "单复数错误：单复数错误",
+          "revisionSuggestion": "建议把 horizon 换成  horizons ",
+          "improvedExample": "In my opinion, becoming a better self means the process of broadening our horizons and forming the right core values.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754604",
+          "studentName": "屈楷博",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "Additionally, I will actively take pare in various volunteer activities and participate in social works in our community during my leisure time.",
+          "issueExplanation": "单复数错误：单复数错误",
+          "revisionSuggestion": "建议把 works 换成  work ",
+          "improvedExample": "Additionally, I will actively take part in various volunteer activities and participate in social work in our community during my leisure time.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754604",
+          "studentName": "屈楷博",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "This can help my balance stress and relaxation while experiencing deep and lasting happiness, which reflects the true value of helping others.",
+          "issueExplanation": "词法错误：代词错误",
+          "revisionSuggestion": "建议把 my 换成  me ",
+          "improvedExample": "This can help me balance stress and relaxation while experiencing deep and lasting happiness, which reflects the true value of helping others.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24747760",
+          "studentName": "董彦德",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "I'm honored to contribute to the article gathering campaign teemed \"Becoming a Better Self,\" and I can't wast to share my insights to you.",
+          "issueExplanation": "词法错误：介词错误",
+          "revisionSuggestion": "建议把 to 换成  with ",
+          "improvedExample": "I'm honored to contribute to the article gathering campaign titled \"Becoming a Better Self,\" and I can't wait to share my insights with you.",
+          "score": 76.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24747760",
+          "studentName": "董彦德",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "In a community project called \"Digital Tutoring\", I provided one-on-one instruction on smart devices or seniors.",
+          "issueExplanation": "词法错误：介词错误",
+          "revisionSuggestion": "建议把 or 换成  for ",
+          "improvedExample": "In a community project called \"Digital Tutoring\", I provided one-on-one instruction on smart devices for seniors.",
+          "score": 76.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754625",
+          "studentName": "郁玲珑",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "To translate this into action, I will explore subjects beyond the classroom, using online resources and joining discussion groups that challenge my thinking, which would broaden my mind and nurture my",
+          "issueExplanation": "时态错误：时态错误",
+          "revisionSuggestion": "建议把 would 换成  will ",
+          "improvedExample": "To translate this into action, I will explore subjects beyond the classroom, using online resources and joining discussion groups that challenge my thinking, which will broaden my mind and nurture my ",
+          "score": 84.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754625",
+          "studentName": "郁玲珑",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "In a community project called \"Digital Tutoring\", I provide one-on-one instructions on smart devices for seniors.",
+          "issueExplanation": "单复数错误：单复数错误",
+          "revisionSuggestion": "建议把 instructions 换成  instruction ",
+          "improvedExample": "In a community project called \"Digital Tutoring\", I provide one-on-one instruction on smart devices for seniors.",
+          "score": 84.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24747756",
+          "studentName": "陈安祺",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "To develop my physical health, I can spend thirty minutes to do some aerobic sports every day, which can help me to resist the anxious and tension from school and academic.",
+          "issueExplanation": "词性误用：词性误用",
+          "revisionSuggestion": "建议把 anxious 换成  anxiety ",
+          "improvedExample": "To develop my physical health, I can spend thirty minutes doing some aerobic sports every day, which can help me to resist the anxiety and tension from school and academics.",
+          "score": 73.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24747756",
+          "studentName": "陈安祺",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "I think a healthy body is highly related to a better self because it is the most important foundation that enables us to realize our life ideals and pave the way to reach it.",
+          "issueExplanation": "词法错误：代词错误",
+          "revisionSuggestion": "建议把 it 换成  them ",
+          "improvedExample": "I think a healthy body is highly related to a better self because it is the most important foundation that enables us to realize our life ideals and paves the way to reach them.",
+          "score": 73.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "structure_unclear",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24747756",
+          "studentName": "陈安祺",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "To me, it not only as physical health, but also means mental strength.",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议把 as 换成  means ",
+          "improvedExample": "To me, it not only means physical health, but also mental strength.",
+          "score": 73.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24747756",
+          "studentName": "陈安祺",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "I think a healthy body is highly related to a better self because it is the most important foundation that enables us to realize our life ideals and pave the way to reach it.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 pave 换成  paves ",
+          "improvedExample": "I think a healthy body is highly related to a better self because it is the most important foundation that enables us to realize our life ideals and paves the way to reach them.",
+          "score": 73.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754601",
+          "studentName": "刘胜昔",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "Greetings! Glad to know you're interested in our school activity and I'm happy to share my understanding of \"Becoming a Better Self\".",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议把 Glad 换成  I am glad ",
+          "improvedExample": "Greetings! I am glad to know you're interested in our school activity and I'm happy to share my understanding of \"Becoming a Better Self\".",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754601",
+          "studentName": "刘胜昔",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "To achieve this, I could take part in aerobic sports regularly, which boosts my stamina, relieves my tension, and makes me healthier, paving the way toward better self-development.",
+          "issueExplanation": "句子结构错误：双谓语错误",
+          "revisionSuggestion": "建议删除  could ",
+          "improvedExample": "To achieve this, I take part in aerobic sports regularly, which boosts my stamina, relieves my tension, and makes me healthier, paving the way toward better self-development.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754601",
+          "studentName": "刘胜昔",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "10 achieve this, I may read classical books to gain some guidance for life and read specialized scientific articles to cultivate a clearer mind, grasping the mental qualities of a better self.",
+          "issueExplanation": "句子结构错误：双谓语错误",
+          "revisionSuggestion": "建议删除  may ",
+          "improvedExample": "To achieve this, I read classical books to gain some guidance for life and read specialized scientific articles to cultivate a clearer mind, grasping the mental qualities of a better self.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754629",
+          "studentName": "张俏兮",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "In order to become a better self, there one many ways I can do.",
+          "issueExplanation": "句子结构错误：There be句型错误",
+          "revisionSuggestion": "建议把 one 换成  are ",
+          "improvedExample": "In order to become a better self, there are many ways I can do.",
+          "score": 75.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754626",
+          "studentName": "袁梓萌",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "\"To me, becoming a better self\" not only means personal growth, but also means the sense of social responsebility, This involves expanding my knowledge and skills, while engaging with the sociaty and ",
+          "issueExplanation": "句子结构错误：错误使用逗号连接两个完整句子",
+          "revisionSuggestion": "建议把 , 换成  . ",
+          "improvedExample": "\"To me, becoming a better self\" not only means personal growth, but also means the sense of social responsibility. This involves expanding my knowledge and skills, while engaging with society and cont",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754626",
+          "studentName": "袁梓萌",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "\"To me, becoming a better self\" not only means personal growth, but also means the sense of social responsebility, This involves expanding my knowledge and skills, while engaging with the sociaty and ",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 contribute 换成  contributing ",
+          "improvedExample": "\"To me, becoming a better self\" not only means personal growth, but also means the sense of social responsibility. This involves expanding my knowledge and skills, while engaging with society and cont",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754626",
+          "studentName": "袁梓萌",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "I will also try my best to help the people aroud me, by volunteering regularly in the community and visiting elderly to provides accompany which strengthen my connection to the social and making pract",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 making 换成  makes ",
+          "improvedExample": "I will also try my best to help the people around me by volunteering regularly in the community and visiting the elderly to provide company, which strengthens my connection to society and makes practi",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24754634",
+          "studentName": "张子俏",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "By chatting with the elderly, I can learn rich experience from them, then developing my personal understanding of life.",
+          "issueExplanation": "句子结构错误：错误使用逗号连接两个完整句子",
+          "revisionSuggestion": "建议在 then 之前插入 and",
+          "improvedExample": "By chatting with the elderly, I can learn rich experience from them, and then develop my personal understanding of life.",
+          "score": 72.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "format_issue",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754625",
+          "studentName": "郁玲珑",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "This involves actively expanding my knowledge and skills, while linking my own development to the broader fate of society.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议删除  , ",
+          "improvedExample": "This involves actively expanding my knowledge and skills while linking my own development to the broader fate of society.",
+          "score": 84.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754626",
+          "studentName": "袁梓萌",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "I will also try my best to help the people aroud me, by volunteering regularly in the community and visiting elderly to provides accompany which strengthen my connection to the social and making pract",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议删除  , ",
+          "improvedExample": "I will also try my best to help the people around me by volunteering regularly in the community and visiting the elderly to provide company, which strengthens my connection to society and makes practi",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24747754",
+          "studentName": "白奕堃",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "I'd like to share my thoughts about \"Becoming a Better Self.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 . 之后插入 \"",
+          "improvedExample": "I'd like to share my thoughts about \"Becoming a Better Self.\"",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754615",
+          "studentName": "徐匡达",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "In the path to matmity, we all more r less be ampoed will the amerpt Beter see'.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议删除  ' ",
+          "improvedExample": "In the path to maturity, we all more or less be armed with the attempt Better see.",
+          "score": 43.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754615",
+          "studentName": "徐匡达",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "The criteria of better \"and the noverest towards our final, bjedives have long bear the are argument about growth.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议删除  \" ",
+          "improvedExample": "The criteria of better and the movement towards our final objectives have long been the argument about growth.",
+          "score": 43.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754615",
+          "studentName": "徐匡达",
+          "essayTitle": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "taskName": "丰台区2025~2026学年度第一学期期末练习-大作文",
+          "writingType": "practical",
+          "originalText": "the only to cloider regausibiliter ad the master of all reikace.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 the 换成  The ",
+          "improvedExample": "The only to consider responsibility and the master of all reliance.",
+          "score": 43.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754632",
+          "studentName": "张以恒",
+          "essayTitle": "东城区2025-2026学年度第一学期期末统一检测-大作文",
+          "taskName": "东城区2025-2026学年度第一学期期末统一检测-大作文",
+          "writingType": "practical",
+          "originalText": "The track was filled with youthful energy cheers and sweat.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议把 cheers 换成  , cheers, ",
+          "improvedExample": "The track was filled with youthful energy, cheers, and sweat.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754615",
+          "studentName": "徐匡达",
+          "essayTitle": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+          "taskName": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+          "writingType": "practical",
+          "originalText": "For the \"The colour of a city\" competition, I char Beijing and described its colour as ruby.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 colour of a city 换成  Colour of a City ",
+          "improvedExample": "For the \"The Colour of a City\" competition, I chose Beijing and described its colour as ruby.",
+          "score": 70.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754615",
+          "studentName": "徐匡达",
+          "essayTitle": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+          "taskName": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+          "writingType": "practical",
+          "originalText": "The iconic red walls of the Torbildlen city act as a bridge between the past and present, showing how Being honors its thousud-year heritage while embracing a modern era.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 city 换成  City ",
+          "improvedExample": "The iconic red walls of the Forbidden City act as a bridge between the past and present, showing how Beijing honors its thousand-year heritage while embracing a modern era.",
+          "score": 70.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24754615",
+          "studentName": "徐匡达",
+          "essayTitle": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+          "taskName": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+          "writingType": "practical",
+          "originalText": "Finally, ruby embodies natinal pride through Beijing's unique achievement as a \"Dual Olympic City.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 . 之后插入 \"",
+          "improvedExample": "Finally, ruby embodies national pride through Beijing's unique achievement as a \"Dual Olympic City.\"",
+          "score": 70.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    }
+  ],
+  "weakStudents": [
+    {
+      "id": "24754610",
+      "name": "王明中",
+      "averageScore": 40.2,
+      "level": "D",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 78.8
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 13.3
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 4.4
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 3.5
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 10.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 10.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 10.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 10.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 10.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754615",
+      "name": "徐匡达",
+      "averageScore": 43.5,
+      "level": "D",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 75.9
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 16.4
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 5.6
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 2.1
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 43.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747760",
+      "name": "董彦德",
+      "averageScore": 49.2,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 45.8
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 41.5
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 9.0
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 3.7
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 76.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 76.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 76.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 76.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 76.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754612",
+      "name": "王天翊",
+      "averageScore": 50.0,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 51.7
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 33.5
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 10.2
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.7
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 70.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 70.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 70.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 70.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 70.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754606",
+      "name": "申雅欣",
+      "averageScore": 51.5,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 50.0
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 37.5
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 7.7
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.8
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747756",
+      "name": "陈安祺",
+      "averageScore": 55.9,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 51.7
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 35.3
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 8.6
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.3
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 73.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754622",
+      "name": "杨泽宇",
+      "averageScore": 56.2,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "格式规范问题 / 应用文格式"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 46.3
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 43.9
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.9
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 4.9
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 61.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754631",
+      "name": "张思妥",
+      "averageScore": 56.9,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 51.0
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 29.8
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 10.1
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 9.1
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 73.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754620",
+      "name": "晏梓榕",
+      "averageScore": 57.3,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 54.1
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 37.8
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 4.4
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 3.7
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754629",
+      "name": "张俏兮",
+      "averageScore": 58.6,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 51.2
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 40.8
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 4.5
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 3.6
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    }
+  ],
+  "excellentWritings": [
+    {
+      "id": "ew-754604",
+      "studentId": "24754604",
+      "studentName": "屈楷博",
+      "essayTitle": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "taskName": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "writingType": "practical",
+      "score": 90.0,
+      "level": "A",
+      "highlights": "得分90.0分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI'm glad to hear that you are interested in my essay for the competition, \\\"The Color of A City.\\\" Let me share more details with you.\\n\\nI chose Beijing and green as its representative color. Green symbolizes the city's efforts in environmental protection and sustainable development, which are important parts of Beijing's modern image. My reasons are as follows. Firstly, Beijing has promoted the use of shared bikes and expanded its bus and subway networks. These measures have grea",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754608",
+      "studentId": "24754608",
+      "studentName": "汪思齐",
+      "essayTitle": "4月29日 英语测练",
+      "taskName": "4月29日 英语测练",
+      "writingType": "practical",
+      "score": 87.639145,
+      "level": "A",
+      "highlights": "得分87.639145分，含佳句",
+      "excerpt": "{Subject: Advice on Choosing a Major in the Age of AI\\n\\nDear Jim,\\n\\nI am glad to hear from you. I understand that you are confused about choosing a major because of the changes in employment caused by the rise of artificial intelligence. You asked me for some advice, and I would suggest that you consider Human-Computer Interaction.\\n\\nMy first reason is that this major sits at the crossroads of computer science, design, psychology, and ethics. With AI changing the job market, people who can no",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747758",
+      "studentId": "24747758",
+      "studentName": "董颢宁",
+      "essayTitle": "东城区2025-2026学年度第一学期期末统一检测-大作文",
+      "taskName": "东城区2025-2026学年度第一学期期末统一检测-大作文",
+      "writingType": "practical",
+      "score": 87.0,
+      "level": "A",
+      "highlights": "得分87.0分，含佳句",
+      "excerpt": "{Dear Jim,\\nI'm delighted to receive your last letter asking about our school's recent activity themed \\\"Sports Encounter Youth.\\\" Let me tell you more details about it.\\nDuring the activity, our school organized a series of events, including running, rope jumping, and even swimming. Participants were enthusiastic to join, no matter their age or athletic ability. Races between students and school staff members brought us much laughter. We cheered loudly and supported our teammates throughout the",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754619",
+      "studentId": "24754619",
+      "studentName": "闫宇成",
+      "essayTitle": "东城区2025-2026学年度第一学期期末统一检测-大作文",
+      "taskName": "东城区2025-2026学年度第一学期期末统一检测-大作文",
+      "writingType": "practical",
+      "score": 87.0,
+      "level": "A",
+      "highlights": "得分87.0分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI'm honored to hear that you're interested in our school's \\\"Sports Encounter Youth\\\" activity. Let me tell you some details.\\n\\nThe event, aimed at stimulating students' enthusiasm for exercise, was held by the school's sports club in the gym last Monday afternoon. There were multiple exercises featuring a variety of athletic activities tailored to different fitness levels and interests. Students could choose from aerobic exercises like long-distance running or jumping rope to boo",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754625",
+      "studentId": "24754625",
+      "studentName": "郁玲珑",
+      "essayTitle": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "taskName": "北京朝阳2025~2026学年度第一学期期末质量检测-大作文",
+      "writingType": "practical",
+      "score": 87.0,
+      "level": "A",
+      "highlights": "得分87.0分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nIt's great to hear from you! For the \\\"The Color of a City\\\" competition, I chose Beijing and described its color as red.\\n\\nFirst, red symbolizes Beijing's status as the political heart of the nation. Beyond mere decoration, it represents authority and dignity. From the grand architecture of Tiananmen Square to the national flags, red reflects the city's leading role in our country's journey forward.\\n\\nMoreover, the color represents the inheritance of civilization. The iconic red",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747765",
+      "studentId": "24747765",
+      "studentName": "李佳晴",
+      "essayTitle": "4月22日 英语测练",
+      "taskName": "4月22日 英语测练",
+      "writingType": "practical",
+      "score": 85.60803,
+      "level": "A",
+      "highlights": "得分85.60803分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI am writing to reply to your email about the speech content for the UN Youth Forum themed \\\"Skills Needed for a Sustainable Future.\\\" I would like to share my thoughts with you.\\n\\nFirstly, I think the ability to apply green living methods in our daily life is very important for teenagers. For example, we should try to take public transport when commuting. A sustainable future depends on everyone's effort to live greener. By developing the skill of living a greener lifestyle, ever",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747759",
+      "studentId": "24747759",
+      "studentName": "董翔宇",
+      "essayTitle": "5月21日 英语测练",
+      "taskName": "5月21日 英语测练",
+      "writingType": "practical",
+      "score": 85.15221,
+      "level": "A",
+      "highlights": "得分85.15221分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI'm sorry to hear that you were criticized by your teacher for using AI tools to complete your essay. I understand how frustrating this must be. However, as a senior student, I think it is better not to rely on AI for writing assignments.\\n\\nFirst of all, as a senior student, it is your responsibility to finish the essays assigned by your teacher on your own. Writing essays helps you find your weaknesses, such as lacking evidence, and allows your teacher to give you precise feedbac",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754607",
+      "studentId": "24754607",
+      "studentName": "史翰明",
+      "essayTitle": "5月21日 英语测练",
+      "taskName": "5月21日 英语测练",
+      "writingType": "practical",
+      "score": 85.07004,
+      "level": "A",
+      "highlights": "得分85.07004分，含佳句",
+      "excerpt": "{I'm sorry to hear that you were criticized because you completed your writing homework by using AI tools. Don't be stuck. AI is not something uncontrollable if you use its functions properly.\\n\\nIn my perspective, using AI to collect writing resources or ask for writing suggestions is not a big deal. Rather, it can enhance your learning efficiency and help you broaden your horizon. However, if you use AI to generate the whole passage without personal reflections, you need to step out of your co",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754624",
+      "studentId": "24754624",
+      "studentName": "叶广涵",
+      "essayTitle": "4月29日 英语测练",
+      "taskName": "4月29日 英语测练",
+      "writingType": "practical",
+      "score": 84.97818,
+      "level": "A",
+      "highlights": "得分84.97818分",
+      "excerpt": "{Subject: Advice on Choosing a Major\\n\\nDear Jim,\\n\\nI hope this email finds you well. I know you are feeling confused about choosing a major because of the changes in employment caused by the rise of artificial intelligence, and you asked me for some advice.\\n\\nI strongly recommend that you choose law as your major. Since you are passionate about justice, law is a good fit for you. With the rise of AI, many new legal challenges are appearing, such as privacy issues and ethical problems. Society",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754607",
+      "studentId": "24754607",
+      "studentName": "史翰明",
+      "essayTitle": "4月22日 英语测练",
+      "taskName": "4月22日 英语测练",
+      "writingType": "practical",
+      "score": 84.865685,
+      "level": "A",
+      "highlights": "得分84.865685分",
+      "excerpt": "{Dear Jim,\\n\\nI'm glad you're participating in the UN Youth Forum titled \\\"Skills Needed for a Sustainable Future.\\\" I am writing to reply to your question about the skills needed for your speech at the forum. In my opinion, two important skills are recycling skills and long-term thinking skills.\\n\\nRecycling skills are essential because they help reduce waste by turning old items into useful ones. This supports the \\\"3R\\\" principle (Reduce, Reuse, Recycle) and helps save materials and energy th",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    }
+  ],
+  "recommendedResources": [
+    {
+      "id": "res-w-1",
+      "title": "应用文写作模板训练",
+      "resourceType": "writing_practice",
+      "tags": [
+        "写作",
+        "应用文"
+      ],
+      "difficulty": "medium",
+      "grade": "高二",
+      "recommendReason": "针对词汇表达弱 / 用词单一设计",
+      "canPreview": true,
+      "canAssign": true,
+      "canAddToPaperBasket": true
+    }
+  ],
+  "generatedSamples": [
+    {
+      "id": "gs-1",
+      "level": "basic",
+      "title": "基础版 — 徐匡达的作文",
+      "content": "{Hi Jim,\\n\\nThanks for your interest in the \\\"Painting China with Intelligence\\\" event I took part in. I'd like to share my work with you.\\n\\nI created a digital painting titled \\\"Ancient Wisdom Meets Modern Wings.\\\" Using an AI painting tool, I combined traditional Chinese landscape elements, like misty worn forests and pavilions, with modern high-speed trains and AI towers. The idea is to show how technology helps protect our cultural heritage while building a smarter future.\\n\\nTaking part in this activity was truly eye-opening. I felt excited to see how creativity and technology can work hand in hand. It also deepened my pride in our culture and inspired me to learn more about both art and science. I now believe even a small idea can thrive when powered by technology and passion.\\n\\nWhat's your opinion? I'm looking forward to hearing your thoughts!\\n\\nBest regards,\\nLi Hua}",
+      "highlights": "得分49.969917分 | 适合基础薄弱学生参考基本结构",
+      "suitableFor": "20分以下",
+      "editable": true
+    },
+    {
+      "id": "gs-2",
+      "level": "improved",
+      "title": "提升版 — 黄海欣的作文",
+      "content": "{Becoming a Better Self\\n\\nTo me, becoming a better self means improving both physically and mentally. Physically, it requires having a stronger, fitter, and healthier body. Mentally, it means growing and becoming more mature.\\n\\nTo become physically better, I will develop the habit of exercising regularly. I used to be lazy and unwilling to do sports, but from now on, I will keep jogging every morning. I will also try to find a sport that interests me and stick to it.\\n\\nTo become mentally better, I will try to be more responsible, which is a sign of maturity. Since I have just become an adult, it is time to take on my own duties. I will handle my tasks by myself and help my parents with some family chores.\\n\\nBy doing these things, I believe I can become a better version of myself.}",
+      "highlights": "得分67.0分 | 展示中等水平如何组织内容和句式",
+      "suitableFor": "20-25分",
+      "editable": true
+    },
+    {
+      "id": "gs-3",
+      "level": "excellent",
+      "title": "优秀版 — 屈楷博的作文",
+      "content": "{Dear Jim,\\n\\nI'm glad to hear that you are interested in my essay for the competition, \\\"The Color of A City.\\\" Let me share more details with you.\\n\\nI chose Beijing and green as its representative color. Green symbolizes the city's efforts in environmental protection and sustainable development, which are important parts of Beijing's modern image. My reasons are as follows. Firstly, Beijing has promoted the use of shared bikes and expanded its bus and subway networks. These measures have greatly improved public transportation, encouraging people to use eco-friendly travel options instead of private cars, which helps reduce air pollution. Secondly, the city has increased its green spaces and water areas. This not only enhances the environment in the city center but also helps lower greenhouse gas emissions through the natural process of plants absorbing carbon dioxide. Green reflects both the visible changes in the cityscape and the growing awareness of environmental protection among its residents.\\n\\nWhat do you think about my essay? Feel free to write back and share your thoughts.\\n\\nYours,\\nLi Hua}",
+      "highlights": "得分90.0分，含佳句 | 展示高分作文的表达水平",
+      "suitableFor": "25+分",
+      "editable": true
+    }
+  ],
+  "interventionRecords": []
+}

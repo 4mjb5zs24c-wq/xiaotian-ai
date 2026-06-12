@@ -1,0 +1,4295 @@
+{
+  "classId": "class-2023级A17班",
+  "className": "2023级A17班",
+  "unitId": "real-data",
+  "unitName": "平台真实数据",
+  "timeRange": "30d",
+  "updatedAt": "2026-06-11 11:30",
+  "summary": "2023级A17班 共 38 名学生，1129 条词汇错误记录，涉及 723 个词。薄弱学生 21 人，建议重点加强默写和拼写训练。",
+  "metrics": {
+    "practicedWordCount": 723,
+    "weakWordCount": 50,
+    "weakStudentCount": 21,
+    "mainWeakType": "拼不对 / 默写错误"
+  },
+  "errorTypes": [
+    {
+      "type": "spelling",
+      "label": "拼不对 / 默写错误",
+      "percent": 100,
+      "affectedStudentCount": 35,
+      "exampleWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing"
+      ],
+      "aiReason": "平台数据错因均为'不会写'，归类为拼写错误。2023级A17班共1129条拼写错误记录。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划",
+        "组卷"
+      ],
+      "borderColor": "#f0a060",
+      "bgColor": "#fef8f0"
+    }
+  ],
+  "weakWords": [
+    {
+      "id": "ww-000",
+      "text": "laborer/labourer",
+      "itemType": "word",
+      "scoreRate": 10.0,
+      "errorRate": 90.0,
+      "affectedStudentCount": 7,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754423",
+          "studentName": "于博然",
+          "questionContext": "",
+          "studentAnswer": "labors",
+          "correctAnswer": "laborer/labourer",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754454",
+          "studentName": "师若棋",
+          "questionContext": "",
+          "studentAnswer": "Labors",
+          "correctAnswer": "laborer/labourer",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "questionContext": "",
+          "studentAnswer": "labor",
+          "correctAnswer": "laborer/labourer",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "labours",
+          "correctAnswer": "laborer/labourer",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "questionContext": "",
+          "studentAnswer": "labors",
+          "correctAnswer": "laborer/labourer",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在7名学生中出现16次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-001",
+      "text": "AI/artificial intelligence",
+      "itemType": "word",
+      "scoreRate": 15.6,
+      "errorRate": 84.4,
+      "affectedStudentCount": 10,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754421",
+          "studentName": "杨梓涵",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "Al",
+          "correctAnswer": "AI/artificial intelligence",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754402",
+          "studentName": "吕曈夏",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "I",
+          "correctAnswer": "AI/artificial intelligence",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754423",
+          "studentName": "于博然",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "Al",
+          "correctAnswer": "AI/artificial intelligence",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754421",
+          "studentName": "杨梓涵",
+          "questionContext": "",
+          "studentAnswer": "Al",
+          "correctAnswer": "AI/artificial intelligence",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754435",
+          "studentName": "黄泽平",
+          "questionContext": "",
+          "studentAnswer": "Al",
+          "correctAnswer": "AI/artificial intelligence",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在10名学生中出现15次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 94
+    },
+    {
+      "id": "ww-002",
+      "text": "technology",
+      "itemType": "word",
+      "scoreRate": 21.2,
+      "errorRate": 78.8,
+      "affectedStudentCount": 10,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747528",
+          "studentName": "王语含",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "technolgy",
+          "correctAnswer": "technology",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "teehnigne",
+          "correctAnswer": "technology",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747582",
+          "studentName": "徐若芊",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "technolog",
+          "correctAnswer": "technology",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "tecnology",
+          "correctAnswer": "technology",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "technokyy",
+          "correctAnswer": "technology",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在10名学生中出现14次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 90
+    },
+    {
+      "id": "ww-003",
+      "text": "writing",
+      "itemType": "word",
+      "scoreRate": 38.1,
+      "errorRate": 61.9,
+      "affectedStudentCount": 9,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754401",
+          "studentName": "刘盈杉",
+          "questionContext": "",
+          "studentAnswer": "writting",
+          "correctAnswer": "writing",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747526",
+          "studentName": "王铭泽",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "wrriting",
+          "correctAnswer": "writing",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747516",
+          "studentName": "刘冠临",
+          "questionContext": "",
+          "studentAnswer": "writting",
+          "correctAnswer": "writing",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747588",
+          "studentName": "张博悦",
+          "questionContext": "",
+          "studentAnswer": "writting",
+          "correctAnswer": "writing",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754458",
+          "studentName": "王李嘉瑞",
+          "questionContext": "",
+          "studentAnswer": "woriting",
+          "correctAnswer": "writing",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在9名学生中出现11次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 77
+    },
+    {
+      "id": "ww-004",
+      "text": "Beijing",
+      "itemType": "word",
+      "scoreRate": 43.8,
+      "errorRate": 56.2,
+      "affectedStudentCount": 8,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747564",
+          "studentName": "梁馨元",
+          "questionContext": "",
+          "studentAnswer": "Bejing",
+          "correctAnswer": "Beijing",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "Beijoing",
+          "correctAnswer": "Beijing",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "",
+          "studentAnswer": "iseijing",
+          "correctAnswer": "Beijing",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "",
+          "studentAnswer": "E aijing",
+          "correctAnswer": "Beijing",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754462",
+          "studentName": "吴骁航",
+          "questionContext": "",
+          "studentAnswer": "BeiTing",
+          "correctAnswer": "Beijing",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在8名学生中出现10次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 73
+    },
+    {
+      "id": "ww-005",
+      "text": "efficiency",
+      "itemType": "word",
+      "scoreRate": 60.6,
+      "errorRate": 39.4,
+      "affectedStudentCount": 6,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754423",
+          "studentName": "于博然",
+          "questionContext": "",
+          "studentAnswer": "the effeciency",
+          "correctAnswer": "efficiency",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747528",
+          "studentName": "王语含",
+          "questionContext": "",
+          "studentAnswer": "efficieng",
+          "correctAnswer": "efficiency",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "efficieency",
+          "correctAnswer": "efficiency",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "effiency",
+          "correctAnswer": "efficiency",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747541",
+          "studentName": "赵朔羲",
+          "questionContext": "",
+          "studentAnswer": "effeciency",
+          "correctAnswer": "efficiency",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在6名学生中出现7次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 60
+    },
+    {
+      "id": "ww-006",
+      "text": "your",
+      "itemType": "word",
+      "scoreRate": 60.6,
+      "errorRate": 39.4,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "yar",
+          "correctAnswer": "your",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747593",
+          "studentName": "朱浩尘",
+          "questionContext": "",
+          "studentAnswer": "ou",
+          "correctAnswer": "your",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "gyour",
+          "correctAnswer": "your",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "yar",
+          "correctAnswer": "your",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "yor",
+          "correctAnswer": "your",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现7次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 60
+    },
+    {
+      "id": "ww-007",
+      "text": "school",
+      "itemType": "word",
+      "scoreRate": 60.6,
+      "errorRate": 39.4,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "schol",
+          "correctAnswer": "school",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "schol",
+          "correctAnswer": "school",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747541",
+          "studentName": "赵朔羲",
+          "questionContext": "",
+          "studentAnswer": "schol",
+          "correctAnswer": "school",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "schoo",
+          "correctAnswer": "school",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "schol",
+          "correctAnswer": "school",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现7次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 60
+    },
+    {
+      "id": "ww-008",
+      "text": "you",
+      "itemType": "word",
+      "scoreRate": 66.2,
+      "errorRate": 33.8,
+      "affectedStudentCount": 6,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747526",
+          "studentName": "王铭泽",
+          "questionContext": "",
+          "studentAnswer": "syou",
+          "correctAnswer": "you",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "yous",
+          "correctAnswer": "you",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754431",
+          "studentName": "高嘉成",
+          "questionContext": "",
+          "studentAnswer": "yo to",
+          "correctAnswer": "you",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747582",
+          "studentName": "徐若芊",
+          "questionContext": "",
+          "studentAnswer": "yor",
+          "correctAnswer": "you",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747528",
+          "studentName": "王语含",
+          "questionContext": "",
+          "studentAnswer": "gon",
+          "correctAnswer": "you",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在6名学生中出现6次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 55
+    },
+    {
+      "id": "ww-009",
+      "text": "share",
+      "itemType": "word",
+      "scoreRate": 66.2,
+      "errorRate": 33.8,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "shore",
+          "correctAnswer": "share",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747521",
+          "studentName": "马欣然",
+          "questionContext": "",
+          "studentAnswer": "shere",
+          "correctAnswer": "share",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754443",
+          "studentName": "李卓宣",
+          "questionContext": "",
+          "studentAnswer": "shore",
+          "correctAnswer": "share",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747518",
+          "studentName": "刘芮希",
+          "questionContext": "",
+          "studentAnswer": "char",
+          "correctAnswer": "share",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "spare",
+          "correctAnswer": "share",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现6次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 55
+    },
+    {
+      "id": "ww-010",
+      "text": "life",
+      "itemType": "word",
+      "scoreRate": 66.2,
+      "errorRate": 33.8,
+      "affectedStudentCount": 6,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747528",
+          "studentName": "王语含",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "ife",
+          "correctAnswer": "life",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747564",
+          "studentName": "梁馨元",
+          "questionContext": "",
+          "studentAnswer": "lif",
+          "correctAnswer": "life",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754401",
+          "studentName": "刘盈杉",
+          "questionContext": "",
+          "studentAnswer": "lifer",
+          "correctAnswer": "life",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754421",
+          "studentName": "杨梓涵",
+          "questionContext": "",
+          "studentAnswer": "afe",
+          "correctAnswer": "life",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747541",
+          "studentName": "赵朔羲",
+          "questionContext": "",
+          "studentAnswer": "elife",
+          "correctAnswer": "life",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在6名学生中出现6次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 55
+    },
+    {
+      "id": "ww-011",
+      "text": "future",
+      "itemType": "word",
+      "scoreRate": 66.2,
+      "errorRate": 33.8,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754458",
+          "studentName": "王李嘉瑞",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "uture",
+          "correctAnswer": "future",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "fonture",
+          "correctAnswer": "future",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754494",
+          "studentName": "李彦君",
+          "questionContext": "",
+          "studentAnswer": "fusture",
+          "correctAnswer": "future",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747541",
+          "studentName": "赵朔羲",
+          "questionContext": "",
+          "studentAnswer": "futer",
+          "correctAnswer": "future",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "ffuture",
+          "correctAnswer": "future",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现6次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 55
+    },
+    {
+      "id": "ww-012",
+      "text": "difficulty",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747593",
+          "studentName": "朱浩尘",
+          "questionContext": "",
+          "studentAnswer": "diddiculties",
+          "correctAnswer": "difficulty",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754401",
+          "studentName": "刘盈杉",
+          "questionContext": "",
+          "studentAnswer": "difficultis",
+          "correctAnswer": "difficulty",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754408",
+          "studentName": "滕易朴",
+          "questionContext": "",
+          "studentAnswer": "diffialty",
+          "correctAnswer": "difficulty",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747593",
+          "studentName": "朱浩尘",
+          "questionContext": "",
+          "studentAnswer": "diffculties",
+          "correctAnswer": "difficulty",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "diicalties",
+          "correctAnswer": "difficulty",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-013",
+      "text": "more",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "mere",
+          "correctAnswer": "more",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "mere",
+          "correctAnswer": "more",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "questionContext": "",
+          "studentAnswer": "moore",
+          "correctAnswer": "more",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747528",
+          "studentName": "王语含",
+          "questionContext": "",
+          "studentAnswer": "re",
+          "correctAnswer": "more",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "mere",
+          "correctAnswer": "more",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-014",
+      "text": "including",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "inchuding",
+          "correctAnswer": "including",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747586",
+          "studentName": "杨昀翰",
+          "questionContext": "",
+          "studentAnswer": "inceuling",
+          "correctAnswer": "including",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "includy",
+          "correctAnswer": "including",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "includingg",
+          "correctAnswer": "including",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "induding",
+          "correctAnswer": "including",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-015",
+      "text": "thrilled",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754421",
+          "studentName": "杨梓涵",
+          "questionContext": "",
+          "studentAnswer": "thilled",
+          "correctAnswer": "thrilled",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747541",
+          "studentName": "赵朔羲",
+          "questionContext": "",
+          "studentAnswer": "thriled",
+          "correctAnswer": "thrilled",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754458",
+          "studentName": "王李嘉瑞",
+          "questionContext": "",
+          "studentAnswer": "thriled",
+          "correctAnswer": "thrilled",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "thirlled",
+          "correctAnswer": "thrilled",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747569",
+          "studentName": "潘好",
+          "questionContext": "",
+          "studentAnswer": "trilled",
+          "correctAnswer": "thrilled",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-016",
+      "text": "activity",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747526",
+          "studentName": "王铭泽",
+          "questionContext": "",
+          "studentAnswer": "activily",
+          "correctAnswer": "activity",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747521",
+          "studentName": "马欣然",
+          "questionContext": "",
+          "studentAnswer": "all ity",
+          "correctAnswer": "activity",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747526",
+          "studentName": "王铭泽",
+          "questionContext": "",
+          "studentAnswer": "adivity was",
+          "correctAnswer": "activity",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747516",
+          "studentName": "刘冠临",
+          "questionContext": "",
+          "studentAnswer": "actiity. s",
+          "correctAnswer": "activity",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754458",
+          "studentName": "王李嘉瑞",
+          "questionContext": "",
+          "studentAnswer": "activety",
+          "correctAnswer": "activity",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-017",
+      "text": "looking",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "lucking",
+          "correctAnswer": "looking",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "lackny",
+          "correctAnswer": "looking",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "lacksy",
+          "correctAnswer": "looking",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "lacking",
+          "correctAnswer": "looking",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "lckiny",
+          "correctAnswer": "looking",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在1名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-018",
+      "text": "detail",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747564",
+          "studentName": "梁馨元",
+          "questionContext": "",
+          "studentAnswer": "detials",
+          "correctAnswer": "detail",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754423",
+          "studentName": "于博然",
+          "questionContext": "",
+          "studentAnswer": "deterls",
+          "correctAnswer": "detail",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747564",
+          "studentName": "梁馨元",
+          "questionContext": "",
+          "studentAnswer": "detials",
+          "correctAnswer": "detail",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754494",
+          "studentName": "李彦君",
+          "questionContext": "",
+          "studentAnswer": "ditails",
+          "correctAnswer": "detail",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747564",
+          "studentName": "梁馨元",
+          "questionContext": "",
+          "studentAnswer": "detials",
+          "correctAnswer": "detail",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-019",
+      "text": "enthusiasm",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754462",
+          "studentName": "吴骁航",
+          "questionContext": "",
+          "studentAnswer": "onthusiasim",
+          "correctAnswer": "enthusiasm",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754494",
+          "studentName": "李彦君",
+          "questionContext": "",
+          "studentAnswer": "enthusias tion",
+          "correctAnswer": "enthusiasm",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754421",
+          "studentName": "杨梓涵",
+          "questionContext": "",
+          "studentAnswer": "entluusiasm",
+          "correctAnswer": "enthusiasm",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754494",
+          "studentName": "李彦君",
+          "questionContext": "",
+          "studentAnswer": "euthusiasim",
+          "correctAnswer": "enthusiasm",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754494",
+          "studentName": "李彦君",
+          "questionContext": "",
+          "studentAnswer": "enthuiasim",
+          "correctAnswer": "enthusiasm",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-020",
+      "text": "truly",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747588",
+          "studentName": "张博悦",
+          "questionContext": "",
+          "studentAnswer": "truely",
+          "correctAnswer": "truly",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "questionContext": "",
+          "studentAnswer": "truely",
+          "correctAnswer": "truly",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754458",
+          "studentName": "王李嘉瑞",
+          "questionContext": "",
+          "studentAnswer": "truely",
+          "correctAnswer": "truly",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "truely",
+          "correctAnswer": "truly",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "questionContext": "",
+          "studentAnswer": "tray",
+          "correctAnswer": "truly",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-021",
+      "text": "self",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747529",
+          "studentName": "王子墨",
+          "questionContext": "",
+          "studentAnswer": "selfl",
+          "correctAnswer": "self",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754402",
+          "studentName": "吕曈夏",
+          "questionContext": "",
+          "studentAnswer": "seft",
+          "correctAnswer": "self",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "",
+          "studentAnswer": "syt",
+          "correctAnswer": "self",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747586",
+          "studentName": "杨昀翰",
+          "questionContext": "",
+          "studentAnswer": "wolf",
+          "correctAnswer": "self",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "selfn",
+          "correctAnswer": "self",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-022",
+      "text": "chose",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754443",
+          "studentName": "李卓宣",
+          "questionContext": "",
+          "studentAnswer": "choce",
+          "correctAnswer": "chose",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747564",
+          "studentName": "梁馨元",
+          "questionContext": "",
+          "studentAnswer": "choosed",
+          "correctAnswer": "chose",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "questionContext": "",
+          "studentAnswer": "choosed",
+          "correctAnswer": "chose",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747541",
+          "studentName": "赵朔羲",
+          "questionContext": "",
+          "studentAnswer": "choosed",
+          "correctAnswer": "chose",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747560",
+          "studentName": "柯奕铭",
+          "questionContext": "",
+          "studentAnswer": "choosed",
+          "correctAnswer": "chose",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-023",
+      "text": "reading",
+      "itemType": "word",
+      "scoreRate": 71.9,
+      "errorRate": 28.1,
+      "affectedStudentCount": 2,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754462",
+          "studentName": "吴骁航",
+          "questionContext": "",
+          "studentAnswer": "readin",
+          "correctAnswer": "reading",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "readly",
+          "correctAnswer": "reading",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "readny",
+          "correctAnswer": "reading",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "readin",
+          "correctAnswer": "reading",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "readin",
+          "correctAnswer": "reading",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在2名学生中出现5次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 51
+    },
+    {
+      "id": "ww-024",
+      "text": "studying",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754443",
+          "studentName": "李卓宣",
+          "questionContext": "",
+          "studentAnswer": "studyling",
+          "correctAnswer": "studying",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754408",
+          "studentName": "滕易朴",
+          "questionContext": "",
+          "studentAnswer": "studing",
+          "correctAnswer": "studying",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "studing",
+          "correctAnswer": "studying",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754462",
+          "studentName": "吴骁航",
+          "questionContext": "",
+          "studentAnswer": "studing",
+          "correctAnswer": "studying",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-025",
+      "text": "strengthen",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747564",
+          "studentName": "梁馨元",
+          "questionContext": "",
+          "studentAnswer": "strenghthen",
+          "correctAnswer": "strengthen",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747562",
+          "studentName": "李禹辰",
+          "questionContext": "",
+          "studentAnswer": "strenthen",
+          "correctAnswer": "strengthen",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747521",
+          "studentName": "马欣然",
+          "questionContext": "",
+          "studentAnswer": "strenghes",
+          "correctAnswer": "strengthen",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "strengtening",
+          "correctAnswer": "strengthen",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-026",
+      "text": "overcome",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747588",
+          "studentName": "张博悦",
+          "questionContext": "",
+          "studentAnswer": "overana",
+          "correctAnswer": "overcome",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754462",
+          "studentName": "吴骁航",
+          "questionContext": "",
+          "studentAnswer": "overlome the",
+          "correctAnswer": "overcome",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "",
+          "studentAnswer": "ovewr",
+          "correctAnswer": "overcome",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "",
+          "studentAnswer": "overome",
+          "correctAnswer": "overcome",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-027",
+      "text": "thoughts",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "thouhts",
+          "correctAnswer": "thoughts",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747593",
+          "studentName": "朱浩尘",
+          "questionContext": "",
+          "studentAnswer": "15-thought",
+          "correctAnswer": "thoughts",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "questionContext": "",
+          "studentAnswer": "thagh's",
+          "correctAnswer": "thoughts",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "",
+          "studentAnswer": "thoughtu1",
+          "correctAnswer": "thoughts",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-028",
+      "text": "divided",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747582",
+          "studentName": "徐若芊",
+          "questionContext": "",
+          "studentAnswer": "decided",
+          "correctAnswer": "divided",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747562",
+          "studentName": "李禹辰",
+          "questionContext": "",
+          "studentAnswer": "devided",
+          "correctAnswer": "divided",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747521",
+          "studentName": "马欣然",
+          "questionContext": "",
+          "studentAnswer": "decided",
+          "correctAnswer": "divided",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "devided",
+          "correctAnswer": "divided",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-029",
+      "text": "delighted",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 2,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "",
+          "studentAnswer": "delight",
+          "correctAnswer": "delighted",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "",
+          "studentAnswer": "dcighted",
+          "correctAnswer": "delighted",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "",
+          "studentAnswer": "delight",
+          "correctAnswer": "delighted",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747560",
+          "studentName": "柯奕铭",
+          "questionContext": "",
+          "studentAnswer": "deligted",
+          "correctAnswer": "delighted",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在2名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-030",
+      "text": "better",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "Bette",
+          "correctAnswer": "better",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "letter",
+          "correctAnswer": "better",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747588",
+          "studentName": "张博悦",
+          "questionContext": "",
+          "studentAnswer": "moreort",
+          "correctAnswer": "better",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747521",
+          "studentName": "马欣然",
+          "questionContext": "",
+          "studentAnswer": "metter",
+          "correctAnswer": "better",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-031",
+      "text": "showcase",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754402",
+          "studentName": "吕曈夏",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "showase",
+          "correctAnswer": "showcase",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754421",
+          "studentName": "杨梓涵",
+          "questionContext": "",
+          "studentAnswer": "strowcase",
+          "correctAnswer": "showcase",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754402",
+          "studentName": "吕曈夏",
+          "questionContext": "",
+          "studentAnswer": "showcale",
+          "correctAnswer": "showcase",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "shwwases",
+          "correctAnswer": "showcase",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-032",
+      "text": "choose",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "chose",
+          "correctAnswer": "choose",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747528",
+          "studentName": "王语含",
+          "questionContext": "",
+          "studentAnswer": "chossing",
+          "correctAnswer": "choose",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "to shoose",
+          "correctAnswer": "choose",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754458",
+          "studentName": "王李嘉瑞",
+          "questionContext": "",
+          "studentAnswer": "hoose",
+          "correctAnswer": "choose",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-033",
+      "text": "promote",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747582",
+          "studentName": "徐若芊",
+          "questionContext": "",
+          "studentAnswer": "prompt",
+          "correctAnswer": "promote",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754423",
+          "studentName": "于博然",
+          "questionContext": "",
+          "studentAnswer": "prompt",
+          "correctAnswer": "promote",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754443",
+          "studentName": "李卓宣",
+          "questionContext": "",
+          "studentAnswer": "prompt",
+          "correctAnswer": "promote",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "promotioor",
+          "correctAnswer": "promote",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-034",
+      "text": "develop",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754454",
+          "studentName": "师若棋",
+          "questionContext": "",
+          "studentAnswer": "develp",
+          "correctAnswer": "develop",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747560",
+          "studentName": "柯奕铭",
+          "questionContext": "",
+          "studentAnswer": "developp",
+          "correctAnswer": "develop",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754421",
+          "studentName": "杨梓涵",
+          "questionContext": "",
+          "studentAnswer": "devolop",
+          "correctAnswer": "develop",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754431",
+          "studentName": "高嘉成",
+          "questionContext": "",
+          "studentAnswer": "develope",
+          "correctAnswer": "develop",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-035",
+      "text": "beautiful",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747564",
+          "studentName": "梁馨元",
+          "questionContext": "",
+          "studentAnswer": "beatu tiful",
+          "correctAnswer": "beautiful",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "beatiful",
+          "correctAnswer": "beautiful",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754462",
+          "studentName": "吴骁航",
+          "questionContext": "",
+          "studentAnswer": "beatiful",
+          "correctAnswer": "beautiful",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747528",
+          "studentName": "王语含",
+          "questionContext": "",
+          "studentAnswer": "grantful",
+          "correctAnswer": "beautiful",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-036",
+      "text": "daily",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "daliy",
+          "correctAnswer": "daily",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "daliy",
+          "correctAnswer": "daily",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754423",
+          "studentName": "于博然",
+          "questionContext": "",
+          "studentAnswer": "deilly",
+          "correctAnswer": "daily",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747569",
+          "studentName": "潘好",
+          "questionContext": "",
+          "studentAnswer": "decily",
+          "correctAnswer": "daily",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-037",
+      "text": "video",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747541",
+          "studentName": "赵朔羲",
+          "questionContext": "",
+          "studentAnswer": "vedio",
+          "correctAnswer": "video",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747528",
+          "studentName": "王语含",
+          "questionContext": "",
+          "studentAnswer": "wide",
+          "correctAnswer": "video",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747593",
+          "studentName": "朱浩尘",
+          "questionContext": "",
+          "studentAnswer": "vide.",
+          "correctAnswer": "video",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747541",
+          "studentName": "赵朔羲",
+          "questionContext": "",
+          "studentAnswer": "vedio",
+          "correctAnswer": "video",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-038",
+      "text": "forward",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 2,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "forard",
+          "correctAnswer": "forward",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "for ward",
+          "correctAnswer": "forward",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "fruad",
+          "correctAnswer": "forward",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754421",
+          "studentName": "杨梓涵",
+          "questionContext": "",
+          "studentAnswer": "forword",
+          "correctAnswer": "forward",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在2名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-039",
+      "text": "contribute",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747588",
+          "studentName": "张博悦",
+          "questionContext": "",
+          "studentAnswer": "conutributed",
+          "correctAnswer": "contribute",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747588",
+          "studentName": "张博悦",
+          "questionContext": "",
+          "studentAnswer": "ontributed",
+          "correctAnswer": "contribute",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754462",
+          "studentName": "吴骁航",
+          "questionContext": "",
+          "studentAnswer": "contributin",
+          "correctAnswer": "contribute",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "ontributing",
+          "correctAnswer": "contribute",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-040",
+      "text": "interested",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754402",
+          "studentName": "吕曈夏",
+          "questionContext": "",
+          "studentAnswer": "intoresta",
+          "correctAnswer": "interested",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747526",
+          "studentName": "王铭泽",
+          "questionContext": "",
+          "studentAnswer": "interesled",
+          "correctAnswer": "interested",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754402",
+          "studentName": "吕曈夏",
+          "questionContext": "",
+          "studentAnswer": "interesta",
+          "correctAnswer": "interested",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "intersted",
+          "correctAnswer": "interested",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-041",
+      "text": "exhibition",
+      "itemType": "word",
+      "scoreRate": 77.5,
+      "errorRate": 22.5,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747526",
+          "studentName": "王铭泽",
+          "questionContext": "",
+          "studentAnswer": "exibition",
+          "correctAnswer": "exhibition",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "exhibion",
+          "correctAnswer": "exhibition",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747526",
+          "studentName": "王铭泽",
+          "questionContext": "",
+          "studentAnswer": "exibition",
+          "correctAnswer": "exhibition",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754458",
+          "studentName": "王李嘉瑞",
+          "questionContext": "",
+          "studentAnswer": "exhibibiton",
+          "correctAnswer": "exhibition",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现4次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 47
+    },
+    {
+      "id": "ww-042",
+      "text": "problem",
+      "itemType": "word",
+      "scoreRate": 83.1,
+      "errorRate": 16.9,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747593",
+          "studentName": "朱浩尘",
+          "questionContext": "",
+          "studentAnswer": "the proile",
+          "correctAnswer": "problem",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "problom",
+          "correctAnswer": "problem",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747588",
+          "studentName": "张博悦",
+          "questionContext": "",
+          "studentAnswer": "robleay",
+          "correctAnswer": "problem",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现3次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-043",
+      "text": "solution",
+      "itemType": "word",
+      "scoreRate": 83.1,
+      "errorRate": 16.9,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754423",
+          "studentName": "于博然",
+          "questionContext": "",
+          "studentAnswer": "sollution",
+          "correctAnswer": "solution",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "",
+          "studentAnswer": "soutions a lot",
+          "correctAnswer": "solution",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754460",
+          "studentName": "王乔楚",
+          "questionContext": "",
+          "studentAnswer": "soluton",
+          "correctAnswer": "solution",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现3次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-044",
+      "text": "solve",
+      "itemType": "word",
+      "scoreRate": 83.1,
+      "errorRate": 16.9,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754401",
+          "studentName": "刘盈杉",
+          "questionContext": "",
+          "studentAnswer": "soving",
+          "correctAnswer": "solve",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754462",
+          "studentName": "吴骁航",
+          "questionContext": "",
+          "studentAnswer": "soving,",
+          "correctAnswer": "solve",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747521",
+          "studentName": "马欣然",
+          "questionContext": "",
+          "studentAnswer": "soving",
+          "correctAnswer": "solve",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现3次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-045",
+      "text": "different",
+      "itemType": "word",
+      "scoreRate": 83.1,
+      "errorRate": 16.9,
+      "affectedStudentCount": 2,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754494",
+          "studentName": "李彦君",
+          "questionContext": "",
+          "studentAnswer": "difecent",
+          "correctAnswer": "different",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754494",
+          "studentName": "李彦君",
+          "questionContext": "",
+          "studentAnswer": "diferent",
+          "correctAnswer": "different",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "questionContext": "假设你是红星中学高三学生李华。你学校即将举办 “未来已来”（The Future is Here）的科技节活动。你打算邀请你的国际部好友 Jim 参加。请你给他写一封邮件，内容包括：1.  活动安排（",
+          "studentAnswer": "difherent",
+          "correctAnswer": "different",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在2名学生中出现3次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-046",
+      "text": "create",
+      "itemType": "word",
+      "scoreRate": 83.1,
+      "errorRate": 16.9,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747548",
+          "studentName": "庄颜",
+          "questionContext": "",
+          "studentAnswer": "creat",
+          "correctAnswer": "create",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747576",
+          "studentName": "王梓木",
+          "questionContext": "",
+          "studentAnswer": "great",
+          "correctAnswer": "create",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747564",
+          "studentName": "梁馨元",
+          "questionContext": "",
+          "studentAnswer": "creat",
+          "correctAnswer": "create",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现3次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-047",
+      "text": "residents",
+      "itemType": "word",
+      "scoreRate": 83.1,
+      "errorRate": 16.9,
+      "affectedStudentCount": 2,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "visidents",
+          "correctAnswer": "residents",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "Risidents",
+          "correctAnswer": "residents",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747588",
+          "studentName": "张博悦",
+          "questionContext": "",
+          "studentAnswer": "presideants",
+          "correctAnswer": "residents",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在2名学生中出现3次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-048",
+      "text": "environmental",
+      "itemType": "word",
+      "scoreRate": 83.1,
+      "errorRate": 16.9,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24747521",
+          "studentName": "马欣然",
+          "questionContext": "",
+          "studentAnswer": "the enviromental",
+          "correctAnswer": "environmental",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747552",
+          "studentName": "陈孝校",
+          "questionContext": "",
+          "studentAnswer": "environmene",
+          "correctAnswer": "environmental",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24747582",
+          "studentName": "徐若芊",
+          "questionContext": "",
+          "studentAnswer": "enviromental",
+          "correctAnswer": "environmental",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现3次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-049",
+      "text": "and",
+      "itemType": "word",
+      "scoreRate": 83.1,
+      "errorRate": 16.9,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [
+        {
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "questionContext": "",
+          "studentAnswer": "athat",
+          "correctAnswer": "and",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754429",
+          "studentName": "禚奕辰",
+          "questionContext": "",
+          "studentAnswer": "areo,",
+          "correctAnswer": "and",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        },
+        {
+          "studentId": "24754443",
+          "studentName": "李卓宣",
+          "questionContext": "",
+          "studentAnswer": "anch",
+          "correctAnswer": "and",
+          "errorType": "spelling",
+          "sourceTaskName": "平台词汇练习",
+          "sourceTime": ""
+        }
+      ],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现3次拼写错误。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    }
+  ],
+  "weakStudents": [
+    {
+      "id": "24754429",
+      "name": "禚奕辰",
+      "scoreRate": 78.5,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共27次拼写错误，涉及23个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 22,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747576",
+      "name": "王梓木",
+      "scoreRate": 78.5,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共27次拼写错误，涉及27个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 22,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754402",
+      "name": "吕曈夏",
+      "scoreRate": 77.7,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共28次拼写错误，涉及24个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 23,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754401",
+      "name": "刘盈杉",
+      "scoreRate": 76.9,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共29次拼写错误，涉及27个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 24,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747526",
+      "name": "王铭泽",
+      "scoreRate": 76.1,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共30次拼写错误，涉及28个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 24,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754421",
+      "name": "杨梓涵",
+      "scoreRate": 73.7,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共33次拼写错误，涉及30个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 27,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747588",
+      "name": "张博悦",
+      "scoreRate": 72.9,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共34次拼写错误，涉及32个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 28,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747593",
+      "name": "朱浩尘",
+      "scoreRate": 72.1,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共35次拼写错误，涉及33个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 28,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747528",
+      "name": "王语含",
+      "scoreRate": 72.1,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共35次拼写错误，涉及33个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 28,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747541",
+      "name": "赵朔羲",
+      "scoreRate": 71.3,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共36次拼写错误，涉及34个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 29,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754435",
+      "name": "黄泽平",
+      "scoreRate": 70.5,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共37次拼写错误，涉及36个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 30,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747564",
+      "name": "梁馨元",
+      "scoreRate": 69.7,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共38次拼写错误，涉及34个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 31,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754470",
+      "name": "张瀚夫",
+      "scoreRate": 68.1,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共40次拼写错误，涉及34个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 32,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754494",
+      "name": "李彦君",
+      "scoreRate": 65.0,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共44次拼写错误，涉及40个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 35,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754443",
+      "name": "李卓宣",
+      "scoreRate": 65.0,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共44次拼写错误，涉及42个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 35,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754462",
+      "name": "吴骁航",
+      "scoreRate": 64.2,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共45次拼写错误，涉及43个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 36,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747548",
+      "name": "庄颜",
+      "scoreRate": 63.4,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共46次拼写错误，涉及41个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 37,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754423",
+      "name": "于博然",
+      "scoreRate": 61.8,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共48次拼写错误，涉及47个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 39,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747521",
+      "name": "马欣然",
+      "scoreRate": 48.2,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共65次拼写错误，涉及61个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 52,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747552",
+      "name": "陈孝校",
+      "scoreRate": 41.9,
+      "weakWords": [
+        "laborer/labourer",
+        "AI/artificial intelligence",
+        "technology",
+        "writing",
+        "Beijing",
+        "efficiency",
+        "your",
+        "school"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共73次拼写错误，涉及62个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 59,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "weakWordDetails": []
+    }
+  ],
+  "goodStudents": [
+    {
+      "id": "24747529",
+      "name": "王子墨",
+      "scoreRate": 94.4,
+      "masteredCount": 7,
+      "highlight": "词汇拼写错误较少，仅7次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747569",
+      "name": "潘好",
+      "scoreRate": 90.4,
+      "masteredCount": 12,
+      "highlight": "词汇拼写错误较少，仅12次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747518",
+      "name": "刘芮希",
+      "scoreRate": 89.6,
+      "masteredCount": 12,
+      "highlight": "词汇拼写错误较少，仅13次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747560",
+      "name": "柯奕铭",
+      "scoreRate": 89.6,
+      "masteredCount": 12,
+      "highlight": "词汇拼写错误较少，仅13次",
+      "stability": "stable"
+    },
+    {
+      "id": "24754454",
+      "name": "师若棋",
+      "scoreRate": 88.8,
+      "masteredCount": 14,
+      "highlight": "词汇拼写错误较少，仅14次",
+      "stability": "stable"
+    },
+    {
+      "id": "24754428",
+      "name": "周恩昊",
+      "scoreRate": 88.8,
+      "masteredCount": 14,
+      "highlight": "词汇拼写错误较少，仅14次",
+      "stability": "stable"
+    },
+    {
+      "id": "24754431",
+      "name": "高嘉成",
+      "scoreRate": 88.8,
+      "masteredCount": 14,
+      "highlight": "词汇拼写错误较少，仅14次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747582",
+      "name": "徐若芊",
+      "scoreRate": 88.1,
+      "masteredCount": 15,
+      "highlight": "词汇拼写错误较少，仅15次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747586",
+      "name": "杨昀翰",
+      "scoreRate": 87.3,
+      "masteredCount": 15,
+      "highlight": "词汇拼写错误较少，仅16次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747562",
+      "name": "李禹辰",
+      "scoreRate": 86.5,
+      "masteredCount": 17,
+      "highlight": "词汇拼写错误较少，仅17次",
+      "stability": "stable"
+    }
+  ],
+  "interventionRecords": []
+}

@@ -1,0 +1,150 @@
+{
+  "_说明": {
+    "用途": "写作洞察数据模板 — 填写真实数据后会由脚本转换成 WritingInsightData",
+    "数据粒度": "每一条记录 = 一个学生的一次作文批改结果",
+    "字段说明": {
+      "studentName": "学生姓名",
+      "essayTitle": "作文标题",
+      "writingType": "写作类型。可选值：practical(应用文) continuation(读后续写) sync_composition(同步作文) custom_correction(自定义批改) comprehensive_expression(书面表达)",
+      "taskName": "练习任务名称",
+      "date": "批改日期，格式 YYYY-MM-DD",
+      "score": "得分（数字）",
+      "totalScore": "满分（数字），如 20",
+      "level": "等级。可选值：A B C D E",
+      "problems": "本次作文发现的问题列表，可为空数组"
+    },
+    "problems字段说明": {
+      "type": "问题类型。可选值：content_incomplete(内容不完整/要点缺失) structure_unclear(结构不清/段落组织弱) language_accuracy(语言准确性弱/语法错误多) vocabulary_weak(词汇表达弱/用词单一) sentence_monotony(句式单一/句子衔接弱) logic_cohesion(逻辑衔接弱/情节不连贯) format_issue(格式规范问题/应用文格式)",
+      "originalText": "学生的原始错误句子",
+      "explanation": "问题说明（为什么这是问题）",
+      "suggestion": "修改建议",
+      "improvedExample": "改进后的正确例句（可选）"
+    },
+    "填写要点": [
+      "不需要每个学生每篇作文都有问题——完全正确的作文 problems 留空数组即可",
+      "一篇作文可以有多个问题，但建议每篇 1-3 个主要问题",
+      "建议至少覆盖一个班级一次写作练习的数据（30-40 条记录）"
+    ]
+  },
+
+  "classInfo": {
+    "classId": "class-7-3",
+    "className": "初一 1 班",
+    "unitName": "Unit 3 — Food and Drinks"
+  },
+
+  "records": [
+    {
+      "studentName": "张晓明",
+      "essayTitle": "My Favorite Food",
+      "writingType": "sync_composition",
+      "taskName": "Unit 3 同步写作",
+      "date": "2026-05-30",
+      "score": 12,
+      "totalScore": 20,
+      "level": "C",
+      "problems": [
+        {
+          "type": "language_accuracy",
+          "originalText": "He go to school at seven.",
+          "explanation": "主语 He 是第三人称单数，动词 go 应为 goes",
+          "suggestion": "go → goes",
+          "improvedExample": "He goes to school at seven."
+        },
+        {
+          "type": "vocabulary_weak",
+          "originalText": "I like eat apple very much.",
+          "explanation": "like 后应接动名词 eating，且 eat 用词过于简单",
+          "suggestion": "like eating → I enjoy eating / I am fond of",
+          "improvedExample": "I enjoy eating apples very much."
+        }
+      ]
+    },
+    {
+      "studentName": "李华",
+      "essayTitle": "My Favorite Food",
+      "writingType": "sync_composition",
+      "taskName": "Unit 3 同步写作",
+      "date": "2026-05-30",
+      "score": 18,
+      "totalScore": 20,
+      "level": "A",
+      "problems": []
+    },
+    {
+      "studentName": "王芳",
+      "essayTitle": "My Favorite Food",
+      "writingType": "sync_composition",
+      "taskName": "Unit 3 同步写作",
+      "date": "2026-05-30",
+      "score": 10,
+      "totalScore": 20,
+      "level": "D",
+      "problems": [
+        {
+          "type": "structure_unclear",
+          "originalText": "My favorite food is chicken. I have a dog. Chicken is good.",
+          "explanation": "段落跳跃太大，从食物突然跳到宠物再跳回食物，缺少逻辑衔接",
+          "suggestion": "围绕食物主题展开，第二句可以描述为什么喜欢鸡肉",
+          "improvedExample": "My favorite food is chicken. It tastes delicious and is good for my health."
+        },
+        {
+          "type": "sentence_monotony",
+          "originalText": "I like chicken. I like rice. I like juice.",
+          "explanation": "连续三个简单句都是 I like... 句式，缺乏变化",
+          "suggestion": "使用不同句式表达，如 I also enjoy... / My favorite drink is...",
+          "improvedExample": "I like chicken best. I also enjoy rice, and my favorite drink is juice."
+        }
+      ]
+    },
+    {
+      "studentName": "刘洋",
+      "essayTitle": "My Favorite Food",
+      "writingType": "sync_composition",
+      "taskName": "Unit 3 同步写作",
+      "date": "2026-05-30",
+      "score": 16,
+      "totalScore": 20,
+      "level": "B",
+      "problems": [
+        {
+          "type": "format_issue",
+          "originalText": "Let me tell you about my favorite food. My favorite food is dumpling.",
+          "explanation": "同步作文不需要书信格式的开头句，且 dumpling 应用复数 dumplings",
+          "suggestion": "直接开头描述食物，dumpling → dumplings",
+          "improvedExample": "Dumplings are my favorite food. They are a traditional Chinese dish."
+        }
+      ]
+    },
+    {
+      "studentName": "陈思雨",
+      "essayTitle": "My Favorite Food",
+      "writingType": "sync_composition",
+      "taskName": "Unit 3 同步写作",
+      "date": "2026-05-30",
+      "score": 15,
+      "totalScore": 20,
+      "level": "B",
+      "problems": []
+    }
+  ],
+
+  "_excellentWritings_可选": {
+    "说明": "如果有特别优秀的作文，可以单独列出作为范文参考。选填。",
+    "excellentWritings": [
+      {
+        "studentName": "李华",
+        "essayTitle": "My Favorite Food",
+        "writingType": "sync_composition",
+        "taskName": "Unit 3 同步写作",
+        "score": 18,
+        "totalScore": 20,
+        "level": "A",
+        "highlights": "句式多样，逻辑清晰，词汇丰富准确",
+        "excerpt": "I enjoy eating dumplings because they are not only delicious but also represent the warmth of family gatherings."
+      }
+    ]
+  },
+
+  "_说明2": "以上为示例数据。填写后 records 数组多少个都可以，problems 数组也可空。"
+}

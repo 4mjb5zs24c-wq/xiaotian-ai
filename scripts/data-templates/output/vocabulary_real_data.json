@@ -1,0 +1,1828 @@
+{
+  "classId": "class-2023级R6班",
+  "className": "2023级R6班",
+  "unitId": "real-data",
+  "unitName": "平台真实数据",
+  "timeRange": "30d",
+  "updatedAt": "2026-06-11 10:58",
+  "summary": "基于 2023级R6班 共 37 名学生的 1111 条词汇作答数据，主要薄弱类型为「拼不对 / 默写错误」（占比100.0%），高频错词 726 个，薄弱学生 36 人。建议重点加强拼写默写训练和语境应用练习。",
+  "metrics": {
+    "practicedWordCount": 727,
+    "weakWordCount": 726,
+    "weakStudentCount": 36,
+    "mainWeakType": "拼不对 / 默写错误"
+  },
+  "errorTypes": [
+    {
+      "type": "spelling",
+      "label": "拼不对 / 默写错误",
+      "percent": 100.0,
+      "affectedStudentCount": 1111,
+      "exampleWords": [
+        "solve problems",
+        "moments",
+        "filling",
+        "thoughts",
+        "status"
+      ],
+      "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "borderColor": "#f0a060",
+      "bgColor": "#fef8f0"
+    }
+  ],
+  "weakWords": [
+    {
+      "id": "ww-000",
+      "text": "solve problems",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-001",
+      "text": "moments",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-002",
+      "text": "filling",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-003",
+      "text": "thoughts",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-004",
+      "text": "status",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-005",
+      "text": "problem",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 2,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在2名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-006",
+      "text": "from",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-007",
+      "text": "endeavour/endeavor",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-008",
+      "text": "broaden",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在5名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-009",
+      "text": "another",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-010",
+      "text": "daily",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 2,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在2名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-011",
+      "text": "doing",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-012",
+      "text": "consistent",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-013",
+      "text": "brainstorm",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-014",
+      "text": "easily",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-015",
+      "text": "trying",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-016",
+      "text": "enhance",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 2,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在2名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-017",
+      "text": "limitation",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-018",
+      "text": "understanding",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在3名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-019",
+      "text": "solve",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在3名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-020",
+      "text": "contribute",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-021",
+      "text": "bridge",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-022",
+      "text": "endurance",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-023",
+      "text": "way",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-024",
+      "text": "aspect",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-025",
+      "text": "makes",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 2,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在2名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-026",
+      "text": "dreams",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-027",
+      "text": "mindset",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-028",
+      "text": "stepping",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在1名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-029",
+      "text": "involves",
+      "itemType": "word",
+      "scoreRate": 0.0,
+      "errorRate": 100.0,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台练习数据"
+      ],
+      "aiReason": "该词在3名学生中出现错误，错误率100.0%。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    }
+  ],
+  "weakStudents": [
+    {
+      "id": "24747558",
+      "name": "郝一帆",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "interested",
+        "interview",
+        "lives",
+        "create",
+        "video",
+        "heard"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答6次，错误6次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754413",
+      "name": "王紫瑄",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "genres",
+        "into",
+        "firsthand",
+        "involves",
+        "their",
+        "consuming",
+        "voices",
+        "command",
+        "partner",
+        "have"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答10次，错误10次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754426",
+      "name": "赵世琪",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "vertical",
+        "communicating",
+        "GPS",
+        "someone else",
+        "technology",
+        "argument",
+        "exercise",
+        "video",
+        "integrated",
+        "short video"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答28次，错误28次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754404",
+      "name": "齐韵如",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "major",
+        "finally",
+        "suggestions",
+        "important",
+        "trying",
+        "barrier",
+        "electronic",
+        "recommend",
+        "strengthen",
+        "growing"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答44次，错误44次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754418",
+      "name": "邢宗英",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "suggestions",
+        "important",
+        "your",
+        "benefits",
+        "healthy",
+        "technology",
+        "exhibition",
+        "share",
+        "cultural",
+        "strengthen"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答35次，错误35次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754419",
+      "name": "杨小墨",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "slave",
+        "insights",
+        "benefits",
+        "existence",
+        "human",
+        "humans",
+        "integrated",
+        "speed",
+        "favorite/favourite",
+        "latest"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答27次，错误27次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747563",
+      "name": "李宗霖",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "environmentally",
+        "interested",
+        "holding",
+        "heroes",
+        "healthy",
+        "cloth",
+        "hesitation",
+        "by",
+        "evaluate",
+        "supermarket"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答39次，错误39次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754400",
+      "name": "刘嘉来",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "responsibility",
+        "blossom",
+        "emphasize/emphasise",
+        "striving",
+        "smell",
+        "recommend",
+        "scene",
+        "still",
+        "embedded",
+        "also"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答24次，错误24次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754415",
+      "name": "吴灵姝",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "homework",
+        "laziness",
+        "loneliness",
+        "within",
+        "responsibility",
+        "pose",
+        "rich",
+        "confidence",
+        "delighted",
+        "by"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答49次，错误49次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754398",
+      "name": "刘海艺",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "rider",
+        "inherit",
+        "considering",
+        "lifestyle",
+        "technology",
+        "bin",
+        "motivation",
+        "demonstrate",
+        "exhibition",
+        "automatic"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答44次，错误44次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747557",
+      "name": "高睿泽",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "month",
+        "social development",
+        "other",
+        "significantly",
+        "relax",
+        "summarize",
+        "looking",
+        "bike",
+        "Beijing",
+        "delighted"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答37次，错误37次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "19477103",
+      "name": "王予曈",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "ethically",
+        "northern",
+        "navigation",
+        "severe",
+        "communicating",
+        "boundary",
+        "assistant",
+        "display",
+        "diligence",
+        "lifelong"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答13次，错误13次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754407",
+      "name": "孙雅瑄",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "doctor",
+        "arouse",
+        "definitely",
+        "no",
+        "behaviour",
+        "designs",
+        "performance",
+        "exercise",
+        "video",
+        "techniques"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答50次，错误50次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747559",
+      "name": "金桐",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "stuck",
+        "interested",
+        "liberty",
+        "corridor",
+        "efficiency",
+        "safety",
+        "writing",
+        "diverse",
+        "abilities",
+        "makes"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答18次，错误18次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754405",
+      "name": "任一铭",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "showcase",
+        "silently",
+        "workers"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答4次，错误4次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754414",
+      "name": "温馨然",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "last",
+        "feelings",
+        "get",
+        "experience",
+        "advice",
+        "future"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答6次，错误6次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747556",
+      "name": "高晨曦",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "atmosphere",
+        "content",
+        "about",
+        "pop",
+        "interesting",
+        "next",
+        "partner",
+        "peaceful",
+        "safely",
+        "share"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答37次，错误37次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754416",
+      "name": "吴姗珊",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "cane",
+        "teammates",
+        "school",
+        "dream",
+        "relying",
+        "result",
+        "channel",
+        "lives",
+        "expressive",
+        "feet"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答20次，错误20次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754410",
+      "name": "王睿佳",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "obtain",
+        "improvement",
+        "AI/artificial intelligence",
+        "truly",
+        "promote",
+        "allocation",
+        "signs",
+        "abroad",
+        "host",
+        "crucible"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答18次，错误18次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747550",
+      "name": "陈宸安",
+      "scoreRate": 0.0,
+      "weakWords": [
+        "the final exam",
+        "thrilled",
+        "address",
+        "human",
+        "return",
+        "into",
+        "thoughts",
+        "symbol",
+        "resistance",
+        "critical"
+      ],
+      "mainErrorTypes": [
+        "拼写",
+        "语境应用"
+      ],
+      "typicalContext": "共作答30次，错误30次，得分率0.0%。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 99,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100.0,
+          "affectedStudentCount": 1111,
+          "exampleWords": [
+            "solve problems",
+            "moments",
+            "filling",
+            "thoughts",
+            "status"
+          ],
+          "aiReason": "该类型在37名学生中发生1111次，占错题拼不对 / 默写错误维度的主要问题。",
+          "recommendedActions": [
+            "默写",
+            "词汇复习规划"
+          ],
+          "borderColor": "#f0a060",
+          "bgColor": "#fef8f0"
+        }
+      ],
+      "weakWordDetails": []
+    }
+  ],
+  "goodStudents": [],
+  "interventionRecords": []
+}

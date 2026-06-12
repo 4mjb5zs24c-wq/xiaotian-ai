@@ -8,9 +8,11 @@
  *   1. Function entry keywords
  *   2. Specific paper name patterns (province + year + exam type)
  *   3. Sync vocab / sync text keywords
- *   4. Resource type keywords (listening, practice, special, mock, etc.)
- *   5. Context-based comprehensive search (default)
- *   6. No results / unrecognizable (fallback)
+ *   4. Resource type keywords (listening, writing, vocab, grammar, reading, etc.)
+ *   5. Unit N + specific type combination
+ *   6. Context-based comprehensive search (default)
+ *   7. Fuzzy / conversational queries
+ *   8. No results / unrecognizable (fallback)
  */
 
 import type { NewSearchResult, SearchContext, ResourceItem, FunctionEntry, MockActionResult } from './types'
@@ -92,14 +94,46 @@ function normalizeQuery(query: string): string {
     .replace(/[，,。.！!？?、]/g, '')
 }
 
+/**
+ * Check if query is purely digits/special chars (not meaningful search)
+ */
+function isMeaninglessQuery(q: string): boolean {
+  // Pure digits
+  if (/^\d+$/.test(q)) return true
+  // Only special chars
+  if (/^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]+$/.test(q)) return true
+  // Too short (single char)
+  if (q.length < 2) return true
+  return false
+}
+
+/**
+ * Extract unit number from query. Returns null if no unit referenced.
+ */
+function extractUnitNum(q: string, orig: string): string | null {
+  // Try from normalized q
+  const m1 = q.match(/unit\s*(\d+)/)
+  if (m1) return m1[1]
+  // Try from Chinese
+  const m2 = orig.match(/第\s*(\d+)\s*单元/)
+  if (m2) return m2[1]
+  return null
+}
+
 // ── Main Search Engine ────────────────────────────────────
 
 export function matchNewSearch(
   query: string,
   ctx: SearchContext,
 ): NewSearchResult {
-  const q = normalizeQuery(query)
   const orig = query.trim()
+
+  // Handle empty / meaningless queries
+  if (!orig || isMeaninglessQuery(normalizeQuery(orig))) {
+    return SCENARIO_MAP.unrecognizable(orig, ctx)
+  }
+
+  const q = normalizeQuery(orig)
 
   // ── Priority 1: Function Entry Search ──────────────────
   const funcResult = tryFunctionEntryMatch(q, orig)
@@ -116,7 +150,6 @@ export function matchNewSearch(
 
   // ── Priority 4: Sync Text Search ──────────────────────
   if (/同步课文|课文内容|课文原文|课文跟读/.test(q)) {
-    // Check if query hints at flat structure
     if (/topic|话题/.test(q)) {
       return SCENARIO_MAP.sync_text_flat(orig, ctx)
     }
@@ -125,49 +158,102 @@ export function matchNewSearch(
 
   // ── Priority 5: Resource Type Search ──────────────────
 
-  // 听力搜索 (but NOT 听说练习 specifically)
+  // 5a. 写作练习 (must be before P1 批改 to avoid function_entry capture)
+  if (/写作练习|写作训练|作文练习|书面表达|^作文$|应用文|读后续写/.test(q)) {
+    return SCENARIO_MAP.writing(orig, ctx)
+  }
+
+  // 5b. 词汇练习
+  if (/词汇练习|单词练习|单词拼写|词形变化|单词默写|单词听写|^单词$/.test(q)) {
+    return SCENARIO_MAP.vocab_practice(orig, ctx)
+  }
+
+  // 5c. 语法练习
+  if (/语法练习|语法填空|单句语法|语法训练|完形填空|选词填空|短文填空|^语法$/.test(q)) {
+    return SCENARIO_MAP.grammar(orig, ctx)
+  }
+
+  // 5d. 阅读练习
+  if (/阅读理解|阅读练习|阅读训练|阅读七选五|英语阅读|任务型阅读/.test(q)) {
+    return SCENARIO_MAP.reading(orig, ctx)
+  }
+
+  // 5e. 听力模拟 (must be before 模拟/听力 to avoid capture)
+  if (/听力模拟|听力模考/.test(q)) {
+    return SCENARIO_MAP.listening_mock(orig, ctx)
+  }
+
+  // 5f. 听力搜索 (but NOT 听说练习 specifically)
   if (/^听力$|听力资源|听力练习|听力训练|听力素材/.test(q) && !/听说/.test(q)) {
     return SCENARIO_MAP.listening(orig, ctx)
   }
 
-  // 听说搜索 — check for no-results scenario
+  // 5g. 听说搜索 — check for no-results scenario
   if (/听说练习|听说训练|听说资源|听说/.test(q)) {
-    // If region doesn't support speaking practice, show alternatives
     if (ctx.region === 'default' && /Unit\s*1/.test(q)) {
       return SCENARIO_MAP.no_speaking_region(orig, ctx)
     }
     return SCENARIO_MAP.listening(orig, ctx)
   }
 
-  // 同步练习
+  // 5h. 同步练习
   if (/同步练习|同步训练|单元练习/.test(q)) {
     return SCENARIO_MAP.sync_practice(orig, ctx)
   }
 
-  // 专项搜索
+  // 5i. 真题独立搜索 (not captured by P2 paper_name — must be before 专项)
+  if (/^真题$|真题资源|真题库|历年真题|中高考真题|区域精选/.test(q)) {
+    return SCENARIO_MAP.real_exam(orig, ctx)
+  }
+
+  // 5j. 专项搜索
   if (/专项|专项训练|专项练习|词汇专项|语法专项|听力专项|听说专项|写作专项|阅读专项/.test(q)) {
     return SCENARIO_MAP.special_topic(orig, ctx)
   }
 
-  // 模拟搜索
-  if (/模拟|模拟卷|模拟题|模拟试题|单元检测|阶段测试|考前冲刺/.test(q)) {
+  // 5k. 模拟搜索 (must be AFTER 听力模拟)
+  if (/模拟|模拟卷|模拟题|模拟试题|单元检测|阶段测试|考前冲刺|期末考试|期中考试|摸底考试/.test(q)) {
     return SCENARIO_MAP.mock_exam(orig, ctx)
   }
 
-  // 阅读理解
-  if (/阅读理解|阅读练习|阅读训练|阅读/.test(q)) {
-    return SCENARIO_MAP.sync_practice(orig, ctx)
+  // 5l. 配音搜索
+  if (/配音|配音练习|视频配音|趣味配音|同步视频|视频资源/.test(q)) {
+    return SCENARIO_MAP.unit1_comprehensive(orig, ctx)
   }
 
-  // ── Priority 6: Comprehensive / Unit Search ──────────
-  // "Unit N 资源", "Unit N 练习", or general unit-related queries
-  if (/unit\s*\d|第\d单元|单元/.test(q) || /资源|综合|练习/.test(q)) {
+  // ── Priority 6: Unit N + Specific Type Combination ────
+  // "Unit 1 听力", "Unit 3 词汇", "Unit 2 语法" etc.
+  const unitNum = extractUnitNum(q, orig)
+  if (unitNum || /单元/.test(q)) {
+    if (/听力|听说/.test(q)) return SCENARIO_MAP.listening(orig, ctx)
+    if (/词汇|单词|词表/.test(q)) return SCENARIO_MAP.vocab_practice(orig, ctx)
+    if (/语法/.test(q)) return SCENARIO_MAP.grammar(orig, ctx)
+    if (/写作|作文/.test(q)) return SCENARIO_MAP.writing(orig, ctx)
+    if (/阅读/.test(q)) return SCENARIO_MAP.reading(orig, ctx)
+    if (/课文/.test(q)) return SCENARIO_MAP.sync_text_structured(orig, ctx)
+    if (/模拟|检测|测试|考试/.test(q)) return SCENARIO_MAP.mock_exam(orig, ctx)
+    if (/真题/.test(q)) return SCENARIO_MAP.real_exam(orig, ctx)
+    if (/专项/.test(q)) return SCENARIO_MAP.special_topic(orig, ctx)
+    // Default: comprehensive
+    return SCENARIO_MAP.unit1_comprehensive(orig, ctx)
+  }
+
+  // Generic resource categories without Unit prefix
+  if (/资源|综合|练习/.test(q)) {
     return SCENARIO_MAP.unit1_comprehensive(orig, ctx)
   }
 
   // ── Priority 7: Fuzzy / Default ──────────────────────
-  // "有没有资源", "帮我找点练习", "这个单元有什么"
-  if (/有没有|帮我找|有什么|找.*资源|找.*练习|看看/.test(q) || q.length <= 3) {
+  // Conversational queries: "有没有资源", "帮我找点练习"
+  // "阅读" alone is too broad, redirect to reading
+  if (/^阅读$|^阅读资源$/.test(q)) {
+    return SCENARIO_MAP.reading(orig, ctx)
+  }
+  if (/有没有|帮我找|有什么|找.*资源|找.*练习|看看/.test(q)) {
+    return SCENARIO_MAP.unit1_comprehensive(orig, ctx)
+  }
+  // Chinese short queries (2-4 chars, contains Chinese) → comprehensive
+  if (q.length >= 2 && q.length <= 4 && /[一-鿿]/.test(q)) {
     return SCENARIO_MAP.unit1_comprehensive(orig, ctx)
   }
 
@@ -186,8 +272,9 @@ function tryFunctionEntryMatch(
     { pattern: /三方卡|答题卡|纸质答题卡|纸质练习|新建答题卡|自制答题卡|制卡/, scenario: 'function_entry' },
     { pattern: /词表|词单/, scenario: 'wordlist' },
     { pattern: /听写|默写批改|词句|句子听写/, scenario: 'function_entry' },
-    { pattern: /批改|应用文|读后续写|篇章默写/, scenario: 'function_entry' },
+    { pattern: /批改|篇章默写/, scenario: 'function_entry' },
     { pattern: /导入试卷|导入考卷|导入试题/, scenario: 'function_entry' },
+    { pattern: /讲词|单词讲解|词义讲解|讲单词/, scenario: 'function_entry' },
     { pattern: /自定义/, scenario: 'function_entry' },
   ]
 

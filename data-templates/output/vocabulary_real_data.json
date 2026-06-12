@@ -1,0 +1,2199 @@
+{
+  "classId": "class-2023级A18班",
+  "className": "2023级A18班",
+  "unitId": "real-data",
+  "unitName": "平台真实数据（错误记录）",
+  "timeRange": "30d",
+  "updatedAt": "2026-06-11 11:13",
+  "summary": "基于 2023级A18班 共 41 名学生的 2117 条词汇错误记录，共涉及 1247 个不同词汇。平台错因标注均为「不会写」（拼写错误类），高频错词 50 个，薄弱学生 27 人。建议重点加强默写和拼写训练。",
+  "metrics": {
+    "practicedWordCount": 1247,
+    "weakWordCount": 50,
+    "weakStudentCount": 27,
+    "mainWeakType": "拼不对 / 默写错误"
+  },
+  "errorTypes": [
+    {
+      "type": "spelling",
+      "label": "拼不对 / 默写错误",
+      "percent": 100,
+      "affectedStudentCount": 41,
+      "exampleWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance"
+      ],
+      "aiReason": "平台词汇错因数据仅标注'不会写'，归类为拼写错误。41名学生中有2117次拼写错误记录。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划",
+        "组卷"
+      ],
+      "borderColor": "#f0a060",
+      "bgColor": "#fef8f0"
+    },
+    {
+      "type": "contextual_usage",
+      "label": "不会用 / 语境应用弱",
+      "percent": 0,
+      "affectedStudentCount": 0,
+      "exampleWords": [],
+      "aiReason": "当前数据中未单独标记语境应用类型错误，建议平台补充错因分类。",
+      "recommendedActions": [
+        "组卷",
+        "讲词"
+      ],
+      "borderColor": "#4b9fe8",
+      "bgColor": "#f0f6fc"
+    }
+  ],
+  "weakWords": [
+    {
+      "id": "ww-000",
+      "text": "AI/artificial intelligence",
+      "itemType": "word",
+      "scoreRate": 10.0,
+      "errorRate": 90.0,
+      "affectedStudentCount": 15,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在15名学生中出现34次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 99
+    },
+    {
+      "id": "ww-001",
+      "text": "laborer/labourer",
+      "itemType": "word",
+      "scoreRate": 33.8,
+      "errorRate": 66.2,
+      "affectedStudentCount": 14,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在14名学生中出现25次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 80
+    },
+    {
+      "id": "ww-002",
+      "text": "Beijing",
+      "itemType": "word",
+      "scoreRate": 52.4,
+      "errorRate": 47.6,
+      "affectedStudentCount": 9,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在9名学生中出现18次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 66
+    },
+    {
+      "id": "ww-003",
+      "text": "efficiency",
+      "itemType": "word",
+      "scoreRate": 57.6,
+      "errorRate": 42.4,
+      "affectedStudentCount": 10,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在10名学生中出现16次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 62
+    },
+    {
+      "id": "ww-004",
+      "text": "perseverance",
+      "itemType": "word",
+      "scoreRate": 60.3,
+      "errorRate": 39.7,
+      "affectedStudentCount": 10,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在10名学生中出现15次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 60
+    },
+    {
+      "id": "ww-005",
+      "text": "technology",
+      "itemType": "word",
+      "scoreRate": 65.6,
+      "errorRate": 34.4,
+      "affectedStudentCount": 11,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在11名学生中出现13次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 56
+    },
+    {
+      "id": "ww-006",
+      "text": "technologies",
+      "itemType": "word",
+      "scoreRate": 65.6,
+      "errorRate": 34.4,
+      "affectedStudentCount": 7,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在7名学生中出现13次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 56
+    },
+    {
+      "id": "ww-007",
+      "text": "sustainable",
+      "itemType": "word",
+      "scoreRate": 68.2,
+      "errorRate": 31.8,
+      "affectedStudentCount": 8,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在8名学生中出现12次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 54
+    },
+    {
+      "id": "ww-008",
+      "text": "resilience",
+      "itemType": "word",
+      "scoreRate": 70.9,
+      "errorRate": 29.1,
+      "affectedStudentCount": 9,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在9名学生中出现11次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 52
+    },
+    {
+      "id": "ww-009",
+      "text": "strengthen",
+      "itemType": "word",
+      "scoreRate": 73.5,
+      "errorRate": 26.5,
+      "affectedStudentCount": 9,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在9名学生中出现10次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 50
+    },
+    {
+      "id": "ww-010",
+      "text": "horizon",
+      "itemType": "word",
+      "scoreRate": 73.5,
+      "errorRate": 26.5,
+      "affectedStudentCount": 6,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在6名学生中出现10次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 50
+    },
+    {
+      "id": "ww-011",
+      "text": "difficulty",
+      "itemType": "word",
+      "scoreRate": 76.2,
+      "errorRate": 23.8,
+      "affectedStudentCount": 6,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在6名学生中出现9次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 48
+    },
+    {
+      "id": "ww-012",
+      "text": "thrilled",
+      "itemType": "word",
+      "scoreRate": 76.2,
+      "errorRate": 23.8,
+      "affectedStudentCount": 6,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在6名学生中出现9次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 48
+    },
+    {
+      "id": "ww-013",
+      "text": "focus",
+      "itemType": "word",
+      "scoreRate": 76.2,
+      "errorRate": 23.8,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现9次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 48
+    },
+    {
+      "id": "ww-014",
+      "text": "understanding",
+      "itemType": "word",
+      "scoreRate": 78.8,
+      "errorRate": 21.2,
+      "affectedStudentCount": 7,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在7名学生中出现8次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 46
+    },
+    {
+      "id": "ww-015",
+      "text": "modern",
+      "itemType": "word",
+      "scoreRate": 78.8,
+      "errorRate": 21.2,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现8次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 46
+    },
+    {
+      "id": "ww-016",
+      "text": "into",
+      "itemType": "word",
+      "scoreRate": 78.8,
+      "errorRate": 21.2,
+      "affectedStudentCount": 6,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在6名学生中出现8次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 46
+    },
+    {
+      "id": "ww-017",
+      "text": "writing",
+      "itemType": "word",
+      "scoreRate": 78.8,
+      "errorRate": 21.2,
+      "affectedStudentCount": 7,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在7名学生中出现8次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 46
+    },
+    {
+      "id": "ww-018",
+      "text": "experience",
+      "itemType": "word",
+      "scoreRate": 81.5,
+      "errorRate": 18.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现7次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 44
+    },
+    {
+      "id": "ww-019",
+      "text": "forward",
+      "itemType": "word",
+      "scoreRate": 81.5,
+      "errorRate": 18.5,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现7次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 44
+    },
+    {
+      "id": "ww-020",
+      "text": "truly",
+      "itemType": "word",
+      "scoreRate": 81.5,
+      "errorRate": 18.5,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现7次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 44
+    },
+    {
+      "id": "ww-021",
+      "text": "and",
+      "itemType": "word",
+      "scoreRate": 84.1,
+      "errorRate": 15.9,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现6次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-022",
+      "text": "activity",
+      "itemType": "word",
+      "scoreRate": 84.1,
+      "errorRate": 15.9,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现6次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-023",
+      "text": "greeting",
+      "itemType": "word",
+      "scoreRate": 84.1,
+      "errorRate": 15.9,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现6次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-024",
+      "text": "creativity",
+      "itemType": "word",
+      "scoreRate": 84.1,
+      "errorRate": 15.9,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现6次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-025",
+      "text": "algorithm",
+      "itemType": "word",
+      "scoreRate": 84.1,
+      "errorRate": 15.9,
+      "affectedStudentCount": 6,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在6名学生中出现6次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-026",
+      "text": "model",
+      "itemType": "word",
+      "scoreRate": 84.1,
+      "errorRate": 15.9,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现6次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-027",
+      "text": "video",
+      "itemType": "word",
+      "scoreRate": 84.1,
+      "errorRate": 15.9,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现6次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-028",
+      "text": "thinking",
+      "itemType": "word",
+      "scoreRate": 84.1,
+      "errorRate": 15.9,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现6次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-029",
+      "text": "more",
+      "itemType": "word",
+      "scoreRate": 84.1,
+      "errorRate": 15.9,
+      "affectedStudentCount": 6,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在6名学生中出现6次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-030",
+      "text": "environmental",
+      "itemType": "word",
+      "scoreRate": 84.1,
+      "errorRate": 15.9,
+      "affectedStudentCount": 6,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在6名学生中出现6次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 42
+    },
+    {
+      "id": "ww-031",
+      "text": "success",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-032",
+      "text": "cooperation",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-033",
+      "text": "neighborhood/neighbourhood",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-034",
+      "text": "the",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-035",
+      "text": "interested",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在1名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-036",
+      "text": "skills",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-037",
+      "text": "morning",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-038",
+      "text": "like",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-039",
+      "text": "sense",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-040",
+      "text": "skill",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-041",
+      "text": "foundation",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-042",
+      "text": "spirit",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-043",
+      "text": "technological",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-044",
+      "text": "3D",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-045",
+      "text": "mathematics",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 1,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在1名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-046",
+      "text": "assistants",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-047",
+      "text": "grammar",
+      "itemType": "word",
+      "scoreRate": 86.8,
+      "errorRate": 13.2,
+      "affectedStudentCount": 5,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在5名学生中出现5次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 40
+    },
+    {
+      "id": "ww-048",
+      "text": "brainstorm",
+      "itemType": "word",
+      "scoreRate": 89.4,
+      "errorRate": 10.6,
+      "affectedStudentCount": 4,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在4名学生中出现4次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 38
+    },
+    {
+      "id": "ww-049",
+      "text": "convenient",
+      "itemType": "word",
+      "scoreRate": 89.4,
+      "errorRate": 10.6,
+      "affectedStudentCount": 3,
+      "mainErrorType": "spelling",
+      "errorTypes": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        }
+      ],
+      "typicalMistakes": [],
+      "sourceTasks": [
+        "平台词汇练习"
+      ],
+      "aiReason": "该词在3名学生中出现4次拼写错误，高频错词。",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "priorityScore": 38
+    }
+  ],
+  "weakStudents": [
+    {
+      "id": "24754548",
+      "name": "刘灏铭",
+      "scoreRate": 79.6,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共38次拼写错误，涉及36个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 21,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747667",
+      "name": "刘泽尧",
+      "scoreRate": 79.1,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共39次拼写错误，涉及36个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 21,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747681",
+      "name": "王羿祯",
+      "scoreRate": 79.1,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共39次拼写错误，涉及34个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 21,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754528",
+      "name": "张继扬",
+      "scoreRate": 78.6,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共40次拼写错误，涉及38个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 22,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747646",
+      "name": "宗畹青",
+      "scoreRate": 78.6,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共40次拼写错误，涉及38个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 22,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754559",
+      "name": "王宽",
+      "scoreRate": 78.6,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共40次拼写错误，涉及37个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 22,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747692",
+      "name": "臧桂为",
+      "scoreRate": 78.0,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共41次拼写错误，涉及36个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 22,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747672",
+      "name": "曲奕霏",
+      "scoreRate": 75.4,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共46次拼写错误，涉及43个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 25,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747677",
+      "name": "王海尘",
+      "scoreRate": 74.3,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共48次拼写错误，涉及45个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 26,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747644",
+      "name": "张继元",
+      "scoreRate": 73.8,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共49次拼写错误，涉及45个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 27,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747665",
+      "name": "李昀宸",
+      "scoreRate": 71.6,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共53次拼写错误，涉及51个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 29,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754543",
+      "name": "何昊晏",
+      "scoreRate": 71.1,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共54次拼写错误，涉及44个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 29,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754522",
+      "name": "袁嘉锴",
+      "scoreRate": 70.0,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共56次拼写错误，涉及53个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 30,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754568",
+      "name": "闫光泰",
+      "scoreRate": 65.2,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共65次拼写错误，涉及60个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 35,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754564",
+      "name": "徐嘉禾",
+      "scoreRate": 64.1,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共67次拼写错误，涉及52个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 36,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747637",
+      "name": "王栎强",
+      "scoreRate": 62.5,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共70次拼写错误，涉及66个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 38,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24747623",
+      "name": "林润时",
+      "scoreRate": 62.5,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共70次拼写错误，涉及64个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 38,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754530",
+      "name": "周犇",
+      "scoreRate": 61.4,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共72次拼写错误，涉及69个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 39,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754585",
+      "name": "陈乐瑶",
+      "scoreRate": 60.9,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共73次拼写错误，涉及67个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 40,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    },
+    {
+      "id": "24754596",
+      "name": "林子悦",
+      "scoreRate": 59.8,
+      "weakWords": [
+        "AI/artificial intelligence",
+        "laborer/labourer",
+        "Beijing",
+        "efficiency",
+        "perseverance",
+        "technology",
+        "technologies",
+        "sustainable"
+      ],
+      "mainErrorTypes": [
+        "拼不对"
+      ],
+      "typicalContext": "共75次拼写错误，涉及72个词。",
+      "recentTrend": "stable",
+      "recommendedActions": [
+        "默写",
+        "词汇复习规划"
+      ],
+      "weaknessPriorityScore": 41,
+      "errorTypeDistribution": [
+        {
+          "type": "spelling",
+          "label": "拼不对 / 默写错误",
+          "percent": 100
+        },
+        {
+          "type": "contextual_usage",
+          "label": "不会用 / 语境应用弱",
+          "percent": 0
+        }
+      ],
+      "weakWordDetails": []
+    }
+  ],
+  "goodStudents": [
+    {
+      "id": "24747651",
+      "name": "戴明玥",
+      "scoreRate": 99.5,
+      "masteredCount": 1,
+      "highlight": "词汇错误较少，仅1次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747649",
+      "name": "陈卓远",
+      "scoreRate": 97.3,
+      "masteredCount": 5,
+      "highlight": "词汇错误较少，仅5次",
+      "stability": "stable"
+    },
+    {
+      "id": "24754590",
+      "name": "郭嘉谢",
+      "scoreRate": 94.6,
+      "masteredCount": 10,
+      "highlight": "词汇错误较少，仅10次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747701",
+      "name": "支晗升",
+      "scoreRate": 93.6,
+      "masteredCount": 11,
+      "highlight": "词汇错误较少，仅12次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747683",
+      "name": "王振安",
+      "scoreRate": 89.8,
+      "masteredCount": 19,
+      "highlight": "词汇错误较少，仅19次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747695",
+      "name": "张恪宁",
+      "scoreRate": 88.8,
+      "masteredCount": 17,
+      "highlight": "词汇错误较少，仅21次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747687",
+      "name": "徐珺仪",
+      "scoreRate": 86.1,
+      "masteredCount": 23,
+      "highlight": "词汇错误较少，仅26次",
+      "stability": "stable"
+    },
+    {
+      "id": "24754534",
+      "name": "陈汉铭",
+      "scoreRate": 86.1,
+      "masteredCount": 23,
+      "highlight": "词汇错误较少，仅26次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747679",
+      "name": "王烁铭",
+      "scoreRate": 85.0,
+      "masteredCount": 26,
+      "highlight": "词汇错误较少，仅28次",
+      "stability": "stable"
+    },
+    {
+      "id": "24747676",
+      "name": "万卓坤",
+      "scoreRate": 83.9,
+      "masteredCount": 30,
+      "highlight": "词汇错误较少，仅30次",
+      "stability": "stable"
+    }
+  ],
+  "interventionRecords": []
+}

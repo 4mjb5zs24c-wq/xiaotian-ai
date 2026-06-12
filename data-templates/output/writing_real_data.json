@@ -1,0 +1,1062 @@
+{
+  "classId": "class-2023级A18班",
+  "className": "2023级A18班",
+  "unitId": "real-data",
+  "unitName": "平台真实数据",
+  "timeRange": "30d",
+  "updatedAt": "2026-06-11 11:14",
+  "summary": "基于 2023级A18班 共 41 名学生的 9308 条作文批改数据，全部为应用文，平均得分 68.1 分。主要问题为「词汇表达弱 / 用词单一」（占比46.7%），其次为「语言准确性弱 / 语法错误多」。薄弱学生（平均分<60）2 人。",
+  "metrics": {
+    "averageScore": 68.1,
+    "averageLevel": "B",
+    "reviewedEssayCount": 9308,
+    "mainProblemType": "词汇表达弱 / 用词单一",
+    "weakStudentCount": 2,
+    "excellentEssayCount": 10
+  },
+  "problemTypes": [
+    {
+      "id": "pt-vocabulary_weak",
+      "type": "vocabulary_weak",
+      "label": "词汇表达弱 / 用词单一",
+      "borderColor": "#8e7cc3",
+      "bgColor": "#f6f0fc",
+      "percent": 46.7,
+      "affectedStudentCount": 41,
+      "typicalPerformance": "(4347/9308)",
+      "aiReason": "从9308条写作记录中分析，「词汇表达弱 / 用词单一」共出现4347次，占比46.7%，是2023级A18班写作中最突出的问题。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "Therefore, on the cold morning, I got up early and my face was covered in sweat ",
+        "For me, \"Labor creates value\" is no longer a cold motto anymore; it means we can",
+        "Though the process of identifying various waste and guiding smart system was cha"
+      ]
+    },
+    {
+      "id": "pt-language_accuracy",
+      "type": "language_accuracy",
+      "label": "语言准确性弱 / 语法错误多",
+      "borderColor": "#7b9cd6",
+      "bgColor": "#f0f4fc",
+      "percent": 40.6,
+      "affectedStudentCount": 41,
+      "typicalPerformance": "(3775/9308)",
+      "aiReason": "从9308条写作记录中分析，「语言准确性弱 / 语法错误多」共出现3775次，占比40.6%，是2023级A18班写作中最突出的问题。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "For me, \"Labor creates value\" is no longer a cold motto anymore; it means we can",
+        "For me, \"Labor creates value\" is no longer a cold motto anymore; it means we can",
+        "My first task was picking up garbage along streets and sorting them into differe"
+      ]
+    },
+    {
+      "id": "pt-structure_unclear",
+      "type": "structure_unclear",
+      "label": "结构不清 / 段落组织弱",
+      "borderColor": "#f0a060",
+      "bgColor": "#fef8f0",
+      "percent": 6.9,
+      "affectedStudentCount": 40,
+      "typicalPerformance": "(645/9308)",
+      "aiReason": "从9308条写作记录中分析，「结构不清 / 段落组织弱」共出现645次，占比6.9%，是2023级A18班写作中最突出的问题。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "My fellow0 and I to work on.",
+        "My fellow0 and I to work on.",
+        "After that, I r volunteers r used the recyclable bottles we had just collected a"
+      ]
+    },
+    {
+      "id": "pt-format_issue",
+      "type": "format_issue",
+      "label": "格式规范问题 / 应用文格式",
+      "borderColor": "#9ab3cc",
+      "bgColor": "#f5f7fa",
+      "percent": 5.8,
+      "affectedStudentCount": 41,
+      "typicalPerformance": "(541/9308)",
+      "aiReason": "从9308条写作记录中分析，「格式规范问题 / 应用文格式」共出现541次，占比5.8%，是2023级A18班写作中最突出的问题。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "After that.",
+        "The other volunteers and I used the recyclable bottles and containers we had col",
+        "Not only did I notice my green ingenuity but I also realized that the true meani"
+      ]
+    }
+  ],
+  "highFrequencyIssues": [
+    {
+      "problemType": "vocabulary_weak",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24747646",
+          "studentName": "宗畹青",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "Therefore, on the cold morning, I got up early and my face was covered in sweat and my army were shaking after cleaning all the ice in the doorway.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 and my army 换成  , and my arms ",
+          "improvedExample": "Therefore, on the cold morning, I got up early, and my face was covered in sweat, and my arms were shaking after cleaning all the ice in the doorway.",
+          "score": 72.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24747646",
+          "studentName": "宗畹青",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "For me, \"Labor creates value\" is no longer a cold motto anymore; it means we can help others, contribute to the society and make the world better through our own hands, which is how labor can benefit ",
+          "issueExplanation": "表达错误：表达冗余",
+          "revisionSuggestion": "建议删除  anymore ",
+          "improvedExample": "For me, \"Labor creates value\" is no longer a cold motto; it means we can help others, contribute to society, and make the world better through our own hands, which is how labor can benefit me.",
+          "score": 72.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "Though the process of identifying various waste and guiding smart system was challenging, the appreciation from an elderly woman ignited my determination to work on.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 work 换成  carry ",
+          "improvedExample": "Though the process of identifying various wastes and guiding the smart system was challenging, the appreciation from an elderly woman ignited my determination to carry on.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "I have become a more resilient and responsible person during this event.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 during this event 换成  through this experience ",
+          "improvedExample": "I have become a more resilient and responsible person through this experience.",
+          "score": 70.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754528",
+          "studentName": "张继扬",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "Labour shapes us in many ways; it not only fosters our responsibility for community, but also builds our character, leading to a more devoting and caring person.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 devoting 换成  devoted ",
+          "improvedExample": "Labour shapes us in many ways; it not only fosters our responsibility for the community, but also builds our character, leading to a more devoted and caring person.",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754528",
+          "studentName": "张继扬",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My experience was volunteering at a local elorely institution.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 elorely 换成  elderly ",
+          "improvedExample": "My experience was volunteering at a local elderly institution.",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754528",
+          "studentName": "张继扬",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My job was to sweep the floor, watering flowers, helping in the kitchen, and bathing the elders.",
+          "issueExplanation": "固定搭配错误：固定搭配错误",
+          "revisionSuggestion": "建议把 bathing 换成  bathe ",
+          "improvedExample": "My job was to sweep the floor, water flowers, help in the kitchen, and bathe the elders.",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754528",
+          "studentName": "张继扬",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "I suddenly realized that my labour-no matter how hard it seemed really makes a difference in others 'lives; it's worth it.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把   换成  - ",
+          "improvedExample": "I suddenly realized that my labour-no matter how hard it seemed-really makes a difference in others' lives; it's worth it.",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754528",
+          "studentName": "张继扬",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "I finished that day, tiring yet uplifting.",
+          "issueExplanation": "用词错误：分词形容词错误",
+          "revisionSuggestion": "建议把 tiring 换成  tired ",
+          "improvedExample": "I finished that day, tired yet uplifted.",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24754528",
+          "studentName": "张继扬",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "I finished that day, tiring yet uplifting.",
+          "issueExplanation": "用词错误：用词错误",
+          "revisionSuggestion": "建议把 uplifting 换成  uplifted ",
+          "improvedExample": "I finished that day, tired yet uplifted.",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "language_accuracy",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24747646",
+          "studentName": "宗畹青",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "For me, \"Labor creates value\" is no longer a cold motto anymore; it means we can help others, contribute to the society and make the world better through our own hands, which is how labor can benefit ",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议把 the society 换成  society, ",
+          "improvedExample": "For me, \"Labor creates value\" is no longer a cold motto; it means we can help others, contribute to society, and make the world better through our own hands, which is how labor can benefit me.",
+          "score": 72.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24747646",
+          "studentName": "宗畹青",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "For me, \"Labor creates value\" is no longer a cold motto anymore; it means we can help others, contribute to the society and make the world better through our own hands, which is how labor can benefit ",
+          "issueExplanation": "词法错误：代词错误",
+          "revisionSuggestion": "建议把 myself 换成  me ",
+          "improvedExample": "For me, \"Labor creates value\" is no longer a cold motto; it means we can help others, contribute to society, and make the world better through our own hands, which is how labor can benefit me.",
+          "score": 72.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My first task was picking up garbage along streets and sorting them into different categories with the help of AI-powered machine.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议在 streets 之前插入 the",
+          "improvedExample": "My first task was picking up garbage along the streets and sorting it into different categories with the help of an AI-powered machine.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My first task was picking up garbage along streets and sorting them into different categories with the help of AI-powered machine.",
+          "issueExplanation": "词法错误：代词错误",
+          "revisionSuggestion": "建议把 them 换成  it ",
+          "improvedExample": "My first task was picking up garbage along the streets and sorting it into different categories with the help of an AI-powered machine.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My first task was picking up garbage along streets and sorting them into different categories with the help of AI-powered machine.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议在 AI 之前插入 an",
+          "improvedExample": "My first task was picking up garbage along the streets and sorting it into different categories with the help of an AI-powered machine.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "Though the process of identifying various waste and guiding smart system was challenging, the appreciation from an elderly woman ignited my determination to work on.",
+          "issueExplanation": "单复数错误：单复数错误",
+          "revisionSuggestion": "建议把 waste 换成  wastes ",
+          "improvedExample": "Though the process of identifying various wastes and guiding the smart system was challenging, the appreciation from an elderly woman ignited my determination to carry on.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "Though the process of identifying various waste and guiding smart system was challenging, the appreciation from an elderly woman ignited my determination to work on.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议在 smart 之前插入 the",
+          "improvedExample": "Though the process of identifying various wastes and guiding the smart system was challenging, the appreciation from an elderly woman ignited my determination to carry on.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "Not only did I notice my green ingenuity but I also realized that the true meaning of labor lies in contributing to the broader fate of community.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议在 community 之前插入 the",
+          "improvedExample": "Not only did I notice my green ingenuity, but I also realized that the true meaning of labor lies in contributing to the broader fate of the community.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "I have became a more resilient and responsible person during this event.",
+          "issueExplanation": "时态错误：时态错误",
+          "revisionSuggestion": "建议把 became 换成  become ",
+          "improvedExample": "I have become a more resilient and responsible person during this event.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My first task was picking up garbage along streets and sorting them into different categories with the help of AI-powered machine.",
+          "issueExplanation": "词法错误：冠词错误",
+          "revisionSuggestion": "建议在 streets 之前插入 the",
+          "improvedExample": "My first task was picking up garbage along the streets and sorting it into different categories with the help of an AI-powered machine.",
+          "score": 70.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "structure_unclear",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My fellow0 and I to work on.",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议把 fellow0 换成  fellow volunteers ",
+          "improvedExample": "My fellow volunteers and I worked on it.",
+          "score": 70.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My fellow0 and I to work on.",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议把 to work on 换成  worked on it ",
+          "improvedExample": "My fellow volunteers and I worked on it.",
+          "score": 70.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "After that, I r volunteers r used the recyclable bottles we had just collected and containers to grow flowers, turning a vacant community corner into a vibrant public garden.",
+          "issueExplanation": "句子结构错误：语序错误",
+          "revisionSuggestion": "建议把 we had just collected and containers 换成  and containers we had just collected ",
+          "improvedExample": "After that, my fellow volunteers and I used the recyclable bottles and containers we had just collected to grow flowers, turning a vacant community corner into a vibrant public garden.",
+          "score": 70.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754528",
+          "studentName": "张继扬",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My job was to sweep the floor, watering flowers, helping in the kitchen, and bathing the elders.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 watering 换成  water ",
+          "improvedExample": "My job was to sweep the floor, water flowers, help in the kitchen, and bathe the elders.",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754528",
+          "studentName": "张继扬",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My job was to sweep the floor, watering flowers, helping in the kitchen, and bathing the elders.",
+          "issueExplanation": "句子结构错误：误用非谓语动词作谓语",
+          "revisionSuggestion": "建议把 helping 换成  help ",
+          "improvedExample": "My job was to sweep the floor, water flowers, help in the kitchen, and bathe the elders.",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754528",
+          "studentName": "张继扬",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "This experience not only strengthened my e resolution to devote to my community, but also taught me that: Every labour counts.",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议在 to 之前插入 myself",
+          "improvedExample": "This experience not only strengthened my resolution to devote myself to my community, but also taught me that every labour counts.",
+          "score": 69.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24747672",
+          "studentName": "曲奕霏",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "It was an amazing feeling to see how my labor was turned into real results on the dinner table when stirring the pot and smelling the fresh vegetables I had picked that morning.",
+          "issueExplanation": "句子结构错误：误用非谓语动词作谓语",
+          "revisionSuggestion": "建议把 stirring the pot and smelling 换成  I stirred the pot and smelled ",
+          "improvedExample": "It was an amazing feeling to see how my labor was turned into real results on the dinner table when I stirred the pot and smelled the fresh vegetables I had picked that morning.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24747672",
+          "studentName": "曲奕霏",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "During this event, I learned to transplant seedlings from indoors to outdoors, The task required patience-each tiny root had to be placed carefully in the soil without breaking.",
+          "issueExplanation": "句子结构错误：错误使用逗号连接两个完整句子",
+          "revisionSuggestion": "建议把 , 换成  . ",
+          "improvedExample": "During this event, I learned to transplant seedlings from indoors to outdoors. The task required patience-each tiny root had to be placed carefully in the soil without breaking.",
+          "score": 87.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754532",
+          "studentName": "曹煜堃",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "It not only has made me stronger and healthier, but also has taught me that worth and happiness came from sweat and dedication.",
+          "issueExplanation": "句子结构错误：语序错误",
+          "revisionSuggestion": "建议把 not only has 换成  has not only ",
+          "improvedExample": "It has not only made me stronger and healthier, but also has taught me that worth and happiness come from sweat and dedication.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24747661",
+          "studentName": "李家宇",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "It made me struggling when I was attaching threads between different parts of during my first attempt.",
+          "issueExplanation": "句子结构错误：宾语补足语错误",
+          "revisionSuggestion": "建议把 struggling 换成  struggle ",
+          "improvedExample": "It made me struggle when I was attaching threads between different parts during my first attempt.",
+          "score": 52.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "format_issue",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "After that.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议把 . 换成  , ",
+          "improvedExample": "After that,",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "The other volunteers and I used the recyclable bottles and containers we had collected to grow flowers, turning a vacant Community corner into a vibrant public garden.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 Community 换成  community ",
+          "improvedExample": "The other volunteers and I used the recyclable bottles and containers we had collected to grow flowers, turning a vacant community corner into a vibrant public garden.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "Not only did I notice my green ingenuity but I also realized that the true meaning of labor lies in contributing to the broader fate of community.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 but 之前插入 ,",
+          "improvedExample": "Not only did I notice my green ingenuity, but I also realized that the true meaning of labor lies in contributing to the broader fate of the community.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754559",
+          "studentName": "王宽",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "For me, the first experience that springs to mind is participating in the \"Green Neighborhood program.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 Neighborhood 之后插入 \"",
+          "improvedExample": "For me, the first experience that springs to mind is participating in the \"Green Neighborhood\" program.",
+          "score": 70.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24747672",
+          "studentName": "曲奕霏",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "During this event, I learned to transplant seedlings from indoors to out dooms,",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议把 , 换成  . ",
+          "improvedExample": "During this event, I learned to transplant seedlings from indoors to outdoors.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754532",
+          "studentName": "曹煜堃",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "For me, \"Labor creates value is no longer merely a cold motto in the textbook. anymore, it means we can help others, contribute to society, and make the world a better place through our own hands.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 value 之后插入 \"",
+          "improvedExample": "For me, \"Labor creates value\" is no longer merely a cold motto in the textbook. Anymore, it means we can help others, contribute to society, and make the world a better place through our own hands.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754532",
+          "studentName": "曹煜堃",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "For me, \"Labor creates value is no longer merely a cold motto in the textbook. anymore, it means we can help others, contribute to society, and make the world a better place through our own hands.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 anymore 换成  Anymore ",
+          "improvedExample": "For me, \"Labor creates value\" is no longer merely a cold motto in the textbook. Anymore, it means we can help others, contribute to society, and make the world a better place through our own hands.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754524",
+          "studentName": "张贝宁",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "Now when I tutor classmates, I remember the burning in my calves.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 when 之前插入 ,",
+          "improvedExample": "Now, when I tutor classmates, I remember the burning in my calves.",
+          "score": 78.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24747692",
+          "studentName": "臧桂为",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "My most unforgettable labor experience was doing voluntary work as a guide at the national museum.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 national museum 换成  National Museum ",
+          "improvedExample": "My most unforgettable labor experience was doing voluntary work as a guide at the National Museum.",
+          "score": 81.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24747623",
+          "studentName": "林润时",
+          "essayTitle": "Labor Shaped Me",
+          "taskName": "Labor Shaped Me",
+          "writingType": "practical",
+          "originalText": "I caught myself, checked the bag-sealed, warm-and continued delvering, without hesitation.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议删除 , ",
+          "improvedExample": "I caught myself, checked the bag-sealed, warm-and continued delivering without hesitation.",
+          "score": 64.0,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    }
+  ],
+  "weakStudents": [
+    {
+      "id": "24747649",
+      "name": "陈卓远",
+      "averageScore": 49.8,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "格式规范问题 / 应用文格式"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 42.6
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 42.6
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 8.5
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 6.4
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "平台写作任务",
+          "score": 58.11215,
+          "date": ""
+        },
+        {
+          "taskName": "平台写作任务",
+          "score": 58.11215,
+          "date": ""
+        },
+        {
+          "taskName": "平台写作任务",
+          "score": 58.11215,
+          "date": ""
+        },
+        {
+          "taskName": "平台写作任务",
+          "score": 58.11215,
+          "date": ""
+        },
+        {
+          "taskName": "平台写作任务",
+          "score": 58.11215,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础训练",
+        "增加词汇积累和同义替换"
+      ]
+    },
+    {
+      "id": "24754517",
+      "name": "吴昊然",
+      "averageScore": 57.3,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "格式规范问题 / 应用文格式"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 64.4
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 23.6
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 7.3
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 4.7
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "平台写作任务",
+          "score": 81.0,
+          "date": ""
+        },
+        {
+          "taskName": "平台写作任务",
+          "score": 81.0,
+          "date": ""
+        },
+        {
+          "taskName": "平台写作任务",
+          "score": 81.0,
+          "date": ""
+        },
+        {
+          "taskName": "平台写作任务",
+          "score": 81.0,
+          "date": ""
+        },
+        {
+          "taskName": "平台写作任务",
+          "score": 81.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础训练",
+        "增加词汇积累和同义替换"
+      ]
+    }
+  ],
+  "excellentWritings": [
+    {
+      "id": "ew-754559",
+      "studentId": "24754559",
+      "studentName": "王宽",
+      "essayTitle": "Labor Shaped Me",
+      "taskName": "Labor Shaped Me",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "My first task was picking up garbage along streets and sorting them into different categories with the help of AI-powered machine.",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754559",
+      "studentId": "24754559",
+      "studentName": "王宽",
+      "essayTitle": "Labor Shaped Me",
+      "taskName": "Labor Shaped Me",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "My first task was picking up garbage along streets and sorting them into different categories with the help of AI-powered machine.",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754559",
+      "studentId": "24754559",
+      "studentName": "王宽",
+      "essayTitle": "Labor Shaped Me",
+      "taskName": "Labor Shaped Me",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "My first task was picking up garbage along streets and sorting them into different categories with the help of AI-powered machine.",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754559",
+      "studentId": "24754559",
+      "studentName": "王宽",
+      "essayTitle": "Labor Shaped Me",
+      "taskName": "Labor Shaped Me",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "Though the process of identifying various waste and guiding smart system was challenging, the appreciation from an elderly woman ignited my determination to work on.",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754559",
+      "studentId": "24754559",
+      "studentName": "王宽",
+      "essayTitle": "Labor Shaped Me",
+      "taskName": "Labor Shaped Me",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "Though the process of identifying various waste and guiding smart system was challenging, the appreciation from an elderly woman ignited my determination to work on.",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754559",
+      "studentId": "24754559",
+      "studentName": "王宽",
+      "essayTitle": "Labor Shaped Me",
+      "taskName": "Labor Shaped Me",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "Though the process of identifying various waste and guiding smart system was challenging, the appreciation from an elderly woman ignited my determination to work on.",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754559",
+      "studentId": "24754559",
+      "studentName": "王宽",
+      "essayTitle": "Labor Shaped Me",
+      "taskName": "Labor Shaped Me",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "After that.",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754559",
+      "studentId": "24754559",
+      "studentName": "王宽",
+      "essayTitle": "Labor Shaped Me",
+      "taskName": "Labor Shaped Me",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "The other volunteers and I used the recyclable bottles and containers we had collected to grow flowers, turning a vacant Community corner into a vibrant public garden.",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754559",
+      "studentId": "24754559",
+      "studentName": "王宽",
+      "essayTitle": "Labor Shaped Me",
+      "taskName": "Labor Shaped Me",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "Not only did I notice my green ingenuity but I also realized that the true meaning of labor lies in contributing to the broader fate of community.",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754559",
+      "studentId": "24754559",
+      "studentName": "王宽",
+      "essayTitle": "Labor Shaped Me",
+      "taskName": "Labor Shaped Me",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "Not only did I notice my green ingenuity but I also realized that the true meaning of labor lies in contributing to the broader fate of community.",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    }
+  ],
+  "recommendedResources": [
+    {
+      "id": "res-w-1",
+      "title": "应用文写作模板训练",
+      "resourceType": "writing_practice",
+      "tags": [
+        "写作",
+        "应用文"
+      ],
+      "difficulty": "medium",
+      "grade": "高二",
+      "recommendReason": "针对词汇表达弱 / 用词单一问题设计",
+      "canPreview": true,
+      "canAssign": true,
+      "canAddToPaperBasket": true
+    },
+    {
+      "id": "res-w-2",
+      "title": "英语语法精讲精练",
+      "resourceType": "grammar_practice",
+      "tags": [
+        "语法",
+        "写作"
+      ],
+      "difficulty": "medium",
+      "grade": "高二",
+      "recommendReason": "针对语言准确性弱问题设计",
+      "canPreview": true,
+      "canAssign": true,
+      "canAddToPaperBasket": true
+    }
+  ],
+  "generatedSamples": [
+    {
+      "id": "gs-1",
+      "level": "basic",
+      "title": "基础版范文",
+      "content": "根据2023级A18班平均分68.1的写作水平，生成语法简单、词汇基础的应用文范文。",
+      "highlights": "基础句式，规范格式",
+      "suitableFor": "20分以下"
+    },
+    {
+      "id": "gs-2",
+      "level": "improved",
+      "title": "提升版范文",
+      "content": "展示如何减少词汇表达弱 / 用词单一错误，提升表达。",
+      "highlights": "句式多样，表达准确",
+      "suitableFor": "20-25分"
+    },
+    {
+      "id": "gs-3",
+      "level": "excellent",
+      "title": "优秀版范文",
+      "content": "基于平台高分作文的写作风格优化，展示地道表达和高级句式。",
+      "highlights": "逻辑清晰，语言地道",
+      "suitableFor": "25+分"
+    }
+  ],
+  "interventionRecords": []
+}

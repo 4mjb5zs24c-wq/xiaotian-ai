@@ -1,8 +1,7 @@
 /**
- * AI 词汇洞察 — Type Definitions
+ * AI 词汇洞察 — Type Definitions（规则引擎版）
  *
- * 一期不做自由问答、不做导出。
- * 重点：结构化洞察、数据下钻、干预动作、词汇复习方案闭环。
+ * 一期不接大模型，所有洞察/归因/推荐均由规则引擎+统计规则实现。
  */
 
 // ── Home Teaching Concern Card ──────────────────────────
@@ -22,29 +21,119 @@ export interface HomeTeachingConcernCard {
 export type TimeRange = '7d' | '14d' | '30d' | 'semester' | 'current_unit' | 'custom'
 
 export const TIME_RANGE_LABELS: Record<TimeRange, string> = {
-  '7d': '近 7 天',
-  '14d': '近 14 天',
-  '30d': '近 30 天',
-  semester: '本学期',
-  current_unit: '当前单元',
-  custom: '自定义时间范围',
+  '7d': '近 7 天', '14d': '近 14 天', '30d': '近 30 天',
+  semester: '本学期', current_unit: '当前单元', custom: '自定义时间范围',
 }
 
-// ── Error Types (7 fixed categories) ───────────────────
+// ── 4 类平台归因 ───────────────────────────────────────
 
-export type VocabularyErrorType =
-  | 'listening_recognition'
-  | 'spelling'
-  | 'en_to_cn'
-  | 'cn_to_en_confusion'
-  | 'contextual_usage'
-  | 'pronunciation'
-  | 'phrase_chunk'
+export type VocabularyErrorType = 'new_word' | 'pronunciation' | 'spelling' | 'contextual_usage'
+
+export const ERROR_TYPE_META: Record<VocabularyErrorType, { label: string; borderColor: string; bgColor: string; desc: string }> = {
+  spelling:          { label: '不会写', borderColor: '#f0a060', bgColor: '#fef8f0', desc: '拼写错误、漏写、默写错误、格式不规范' },
+  pronunciation:     { label: '读不准', borderColor: '#e55',    bgColor: '#fef0f0', desc: '听辨困难、发音不准、跟读或听写场景中识别错误' },
+  new_word:          { label: '生词',   borderColor: '#7b9cd6', bgColor: '#f0f4fc', desc: '不认识词义、英汉匹配错误、词义理解不稳定' },
+  contextual_usage:  { label: '不会用', borderColor: '#4b9fe8', bgColor: '#f0f6fc', desc: '语境使用错误、搭配不当、词形变化不准确' },
+}
+
+export type IssueType = '生词' | '读不准' | '不会写' | '不会用'
+
+// ══════════════════════════════════════════════════════════════
+// Rule Engine Configuration
+// ══════════════════════════════════════════════════════════════
+
+export const VOCAB_ISSUE_RULES = {
+  issueTypes: ['生词', '读不准', '不会写', '不会用'] as IssueType[],
+
+  typeDescriptions: {
+    '生词':   '不认识 / 不熟悉词义',
+    '读不准': '发音问题 / 辨音问题',
+    '不会写': '拼写错误 / 漏写 / 默写错误 / 格式错误',
+    '不会用': '语用问题 / 语境使用问题 / 搭配问题',
+  } as Record<IssueType, string>,
+
+  /** 题型 → 归因映射 */
+  taskTypeMapping: {
+    '生词':   ['英汉匹配', '中英互译', '词义选择', '单词认读', '词义理解题'],
+    '读不准': ['听力题', '听取信息题', '跟读题', '配音题', '语音识别练习'],
+    '不会写': ['默写', '听写', '单词填空', '英文输入题', '单词拼写'],
+    '不会用': ['语篇填空', '选词填空', '完形填空', '写作', '句子翻译', '词形变化题', '固定搭配题'],
+  } as Record<IssueType, string[]>,
+
+  /** 答案比对辅助规则 */
+  answerComparisonRules: [
+    { condition: '答案为空或完全不相关', rule: '按题型归因' },
+    { condition: '相似但有字母缺失/替换/顺序错误', rule: '不会写' },
+    { condition: '忽略大小写/空格/标点后接近正确答案', rule: '不会写' },
+    { condition: '写成另一个词库内英文词但语境不正确', rule: '不会用' },
+    { condition: '听力/跟读来源中出现音近词或听辨错误', rule: '读不准' },
+  ],
+
+  /** 严重程度规则 */
+  severityRules: {
+    '极高': { maxScoreRate: 30, minAffectedStudents: 10 },
+    '高':   { maxScoreRate: 50, minAffectedStudents: 8 },
+    '中高': { maxScoreRate: 65 },
+    '中':   { maxScoreRate: 80 },
+    '低':   { maxScoreRate: 101 },
+  },
+
+  /** 归因分析文案模板 */
+  reasonTemplates: {
+    '生词':   '该词在词义理解类题目中错误较多，学生对词义不熟悉，建议先进行认读和释义巩固。',
+    '读不准': '该词主要来自听力、听取信息或跟读类练习，学生在听辨或发音环节错误较多，建议结合音频进行跟读和辨音训练。',
+    '不会写': '该词在默写、听写或英文输入类题目中错误较多，主要表现为拼写错误、漏写或格式不规范，建议进行默写和拼写巩固。',
+    '不会用': '该词在语境应用类题目中错误较多，学生对搭配、词形或语境使用掌握不稳定，建议结合例句和语篇练习巩固。',
+  } as Record<IssueType, string>,
+
+  /** 推荐干预动作规则 */
+  recommendationRules: {
+    '生词':   ['加入复习方案', '词义认读练习'],
+    '读不准': ['发起课后PK', '布置跟读练习', '加入复习方案'],
+    '不会写': ['生成默写单', '加入复习方案', '听写巩固'],
+    '不会用': ['布置语境练习', '加入复习方案', '例句语篇巩固'],
+  } as Record<IssueType, string[]>,
+}
+
+// ── Helper ──────────────────────────────────────────────
+
+export function getIssueTypeFromErrorType(et: VocabularyErrorType): IssueType {
+  return ERROR_TYPE_META[et]?.label as IssueType || '不会写'
+}
+
+export function getReasonForIssue(et: VocabularyErrorType): string {
+  const issue = getIssueTypeFromErrorType(et)
+  return VOCAB_ISSUE_RULES.reasonTemplates[issue] || ''
+}
+
+// ── Severity ──────────────────────────────────────────
+
+export type Severity = '极高' | '高' | '中高' | '中' | '低'
+
+export function calcSeverity(scoreRate: number, affectedStudents: number): Severity {
+  const rules = VOCAB_ISSUE_RULES.severityRules
+  if (scoreRate <= rules['极高'].maxScoreRate && affectedStudents >= rules['极高'].minAffectedStudents) return '极高'
+  if (scoreRate <= rules['高'].maxScoreRate || affectedStudents >= rules['高'].minAffectedStudents) return '高'
+  if (scoreRate <= rules['中高'].maxScoreRate) return '中高'
+  if (scoreRate <= rules['中'].maxScoreRate) return '中'
+  return '低'
+}
+
+export const SEVERITY_STYLES: Record<Severity, { bg: string; text: string; border: string }> = {
+  '极高': { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-200' },
+  '高':   { bg: 'bg-orange-50', text: 'text-orange-600', border: 'border-orange-200' },
+  '中高': { bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-200' },
+  '中':   { bg: 'bg-slate-50', text: 'text-slate-500', border: 'border-slate-200' },
+  '低':   { bg: 'bg-slate-50', text: 'text-slate-400', border: 'border-slate-200' },
+}
+
+// ── Error Type Item ─────────────────────────────────────
 
 export interface ErrorTypeItem {
   type: VocabularyErrorType
   label: string
   percent: number
+  desc?: string
   affectedStudentCount: number
   exampleWords: string[]
   aiReason: string
@@ -53,45 +142,72 @@ export interface ErrorTypeItem {
   bgColor: string
 }
 
-export const ERROR_TYPE_META: Record<VocabularyErrorType, { label: string; borderColor: string; bgColor: string }> = {
-  listening_recognition: { label: '听不准 / 听音识词弱', borderColor: '#e55', bgColor: '#fef0f0' },
-  spelling: { label: '拼不对 / 默写错误', borderColor: '#f0a060', bgColor: '#fef8f0' },
-  en_to_cn: { label: '认不出 / 英中匹配弱', borderColor: '#7b9cd6', bgColor: '#f0f4fc' },
-  cn_to_en_confusion: { label: '词义混淆 / 中英匹配弱', borderColor: '#8e7cc3', bgColor: '#f6f0fc' },
-  contextual_usage: { label: '不会用 / 语境应用弱', borderColor: '#4b9fe8', bgColor: '#f0f6fc' },
-  pronunciation: { label: '读不准 / 跟读发音弱', borderColor: '#4caf50', bgColor: '#f0faf0' },
-  phrase_chunk: { label: '语块掌握弱', borderColor: '#9ab3cc', bgColor: '#f5f7fa' },
+// ── Wrong Form / Evidence ──────────────────────────────
+
+export interface WrongForm {
+  text: string
+  students: number
+  count: number
 }
 
-// ── Core Metrics ────────────────────────────────────────
+export interface ErrorEvidence {
+  studentName: string
+  source: string
+  wrongAnswer: string
+  correctAnswer: string
+  question?: string
+  questionId?: string
+  questionType?: string
+  date?: string
+}
+
+// ── Intervention Recommendation ───────────────────────
+
+export interface InterventionRecommendation {
+  id: string
+  title: string
+  content: string
+  actionLabel: string
+  actionDesc: string
+  targetWords?: string[]
+}
+
+// ── Core Metrics ──────────────────────────────────────
 
 export interface VocabularyMetrics {
-  masteryRate: number
   practicedWordCount: number
   weakWordCount: number
   weakStudentCount: number
   mainWeakType: string
 }
 
-// ── Weak Word / Chunk Item ──────────────────────────────
+// ── Weak Word Item ────────────────────────────────────
 
 export interface WeakWordItem {
   id: string
   text: string
   itemType: 'word' | 'chunk'
-  masteryRate: number
+  scoreRate: number
   errorRate: number
+  errorCount?: number
   affectedStudentCount: number
   mainErrorType: VocabularyErrorType
+  /** 多标签：可能同时涉及多个归因类型 */
+  issueTypes?: VocabularyErrorType[]
   errorTypes: { type: VocabularyErrorType; label: string; percent: number }[]
   typicalMistakes: TypicalMistake[]
   sourceTasks: string[]
   aiReason: string
   recommendedActions: string[]
   priorityScore: number
+  severity?: Severity
+  wrongForms?: WrongForm[]
+  evidences?: ErrorEvidence[]
+  /** 练习来源类型 */
+  source?: string
 }
 
-// ── Typical Mistake Detail ──────────────────────────────
+// ── Typical Mistake Detail ────────────────────────────
 
 export interface TypicalMistake {
   studentId: string
@@ -104,12 +220,12 @@ export interface TypicalMistake {
   sourceTime: string
 }
 
-// ── Student Insight ─────────────────────────────────────
+// ── Student Insight ───────────────────────────────────
 
 export interface WeakStudentItem {
   id: string
   name: string
-  masteryRate: number
+  scoreRate: number
   weakWords: string[]
   mainErrorTypes: string[]
   typicalContext: string
@@ -123,13 +239,13 @@ export interface WeakStudentItem {
 export interface GoodStudentItem {
   id: string
   name: string
-  masteryRate: number
+  scoreRate: number
   masteredCount: number
   highlight: string
   stability: 'stable' | 'improving'
 }
 
-// ── Intervention Record ─────────────────────────────────
+// ── Intervention Record ───────────────────────────────
 
 export interface InterventionRecord {
   id: string
@@ -144,54 +260,41 @@ export interface InterventionRecord {
 }
 
 export interface EffectSummary {
-  beforeMasteryRate: number
-  afterMasteryRate: number
+  beforeScoreRate: number
+  afterScoreRate: number
   stillWeakWords: string[]
   improvedStudents: number
   needMorePracticeStudents: number
   suggestion: string
 }
 
-// ── Review Plan ─────────────────────────────────────────
+// ── Review Plan ────────────────────────────────────────
 
 export type ReviewGoal = 'quick_fix' | 'current_unit' | 'stage_exam' | 'weak_student' | 'custom'
 
-export const REVIEW_GOAL_META: Record<ReviewGoal, { label: string; desc: string; defaultDays: number; defaultWordCount: number }> = {
-  quick_fix: { label: '快速巩固近期错词', desc: '集中巩固近期的薄弱词汇和语块，快速提升掌握率。', defaultDays: 3, defaultWordCount: 30 },
-  current_unit: { label: '当前单元词汇复习', desc: '针对当前教学单元的课标词和非课标词进行系统复习。', defaultDays: 7, defaultWordCount: 50 },
-  stage_exam: { label: '阶段 / 考前词汇复习', desc: '覆盖多单元和课标词汇的阶段性综合复习，适合期中期末或考前冲刺。', defaultDays: 14, defaultWordCount: 80 },
-  weak_student: { label: '薄弱学生补练', desc: '针对词汇掌握率偏低的学生进行个性化补练和强化训练。', defaultDays: 7, defaultWordCount: 30 },
-  custom: { label: '自定义复习规划', desc: '自由组合词汇范围、练习频次和复习策略，满足个性化教学需求。', defaultDays: 7, defaultWordCount: 50 },
+export const REVIEW_GOAL_META: Record<ReviewGoal, { label: string; desc: string; defaultDays: number; defaultWordCount: number; defaultRollback: number; masteryRule: string }> = {
+  quick_fix:    { label: '快速巩固近期错词', desc: '当前时间范围内高频错词，优先极高/高严重程度。', defaultDays: 3,  defaultWordCount: 30, defaultRollback: 1, masteryRule: '连续答对 2 次' },
+  current_unit: { label: '当前单元词汇复习', desc: '当前单元课标词、非课标词、当前单元错词。',   defaultDays: 7,  defaultWordCount: 50, defaultRollback: 2, masteryRule: '连续答对 2 次' },
+  stage_exam:   { label: '阶段 / 考前复习',   desc: '多单元词汇、阶段错词、近 30 天高频错词。',    defaultDays: 14, defaultWordCount: 80, defaultRollback: 2, masteryRule: '累计答对 3 次' },
+  weak_student: { label: '薄弱学生补练',     desc: '薄弱学生个人错词、多名薄弱学生共性错词。',      defaultDays: 7,  defaultWordCount: 30, defaultRollback: 2, masteryRule: '连续答对 2 次' },
+  custom:       { label: '自定义复习规划',    desc: '自由组合词汇范围、练习频次和复习策略。',          defaultDays: 7,  defaultWordCount: 50, defaultRollback: 1, masteryRule: '连续答对 2 次' },
 }
-
-// ── Vocabulary Scope ────────────────────────────────────
 
 export type VocabScopeId = 'error_words' | 'sync_unit' | 'platform_extended'
 
 export const VOCAB_SCOPE_OPTIONS: { id: VocabScopeId; label: string; desc: string }[] = [
-  { id: 'error_words',       label: '错词时间范围',  desc: '基于选定时间段内的错词' },
+  { id: 'error_words',       label: '错词范围',      desc: '基于选定时间段内的错词' },
   { id: 'sync_unit',         label: '同步单元词汇',  desc: '选择教学单元对应的课标词及非课标词' },
   { id: 'platform_extended', label: '拓展词汇',      desc: '平台上的词汇专题和考纲词表' },
 ]
 
-// ── Extended Vocab Sub-Options ─────────────────────────
-
 export const EXTENDED_VOCAB_OPTIONS = [
-  '不规则动词',
-  '中考必会词汇和短语',
-  '中考课标1600词话题分类',
-  '课标3500词',
+  '不规则动词', '中考必会词汇和短语', '中考课标1600词话题分类', '课标3500词',
 ] as const
 
 export type ExtendedVocabItem = typeof EXTENDED_VOCAB_OPTIONS[number]
 
-// ── Sync Units ─────────────────────────────────────────
-
-export const SYNC_UNITS = [
-  'Unit 1', 'Unit 2', 'Unit 3', 'Unit 4',
-  'Unit 5', 'Unit 6', 'Unit 7', 'Unit 8',
-] as const
-
+export const SYNC_UNITS = ['Unit 1','Unit 2','Unit 3','Unit 4','Unit 5','Unit 6','Unit 7','Unit 8'] as const
 export type SyncUnit = typeof SYNC_UNITS[number]
 
 export interface ReviewPlanConfig {
@@ -205,49 +308,34 @@ export interface ReviewPlanConfig {
 }
 
 export interface ReviewPlanTask {
-  id: string
-  checked: boolean
-  name: string
-  contentScope: string
-  taskType: string
-  targetType: 'class' | 'group' | 'student'
-  targetName: string
-  scheduledTime: string
-  deadline: string
-  editable: boolean
+  id: string; checked: boolean; name: string; contentScope: string; taskType: string
+  targetType: 'class' | 'group' | 'student'; targetName: string
+  scheduledTime: string; deadline: string; editable: boolean
 }
 
 // ── Top-Level Data Structure ────────────────────────────
 
 export interface VocabularyInsightData {
-  classId: string
-  className: string
-  unitId: string
-  unitName: string
-  timeRange: TimeRange
-  updatedAt: string
-  summary: string
+  classId: string; className: string; unitId: string; unitName: string
+  timeRange: TimeRange; updatedAt: string; summary: string
   metrics: VocabularyMetrics
   errorTypes: ErrorTypeItem[]
   weakWords: WeakWordItem[]
   weakStudents: WeakStudentItem[]
   goodStudents: GoodStudentItem[]
   interventionRecords: InterventionRecord[]
+  recommendations?: InterventionRecommendation[]
+  summaryStats?: {
+    studentCount: number; errorRecordCount: number; practicedWordCount: number
+    highFrequencyWordCount: number; weakStudentCount: number; mainWeakType: string
+  }
 }
 
 // ── Low-value word types to filter out ──────────────────
 
 export const LOW_VALUE_WORD_TYPES = [
-  'pronoun',
-  'preposition',
-  'article',
-  'numeral',
-  'proper_noun',
-  'interjection',
-  'abbreviation',
-  'affix',
-  'letter',
-  'other_low_value',
+  'pronoun','preposition','article','numeral','proper_noun',
+  'interjection','abbreviation','affix','letter','other_low_value',
 ] as const
 
 export type LowValueWordType = typeof LOW_VALUE_WORD_TYPES[number]

@@ -1,0 +1,103 @@
+{
+  "_说明": {
+    "用途": "词汇洞察数据模板 — 填写真实数据后会由脚本转换成 VocabularyInsightData",
+    "数据粒度": "每一条记录 = 一个学生在一次练习中对一个词的作答",
+    "字段说明": {
+      "studentName": "学生姓名",
+      "taskName": "练习名称，如 Unit 1 单词默写（1）",
+      "taskType": "练习类型。可选值：默写 听写 中英检测 词表识记 课后PK 课后领读 语境填词 组卷检测 错词复练",
+      "date": "练习日期，格式 YYYY-MM-DD",
+      "word": "考查的单词或语块，如 welcome 或 What would you like?",
+      "studentAnswer": "学生作答内容（错误答案）",
+      "correctAnswer": "正确答案",
+      "isCorrect": "是否答对（true/false）"
+    },
+    "填写要点": [
+      "不需要只提供错的数据——正确和错误的数据都提供，脚本会自动统计",
+      "同一个学生同一个词允许多条记录（不同练习），脚本会合并统计",
+      "语块（如 What would you like?）和单词放在同一张表即可",
+      "建议至少覆盖一个完整单元的数据，数据量太小程序跑不出有意义的洞察"
+    ]
+  },
+
+  "classInfo": {
+    "classId": "class-7-3",
+    "className": "初一 1 班",
+    "unitName": "Unit 3 — Food and Drinks"
+  },
+
+  "records": [
+    {
+      "studentName": "张晓明",
+      "taskName": "Unit 1 单词默写（1）",
+      "taskType": "默写",
+      "date": "2026-05-28",
+      "word": "welcome",
+      "studentAnswer": "welcom",
+      "correctAnswer": "welcome",
+      "isCorrect": false
+    },
+    {
+      "studentName": "张晓明",
+      "taskName": "Unit 1 单词默写（1）",
+      "taskType": "默写",
+      "date": "2026-05-28",
+      "word": "teacher",
+      "studentAnswer": "teacher",
+      "correctAnswer": "teacher",
+      "isCorrect": true
+    },
+    {
+      "studentName": "李华",
+      "taskName": "Unit 1 听写练习",
+      "taskType": "听写",
+      "date": "2026-05-29",
+      "word": "welcome",
+      "studentAnswer": "wellcome",
+      "correctAnswer": "welcome",
+      "isCorrect": false
+    },
+    {
+      "studentName": "李华",
+      "taskName": "Unit 1 听写练习",
+      "taskType": "听写",
+      "date": "2026-05-29",
+      "word": "student",
+      "studentAnswer": "student",
+      "correctAnswer": "student",
+      "isCorrect": true
+    },
+    {
+      "studentName": "王芳",
+      "taskName": "Unit 1 单词默写（1）",
+      "taskType": "默写",
+      "date": "2026-05-28",
+      "word": "student",
+      "studentAnswer": "studant",
+      "correctAnswer": "student",
+      "isCorrect": false
+    },
+    {
+      "studentName": "刘洋",
+      "taskName": "Unit 1 词汇检测",
+      "taskType": "词表识记",
+      "date": "2026-05-30",
+      "word": "teacher",
+      "studentAnswer": "techer",
+      "correctAnswer": "teacher",
+      "isCorrect": false
+    },
+    {
+      "studentName": "刘洋",
+      "taskName": "Unit 1 词汇检测",
+      "taskType": "词表识记",
+      "date": "2026-05-30",
+      "word": "student",
+      "studentAnswer": "student",
+      "correctAnswer": "student",
+      "isCorrect": true
+    }
+  ],
+
+  "_说明2": "以上为示例数据，请用以上格式填入真实平台数据。records 数组多少个都可以。"
+}

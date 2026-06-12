@@ -1,0 +1,1942 @@
+{
+  "classId": "class-2023级A17班",
+  "className": "2023级A17班",
+  "unitId": "real-data",
+  "unitName": "平台真实数据",
+  "timeRange": "30d",
+  "updatedAt": "2026-06-11 11:30",
+  "summary": "2023级A17班 共 35 名学生，5549 条应用文批改记录，平均 56.5 分。主要问题「词汇表达弱 / 用词单一」(45.5%)，薄弱学生 25 人。",
+  "metrics": {
+    "averageScore": 56.5,
+    "averageLevel": "C",
+    "reviewedEssayCount": 5549,
+    "mainProblemType": "词汇表达弱 / 用词单一",
+    "weakStudentCount": 25,
+    "excellentEssayCount": 10
+  },
+  "problemTypes": [
+    {
+      "id": "pt-vocabulary_weak",
+      "type": "vocabulary_weak",
+      "label": "词汇表达弱 / 用词单一",
+      "borderColor": "#8e7cc3",
+      "bgColor": "#f6f0fc",
+      "percent": 45.5,
+      "affectedStudentCount": 35,
+      "typicalPerformance": "(2525/5549)",
+      "aiReason": "共2525次，占比45.5%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "Greetings! Knowing that you are interested in the technlong powered activity the",
+        "Greetings! Knowing that you are interested in the technlong powered activity the",
+        "I filmed a docmentary-style movie to show how AI-powered smart apps inflhuence c"
+      ]
+    },
+    {
+      "id": "pt-language_accuracy",
+      "type": "language_accuracy",
+      "label": "语言准确性弱 / 语法错误多",
+      "borderColor": "#7b9cd6",
+      "bgColor": "#f0f4fc",
+      "percent": 41.3,
+      "affectedStudentCount": 35,
+      "typicalPerformance": "(2294/5549)",
+      "aiReason": "共2294次，占比41.3%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "Athugh there are plenty of difficulties emerging in the process, I've not only g",
+        "Greetings! I'm glad to know that you are interested about the activity whose the",
+        "Greetings! I'm glad to know that you are interested about the activity whose the"
+      ]
+    },
+    {
+      "id": "pt-structure_unclear",
+      "type": "structure_unclear",
+      "label": "结构不清 / 段落组织弱",
+      "borderColor": "#f0a060",
+      "bgColor": "#fef8f0",
+      "percent": 8.2,
+      "affectedStudentCount": 35,
+      "typicalPerformance": "(456/5549)",
+      "aiReason": "共456次，占比8.2%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "Greetings! Knowing that you are interested in the technlong powered activity the",
+        "'ve gained a lot during this meaningful activity.",
+        "Through this activity, I have acknowledged the high speed of Chinese technology "
+      ]
+    },
+    {
+      "id": "pt-format_issue",
+      "type": "format_issue",
+      "label": "格式规范问题 / 应用文格式",
+      "borderColor": "#9ab3cc",
+      "bgColor": "#f5f7fa",
+      "percent": 4.9,
+      "affectedStudentCount": 33,
+      "typicalPerformance": "(274/5549)",
+      "aiReason": "共274次，占比4.9%。",
+      "recommendedActions": [
+        "推荐写作练习",
+        "范文生成"
+      ],
+      "examples": [
+        "Greeting! Learning that you are interested in my experience of \"Technologe Smart",
+        "My work is named \"Digital intelligent health system\" consisting of two parts: \" ",
+        "Besides, It provide recommendation of food and drinks, cutting back on sugary an"
+      ]
+    }
+  ],
+  "highFrequencyIssues": [
+    {
+      "problemType": "vocabulary_weak",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Greetings! Knowing that you are interested in the technlong powered activity themed \"Intelligent China,\" want to share my workant with you.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 technlong  换成  technology- ",
+          "improvedExample": "Greetings! Knowing that you are interested in the technology-powered activity themed \"Intelligent China,\" I want to share my work with you.",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Greetings! Knowing that you are interested in the technlong powered activity themed \"Intelligent China,\" want to share my workant with you.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 workant 换成  work ",
+          "improvedExample": "Greetings! Knowing that you are interested in the technology-powered activity themed \"Intelligent China,\" I want to share my work with you.",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "I filmed a docmentary-style movie to show how AI-powered smart apps inflhuence common people's lives in China.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 docmentary 换成  documentary ",
+          "improvedExample": "I filmed a documentary-style movie to show how AI-powered smart apps influence common people's lives in China.",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "I filmed a docmentary-style movie to show how AI-powered smart apps inflhuence common people's lives in China.",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 inflhuence 换成  influence ",
+          "improvedExample": "I filmed a documentary-style movie to show how AI-powered smart apps influence common people's lives in China.",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "In the movie, I filled an elderly resident who uses a smart watch to monitor her heart-rates and alrt her to irregdarities, which shwwases the efficiency and convenience that AI-powered apps bring to ",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 filled 换成  filmed ",
+          "improvedExample": "In the movie, I filmed an elderly resident who uses a smart watch to monitor her heart rates and alert her to irregularities, which showcases the efficiency and convenience that AI-powered apps bring ",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "In the movie, I filled an elderly resident who uses a smart watch to monitor her heart-rates and alrt her to irregdarities, which shwwases the efficiency and convenience that AI-powered apps bring to ",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议删除  - ",
+          "improvedExample": "In the movie, I filmed an elderly resident who uses a smart watch to monitor her heart rates and alert her to irregularities, which showcases the efficiency and convenience that AI-powered apps bring ",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "In the movie, I filled an elderly resident who uses a smart watch to monitor her heart-rates and alrt her to irregdarities, which shwwases the efficiency and convenience that AI-powered apps bring to ",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 alrt 换成  alert ",
+          "improvedExample": "In the movie, I filmed an elderly resident who uses a smart watch to monitor her heart rates and alert her to irregularities, which showcases the efficiency and convenience that AI-powered apps bring ",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "In the movie, I filled an elderly resident who uses a smart watch to monitor her heart-rates and alrt her to irregdarities, which shwwases the efficiency and convenience that AI-powered apps bring to ",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 irregdarities 换成  irregularities ",
+          "improvedExample": "In the movie, I filmed an elderly resident who uses a smart watch to monitor her heart rates and alert her to irregularities, which showcases the efficiency and convenience that AI-powered apps bring ",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "In the movie, I filled an elderly resident who uses a smart watch to monitor her heart-rates and alrt her to irregdarities, which shwwases the efficiency and convenience that AI-powered apps bring to ",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 shwwases 换成  showcases ",
+          "improvedExample": "In the movie, I filmed an elderly resident who uses a smart watch to monitor her heart rates and alert her to irregularities, which showcases the efficiency and convenience that AI-powered apps bring ",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Athugh there are plenty of difficulties emerging in the process, I've not only gained a deep incinght into how tecnlyy powered chinese peode's lives, but also realized that technology should be used t",
+          "issueExplanation": "拼写错误：拼写错误",
+          "revisionSuggestion": "建议把 Athugh 换成  Although ",
+          "improvedExample": "Although there are plenty of difficulties emerging in the process, I've not only gained a deep insight into how technology-powered Chinese people's lives are affected, but also realized that technolog",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "language_accuracy",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Athugh there are plenty of difficulties emerging in the process, I've not only gained a deep incinght into how tecnlyy powered chinese peode's lives, but also realized that technology should be used t",
+          "issueExplanation": "语态错误：语态错误",
+          "revisionSuggestion": "建议把 tecnlyy powered chinese peode's lives 换成  technology-powered Chinese people's lives are affected ",
+          "improvedExample": "Although there are plenty of difficulties emerging in the process, I've not only gained a deep insight into how technology-powered Chinese people's lives are affected, but also realized that technolog",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Greetings! I'm glad to know that you are interested about the activity whose theme is \"smart drawing China.\"",
+          "issueExplanation": "词法错误：介词错误",
+          "revisionSuggestion": "建议把 about 换成  in ",
+          "improvedExample": "Greetings! I'm glad to know that you are interested in the activity whose theme is \"Smart Drawing China.\"",
+          "score": 56.745926,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Greetings! I'm glad to know that you are interested about the activity whose theme is \"smart drawing China.\"",
+          "issueExplanation": "词性误用：词性误用",
+          "revisionSuggestion": "建议把 smart drawing 换成  Smart Drawing ",
+          "improvedExample": "Greetings! I'm glad to know that you are interested in the activity whose theme is \"Smart Drawing China.\"",
+          "score": 56.745926,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Let me share the detail wil you.",
+          "issueExplanation": "单复数错误：单复数错误",
+          "revisionSuggestion": "建议把 detail 换成  details ",
+          "improvedExample": "Let me share the details with you.",
+          "score": 56.745926,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "This work shows chinese great progress in technology during the past Po decades, which embodies the Chinese's spirit of countinuly innorating.",
+          "issueExplanation": "词性误用：词性误用",
+          "revisionSuggestion": "建议把 chinese 换成  China's ",
+          "improvedExample": "This work shows China's great progress in technology during the past two decades, which embodies the Chinese spirit of continually innovating.",
+          "score": 56.745926,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "This activity makes me gained a lot.",
+          "issueExplanation": "时态错误：时态错误",
+          "revisionSuggestion": "建议把 makes me gained 换成  has made me gain ",
+          "improvedExample": "This activity has made me gain a lot.",
+          "score": 56.745926,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Through this activity, I have acknowledged the high speed of Chinese technology development as well as boost my confidence of China speed.",
+          "issueExplanation": "词性误用：词性误用",
+          "revisionSuggestion": "建议把 technology 换成  technological ",
+          "improvedExample": "Through this activity, I have acknowledged the high speed of Chinese technological development as well as boosted my confidence in China's speed.",
+          "score": 56.745926,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Through this activity, I have acknowledged the high speed of Chinese technology development as well as boost my confidence of China speed.",
+          "issueExplanation": "词法错误：介词错误",
+          "revisionSuggestion": "建议把 of 换成  in ",
+          "improvedExample": "Through this activity, I have acknowledged the high speed of Chinese technological development as well as boosted my confidence in China's speed.",
+          "score": 56.745926,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Through this activity, I have acknowledged the high speed of Chinese technology development as well as boost my confidence of China speed.",
+          "issueExplanation": "所属关系错误：所属关系错误",
+          "revisionSuggestion": "建议在 speed 之前插入 's",
+          "improvedExample": "Through this activity, I have acknowledged the high speed of Chinese technological development as well as boosted my confidence in China's speed.",
+          "score": 56.745926,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "I have also been more proud of China, wanting to spread this confident to world by this work.",
+          "issueExplanation": "比较级最高级错误：形容词比较级错误",
+          "revisionSuggestion": "建议把 more proud 换成  prouder ",
+          "improvedExample": "I have also been prouder of China, wanting to spread this confidence to the world through this work.",
+          "score": 56.745926,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "structure_unclear",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Greetings! Knowing that you are interested in the technlong powered activity themed \"Intelligent China,\" want to share my workant with you.",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议在 want 之前插入 I",
+          "improvedExample": "Greetings! Knowing that you are interested in the technology-powered activity themed \"Intelligent China,\" I want to share my work with you.",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754452",
+          "studentName": "秦宇昂",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "'ve gained a lot during this meaningful activity.",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议把 've 换成  I've ",
+          "improvedExample": "I've gained a lot during this meaningful activity.",
+          "score": 65.148,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754470",
+          "studentName": "张瀚夫",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Through this activity, I have acknowledged the high speed of Chinese technology development as well as boost my confidence of China speed.",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 boost 换成  boosted ",
+          "improvedExample": "Through this activity, I have acknowledged the high speed of Chinese technological development as well as boosted my confidence in China's speed.",
+          "score": 56.745926,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24754460",
+          "studentName": "王乔楚",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "What do you think of it? Awaiting your response,",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议把 Awaiting your response, 换成  I am awaiting your response. ",
+          "improvedExample": "What do you think of it? I am awaiting your response.",
+          "score": 79.41972,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24747588",
+          "studentName": "张博悦",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "I used to think AI would truly draw under my requests, but surprised, AI not only increased simple items, but added people in my surprised, AI devoted to construct China who are Maoze Dong, Zheuen Lai",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议把 surprised 换成  to my surprise ",
+          "improvedExample": "I used to think AI would truly draw according to my requests, but to my surprise, AI not only added simple items but also added people. To my surprise, AI devoted itself to constructing China by inclu",
+          "score": 64.47647,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24747588",
+          "studentName": "张博悦",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Please feel free to discuss with me.",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议在 with 之前插入 it",
+          "improvedExample": "Please feel free to discuss it with me.",
+          "score": 64.47647,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24747569",
+          "studentName": "潘好",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "It's convenient to gain more knowledge about Chinese traditional culture at home.",
+          "issueExplanation": "句子结构错误：语序错误",
+          "revisionSuggestion": "建议把 Chinese traditional 换成  traditional Chinese ",
+          "improvedExample": "It's convenient to gain more knowledge about traditional Chinese culture at home.",
+          "score": 67.31937,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24754428",
+          "studentName": "周恩昊",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "In the bottom, you can see AI-powered robots guiding passengers, helping seniors to reach the correct platform.",
+          "issueExplanation": "句子结构错误：错误使用逗号连接两个完整句子",
+          "revisionSuggestion": "建议把 , 换成  and ",
+          "improvedExample": "At the bottom, you can see AI-powered robots guiding passengers and helping seniors to reach the correct platform.",
+          "score": 74.33613,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24747560",
+          "studentName": "柯奕铭",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "I used to think China's technology follows foreign, but through my notice on the robots used in daily life such as these running robots in maratiban I realized that China can share and lead the techno",
+          "issueExplanation": "句子结构错误：句子成分残缺",
+          "revisionSuggestion": "建议在 , 之前插入 countries",
+          "improvedExample": "I used to think China's technology follows foreign countries, but through my observation of the robots used in daily life, such as these running robots in marathons, I realize that China can share and",
+          "score": 52.089485,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24747560",
+          "studentName": "柯奕铭",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "I used to think China's technology follows foreign, but through my notice on the robots used in daily life such as these running robots in maratiban I realized that China can share and lead the techno",
+          "issueExplanation": "句子结构错误：并列结构错误",
+          "revisionSuggestion": "建议把 realized 换成  realize ",
+          "improvedExample": "I used to think China's technology follows foreign countries, but through my observation of the robots used in daily life, such as these running robots in marathons, I realize that China can share and",
+          "score": 52.089485,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    },
+    {
+      "problemType": "format_issue",
+      "items": [
+        {
+          "id": "wi-000",
+          "studentId": "24754494",
+          "studentName": "李彦君",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Greeting! Learning that you are interested in my experience of \"Technologe Smartly. Write the Picture of China,\", infoodnce to I would event called. like to fronnce my works you.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议把 . 换成  : ",
+          "improvedExample": "Greeting! Learning that you are interested in my experience of \"Technology Smartly: Write the Picture of China,\" I would like to introduce my works to you by participating in this event.",
+          "score": 60.545082,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-001",
+          "studentId": "24754423",
+          "studentName": "于博然",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "My work is named \"Digital intelligent health system\" consisting of two parts: \" \" Maintaining Sports\" and \"Smart diet\" For sports, it allows students to choose different activities, from football to s",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 intelligent health system 换成  Intelligent Health System, ",
+          "improvedExample": "My work is named \"Digital Intelligent Health System,\" consisting of two parts: \"Maintaining Sports\" and \"Smart Diet.\" For sports, it allows students to choose different activities, from football to sh",
+          "score": 62.186523,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-002",
+          "studentId": "24754423",
+          "studentName": "于博然",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Besides, It provide recommendation of food and drinks, cutting back on sugary and snacks a, with detailed nutrition labels of each foods..",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议把 .. 换成  . ",
+          "improvedExample": "Besides, it provides recommendations of food and drinks, cutting back on sugary snacks, with detailed nutrition labels of each food.",
+          "score": 62.186523,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-003",
+          "studentId": "24747569",
+          "studentName": "潘好",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "I developed an App which includes my drawings about Chinese famous attractions, such as the Forbidden City and the Great Wall.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 App 换成  app ",
+          "improvedExample": "I developed an app which includes my drawings of famous Chinese attractions, such as the Forbidden City and the Great Wall.",
+          "score": 67.31937,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-004",
+          "studentId": "24754428",
+          "studentName": "周恩昊",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Beside the screen, each platform is signed red, yellow or green, which means how long the line is, effectively reduces unnecessary waste of time on waiting.",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 or 之前插入 ,",
+          "improvedExample": "Beside the screen, each platform is marked red, yellow, or green, which indicates how long the line is and effectively reduces unnecessary waste of time waiting.",
+          "score": 74.33613,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-005",
+          "studentId": "24747560",
+          "studentName": "柯奕铭",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Feeling deligted that you are interested in my engagement of \"Lainting China tech-intelligent collection event, I'm writing this letter to share some details.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 tech 换成  Tech ",
+          "improvedExample": "Feeling delighted that you are interested in my engagement in the \"Painting China Tech-Intelligent Collection\" event, I'm writing this letter to share some details.",
+          "score": 52.089485,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-006",
+          "studentId": "24747560",
+          "studentName": "柯奕铭",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "Feeling deligted that you are interested in my engagement of \"Lainting China tech-intelligent collection event, I'm writing this letter to share some details.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 intelligent collection 换成  Intelligent Collection\" ",
+          "improvedExample": "Feeling delighted that you are interested in my engagement in the \"Painting China Tech-Intelligent Collection\" event, I'm writing this letter to share some details.",
+          "score": 52.089485,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-007",
+          "studentId": "24747560",
+          "studentName": "柯奕铭",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "I used to think China's technology follows foreign, but through my notice on the robots used in daily life such as these running robots in maratiban I realized that China can share and lead the techno",
+          "issueExplanation": "标点与格式错误：标点错误",
+          "revisionSuggestion": "建议在 such 之前插入 ,",
+          "improvedExample": "I used to think China's technology follows foreign countries, but through my observation of the robots used in daily life, such as these running robots in marathons, I realize that China can share and",
+          "score": 52.089485,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-008",
+          "studentId": "24754458",
+          "studentName": "王李嘉瑞",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "the family move with an ly moe a point, actively showing Chinese traditional acltun and I learned that AI works best when combined with cultural preserving.",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 the 换成  The ",
+          "improvedExample": "The family moves with an lively mood and a point, actively showing Chinese traditional culture, and I learned that AI works best when combined with cultural preservation.",
+          "score": 58.18612,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        },
+        {
+          "id": "wi-009",
+          "studentId": "24747593",
+          "studentName": "朱浩尘",
+          "essayTitle": "5月23日 英语测练",
+          "taskName": "5月23日 英语测练",
+          "writingType": "practical",
+          "originalText": "This image's most special seature is that it is not a stable picture, but a combination of 12 pictures t which shows the sights of Boring Jin Dynasty to the present day, and gradually it can change th",
+          "issueExplanation": "标点与格式错误：大小写错误",
+          "revisionSuggestion": "建议把 of Boring 换成  from the boring ",
+          "improvedExample": "This image's most special feature is that it is not a stable picture, but a combination of 12 pictures which show the sights from the boring Jin Dynasty to the present day, and gradually it can change",
+          "score": 73.60586,
+          "answerSheetImageUrl": "",
+          "fullEssayId": ""
+        }
+      ]
+    }
+  ],
+  "weakStudents": [
+    {
+      "id": "24747529",
+      "name": "王子墨",
+      "averageScore": 33.0,
+      "level": "D",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 48.1
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 33.3
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 18.5
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747586",
+      "name": "杨昀翰",
+      "averageScore": 36.1,
+      "level": "D",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 61.9
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 26.2
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 9.5
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 2.4
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 7.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747552",
+      "name": "陈孝校",
+      "averageScore": 45.5,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 49.6
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 39.7
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 7.8
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 3.0
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 41.56842,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 41.56842,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 41.56842,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 41.56842,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 41.56842,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747521",
+      "name": "马欣然",
+      "averageScore": 47.5,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 50.2
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 39.2
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 8.4
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 2.3
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 16.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747541",
+      "name": "赵朔羲",
+      "averageScore": 50.7,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 44.7
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 44.3
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 8.2
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 2.7
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 52.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 52.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 52.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 52.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 52.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747576",
+      "name": "王梓木",
+      "averageScore": 50.7,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "格式规范问题 / 应用文格式"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 55.2
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 34.3
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 7.6
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 2.9
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 55.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 55.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 55.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 55.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 55.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754408",
+      "name": "滕易朴",
+      "averageScore": 52.6,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 42.7
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 41.3
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 9.3
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 6.7
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 19.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 19.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 19.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 19.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 19.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747582",
+      "name": "徐若芊",
+      "averageScore": 53.3,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 46.3
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 32.9
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 10.7
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 10.1
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 58.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 58.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 58.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 58.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 58.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754494",
+      "name": "李彦君",
+      "averageScore": 54.1,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 43.5
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 40.7
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 11.7
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.2
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 60.545082,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 60.545082,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 60.545082,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 60.545082,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 60.545082,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754462",
+      "name": "吴骁航",
+      "averageScore": 54.5,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "格式规范问题 / 应用文格式"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 51.7
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 39.7
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 5.2
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 3.4
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 75.5017,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.5017,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.5017,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.5017,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 75.5017,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747528",
+      "name": "王语含",
+      "averageScore": 54.7,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 45.6
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 38.2
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 11.1
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 5.1
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 61.507874,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.507874,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.507874,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.507874,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.507874,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747526",
+      "name": "王铭泽",
+      "averageScore": 55.1,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "格式规范问题 / 应用文格式"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 47.4
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 41.4
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 5.6
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 5.6
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 61.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 61.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754452",
+      "name": "秦宇昂",
+      "averageScore": 55.4,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "格式规范问题 / 应用文格式"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 66.1
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 28.1
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.1
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 1.7
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 65.148,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 65.148,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 65.148,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 65.148,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 65.148,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24747593",
+      "name": "朱浩尘",
+      "averageScore": 55.9,
+      "level": "C",
+      "mainProblemTypes": [
+        "语言准确性弱 / 语法错误多",
+        "词汇表达弱 / 用词单一",
+        "结构不清 / 段落组织弱"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 41.7
+        },
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 39.1
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 11.5
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 7.7
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 73.60586,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.60586,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.60586,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.60586,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 73.60586,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    },
+    {
+      "id": "24754454",
+      "name": "师若棋",
+      "averageScore": 56.0,
+      "level": "C",
+      "mainProblemTypes": [
+        "词汇表达弱 / 用词单一",
+        "语言准确性弱 / 语法错误多",
+        "格式规范问题 / 应用文格式"
+      ],
+      "typicalSentence": "",
+      "relatedTasks": [],
+      "scoreTrend": "stable",
+      "problemDistribution": [
+        {
+          "type": "vocabulary_weak",
+          "label": "词汇表达弱 / 用词单一",
+          "percent": 54.8
+        },
+        {
+          "type": "language_accuracy",
+          "label": "语言准确性弱 / 语法错误多",
+          "percent": 35.7
+        },
+        {
+          "type": "format_issue",
+          "label": "格式规范问题 / 应用文格式",
+          "percent": 4.8
+        },
+        {
+          "type": "structure_unclear",
+          "label": "结构不清 / 段落组织弱",
+          "percent": 4.8
+        }
+      ],
+      "answerSheetImageUrl": "",
+      "fullEssayIds": [],
+      "recentScores": [
+        {
+          "taskName": "写作任务",
+          "score": 1.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 1.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 1.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 1.0,
+          "date": ""
+        },
+        {
+          "taskName": "写作任务",
+          "score": 1.0,
+          "date": ""
+        }
+      ],
+      "revisionSuggestions": [
+        "加强语法基础",
+        "积累词汇"
+      ]
+    }
+  ],
+  "excellentWritings": [
+    {
+      "id": "ew-747518",
+      "studentId": "24747518",
+      "studentName": "刘芮希",
+      "essayTitle": "海淀一模-未来已来",
+      "taskName": "海淀一模-未来已来",
+      "writingType": "practical",
+      "score": 90.0,
+      "level": "A",
+      "highlights": "得分90.0分，含佳句",
+      "excerpt": "{I'm delighted to invite you to our school's upcoming \\\"The Future is Here\\\" tech festival, which will be held next Friday from 2 p.m. to 5 p.m. in the school auditorium.\\n\\nThe event will feature a series of exciting activities. First, we will have a keynote speech by a tech expert on cutting-edge technologies like AI and smart cities. Then, there will be a student innovation exhibition, where you can see our homemade tech projects, such as AI-assisted learning tools and smart home devices. Fin",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747518",
+      "studentId": "24747518",
+      "studentName": "刘芮希",
+      "essayTitle": "4月29日 英语测练",
+      "taskName": "4月29日 英语测练",
+      "writingType": "practical",
+      "score": 90.0,
+      "level": "A",
+      "highlights": "得分90.0分，含佳句",
+      "excerpt": "{Subject: Advice on Choosing a Major Amid AI Development\\n\\nDear Jim,\\n\\nI'm sorry to hear you're confused about choosing a major amid AI's growing influence. You asked me for advice, so I'm writing to share my thoughts with you.\\n\\nAI is reshaping the job market. It replaces routine, repetitive jobs and creates new, human-centered roles that demand creativity and adaptability. Given these changes, I recommend you choose computer science with a focus on AI technology. First, this major lets you ",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747518",
+      "studentId": "24747518",
+      "studentName": "刘芮希",
+      "essayTitle": "0331测练",
+      "taskName": "0331测练",
+      "writingType": "practical",
+      "score": 87.0,
+      "level": "A",
+      "highlights": "得分87.0分",
+      "excerpt": "{I'm delighted to hear that you're interested in the art exhibition themed \\\"The Most Respected Workers\\\" held in our school recently. I'd like to tell you more about it.\\nThe exhibition showcased a diverse range of student works, including vivid photographs capturing the daily efforts of cleaners, delivery workers, and teachers; moving paintings of people working hard; and beautiful handmade crafts. Every piece showed our true respect for ordinary workers.\\nWandering through the exhibition, I w",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747518",
+      "studentId": "24747518",
+      "studentName": "刘芮希",
+      "essayTitle": "4月22日 英语测练",
+      "taskName": "4月22日 英语测练",
+      "writingType": "practical",
+      "score": 85.14768,
+      "level": "A",
+      "highlights": "得分85.14768分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI'm writing to reply to your question about the speech content for the UN Youth Forum on \\\"Skills Needed for a Sustainable Future.\\\" I'd like to share my thoughts with you.\\n\\nFirst and foremost, collaborative skills are essential. Global challenges like climate change are too complex for one person to solve alone. Working with others allows us to share strengths, exchange ideas, and create practical solutions that benefit the whole world.\\n\\nBesides, adaptability is another key sk",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747518",
+      "studentId": "24747518",
+      "studentName": "刘芮希",
+      "essayTitle": "5月21日 英语测练",
+      "taskName": "5月21日 英语测练",
+      "writingType": "practical",
+      "score": 82.68094,
+      "level": "A",
+      "highlights": "得分82.68094分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI'm sorry to hear about your recent experience, and I'd like to share my thoughts about AI and study with you. Overusing AI for assignments weakens critical thinking and independent learning. Take English essay writing for example: we should never outsource our core ideas to AI. Instead, we can first develop our own arguments, then use AI to polish wording or refine grammar. Rather than seeking direct answers, we can use AI to explain confusing points or offer alternative perspecti",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754421",
+      "studentId": "24754421",
+      "studentName": "杨梓涵",
+      "essayTitle": "4月22日 英语测练",
+      "taskName": "4月22日 英语测练",
+      "writingType": "practical",
+      "score": 82.3685,
+      "level": "A",
+      "highlights": "得分82.3685分",
+      "excerpt": "{Dear Jim,\\n\\nI'm writing to reply to your question about the speech content for the UN Youth Forum themed \\\"Skills Needed for a Sustainable Future.\\\" Here are my thoughts.\\n\\nI believe that a creative mindset is an important skill for a sustainable future. Creativity helps us come up with new ideas and solutions that can push society forward in a sustainable way. It also shows how unique we are compared to AI and medicine. Besides creativity, teamwork and cooperation are essential skills becaus",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754421",
+      "studentId": "24754421",
+      "studentName": "杨梓涵",
+      "essayTitle": "5月23日 英语测练",
+      "taskName": "5月23日 英语测练",
+      "writingType": "practical",
+      "score": 81.36445,
+      "level": "A",
+      "highlights": "得分81.36445分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nThank you for your letter and your interest in the \\\"Painting China with Intelligence\\\" technology-powered original work collection. I am happy to share with you my project and my feelings about this activity.\\n\\nMy original work is a design of a smart charging station for electric vehicles (EVs). Since EVs represent the future of green transportation with their long range and advanced charging technology, it is important to develop a smart charging station or even a system to supp",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-754421",
+      "studentId": "24754421",
+      "studentName": "杨梓涵",
+      "essayTitle": "丰台区2025～2026学年度第一学期期末练习",
+      "taskName": "丰台区2025～2026学年度第一学期期末练习",
+      "writingType": "practical",
+      "score": 81.0,
+      "level": "A",
+      "highlights": "得分81.0分",
+      "excerpt": "{Becoming a Better Self\\nTo me, \\\"becoming a better self\\\" means achieving balanced growth in three important areas: academic, physical, and mental development. We cannot truly become better unless we improve ourselves in all these aspects.\\nTo achieve this, I focus on finding my own pace and methods in studying to improve my academic efficiency. At the same time, I make sure to exercise every day to keep my body and mind energetic and healthy. Lastly, having a strong mindset is essential to fac",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747562",
+      "studentId": "24747562",
+      "studentName": "李禹辰",
+      "essayTitle": "5月21日 英语测练",
+      "taskName": "5月21日 英语测练",
+      "writingType": "practical",
+      "score": 79.97051,
+      "level": "B",
+      "highlights": "得分79.97051分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nI am writing to reply to your question about being criticized for using AI tools to complete your writing assignment. I understand your feelings and would like to share my thoughts.\\n\\nIn my opinion, using AI tools is understandable since we live in an AI age, and many students use them to help finish their work. However, relying too much on AI can weaken our ability to learn independently. Therefore, I suggest you use AI as a thinking partner rather than a tool to provide direct a",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    },
+    {
+      "id": "ew-747516",
+      "studentId": "24747516",
+      "studentName": "刘冠临",
+      "essayTitle": "5月28日 英语测练",
+      "taskName": "5月28日 英语测练",
+      "writingType": "practical",
+      "score": 79.78299,
+      "level": "B",
+      "highlights": "得分79.78299分，含佳句",
+      "excerpt": "{Dear Jim,\\n\\nThank you for your letter and your interest in the activities our school's student union organized during World Reading Day. I'm happy to share the details with you.\\n\\nDuring World Reading Day, our student union arranged a 15-minute silent reading activity in the library. At a fixed time every day, students come into the reading room, put down their phones, and read quietly for 15 minutes without talking or discussing. At first, some people felt it was a bit awkward, but as they k",
+      "fullEssayId": "",
+      "answerSheetImageUrl": ""
+    }
+  ],
+  "recommendedResources": [
+    {
+      "id": "res-w-1",
+      "title": "应用文写作模板训练",
+      "resourceType": "writing_practice",
+      "tags": [
+        "写作",
+        "应用文"
+      ],
+      "difficulty": "medium",
+      "grade": "高二",
+      "recommendReason": "针对词汇表达弱 / 用词单一设计",
+      "canPreview": true,
+      "canAssign": true,
+      "canAddToPaperBasket": true
+    }
+  ],
+  "generatedSamples": [
+    {
+      "id": "gs-1",
+      "level": "basic",
+      "title": "基础版 — 赵朔羲的作文",
+      "content": "{Dear Jim,\\n\\nI am writing to reply to your inquiry about the activities organized by our school during World Reading Day. I am glad to share the details with you.\\n\\nThe event was divided into two parts. Offline, I designed a wandering Bookshelf in a corner of the library. Everyone could bring a book they love to the Bookshelf and take one they haven't read. When taking a book, you could leave a small note inside. This created a silent conversation between readers who borrowed the same book. Online, there was a 21-Day Reading Check-in. We created a reading group to encourage members to read books every day during the activity, helping us develop good reading habits.\\n\\nDuring this event, I realized the significance of reading and was inspired to keep up my reading habit because of the atmosphere created by these activities. I clearly felt the beauty of reading.\\n\\nDo you like this event? If you want to know more, please write to me again.\\n\\nBest wishes,\\nLi Hua}",
+      "highlights": "得分49.961216分 | 适合基础薄弱学生参考基本结构",
+      "suitableFor": "20分以下",
+      "editable": true
+    },
+    {
+      "id": "gs-2",
+      "level": "improved",
+      "title": "提升版 — 王语含的作文",
+      "content": "{Subject: Suggestions for Your Speech at the UN Youth Forum\\n\\nDear Jim,\\n\\nI'm thrilled to hear that you are going to take part in the UN Youth Forum named \\\"Skills Needed for a Sustainable Future.\\\" It is an honor to give you some initial ideas and suggestions. \\n\\nFocusing on the core concept of a sustainable future, as the tight connections between countries increase, we face many common challenges, such as global warming. In this context, communication skills are essential for cross-cultural communication. We need to cultivate fluent English and correct vocabulary to bridge the gap between different cultures. Moreover, living in the AI era, as teenagers, we should develop creativity, which is the unique skill that humans have apart from AI. In this way, more technologies will be invented and used in greener ways.\\n\\nWhat are your ideas? If you have any questions, please let me know.\\n\\nBest wishes,\\nLi Hua}",
+      "highlights": "得分63.387802分 | 展示中等水平如何组织内容和句式",
+      "suitableFor": "20-25分",
+      "editable": true
+    },
+    {
+      "id": "gs-3",
+      "level": "excellent",
+      "title": "优秀版 — 刘芮希的作文",
+      "content": "{I'm delighted to invite you to our school's upcoming \\\"The Future is Here\\\" tech festival, which will be held next Friday from 2 p.m. to 5 p.m. in the school auditorium.\\n\\nThe event will feature a series of exciting activities. First, we will have a keynote speech by a tech expert on cutting-edge technologies like AI and smart cities. Then, there will be a student innovation exhibition, where you can see our homemade tech projects, such as AI-assisted learning tools and smart home devices. Finally, we'll hold a hands-on workshop, allowing you to experience UK technology and interact with the latest products.\\n\\nI know you have a great passion for technology, so this event is perfect for you. It will not only broaden your horizons but also give you a chance to communicate with like-minded students. I hope you can join us! I'm looking forward to your reply.}",
+      "highlights": "得分90.0分，含佳句 | 展示高分作文的表达水平",
+      "suitableFor": "25+分",
+      "editable": true
+    }
+  ],
+  "interventionRecords": []
+}

@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useMemo } from 'react'
 import type { WritingInsightData, TimeRange } from '../ai/insights/writingInsightTypes'
-import { MOCK_WRITING_INSIGHT, MOCK_WRITING_INTERVENTION_RECORDS } from '../ai/insights/mockWritingInsight'
+import { REAL_DATA_MAP, AVAILABLE_CLASSES } from '../ai/insights/realDataMulti'
 import {
   mockOpenFullEssay,
   mockOpenAnswerSheet,
@@ -22,6 +22,7 @@ import type { WritingIssueItem, ExcellentWriting, GeneratedSample, RecommendedWr
 import type { PaperBasketItem } from '../ai/search-new/types'
 import { useAIStore } from '../ai/store'
 import InsightSideNav from '../ai/components/InsightSideNav'
+import { ChevronDown } from 'lucide-react'
 
 const NAV_ITEMS = [
   { id: 'writing-summary', label: 'AI 诊断总结' },
@@ -34,8 +35,16 @@ const NAV_ITEMS = [
   { id: 'writing-intervention', label: '干预记录' },
 ]
 
+const DEFAULT_CLASS = AVAILABLE_CLASSES[0]
+
 export default function WritingInsightPage() {
-  const [data, setData] = useState<WritingInsightData>(MOCK_WRITING_INSIGHT)
+  const [selectedClass, setSelectedClass] = useState<string>(DEFAULT_CLASS)
+
+  const currentData: WritingInsightData = useMemo(
+    () => REAL_DATA_MAP[selectedClass]?.writing ?? REAL_DATA_MAP[DEFAULT_CLASS].writing,
+    [selectedClass],
+  )
+
   const [timeRange, setTimeRange] = useState<TimeRange>('7d')
   const [showSampleGenerator, setShowSampleGenerator] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
@@ -55,7 +64,7 @@ export default function WritingInsightPage() {
 
   const handleTimeRangeChange = (range: TimeRange) => {
     setTimeRange(range)
-    setData({ ...data, timeRange: range })
+    // Time range change is cosmetic — data doesn't change
   }
 
   // Full essay view
@@ -109,18 +118,35 @@ export default function WritingInsightPage() {
     <div className="flex justify-center px-6">
       <InsightSideNav items={NAV_ITEMS} />
       <div className="flex-1 w-full py-5 space-y-4 max-w-[1600px]">
-        <WritingInsightHeader
-          timeRange={timeRange}
-          onTimeRangeChange={handleTimeRangeChange}
-          className={data.className}
-          updatedAt={data.updatedAt}
-        />
+        {/* ── Class Switcher ── */}
+        <div className="flex items-center justify-between">
+          <WritingInsightHeader
+            timeRange={timeRange}
+            onTimeRangeChange={handleTimeRangeChange}
+            className={currentData.className}
+            updatedAt={currentData.updatedAt}
+          />
+          <div className="relative group">
+            <select
+              value={selectedClass}
+              onChange={(e) => setSelectedClass(e.target.value)}
+              className="appearance-none bg-white border border-slate-200 rounded-xl pl-3.5 pr-9 py-2 text-sm font-semibold text-slate-700
+                hover:border-blue-300 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100
+                cursor-pointer transition-all duration-200"
+            >
+              {AVAILABLE_CLASSES.map(cls => (
+                <option key={cls} value={cls}>{cls}</option>
+              ))}
+            </select>
+            <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+          </div>
+        </div>
 
         <div id="writing-summary">
           <WritingAISummaryCard
-            summary={data.summary}
-            mainProblemTypes={data.problemTypes.slice(0, 3).map(p => p.label)}
-            affectedStudentCount={data.metrics.weakStudentCount}
+            summary={currentData.summary}
+            mainProblemTypes={currentData.problemTypes.slice(0, 3).map(p => p.label)}
+            affectedStudentCount={currentData.metrics.weakStudentCount}
             onRecommendResources={() => resourcesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
             onGenerateSamples={() => setShowSampleGenerator(true)}
           />
@@ -128,19 +154,19 @@ export default function WritingInsightPage() {
 
         <div id="writing-metrics">
           <WritingCoreMetricCards
-            metrics={data.metrics}
+            metrics={currentData.metrics}
             onWeakStudentsClick={() => weakStudentsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
             onExcellentClick={() => excellentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
           />
         </div>
 
         <div id="writing-problem-types">
-          <WritingProblemTypeSection problemTypes={data.problemTypes} />
+          <WritingProblemTypeSection problemTypes={currentData.problemTypes} />
         </div>
 
         <div id="writing-high-freq">
           <HighFrequencyWritingIssuesSection
-            issueGroups={data.highFrequencyIssues}
+            issueGroups={currentData.highFrequencyIssues}
             onViewFullEssay={handleViewFullEssay}
             onViewAnswerSheet={handleViewAnswerSheet}
           />
@@ -148,7 +174,7 @@ export default function WritingInsightPage() {
 
         <div id="writing-weak-students" ref={weakStudentsRef}>
           <WeakWritingStudentsSection
-            students={data.weakStudents}
+            students={currentData.weakStudents}
             onViewFullEssay={handleViewFullEssay}
             onViewAnswerSheet={handleViewAnswerSheet}
           />
@@ -156,7 +182,7 @@ export default function WritingInsightPage() {
 
         <div id="writing-excellent" ref={excellentRef}>
           <ExcellentWritingSection
-            writings={data.excellentWritings}
+            writings={currentData.excellentWritings}
             onViewFullEssay={handleViewFullEssay}
             onViewAnswerSheet={handleViewAnswerSheet}
             onMarkAsReference={handleMarkAsReference}
@@ -165,7 +191,7 @@ export default function WritingInsightPage() {
 
         <div id="writing-resources" ref={resourcesRef}>
           <RecommendedWritingResourcesSection
-            resources={data.recommendedResources}
+            resources={currentData.recommendedResources}
             onPreview={handlePreviewResource}
             onAssign={handleAssignResource}
             onAddToPaperBasket={handleAddToPaperBasket}
@@ -174,12 +200,12 @@ export default function WritingInsightPage() {
         </div>
 
         <div id="writing-intervention">
-          <WritingInterventionRecordSection records={MOCK_WRITING_INTERVENTION_RECORDS} />
+          <WritingInterventionRecordSection records={[]} />
         </div>
 
         {showSampleGenerator && (
           <SampleEssayGenerator
-            samples={data.generatedSamples}
+            samples={currentData.generatedSamples}
             onClose={() => setShowSampleGenerator(false)}
             onMarkAsReference={handleMarkAsReference}
             onCopy={handleCopySample}

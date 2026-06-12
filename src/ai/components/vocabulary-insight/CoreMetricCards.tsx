@@ -1,4 +1,4 @@
-import { ChevronRight, TrendingUp, TrendingDown, AlertTriangle } from 'lucide-react'
+import { ChevronRight, TrendingDown, AlertTriangle } from 'lucide-react'
 import type { VocabularyMetrics } from '../../insights/vocabularyInsightTypes'
 
 interface Props { metrics: VocabularyMetrics; onWeakWordsClick: () => void; onWeakStudentsClick: () => void }
@@ -7,31 +7,35 @@ interface MetricDef {
   key: keyof VocabularyMetrics
   label: string
   suffix: string
+  tip: string
   clickable?: boolean
-  trend?: 'up' | 'down' | 'warn'
+  trend?: 'down' | 'warn'
   trendLabel?: string
 }
 
 const METRICS: MetricDef[] = [
   {
     key: 'practicedWordCount', label: '已练词汇数', suffix: '个',
+    tip: '当前时间范围内，班级学生完成过练习的去重词汇数。',
   },
   {
-    key: 'weakWordCount', label: '高频错词 / 语块', suffix: '个',
+    key: 'weakWordCount', label: '高频错词', suffix: '个',
+    tip: '按错误次数、影响学生数、得分率综合排序后筛选出的重点错词。',
     clickable: true, trend: 'warn', trendLabel: '需关注',
   },
   {
     key: 'weakStudentCount', label: '薄弱学生', suffix: '人',
+    tip: '当前时间范围内，词汇得分率偏低，且错误词数量达到阈值的学生。',
     clickable: true, trend: 'down', trendLabel: '较上月 +2',
   },
   {
     key: 'mainWeakType', label: '主要薄弱类型', suffix: '',
+    tip: 'AI根据学生作答结果自动归类出的主要错误类型。',
     trend: 'warn',
   },
 ]
 
 const TREND_STYLES: Record<string, { icon: React.ReactNode; className: string }> = {
-  up:   { icon: <TrendingUp size={12} />,   className: 'text-emerald-600 bg-emerald-50' },
   down: { icon: <TrendingDown size={12} />, className: 'text-amber-600 bg-amber-50' },
   warn: { icon: <AlertTriangle size={12} />, className: 'text-red-500 bg-red-50' },
 }
@@ -39,15 +43,15 @@ const TREND_STYLES: Record<string, { icon: React.ReactNode; className: string }>
 export default function CoreMetricCards({ metrics, onWeakWordsClick, onWeakStudentsClick }: Props) {
   return (
     <div className="grid grid-cols-4 gap-3">
-      {METRICS.map(({ key, label, suffix, clickable, trend, trendLabel }) => {
+      {METRICS.map(({ key, label, suffix, tip, clickable, trend, trendLabel }) => {
         const val = metrics[key]
         const isStr = typeof val === 'string'
-
         const trendStyle = trend ? TREND_STYLES[trend] : null
 
         return (
           <div
             key={key}
+            title={tip}
             onClick={() => {
               if (key === 'weakWordCount') onWeakWordsClick()
               if (key === 'weakStudentCount') onWeakStudentsClick()
@@ -60,9 +64,12 @@ export default function CoreMetricCards({ metrics, onWeakWordsClick, onWeakStude
                 : ''}
             `}
           >
-            {/* Top row: label + trend */}
+            {/* Top row: label + tooltip icon + trend */}
             <div className="flex items-center justify-between mb-2">
-              <p className="text-[11px] font-medium text-slate-400 tracking-wide uppercase">{label}</p>
+              <div className="flex items-center gap-1">
+                <p className="text-[11px] font-medium text-slate-400 tracking-wide uppercase">{label}</p>
+                <span className="text-[10px] text-slate-300 cursor-help" title={tip}>?</span>
+              </div>
               {trendStyle && trendLabel && (
                 <span className={`inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${trendStyle.className}`}>
                   {trendStyle.icon}

@@ -99,7 +99,7 @@ const resourceModules: ResourceModule[] = [
   { label: '写作素材', desc: '高分句型积累', color: '#e8a83a' },
 ]
 
-const homeInsights = generateHomeInsights({ disabledModules: ['home_wrong_word', 'home_writing', 'home_listening_speaking'], enableExamReminder: true })
+const homeInsights = generateHomeInsights({ disabledModules: ['home_wrong_word', 'home_writing', 'home_listening_speaking', 'exam_reminder'], enableExamReminder: false })
 
 // Add vocabulary insight cards to home insights
 const vocabConcernCards: InsightItem[] = MOCK_VOCAB_CONCERN_CARDS.filter(c => c.type === 'vocabulary_insight').map(c => ({
@@ -145,7 +145,24 @@ const writingConcernCards: InsightItem[] = MOCK_WRITING_CONCERN_CARDS.filter(c =
   scope: { type: 'class' as const, className: '初一 1 班' },
 }))
 
-const allHomeInsights = [...vocabConcernCards.slice(0, 1), ...writingConcernCards.slice(0, 1), ...homeInsights] // 词汇 → 写作 → 听力/听说
+// 阶段性报告洞察卡片
+const stageReportInsight: InsightItem = {
+  insightId: 'stage_report_home',
+  module: 'exam_reminder' as InsightItem['module'],
+  title: '阶段性报告分析',
+  riskLevel: 'medium' as const,
+  priority: 3,
+  scope: { className: '初一 1 班' },
+  evidence: { summary: '阶段报告诊断', details: [] },
+  analysis: '',
+  suggestion: '',
+  actions: [],
+  sourceData: {},
+  sampleInfo: { totalStudents: 42, sampleCount: 42, sampleRatio: 1, isSampleTooSmall: false },
+  createdAt: String(Date.now()),
+  status: 'active' as const,
+} as InsightItem
+const allHomeInsights = [...vocabConcernCards.slice(0, 1), ...writingConcernCards.slice(0, 1), stageReportInsight, ...homeInsights] // 词汇 → 写作 → 阶段性报告
 
 const recentReports: ReportItem[] = [
   { title: '个性化词汇练习', className: '初一1班', groupName: '全班', done: 2, total: 43, date: '2026-05-25', canRemind: true, hasReport: true },
@@ -404,10 +421,10 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* 教学关注 — compact 3-column grid */}
+              {/* 教学洞察 — compact 3-column grid */}
               <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden shrink-0">
                 <div className="px-4 py-2 border-b border-[#f0f4f8] flex items-center justify-between">
-                  <h3 className="text-[12px] font-semibold text-[#3a4f66]">教学关注</h3>
+                  <h3 className="text-[12px] font-semibold text-[#3a4f66]">教学洞察</h3>
                   <span className="text-[10px] text-[#8aabcc]">{allHomeInsights.length} 条</span>
                 </div>
                 <div className="p-2 grid grid-cols-3 gap-2">
@@ -429,6 +446,12 @@ export default function HomePage() {
                       <button
                         key={insight.insightId}
                         onClick={() => {
+                          // 阶段性报告 → 打开 AI 抽屉 practiceStage 面板
+                          if (insight.insightId === 'stage_report_home') {
+                            const stageInsight = generateTeachingInsight('practiceStage')
+                            useAIStore.getState().setAIDrawerPanel('practiceStageInsight', { insight: stageInsight } as Record<string, unknown>)
+                            return
+                          }
                           const mapping = getInsightMapping(insight)
                           if (mapping.isPage) {
                             if (insight.module === 'writing_insight') navigate('/writing-insight')
