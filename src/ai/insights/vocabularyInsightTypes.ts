@@ -272,12 +272,12 @@ export interface EffectSummary {
 
 export type ReviewGoal = 'quick_fix' | 'current_unit' | 'stage_exam' | 'weak_student' | 'custom'
 
-export const REVIEW_GOAL_META: Record<ReviewGoal, { label: string; desc: string; defaultDays: number; defaultWordCount: number; defaultRollback: number; masteryRule: string }> = {
-  quick_fix:    { label: '快速巩固近期错词', desc: '当前时间范围内高频错词，优先极高/高严重程度。', defaultDays: 3,  defaultWordCount: 30, defaultRollback: 1, masteryRule: '连续答对 2 次' },
-  current_unit: { label: '当前单元词汇复习', desc: '当前单元课标词、非课标词、当前单元错词。',   defaultDays: 7,  defaultWordCount: 50, defaultRollback: 2, masteryRule: '连续答对 2 次' },
-  stage_exam:   { label: '阶段 / 考前复习',   desc: '多单元词汇、阶段错词、近 30 天高频错词。',    defaultDays: 14, defaultWordCount: 80, defaultRollback: 2, masteryRule: '累计答对 3 次' },
-  weak_student: { label: '薄弱学生补练',     desc: '薄弱学生个人错词、多名薄弱学生共性错词。',      defaultDays: 7,  defaultWordCount: 30, defaultRollback: 2, masteryRule: '连续答对 2 次' },
-  custom:       { label: '自定义复习规划',    desc: '自由组合词汇范围、练习频次和复习策略。',          defaultDays: 7,  defaultWordCount: 50, defaultRollback: 1, masteryRule: '连续答对 2 次' },
+export const REVIEW_GOAL_META: Record<ReviewGoal, { label: string; desc: string; defaultDays: number; defaultWordCount: number; defaultRollback: number; masteryRule: string; defaultReviewDays: number[] }> = {
+  quick_fix:    { label: '快速巩固近期错词', desc: '基于当前页面筛选范围内的高频错词，优先复习错误率高、影响学生多、错误次数多的词。', defaultDays: 5,  defaultWordCount: 30, defaultRollback: 2, masteryRule: '连续答对 2 次', defaultReviewDays: [1, 3, 5] },
+  current_unit: { label: '当前单元词汇复习', desc: '围绕当前教材单元词汇进行系统复习，包含课标词、非课标词和当前单元易错词。', defaultDays: 7,  defaultWordCount: 50, defaultRollback: 2, masteryRule: '连续答对 2 次', defaultReviewDays: [1, 3, 5, 7] },
+  stage_exam:   { label: '阶段 / 考前复习',   desc: '支持选择多个单元或阶段范围，结合阶段高频错词和重点词进行复习。',               defaultDays: 14, defaultWordCount: 50, defaultRollback: 2, masteryRule: '累计答对 3 次', defaultReviewDays: [1, 3, 5, 7, 9, 11, 13] },
+  weak_student: { label: '薄弱学生补练',     desc: '面向薄弱学生生成个性化补练，不默认生成全班统一复习计划。',                       defaultDays: 7,  defaultWordCount: 30, defaultRollback: 2, masteryRule: '连续答对 2 次', defaultReviewDays: [1, 3, 5, 7] },
+  custom:       { label: '自定义复习规划',    desc: '自由组合词汇来源、练习频次和复习策略。',                                         defaultDays: 7,  defaultWordCount: 50, defaultRollback: 2, masteryRule: '连续答对 2 次', defaultReviewDays: [1, 3, 5, 7] },
 }
 
 export type VocabScopeId = 'error_words' | 'sync_unit' | 'platform_extended'
