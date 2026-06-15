@@ -46,6 +46,37 @@ function getVocabDataForUnit(unit: string) {
   return MOCK_VOCAB_UNIT_1
 }
 
+/** Get listening resource IDs for the current teaching unit */
+function getListeningResourceIds(unit: string): { primary: string[]; rec: string[] } {
+  const u = unitStr({ unit } as SearchContext)
+  if (u === 'Unit 3') {
+    return {
+      primary: ['res-sync-listening-3a', 'res-sync-listening-3b', 'res-sync-listening-3c', 'res-listening-practice-3'],
+      rec: ['res-listening-practice-2', 'res-exam-sprint-1', 'res-listening-mock-1'],
+    }
+  }
+  // Default: Unit 1 (or any other unit)
+  return {
+    primary: ['res-sync-listening-1a', 'res-sync-listening-1b', 'res-sync-listening-1c', 'res-listening-practice-1'],
+    rec: ['res-speaking-practice-1', 'res-listening-mock-1', 'res-listening-practice-2', 'res-exam-sprint-1'],
+  }
+}
+
+/** Get comprehensive resource IDs for the current teaching unit */
+function getComprehensiveResourceIds(unit: string): { primary: string[]; rec: string[] } {
+  const u = unitStr({ unit } as SearchContext)
+  if (u === 'Unit 3') {
+    return {
+      primary: ['res-sync-listening-3a', 'res-sync-listening-3b', 'res-sync-listening-3c', 'res-listening-practice-3', 'res-comprehensive-1'],
+      rec: ['res-reading-practice-1', 'res-writing-practice-1', 'res-vocab-practice-1'],
+    }
+  }
+  return {
+    primary: ['res-sync-listening-1a', 'res-sync-listening-1b', 'res-sync-listening-1c', 'res-speaking-practice-1', 'res-vocab-practice-1', 'res-reading-practice-1'],
+    rec: ['res-unit-test-1', 'res-comprehensive-1', 'res-writing-practice-1', 'res-grammar-practice-1', 'res-dubbing-1', 'res-sync-video-1'],
+  }
+}
+
 /**
  * Parse paper query from query string to get province/year/examType.
  * Used inside paper scenarios to show correct context.
@@ -89,36 +120,26 @@ export function scenarioUnit1Comprehensive(
   ctx: SearchContext = CTX_1_1,
 ): NewSearchResult {
   const u = unitStr(ctx)
-  const primaryIds = [
-    'res-sync-listening-1a', 'res-sync-listening-1b', 'res-sync-listening-1c',
-    'res-speaking-practice-1', 'res-vocab-practice-1',
-    'res-reading-practice-1',
-  ]
-  const recIds = [
-    'res-unit-test-1', 'res-comprehensive-1', 'res-writing-practice-1',
-    'res-grammar-practice-1', 'res-dubbing-1', 'res-sync-video-1',
-  ]
+  const resourceIds = getComprehensiveResourceIds(ctx.unit)
 
   const intent: SearchIntentInfo = {
     query,
     recognizedIntent: `${u} 综合资源搜索`,
     searchType: 'resource',
     context: ctxStr(ctx),
-    matchedTypes: ['sync_listening', 'speaking_practice', 'vocab_practice', 'reading_practice', 'comprehensive'],
-    expandedTypes: ['sync_listening', 'speaking_practice', 'vocab_practice', 'reading_practice'],
-    foldedTypes: ['comprehensive', 'writing_practice', 'grammar_practice', 'dubbing', 'sync_video', 'unit_test'],
-    message: `已为你找到 ${u} 相关资源，包括同步听力、听说练习、词汇练习和阅读理解。精准匹配资源已默认展开，推荐资源已折叠。`,
+    matchedTypes: ['sync_listening', 'vocab_practice', 'reading_practice', 'comprehensive'],
+    expandedTypes: ['sync_listening', 'vocab_practice', 'reading_practice'],
+    foldedTypes: ['comprehensive', 'writing_practice', 'vocab_practice'],
+    message: `已为你找到 ${u} 相关资源，包括同步听力、词汇练习和阅读理解。精准匹配资源已默认展开，推荐资源已折叠。`,
   }
 
   const filterTabs: FilterTab[] = [
-    { category: 'all', label: '全部', count: primaryIds.length + recIds.length },
+    { category: 'all', label: '全部', count: resourceIds.primary.length + resourceIds.rec.length },
     { category: 'sync_listening', label: '同步听力', count: 3 },
-    { category: 'speaking_practice', label: '听说练习', count: 1 },
     { category: 'vocab_practice', label: '词汇练习', count: 1 },
     { category: 'reading_practice', label: '阅读练习', count: 1 },
     { category: 'comprehensive', label: '综合练习', count: 1 },
     { category: 'writing_practice', label: '写作练习', count: 1 },
-    { category: 'unit_test', label: '单元检测', count: 1 },
   ]
 
   const groups: ResourceGroup[] = [
@@ -131,7 +152,7 @@ export function scenarioUnit1Comprehensive(
       displayLimit: 5,
       recommendationText: `以下资源与当前教学进度 ${u} 精确匹配，可直接使用。`,
       matchCategory: 'sync_listening',
-      items: findResources(primaryIds),
+      items: findResources(resourceIds.primary),
     },
     {
       groupId: 'rec-unit',
@@ -142,7 +163,7 @@ export function scenarioUnit1Comprehensive(
       displayLimit: 3,
       recommendationText: `以下资源与 ${u} 话题相关，适合课堂补充或课后拓展使用。`,
       matchCategory: 'comprehensive',
-      items: findResources(recIds),
+      items: findResources(resourceIds.rec),
     },
   ]
 
@@ -214,11 +235,12 @@ export function scenarioSyncTextStructured(
   query: string,
   ctx: SearchContext = CTX_1_1,
 ): NewSearchResult {
+  const u = unitStr(ctx)
   const syncTextItem: typeof MOCK_RESOURCES[0] & { contentData: typeof MOCK_TEXT_STRUCTURED } = {
-    id: 'res-sync-text-unit1',
-    title: 'Unit 1 同步课文',
+    id: `res-sync-text-${u.replace(' ', '-').toLowerCase()}`,
+    title: `${u} 同步课文`,
     type: 'sync_text',
-    tags: ['同步课文', 'Unit 1'],
+    tags: ['同步课文', u],
     duration: undefined,
     difficulty: 'basic',
     grade: '七年级上',
@@ -239,7 +261,7 @@ export function scenarioSyncTextStructured(
     matchedTypes: ['sync_text'],
     expandedTypes: ['sync_text'],
     foldedTypes: [],
-    message: '已为你找到 Unit 1 同步课文内容，可选择具体语篇后布置逐句跟读、整篇跟读或整篇背诵。',
+    message: `已为你找到 ${u} 同步课文内容，可选择具体语篇后布置逐句跟读、整篇跟读或整篇背诵。`,
   }
 
   const filterTabs: FilterTab[] = [
@@ -250,13 +272,13 @@ export function scenarioSyncTextStructured(
   const groups: ResourceGroup[] = [
     {
       groupId: 'sync-text-structured',
-      groupName: 'Unit 1 同步课文',
+      groupName: `${u} 同步课文`,
       groupType: 'sync_text',
       isPrimaryMatch: true,
       defaultExpanded: true,
       displayLimit: 1,
       recommendationText:
-        '推荐理由：这是当前 Unit 1 的同步课文内容，可选择具体语篇后布置逐句跟读、整篇跟读或整篇背诵。',
+        `推荐理由：这是当前 ${u} 的同步课文内容，可选择具体语篇后布置逐句跟读、整篇跟读或整篇背诵。`,
       items: [syncTextItem as any],
     },
   ]
@@ -272,11 +294,12 @@ export function scenarioSyncTextFlat(
   query: string,
   ctx: SearchContext = CTX_1_1,
 ): NewSearchResult {
+  const u = unitStr(ctx)
   const syncTextItem = {
-    id: 'res-sync-text-unit1-flat',
-    title: 'Unit 1 同步课文',
+    id: `res-sync-text-${u.replace(' ', '-').toLowerCase()}-flat`,
+    title: `${u} 同步课文`,
     type: 'sync_text' as const,
-    tags: ['同步课文', 'Unit 1'],
+    tags: ['同步课文', u],
     difficulty: 'basic' as const,
     grade: '七年级上',
     isCurrentUnit: true,
@@ -296,7 +319,7 @@ export function scenarioSyncTextFlat(
     matchedTypes: ['sync_text'],
     expandedTypes: ['sync_text'],
     foldedTypes: [],
-    message: '已为你找到 Unit 1 同步课文内容，以 Topic 结构组织，可选择具体内容后布置跟读或背诵。',
+    message: `已为你找到 ${u} 同步课文内容，以 Topic 结构组织，可选择具体内容后布置跟读或背诵。`,
   }
 
   return {
@@ -304,12 +327,12 @@ export function scenarioSyncTextFlat(
     filterTabs: [{ category: 'all', label: '全部', count: 1 }, { category: 'sync_text', label: '同步课文', count: 1 }],
     resourceGroups: [{
       groupId: 'sync-text-flat',
-      groupName: 'Unit 1 同步课文',
+      groupName: `${u} 同步课文`,
       groupType: 'sync_text',
       isPrimaryMatch: true,
       defaultExpanded: true,
       displayLimit: 1,
-      recommendationText: '推荐理由：这是当前 Unit 1 的同步课文内容，可选择具体语篇后布置逐句跟读、整篇跟读或整篇背诵。',
+      recommendationText: `推荐理由：这是当前 ${u} 的同步课文内容，可选择具体语篇后布置逐句跟读、整篇跟读或整篇背诵。`,
       items: [syncTextItem as any],
     }],
     functionEntries: [],
@@ -327,15 +350,16 @@ export function scenarioListeningSearch(
   ctx: SearchContext = CTX_1_1,
 ): NewSearchResult {
   const u = unitStr(ctx)
+  const resourceIds = getListeningResourceIds(ctx.unit)
   const intent: SearchIntentInfo = {
     query,
     recognizedIntent: '听力资源搜索',
     searchType: 'resource',
     context: ctxStr(ctx),
-    matchedTypes: ['sync_listening', 'listening_practice', 'speaking_practice', 'listening_mock'],
+    matchedTypes: ['sync_listening', 'listening_practice', 'listening_mock'],
     expandedTypes: ['sync_listening', 'listening_practice'],
-    foldedTypes: ['speaking_practice', 'listening_mock'],
-    message: `已为你找到 ${u} 相关听力资源，包括同步听力、听力练习、听说练习和听力模拟题。精准匹配资源已默认展开，推荐资源已折叠。`,
+    foldedTypes: ['listening_mock'],
+    message: `已为你找到 ${u} 相关听力资源，包括同步听力、听力练习和听力模拟题。精准匹配资源已默认展开，推荐资源已折叠。`,
   }
 
   const groups: ResourceGroup[] = [
@@ -347,10 +371,7 @@ export function scenarioListeningSearch(
       defaultExpanded: true,
       displayLimit: 5,
       recommendationText: `以下听力资源与 ${u} 精确匹配。`,
-      items: findResources([
-        'res-sync-listening-1a', 'res-sync-listening-1b', 'res-sync-listening-1c',
-        'res-listening-practice-1',
-      ]),
+      items: findResources(resourceIds.primary),
     },
     {
       groupId: 'listening-rec',
@@ -360,18 +381,14 @@ export function scenarioListeningSearch(
       defaultExpanded: false,
       displayLimit: 3,
       recommendationText: '以下为推荐听力资源，适合拓展训练。',
-      items: findResources([
-        'res-speaking-practice-1', 'res-listening-mock-1', 'res-listening-practice-2',
-        'res-exam-sprint-1',
-      ]),
+      items: findResources(resourceIds.rec),
     },
   ]
 
   const filterTabs: FilterTab[] = [
-    { category: 'all', label: '全部', count: 8 },
+    { category: 'all', label: '全部', count: resourceIds.primary.length + resourceIds.rec.length },
     { category: 'sync_listening', label: '同步听力', count: 3 },
     { category: 'listening_practice', label: '听力练习', count: 2 },
-    { category: 'speaking_practice', label: '听说练习', count: 1 },
     { category: 'listening_mock', label: '听力模拟', count: 1 },
     { category: 'exam_sprint', label: '考前冲刺', count: 1 },
   ]
@@ -387,6 +404,8 @@ export function scenarioNoSpeakingInRegion(
   query: string,
   ctx: SearchContext = CTX_1_1,
 ): NewSearchResult {
+  const u = unitStr(ctx)
+  const resourceIds = getListeningResourceIds(ctx.unit)
   const intent: SearchIntentInfo = {
     query,
     recognizedIntent: '听说练习搜索',
@@ -395,7 +414,7 @@ export function scenarioNoSpeakingInRegion(
     matchedTypes: [],
     expandedTypes: [],
     foldedTypes: [],
-    message: '当前地区暂无 Unit 1 听说练习，已为你推荐可替代资源。',
+    message: `当前地区暂无 ${u} 听说练习，已为你推荐可替代资源。`,
   }
 
   const groups: ResourceGroup[] = [
@@ -407,8 +426,8 @@ export function scenarioNoSpeakingInRegion(
       defaultExpanded: true,
       displayLimit: 5,
       altLabel: '当前单元',
-      recommendationText: 'Unit 1 相关的听力资源可作为听说训练的替代。',
-      items: findResources(['res-sync-listening-1a', 'res-sync-listening-1b', 'res-listening-practice-1', 'res-speaking-practice-2']),
+      recommendationText: `${u} 相关的听力资源可作为听说训练的替代。`,
+      items: [...findResources(resourceIds.primary), ...findResources(['res-speaking-practice-2'])],
     },
     {
       groupId: 'alt-same-grade',
@@ -440,7 +459,7 @@ export function scenarioNoSpeakingInRegion(
     resourceGroups: groups,
     functionEntries: [],
     alternatives: [
-      { label: '当前单元', items: findResources(['res-sync-listening-1a', 'res-sync-listening-1b', 'res-listening-practice-1', 'res-speaking-practice-2']) },
+      { label: '当前单元', items: [...findResources(resourceIds.primary), ...findResources(['res-speaking-practice-2'])] },
       { label: '同年级推荐', items: findResources(['res-special-speaking-1', 'res-regional-select-1', 'res-listening-practice-2']) },
       { label: '非当前单元', items: findResources(['res-listening-mock-1', 'res-exam-sprint-1']) },
     ],
@@ -457,6 +476,7 @@ export function scenarioSyncPractice(
   query: string,
   ctx: SearchContext = CTX_1_1,
 ): NewSearchResult {
+  const u = unitStr(ctx)
   const intent: SearchIntentInfo = {
     query,
     recognizedIntent: '同步练习搜索',
@@ -465,13 +485,13 @@ export function scenarioSyncPractice(
     matchedTypes: ['vocab_practice', 'writing_practice', 'listening_practice', 'speaking_practice', 'comprehensive', 'unit_test', 'stage_test'],
     expandedTypes: ['vocab_practice', 'writing_practice', 'comprehensive'],
     foldedTypes: ['listening_practice', 'speaking_practice', 'unit_test', 'stage_test'],
-    message: '已为你找到 Unit 1 同步练习资源，包括词汇练习、写作练习、听力练习、听说练习、综合练习和单元检测。',
+    message: `已为你找到 ${u} 同步练习资源，包括词汇练习、写作练习、听力练习、听说练习、综合练习和单元检测。`,
   }
 
   const groups: ResourceGroup[] = [
     {
       groupId: 'sync-practice-primary',
-      groupName: 'Unit 1 同步练习',
+      groupName: `${u} 同步练习`,
       groupType: 'resource',
       isPrimaryMatch: true,
       defaultExpanded: true,
@@ -1326,6 +1346,7 @@ export function scenarioListeningMockSearch(
   ctx: SearchContext = CTX_1_1,
 ): NewSearchResult {
   const u = unitStr(ctx)
+  const resourceIds = getListeningResourceIds(ctx.unit)
   const intent: SearchIntentInfo = {
     query,
     recognizedIntent: '听力模拟搜索',
@@ -1346,7 +1367,7 @@ export function scenarioListeningMockSearch(
       defaultExpanded: true,
       displayLimit: 3,
       items: findResources([
-        'res-listening-mock-1', 'res-listening-practice-1', 'res-listening-practice-2',
+        'res-listening-mock-1', 'res-listening-practice-2',
       ]),
     },
     {
@@ -1356,9 +1377,7 @@ export function scenarioListeningMockSearch(
       isPrimaryMatch: false,
       defaultExpanded: false,
       displayLimit: 3,
-      items: findResources([
-        'res-sync-listening-1a', 'res-sync-listening-1b', 'res-sync-listening-1c',
-      ]),
+      items: findResources(resourceIds.primary.slice(0, 3)),
     },
   ]
 
