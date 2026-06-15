@@ -12,7 +12,7 @@ import { matchIntent } from '../ai/workflows'
 import { runWorkflowRunner } from '../ai/engine'
 import type { RunnerResult, RunnerStatus } from '../ai/engine'
 import WorkflowResultDrawer from '../ai/components/WorkflowResultDrawer'
-import { generateTeachingInsight } from '../ai/insights/teachingInsightGenerator'
+import ReviewPlanWizard from '../ai/components/vocabulary-insight/ReviewPlanWizard'
 
 // ── Types ──────────────────────────────────────────────
 
@@ -114,6 +114,9 @@ export default function HomePage() {
   const [aiQuery, setAiQuery] = useState('')
   const setAIDrawerPanel = useAIStore((s) => s.setAIDrawerPanel)
   const setNewSearchResult = useAIStore((s) => s.setNewSearchResult)
+
+  // ── Review Plan Wizard (homepage entry) ──
+  const [showReviewPlan, setShowReviewPlan] = useState(false)
 
   const openAISearch = (query?: string) => {
     if (query) {
@@ -369,10 +372,7 @@ export default function HomePage() {
                           查看洞察
                         </button>
                         <button
-                          onClick={() => {
-                            const insight = generateTeachingInsight('vocabulary')
-                            useAIStore.getState().setAIDrawerPanel('vocabStageInsight', { insight, openReviewWizard: true } as Record<string, unknown>)
-                          }}
+                          onClick={() => setShowReviewPlan(true)}
                           className="text-[11px] text-white bg-[#4b9fe8] hover:bg-[#3a8fd8] px-3 py-1.5 rounded-lg font-medium transition-colors shadow-sm"
                         >
                           生成复习方案
@@ -459,6 +459,14 @@ export default function HomePage() {
         stepNames={wfStepNames}
         onAssign={handleAssign}
       />
+
+      {/* ── Review Plan Wizard (homepage entry: insight mode, default quick_fix) ── */}
+      {showReviewPlan && (
+        <ReviewPlanWizard
+          onClose={() => setShowReviewPlan(false)}
+          entrySource="insight"
+        />
+      )}
     </>
   )
 }
