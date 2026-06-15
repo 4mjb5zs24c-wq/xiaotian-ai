@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { FileText, Filter, Sparkles } from 'lucide-react'
 import ReviewPlanAssignmentCard from '../ai/components/vocabulary-insight/ReviewPlanAssignmentCard'
 import { MOCK_REVIEW_PLAN_ASSIGNMENTS } from '../ai/insights/mockReviewPlanAssignments'
-import type { ReviewPlanDayTask } from '../ai/insights/reviewPlanAssignmentTypes'
+import type { ReviewPlanDayTask, ReviewPlanAssignmentCollection } from '../ai/insights/reviewPlanAssignmentTypes'
 
 type FilterTab = 'all' | 'review_plan' | 'homework' | 'exam' | 'listening' | 'writing'
 
@@ -16,13 +16,28 @@ const FILTER_TABS: { key: FilterTab; label: string }[] = [
   { key: 'writing', label: '写作' },
 ]
 
+function loadStoredPlans(): ReviewPlanAssignmentCollection[] {
+  try {
+    const raw = localStorage.getItem('xiaotian_review_plans')
+    if (raw) return JSON.parse(raw) as ReviewPlanAssignmentCollection[]
+  } catch { /* ignore */ }
+  return []
+}
+
 export default function AssignmentListPage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const highlightPlanId = searchParams.get('highlight')
   const [activeFilter, setActiveFilter] = useState<FilterTab>('all')
 
-  // Auto-expand the plan from publish flow
+  // Merge localStorage plans with mock data
+  const allPlans: ReviewPlanAssignmentCollection[] = useMemo(() => {
+    const stored = loadStoredPlans()
+    // Dedup by id: stored plans take priority (show first)
+    const storedIds = new Set(stored.map((p: ReviewPlanAssignmentCollection) => p.id))
+    const merged = [...stored, ...MOCK_REVIEW_PLAN_ASSIGNMENTS.filter((p: ReviewPlanAssignmentCollection) => !storedIds.has(p.id))]
+    return merged
+  }, [])
   const autoExpandId = highlightPlanId || undefined
 
   const handleViewReport = (dayTask: ReviewPlanDayTask) => {
@@ -60,14 +75,14 @@ export default function AssignmentListPage() {
         {/* Review plan cards */}
         {(activeFilter === 'all' || activeFilter === 'review_plan') && (
           <div className="space-y-4">
-            {MOCK_REVIEW_PLAN_ASSIGNMENTS.length === 0 ? (
+            {allPlans.length === 0 ? (
               <div className="text-center py-16 text-xs text-slate-400">
                 <FileText size={28} className="mx-auto mb-2 text-slate-300" />
                 <p>暂无词汇复习计划</p>
                 <p className="mt-1">从词汇洞察页生成并发布复习方案后，将在此展示</p>
               </div>
             ) : (
-              MOCK_REVIEW_PLAN_ASSIGNMENTS.map(collection => (
+              allPlans.map(collection => (
                 <ReviewPlanAssignmentCard
                   key={collection.id}
                   collection={collection}

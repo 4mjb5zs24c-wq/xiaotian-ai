@@ -136,6 +136,9 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   const [rollingReview, setRollingReview] = useState(true)
   const [generated, setGenerated] = useState(false)
   const [published, setPublished] = useState(false)
+  const [publishing, setPublishing] = useState(false)
+  const [publishError, setPublishError] = useState<string | null>(null)
+  const [publishedPlanId, setPublishedPlanId] = useState<string>('')
 
   // ── Test scenario (dev only) ────────────────────────────
   const [testScenarioId, setTestScenarioId] = useState<TestScenarioId>('normal')
@@ -202,7 +205,102 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   }
 
   const handlePublish = () => {
-    if (onPublish) { onPublish(); return }
+    console.log('[publishReviewPlan] click', { entrySource, isDraft, goal, dayCount, wordsPerDay, taskCount })
+
+    // ── Validate ──
+    if (taskCount === 0) {
+      setPublishError('请至少选择一个复习日')
+      return
+    }
+    if (wordsPerDay <= 0) {
+      setPublishError('每日题量不能为空')
+      return
+    }
+    if (isDraft && draftWordCount === 0) {
+      setPublishError('当前词表为空，无法发布复习方案')
+      return
+    }
+    setPublishError(null)
+    setPublishing(true)
+
+    // ── Build plan data ──
+    const planId = `plan-${Date.now()}`
+    const now = new Date().toISOString()
+    const dayTasks = sortedSelectedDays.map((day, idx) => {
+      const isFirst = idx === 0
+      const isLast = idx === sortedSelectedDays.length - 1
+      const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
+      const taskType = isFirst ? 'main' : isLast ? 'closeout' : 'consolidation'
+      const taskLabel = isFirst
+        ? `Day ${day} 复习任务`
+        : isLast ? `Day ${day} 复习收口任务` : `Day ${day} 巩固回滚任务`
+      return {
+        dayIndex: day,
+        dayLabel: taskLabel,
+        taskType,
+        questionSummary: rollbackQ > 0
+          ? `${mainQ} 道主复习题 + ${rollbackQ} 道动态回滚题`
+          : `${mainQ} 道主复习题`,
+        mainQuestionCount: mainQ,
+        rollbackQuestionCount: rollbackQ,
+        status: 'not_started' as const,
+        submittedCount: 0,
+        totalStudents: 41,
+        startTime: '',
+        deadline: '',
+        id: `${planId}-day-${day}`,
+      }
+    })
+
+    const planData = {
+      id: planId,
+      title: isDraft ? '草稿词复习计划'
+        : goal === 'quick_fix' ? '近期待巩固词复习计划'
+        : goal === 'current_unit' ? '当前单元词汇复习计划'
+        : goal === 'stage_exam' ? '阶段/考前复习计划'
+        : goal === 'weak_student' ? '薄弱学生补练计划'
+        : '自定义词汇复习计划',
+      planType: isDraft ? 'draft_basket' : goal,
+      className: '2023级A18班',
+      wordCount: isDraft ? draftWordCount : effectiveCandidateCount,
+      dayCount,
+      reviewDays: sortedSelectedDays,
+      taskCount,
+      wordsPerDay,
+      status: 'not_started' as const,
+      progressSummary: `已完成 0/${taskCount} 份任务`,
+      goalLabel: isDraft ? '草稿词复习' : goalMeta.label,
+      publishedAt: now,
+      days: dayTasks,
+      overview: {
+        coveredWordCount: isDraft ? draftWordCount : effectiveCandidateCount,
+        cumulativeCompletionRate: 0,
+        masteryImprovement: { before: 0, after: 0, improvement: 0, available: false },
+        rollbackAccuracy: { rate: 0, available: false },
+      },
+    }
+
+    console.log('[publishReviewPlan] payload', planData)
+
+    // ── Persist to localStorage (demo) ──
+    try {
+      const raw = localStorage.getItem('xiaotian_review_plans')
+      const existing: typeof planData[] = raw ? JSON.parse(raw) : []
+      existing.unshift(planData)
+      localStorage.setItem('xiaotian_review_plans', JSON.stringify(existing))
+      console.log('[publishReviewPlan] success, stored', existing.length, 'plans')
+    } catch (err) {
+      console.error('[publishReviewPlan] localStorage error', err)
+      setPublishError('发布失败，请稍后重试。当前方案设置已保留。')
+      setPublishing(false)
+      return
+    }
+
+    // ── Clean up draft basket ──
+    if (onPublish) onPublish()
+
+    setPublishedPlanId(planId)
+    setPublishing(false)
     setPublished(true)
   }
 
@@ -764,10 +862,25 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-colors">
                   上一步
                 </button>
-                <button onClick={handlePublish}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200">
-                  <Send size={14} /> 确认发布
+                <button onClick={handlePublish} disabled={publishing}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
+                  {publishing ? (
+                    <><span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />发布中...</>
+                  ) : (
+                    <><Send size={14} /> 确认发布</>
+                  )}
                 </button>
+              </div>
+            </div>
+          )}
+
+          {/* ═══ Publish error toast ═══ */}
+          {publishError && (
+            <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+              <AlertTriangle size={14} className="text-red-500 shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-xs text-red-700">{publishError}</p>
+                <button onClick={() => setPublishError(null)} className="text-[11px] text-red-500 hover:text-red-600 font-medium mt-1">关闭</button>
               </div>
             </div>
           )}
@@ -783,7 +896,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 <p className="text-xs text-slate-400 mt-1">共生成 {taskCount} 份任务：{reviewDaysText}</p>
               </div>
               <div className="flex gap-2 justify-center">
-                <button onClick={() => { onClose(); navigate('/assignments?highlight=plan-001') }}
+                <button onClick={() => { onClose(); navigate(`/assignments?highlight=${publishedPlanId}`) }}
                   className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-all">
                   <ExternalLink size={12} /> 查看作业列表
                 </button>
@@ -925,9 +1038,13 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-colors">
                   重新制定
                 </button>
-                <button onClick={handlePublish}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200">
-                  <Send size={14} /> 确认发布
+                <button onClick={handlePublish} disabled={publishing}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
+                  {publishing ? (
+                    <><span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />发布中...</>
+                  ) : (
+                    <><Send size={14} /> 确认发布</>
+                  )}
                 </button>
               </div>
             </div>
