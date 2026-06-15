@@ -219,7 +219,7 @@ export function scenarioSyncVocab(
       defaultExpanded: true,
       displayLimit: 1,
       recommendationText:
-        `推荐理由：这是当前 ${unitLabel} 的同步词汇内容，可选择课标词、非课标词和语块后，布置听写、默写、跟读或选词类练习。`,
+        `这是当前 ${unitLabel} 的同步词汇内容，可选择课标词、非课标词和语块后，布置听写、默写、跟读或选词类练习。`,
       items: [syncVocabItem],
     },
   ]
@@ -278,7 +278,7 @@ export function scenarioSyncTextStructured(
       defaultExpanded: true,
       displayLimit: 1,
       recommendationText:
-        `推荐理由：这是当前 ${u} 的同步课文内容，可选择具体语篇后布置逐句跟读、整篇跟读或整篇背诵。`,
+        `这是当前 ${u} 的同步课文内容，可选择具体语篇后布置逐句跟读、整篇跟读或整篇背诵。`,
       items: [syncTextItem as any],
     },
   ]
@@ -332,7 +332,7 @@ export function scenarioSyncTextFlat(
       isPrimaryMatch: true,
       defaultExpanded: true,
       displayLimit: 1,
-      recommendationText: `推荐理由：这是当前 ${u} 的同步课文内容，可选择具体语篇后布置逐句跟读、整篇跟读或整篇背诵。`,
+      recommendationText: `这是当前 ${u} 的同步课文内容，可选择具体语篇后布置逐句跟读、整篇跟读或整篇背诵。`,
       items: [syncTextItem as any],
     }],
     functionEntries: [],
