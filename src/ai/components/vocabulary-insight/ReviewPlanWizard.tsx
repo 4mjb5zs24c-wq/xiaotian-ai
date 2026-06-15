@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { X, ChevronRight, Check, Send, ArrowLeft, Sparkles, Target, Calendar, Hash, RefreshCw, Gauge, BookOpen, Repeat, Clock, AlertTriangle, Users, Eye, Trash2, Filter, ExternalLink } from 'lucide-react'
+import { X, ChevronRight, ChevronDown, Check, Send, ArrowLeft, Sparkles, Target, Calendar, Hash, RefreshCw, Gauge, BookOpen, Repeat, Clock, AlertTriangle, Users, Eye, Trash2, Filter, ExternalLink } from 'lucide-react'
 import type { ReviewGoal, VocabScopeId } from '../../insights/vocabularyInsightTypes'
 import { REVIEW_GOAL_META, VOCAB_SCOPE_OPTIONS, EXTENDED_VOCAB_OPTIONS, SYNC_UNITS } from '../../insights/vocabularyInsightTypes'
 import { TEST_SCENARIOS, getScenarioWarnings, getEffectiveQuestionCount, getEffectiveRollbackCount, isCandidateShort } from './reviewPlanTestScenarios'
@@ -159,6 +159,15 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
     : '词汇复习计划'
   const [planName, setPlanName] = useState(defaultPlanName)
 
+  // ── Custom Day task labels ──
+  const getDefaultDayLabel = (day: number, idx: number, total: number) => {
+    if (idx === 0) return `Day ${day} 复习任务`
+    if (idx === total - 1) return `Day ${day} 复习收口任务`
+    return `Day ${day} 巩固回滚任务`
+  }
+  const [dayLabels, setDayLabels] = useState<Record<number, string>>({})
+  const [showFullRules, setShowFullRules] = useState(false)
+
   // ── Plan start time (default: tomorrow 09:00) ──
   const getDefaultStart = () => {
     const d = new Date()
@@ -269,9 +278,8 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
       const isLast = idx === sortedSelectedDays.length - 1
       const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
       const taskType = isFirst ? 'main' : isLast ? 'closeout' : 'consolidation'
-      const taskLabel = isFirst
-        ? `Day ${day} 复习任务`
-        : isLast ? `Day ${day} 复习收口任务` : `Day ${day} 巩固回滚任务`
+      const defaultLabel = getDefaultDayLabel(day, idx, sortedSelectedDays.length)
+      const taskLabel = dayLabels[day] ?? defaultLabel
       const { startStr, endStr } = computeDayTime(day)
       return {
         dayIndex: day,
@@ -928,48 +936,57 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
 
           {/* ═══ DRAFT STEP 3 preview when generated ═══ */}
           {step === 3 && generated && isDraft && (
-            <div className="space-y-5">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 rounded-xl p-5 space-y-3">
-                <div className="flex items-center gap-2"><Sparkles size={16} className="text-blue-500" /><p className="text-sm font-semibold text-slate-800">草稿词复习方案</p></div>
-                {/* Editable plan name */}
+            <div className="space-y-4">
+              {/* ── Compact Summary Card ── */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 rounded-xl p-4 space-y-3">
+                <div className="flex items-center gap-2"><Sparkles size={16} className="text-blue-500" /><p className="text-sm font-semibold text-slate-800">发布确认</p></div>
+                {/* 1. Plan name */}
                 <div className="flex items-center gap-2">
-                  <label className="text-xs text-slate-400 shrink-0">计划名称：</label>
-                  <input
-                    type="text"
-                    value={planName}
-                    onChange={e => setPlanName(e.target.value)}
-                    className="flex-1 px-3 py-1.5 text-xs text-slate-700 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50"
-                  />
+                  <label className="text-xs text-slate-400 shrink-0 w-16">计划名称：</label>
+                  <input type="text" value={planName} onChange={e => setPlanName(e.target.value)}
+                    className="flex-1 px-3 py-1.5 text-xs text-slate-700 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50" />
                 </div>
-                <div className="space-y-1.5 text-[13px]">
-                  <div><span className="text-slate-400">复习词表：</span><span className="font-medium text-slate-700">已选 {effectiveDraftWordCount} 个词</span></div>
-                  <div><span className="text-slate-400">计划周期：</span><span className="font-medium text-slate-700">{dayCount} 天</span></div>
-                  <div><span className="text-slate-400">复习日：</span><span className="font-medium text-slate-700">{reviewDaysText}</span></div>
-                  <div><span className="text-slate-400">共生成：</span><span className="font-medium text-slate-700">{taskCount} 份任务</span></div>
-                  <div><span className="text-slate-400">每日题量：</span><span className="font-medium text-slate-700">{wordsPerDay} 题</span></div>
-                  <div><span className="text-slate-400">覆盖词数：</span><span className="font-medium text-slate-700">{effectiveDraftWordCount} 个</span></div>
-                  <div><span className="text-slate-400">计划开始：</span><span className="font-medium text-slate-700">{planStartDate} {planStartTime}</span></div>
-                  <div><span className="text-slate-400">动态回滚：</span><span className="font-medium text-emerald-600">已开启</span></div>
-                  <div><span className="text-slate-400">掌握判定：</span><span className="font-medium text-slate-700">连续答对 2 次算掌握</span></div>
+                {/* 2. Plan start time */}
+                <div className="flex items-center gap-2">
+                  <label className="text-xs text-slate-400 shrink-0 w-16">开始时间：</label>
+                  <input type="date" value={planStartDate} onChange={e => setPlanStartDate(e.target.value)}
+                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400" />
+                  <input type="time" value={planStartTime} onChange={e => setPlanStartTime(e.target.value)}
+                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400" />
                 </div>
-                {/* Plan start time editor */}
-                <div className="flex items-center gap-3 bg-white/60 rounded-lg px-3 py-2 border border-blue-100">
-                  <span className="text-xs text-slate-500 shrink-0">计划开始时间：</span>
-                  <input
-                    type="date"
-                    value={planStartDate}
-                    onChange={e => setPlanStartDate(e.target.value)}
-                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400"
-                  />
-                  <input
-                    type="time"
-                    value={planStartTime}
-                    onChange={e => setPlanStartTime(e.target.value)}
-                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400"
-                  />
+                {/* 3. Review schedule */}
+                <div className="flex items-center gap-2 text-xs text-slate-500">
+                  <span className="shrink-0 w-16 text-slate-400">复习安排：</span>
+                  <span className="font-medium text-slate-700">{dayCount} 天</span>
+                  <span className="text-slate-300">|</span>
+                  <span className="font-medium text-slate-700">{reviewDaysText}</span>
+                  <span className="text-slate-300">|</span>
+                  <span>共 <span className="font-medium text-slate-700">{taskCount}</span> 份任务</span>
                 </div>
+                {/* 4. Question rules */}
+                <div className="flex items-start gap-2 text-xs">
+                  <span className="shrink-0 w-16 text-slate-400">题量规则：</span>
+                  <div>
+                    <span className="text-slate-700 font-medium">每日 {wordsPerDay} 题</span>
+                    <span className="text-slate-400"> · Day 1 主复习，Day {sortedSelectedDays.slice(1).map(d => d).join('/')} 主复习 + 动态回滚</span>
+                  </div>
+                </div>
+                {/* Collapsible full rules */}
+                <button onClick={() => setShowFullRules(!showFullRules)} className="flex items-center gap-1 text-[11px] text-blue-500 hover:text-blue-600 font-medium">
+                  {showFullRules ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+                  查看完整规则说明
+                </button>
+                {showFullRules && (
+                  <div className="bg-white/60 rounded-lg px-3 py-2 text-[11px] text-slate-500 space-y-1 border border-blue-100">
+                    <p>· 复习词表：已选 {effectiveDraftWordCount} 个词</p>
+                    <p>· 动态回滚：已开启，后续复习日按前一复习日错词自动生成，约占当天题量 1/5</p>
+                    <p>· 掌握判定：连续答对 2 次算掌握</p>
+                    <p>· 班级：2023级A18班 · 全班</p>
+                  </div>
+                )}
               </div>
-              {/* Scenario warnings (draft preview) */}
+
+              {/* Scenario warnings */}
               {scenarioWarnings.length > 0 && (
                 <div className="space-y-1.5">
                   {scenarioWarnings.map((w, i) => (
@@ -983,39 +1000,49 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   ))}
                 </div>
               )}
+
+              {/* ── Task List ── */}
               <div className="space-y-2.5">
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">连续复习计划 · {dayCount} 天 · {taskCount} 份任务</p>
                 {sortedSelectedDays.map((day, idx) => {
                   const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
-                  const isFirst = idx === 0
-                  const isLast = idx === sortedSelectedDays.length - 1
-                  const taskLabel = isFirst ? '复习任务' : isLast ? '复习收口任务' : '巩固回滚任务'
                   const { startStr, endStr } = computeDayTime(day)
+                  const defaultLabel = getDefaultDayLabel(day, idx, sortedSelectedDays.length)
+                  const prevDay = idx > 0 ? sortedSelectedDays[idx - 1] : null
                   return (
-                    <div key={day} className="border border-slate-200 rounded-xl px-4 py-3 bg-white">
-                      <p className="text-[13px] font-semibold text-slate-700">Day {day} {taskLabel}</p>
-                      <p className="text-[11px] text-slate-500 mt-0.5">{startStr} 至 {endStr}</p>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
+                    <div key={day} className="border border-slate-200 rounded-xl px-4 py-3 bg-white space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-blue-500 shrink-0">Day {day}</span>
+                        <input type="text" value={dayLabels[day] ?? defaultLabel} onChange={e => setDayLabels(prev => ({ ...prev, [day]: e.target.value }))}
+                          className="flex-1 px-2 py-1 text-[13px] font-semibold text-slate-700 bg-slate-50 border border-transparent hover:border-slate-200 rounded-md outline-none focus:border-blue-400 focus:bg-white transition-colors" />
+                      </div>
+                      <p className="text-[11px] text-slate-400 ml-7">{startStr} 至 {endStr}</p>
+                      <p className="text-[11px] text-slate-400 ml-7">
                         {mainQ} 道主复习题{rollbackQ > 0 ? ` + ${rollbackQ} 道动态回滚题` : ' · 无回滚题'}
+                        {rollbackQ > 0 && prevDay && ` · 回滚题将在 Day ${prevDay} 截止后生成`}
                       </p>
                     </div>
                   )
                 })}
               </div>
-              <div className="flex gap-3 pt-3 border-t border-slate-100">
-                <button onClick={() => { setStep(2); setGenerated(false) }}
-                  className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-colors">
-                  上一步
-                </button>
-                <button onClick={handlePublish} disabled={publishing}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
-                  {publishing ? (
-                    <><span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />发布中...</>
-                  ) : (
-                    <><Send size={14} /> 确认发布</>
-                  )}
-                </button>
-              </div>
+            </div>
+          )}
+
+          {/* ═══ Sticky publish actions (draft) ═══ */}
+          {step === 3 && generated && isDraft && (
+            <div className="sticky bottom-0 -mx-6 px-6 py-3 bg-white/95 backdrop-blur-sm border-t border-slate-100 flex gap-3 z-10 rounded-b-2xl">
+              <button onClick={() => { setStep(2); setGenerated(false) }}
+                className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-colors">
+                上一步
+              </button>
+              <button onClick={handlePublish} disabled={publishing}
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
+                {publishing ? (
+                  <><span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />发布中...</>
+                ) : (
+                  <><Send size={14} /> 确认发布</>
+                )}
+              </button>
             </div>
           )}
 
@@ -1057,116 +1084,90 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
               STEP 4: Generated Result (insight mode only)
               ══════════════════════════════════════════════════════════ */}
           {step === 4 && generated && !isDraft && !published && (
-            <div className="space-y-5">
-              {/* Plan Summary */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 rounded-xl p-5 space-y-3">
-                <div className="flex items-center gap-2"><Sparkles size={16} className="text-blue-500" /><p className="text-sm font-semibold text-slate-800">方案说明</p></div>
-                {/* Editable plan name */}
+            <div className="space-y-4">
+              {/* ── Compact Summary Card ── */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 rounded-xl p-4 space-y-3">
+                <div className="flex items-center gap-2"><Sparkles size={16} className="text-blue-500" /><p className="text-sm font-semibold text-slate-800">发布确认</p></div>
+                {/* 1. Plan name */}
                 <div className="flex items-center gap-2">
-                  <label className="text-xs text-slate-400 shrink-0">计划名称：</label>
-                  <input
-                    type="text"
-                    value={planName}
-                    onChange={e => setPlanName(e.target.value)}
-                    className="flex-1 px-3 py-1.5 text-xs text-slate-700 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50"
-                  />
+                  <label className="text-xs text-slate-400 shrink-0 w-16">计划名称：</label>
+                  <input type="text" value={planName} onChange={e => setPlanName(e.target.value)}
+                    className="flex-1 px-3 py-1.5 text-xs text-slate-700 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50" />
                 </div>
-                <div className="space-y-1.5 text-[13px]">
-                  <div><span className="text-slate-400">复习目标：</span><span className="font-medium text-slate-700">{isDraft ? '草稿词复习' : goalMeta.label}</span></div>
-                  <div><span className="text-slate-400">复习范围：</span><span className="font-medium text-slate-700">{isDraft ? `已选 ${effectiveDraftWordCount} 个草稿词` : goal === 'quick_fix' ? (candidateShortage ? `当前页面筛选条件下的高频错词 · 可用 ${effectiveCandidateCount} 个词` : `当前页面筛选条件下的高频错词 · Top ${quickFixWordCount}`) : goal === 'current_unit' ? `Unit 3 — Food and Drinks · 课标词+非课标词+单元易错词` : goal === 'stage_exam' ? `${stageExamUnits.size} 个单元 · 阶段高频错词+多单元重点词` : goal === 'weak_student' ? `${weakStudentIds.size} 名学生个人薄弱词` : getVocabScopeSummary()}</span></div>
-                  <div><span className="text-slate-400">复习对象：</span><span className="font-medium text-slate-700">{isDraft ? '全班' : goal === 'weak_student' ? `已选 ${weakStudentIds.size} 名薄弱学生` : '全班'}</span></div>
-                  <div><span className="text-slate-400">复习词表：</span><span className="font-medium text-slate-700">{isDraft ? `${effectiveDraftWordCount} 个草稿词` : goal === 'quick_fix' ? (effectiveCandidateCount >= quickFixWordCount ? `Top ${quickFixWordCount} 高频错词` : `当前可用高频错词 ${effectiveCandidateCount} 个`) : goal === 'current_unit' ? '约 44 个词' : goal === 'stage_exam' ? '约 120 个词' : goal === 'weak_student' ? '各学生薄弱词表' : '自定义范围'}</span></div>
-                  <div><span className="text-slate-400">计划周期：</span><span className="font-medium text-slate-700">{dayCount} 天</span></div>
-                  <div><span className="text-slate-400">复习日：</span><span className="font-medium text-slate-700">{reviewDaysText}</span></div>
-                  <div><span className="text-slate-400">共生成：</span><span className="font-medium text-slate-700">{taskCount} 份复习任务</span></div>
-                  <div><span className="text-slate-400">每日题量：</span><span className="font-medium text-slate-700">{wordsPerDay} 题</span></div>
-                  <div><span className="text-slate-400">覆盖词数：</span><span className="font-medium text-slate-700">{isDraft ? effectiveDraftWordCount : effectiveCandidateCount} 个</span></div>
-                  <div><span className="text-slate-400">计划开始：</span><span className="font-medium text-slate-700">{planStartDate} {planStartTime}</span></div>
-                  {sortedSelectedDays.map((day, idx) => {
-                    const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
-                    const lowRate = activeScenario?.id === 'low_answer_rate' && !activeScenario?.hasPreviousRollbackPool && idx > 0
-                    const { startStr, endStr } = computeDayTime(day)
-                    return (
-                      <div key={day}>
-                        <span className="text-slate-400">Day {day}：</span>
-                        <span className="font-medium text-slate-700">{mainQ} 道主复习题{rollbackQ > 0 ? ` + ${rollbackQ} 道动态回滚题` : lowRate ? ' · 暂不生成回滚题' : ''}</span>
-                        <span className="text-[11px] text-slate-400 ml-1">({startStr} 至 {endStr})</span>
-                      </div>
-                    )
-                  })}
-                  {goal === 'custom' && !isDraft && <div><span className="text-slate-400">词汇来源：</span><span className="font-medium text-slate-700">{getVocabScopeSummary()}</span></div>}
-                  {!isDraft && goal === 'current_unit' && <div><span className="text-slate-400">优先强化：</span><span className="font-medium text-slate-700">{currentUnitPrioritize ? '易错词优先' : '均等分配'}</span></div>}
-                  {!isDraft && goal === 'stage_exam' && <div><span className="text-slate-400">错词范围：</span><span className="font-medium text-slate-700">{stageExamRange === '30d' ? '近 30 天' : stageExamRange === 'semester' ? '本学期' : '自定义'}</span></div>}
-                  <div><span className="text-slate-400">掌握判定：</span><span className="font-medium text-slate-700">{isDraft ? '连续答对 2 次算掌握' : goal === 'custom' ? (masteryRule === 'consecutive_correct' ? '连续答对' : masteryRule === 'accumulated_correct' ? '累计答对' : '末次答对') : '连续答对 2 次算掌握'}</span></div>
-                  <div><span className="text-slate-400">动态回滚：</span><span className="font-medium text-emerald-600">已开启，后续复习日根据上一复习日错误情况自动生成</span></div>
+                {/* 2. Plan start time */}
+                <div className="flex items-center gap-2">
+                  <label className="text-xs text-slate-400 shrink-0 w-16">开始时间：</label>
+                  <input type="date" value={planStartDate} onChange={e => setPlanStartDate(e.target.value)}
+                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400" />
+                  <input type="time" value={planStartTime} onChange={e => setPlanStartTime(e.target.value)}
+                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400" />
                 </div>
-                {/* Plan start time editor (insight) */}
-                <div className="flex items-center gap-3 bg-white/60 rounded-lg px-3 py-2 border border-blue-100">
-                  <span className="text-xs text-slate-500 shrink-0">计划开始时间：</span>
-                  <input
-                    type="date"
-                    value={planStartDate}
-                    onChange={e => setPlanStartDate(e.target.value)}
-                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400"
-                  />
-                  <input
-                    type="time"
-                    value={planStartTime}
-                    onChange={e => setPlanStartTime(e.target.value)}
-                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400"
-                  />
+                {/* 3. Review schedule */}
+                <div className="flex items-center gap-2 text-xs text-slate-500">
+                  <span className="shrink-0 w-16 text-slate-400">复习安排：</span>
+                  <span className="font-medium text-slate-700">{dayCount} 天</span>
+                  <span className="text-slate-300">|</span>
+                  <span className="font-medium text-slate-700">{reviewDaysText}</span>
+                  <span className="text-slate-300">|</span>
+                  <span>共 <span className="font-medium text-slate-700">{taskCount}</span> 份任务</span>
                 </div>
-                <p className="text-xs text-blue-500 italic leading-relaxed pt-1 border-t border-blue-100">
-                  💡 {isDraft
-                    ? `从草稿篮已选 ${effectiveDraftWordCount} 个词生成 ${taskCount} 份连续复习任务。${sortedSelectedDays[0] ? `Day ${sortedSelectedDays[0]}` : '首个复习日'}只生成主复习题，后续复习日自动添加动态回滚题。`
-                    : goal === 'weak_student'
-                      ? `已为 ${weakStudentIds.size} 名薄弱学生生成个性化补练任务，每人围绕自身薄弱词独立生成复习计划。`
-                      : `基于「${goalMeta.label}」目标生成 ${taskCount} 份复习任务。前期学生只会收到主复习题，后续自动根据作答情况添加动态回滚题。`}
-                </p>
+                {/* 4. Question rules */}
+                <div className="flex items-start gap-2 text-xs">
+                  <span className="shrink-0 w-16 text-slate-400">题量规则：</span>
+                  <div>
+                    <span className="text-slate-700 font-medium">每日 {wordsPerDay} 题</span>
+                    <span className="text-slate-400"> · Day 1 主复习，后续 Day 主复习 + 动态回滚（约占 1/5）</span>
+                  </div>
+                </div>
+                {/* Collapsible full rules */}
+                <button onClick={() => setShowFullRules(!showFullRules)} className="flex items-center gap-1 text-[11px] text-blue-500 hover:text-blue-600 font-medium">
+                  {showFullRules ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+                  查看完整规则说明
+                </button>
+                {showFullRules && (
+                  <div className="bg-white/60 rounded-lg px-3 py-2 text-[11px] text-slate-500 space-y-1 border border-blue-100">
+                    <p>· 复习目标：{goalMeta.label}</p>
+                    <p>· 复习范围：{isDraft ? `已选 ${effectiveDraftWordCount} 个草稿词` : goal === 'quick_fix' ? (candidateShortage ? `高频错词 · 可用 ${effectiveCandidateCount} 个` : `高频错词 · Top ${quickFixWordCount}`) : goal === 'current_unit' ? 'Unit 3 — Food and Drinks' : goal === 'stage_exam' ? `${stageExamUnits.size} 个单元 · 高频错词+多单元重点词` : goal === 'weak_student' ? `${weakStudentIds.size} 名学生薄弱词` : '自定义范围'}</p>
+                    <p>· 复习对象：{isDraft ? '全班' : goal === 'weak_student' ? `已选 ${weakStudentIds.size} 名薄弱学生` : '全班'}</p>
+                    <p>· 复习词表：{isDraft ? `${effectiveDraftWordCount} 个词` : goal === 'quick_fix' ? `${effectiveCandidateCount} 个` : goal === 'current_unit' ? '约 44 个词' : goal === 'stage_exam' ? '约 120 个词' : '自定义范围'}</p>
+                    <p>· 动态回滚：已开启，后续复习日按前一复习日错词自动生成，约占当天题量 1/5</p>
+                    <p>· 掌握判定：{isDraft ? '连续答对 2 次算掌握' : goal === 'custom' ? (masteryRule === 'consecutive_correct' ? '连续答对' : masteryRule === 'accumulated_correct' ? '累计答对' : '末次答对') : '连续答对 2 次算掌握'}</p>
+                    {goal === 'custom' && !isDraft && <p>· 词汇来源：{getVocabScopeSummary()}</p>}
+                    <p>· 班级：2023级A18班</p>
+                  </div>
+                )}
               </div>
 
-              {/* Task List */}
+              {/* Scenario warnings */}
+              {scenarioWarnings.length > 0 && (
+                <div className="space-y-1.5">
+                  {scenarioWarnings.map((w, i) => (
+                    <div key={i} className={`flex items-start gap-2 rounded-lg px-3 py-2 text-[11px]
+                      ${w.type === 'error' ? 'bg-red-50 border border-red-200 text-red-700'
+                      : w.type === 'warning' ? 'bg-amber-50 border border-amber-200 text-amber-700'
+                      : 'bg-blue-50 border border-blue-200 text-blue-700'}`}>
+                      <AlertTriangle size={12} className={`shrink-0 mt-0.5 ${w.type === 'error' ? 'text-red-500' : w.type === 'warning' ? 'text-amber-500' : 'text-blue-500'}`} />
+                      <p>{w.message}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Baseline info */}
+              {activeScenario?.id === 'baseline_shortage' && (
+                <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 text-[11px] text-slate-500 space-y-1">
+                  <p>当前回滚题正确率：<span className="font-semibold text-slate-700">76%</span></p>
+                  <p>稳定基线词数量不足（{activeScenario.stableBaselineCount} 个），暂不计算整体提升</p>
+                </div>
+              )}
+              {activeScenario?.id === 'question_shortage' && (
+                <div className="text-[11px] text-slate-400">每日实际题量：<span className="font-semibold text-slate-500">{effectiveQPCount} 题</span>（目标 {wordsPerDay} 题）</div>
+              )}
+
+              {/* ── Task List ── */}
               <div className="space-y-2.5">
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">连续复习计划 · {dayCount} 天 · {taskCount} 份任务</p>
-
-                {/* ── Scenario warnings (dev only) ── */}
-                {scenarioWarnings.length > 0 && (
-                  <div className="space-y-1.5 mb-2">
-                    {scenarioWarnings.map((w, i) => (
-                      <div key={i} className={`flex items-start gap-2 rounded-lg px-3 py-2 text-[11px]
-                        ${w.type === 'error' ? 'bg-red-50 border border-red-200 text-red-700'
-                        : w.type === 'warning' ? 'bg-amber-50 border border-amber-200 text-amber-700'
-                        : 'bg-blue-50 border border-blue-200 text-blue-700'}`}>
-                        <AlertTriangle size={12} className={`shrink-0 mt-0.5 ${w.type === 'error' ? 'text-red-500' : w.type === 'warning' ? 'text-amber-500' : 'text-blue-500'}`} />
-                        <p>{w.message}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* ── Stable baseline info (when baseline shortage) ── */}
-                {activeScenario?.id === 'baseline_shortage' && (
-                  <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 space-y-1.5 mb-1">
-                    <p className="text-xs text-slate-500">
-                      当前回滚题正确率：<span className="font-semibold text-slate-700">76%</span>
-                    </p>
-                    <p className="text-xs text-slate-400">
-                      稳定基线词数量不足（{activeScenario.stableBaselineCount} 个），暂不计算整体提升
-                    </p>
-                    {activeScenario.baselineImprovementRate == null && (
-                      <p className="text-xs text-slate-400">较首次练习提升：<span className="font-medium text-slate-400">—</span></p>
-                    )}
-                  </div>
-                )}
-
-                {/* ── Effective question count hint ── */}
-                {activeScenario?.id === 'question_shortage' && (
-                  <div className="text-[11px] text-slate-400 mb-1">
-                    每日实际题量：<span className="font-semibold text-slate-500">{effectiveQPCount} 题</span>（目标 {wordsPerDay} 题）
-                  </div>
-                )}
-                {goal === 'weak_student' && !isDraft ? (
-                  // weak_student: show per-student task groups
+                {goal === 'weak_student' ? (
                   MOCK_WEAK_STUDENTS.filter(s => weakStudentIds.has(s.id)).map(s => (
                     <div key={s.id} className="border border-slate-200 rounded-xl overflow-hidden">
                       <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-100 flex items-center gap-2">
@@ -1176,14 +1177,16 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                       </div>
                       {sortedSelectedDays.map((day, idx) => {
                         const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
-                        const prevDay = idx > 0 ? sortedSelectedDays[idx - 1] : null
+                        const { startStr, endStr } = computeDayTime(day)
+                        const defaultLabel = getDefaultDayLabel(day, idx, sortedSelectedDays.length)
                         return (
-                          <div key={day} className="px-4 py-2 border-b border-slate-50 last:border-0 flex items-center justify-between text-[11px]">
-                            <span className="text-slate-600">Day {day}</span>
-                            <span className="text-slate-400">
-                              {mainQ} 题{rollbackQ > 0 ? ` + ${rollbackQ} 回滚` : ' · 无回滚'}
-                              {rollbackQ > 0 && prevDay && ` · Day ${prevDay}截止后生成`}
-                            </span>
+                          <div key={day} className="px-4 py-2 border-b border-slate-50 last:border-0">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[11px] font-bold text-blue-500 shrink-0">Day {day}</span>
+                              <input type="text" value={dayLabels[day] ?? defaultLabel} onChange={e => setDayLabels(prev => ({ ...prev, [day]: e.target.value }))}
+                                className="flex-1 px-2 py-0.5 text-[11px] font-semibold text-slate-700 bg-transparent border border-transparent hover:border-slate-200 rounded outline-none focus:border-blue-400 focus:bg-white transition-colors" />
+                            </div>
+                            <div className="text-[10px] text-slate-400 ml-7 mt-0.5">{startStr} 至 {endStr} · {mainQ} 题{rollbackQ > 0 ? ` + ${rollbackQ} 回滚` : ''}</div>
                           </div>
                         )
                       })}
@@ -1192,14 +1195,18 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 ) : (
                   sortedSelectedDays.map((day, idx) => {
                     const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
-                    const isFirst = idx === 0
-                    const isLast = idx === sortedSelectedDays.length - 1
+                    const { startStr, endStr } = computeDayTime(day)
+                    const defaultLabel = getDefaultDayLabel(day, idx, sortedSelectedDays.length)
                     const prevDay = idx > 0 ? sortedSelectedDays[idx - 1] : null
-                    const taskLabel = isFirst ? '主复习任务' : isLast ? '复习收口任务' : '巩固回滚任务'
                     return (
-                      <div key={day} className="border border-slate-200 rounded-xl px-4 py-3 bg-white">
-                        <p className="text-[13px] font-semibold text-slate-700">Day {day} {taskLabel}</p>
-                        <p className="text-[11px] text-slate-400 mt-0.5">
+                      <div key={day} className="border border-slate-200 rounded-xl px-4 py-3 bg-white space-y-1.5">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-blue-500 shrink-0">Day {day}</span>
+                          <input type="text" value={dayLabels[day] ?? defaultLabel} onChange={e => setDayLabels(prev => ({ ...prev, [day]: e.target.value }))}
+                            className="flex-1 px-2 py-1 text-[13px] font-semibold text-slate-700 bg-slate-50 border border-transparent hover:border-slate-200 rounded-md outline-none focus:border-blue-400 focus:bg-white transition-colors" />
+                        </div>
+                        <p className="text-[11px] text-slate-400 ml-7">{startStr} 至 {endStr}</p>
+                        <p className="text-[11px] text-slate-400 ml-7">
                           {mainQ} 道主复习题{rollbackQ > 0 ? ` + ${rollbackQ} 道动态回滚题` : ' · 无回滚题'}
                           {rollbackQ > 0 && prevDay && ` · 回滚题将在 Day ${prevDay} 截止后生成`}
                         </p>
@@ -1208,22 +1215,24 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   })
                 )}
               </div>
+            </div>
+          )}
 
-              {/* Actions */}
-              <div className="flex gap-3 pt-3 border-t border-slate-100">
-                <button onClick={() => { setStep(isDraft ? 2 : 1); setGenerated(false) }}
-                  className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-colors">
-                  重新制定
-                </button>
-                <button onClick={handlePublish} disabled={publishing}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
-                  {publishing ? (
-                    <><span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />发布中...</>
-                  ) : (
-                    <><Send size={14} /> 确认发布</>
-                  )}
-                </button>
-              </div>
+          {/* ═══ Sticky publish actions (insight) ═══ */}
+          {step === 4 && generated && !isDraft && !published && (
+            <div className="sticky bottom-0 -mx-6 px-6 py-3 bg-white/95 backdrop-blur-sm border-t border-slate-100 flex gap-3 z-10 rounded-b-2xl">
+              <button onClick={() => { setStep(1); setGenerated(false) }}
+                className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-colors">
+                重新制定
+              </button>
+              <button onClick={handlePublish} disabled={publishing}
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
+                {publishing ? (
+                  <><span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />发布中...</>
+                ) : (
+                  <><Send size={14} /> 确认发布</>
+                )}
+              </button>
             </div>
           )}
         </div>
