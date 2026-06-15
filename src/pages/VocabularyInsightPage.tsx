@@ -140,8 +140,8 @@ export default function VocabularyInsightPage() {
             </span>
             <div className="flex items-center gap-2">
               <button onClick={() => setShowDraftPanel(true)} className="text-xs px-3 py-1 rounded-lg font-medium text-blue-600 bg-white border border-blue-200 hover:bg-blue-100 transition-all">查看词表</button>
-              <button onClick={() => { setPlanEntrySource('insight'); setShowReviewPlan(true) }} className="text-xs px-3 py-1 rounded-lg font-medium bg-blue-500 text-white hover:bg-blue-600 transition-all">生成方案</button>
-              <button onClick={() => clearVocabDraft()} className="text-xs text-slate-400 hover:text-red-500 transition-colors">清空</button>
+              <button onClick={() => { setDraftSelectedWordIds(vocabDraftBasket.map(i => i.wordId)); setPlanEntrySource('draftBasket'); setShowReviewPlan(true) }} className="text-xs px-3 py-1 rounded-lg font-medium bg-blue-500 text-white hover:bg-blue-600 transition-all">用草稿生成方案</button>
+              <button onClick={() => { if (confirm(`确定清空当前班级的 ${vocabDraftBasket.length} 个复习草稿词吗？`)) clearVocabDraft() }} className="text-xs text-slate-400 hover:text-red-500 transition-colors">清空</button>
             </div>
           </div>
         )}
