@@ -81,4 +81,6 @@ export interface ReviewPlanAssignmentCollection {
   overview: PlanDataOverview
   publishedAt: string               // ISO timestamp
   goalLabel: string                 // "快速巩固近期错词" / "草稿词复习"
+  planStartDate?: string            // "2026-06-15"
+  planStartTime?: string            // "09:00"
 }

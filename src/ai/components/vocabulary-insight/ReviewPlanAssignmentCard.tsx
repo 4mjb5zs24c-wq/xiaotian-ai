@@ -29,7 +29,15 @@ function fmtDate(iso: string): string {
 }
 
 function computeTimeRange(collection: ReviewPlanAssignmentCollection): string {
-  // Use publish date as start, dayCount days later as end
+  // Use actual day start/deadline times from the first and last day tasks
+  const days = collection.days ?? []
+  if (days.length === 0) return ''
+  const first = days[0]
+  const last = days[days.length - 1]
+  if (first.startTime && last.deadline) {
+    return `${first.startTime} 至 ${last.deadline}`
+  }
+  // Fallback: compute from publishedAt
   const start = fmtDate(collection.publishedAt)
   const endDate = new Date(collection.publishedAt)
   endDate.setDate(endDate.getDate() + collection.dayCount)
@@ -38,7 +46,6 @@ function computeTimeRange(collection: ReviewPlanAssignmentCollection): string {
 }
 
 function computeEstTime(collection: ReviewPlanAssignmentCollection): string {
-  // ~2 min per question per day
   return `每日约${Math.round(collection.wordsPerDay * 2 / 5) * 5}min`
 }
 
@@ -158,12 +165,9 @@ function DayTaskCard({
 }) {
   const canView = day.status === 'completed' || day.status === 'in_progress'
 
-  // Compute per-day time
-  const dayStart = new Date(collection.publishedAt)
-  dayStart.setDate(dayStart.getDate() + day.dayIndex - 1)
-  const dayEnd = new Date(dayStart)
-  const startStr = `${String(dayStart.getMonth() + 1).padStart(2, '0')}-${String(dayStart.getDate()).padStart(2, '0')} 09:00`
-  const endStr = `${String(dayEnd.getMonth() + 1).padStart(2, '0')}-${String(dayEnd.getDate()).padStart(2, '0')} 20:00`
+  // Use actual start/deadline from day data
+  const startStr = day.startTime || ''
+  const endStr = day.deadline || ''
   const estMin = Math.round(collection.wordsPerDay * 2 / 5) * 5
 
   return (
@@ -175,7 +179,7 @@ function DayTaskCard({
           <span className="text-[12px] font-semibold text-[#3a4f66] truncate">{day.dayLabel}</span>
         </div>
         <div className="flex items-center gap-3 text-[10px] text-[#8aabcc] shrink-0 ml-3">
-          <span>{startStr} 至 {endStr}</span>
+          {startStr && endStr && <span>{startStr} 至 {endStr}</span>}
           <span>预计{estMin}min</span>
         </div>
       </div>

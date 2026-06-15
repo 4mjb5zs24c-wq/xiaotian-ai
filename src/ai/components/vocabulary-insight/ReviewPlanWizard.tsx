@@ -150,6 +150,38 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   const [publishing, setPublishing] = useState(false)
   const [publishError, setPublishError] = useState<string | null>(null)
 
+  // ── Plan name (editable in preview) ──
+  const defaultPlanName = isDraft ? '草稿词复习计划'
+    : goal === 'quick_fix' ? '近期待巩固词复习计划'
+    : goal === 'current_unit' ? '当前单元词汇复习计划'
+    : goal === 'stage_exam' ? '阶段词汇复习计划'
+    : goal === 'weak_student' ? '薄弱学生词汇补练'
+    : '词汇复习计划'
+  const [planName, setPlanName] = useState(defaultPlanName)
+
+  // ── Plan start time (default: tomorrow 09:00) ──
+  const getDefaultStart = () => {
+    const d = new Date()
+    d.setDate(d.getDate() + 1)
+    d.setHours(9, 0, 0, 0)
+    return {
+      date: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`,
+      time: '09:00',
+    }
+  }
+  const [planStartDate, setPlanStartDate] = useState(() => getDefaultStart().date)
+  const [planStartTime, setPlanStartTime] = useState('09:00')
+
+  // Compute per-day start/end times from plan start
+  const computeDayTime = (dayIndex: number) => {
+    const startDate = new Date(`${planStartDate}T${planStartTime}`)
+    startDate.setDate(startDate.getDate() + dayIndex - 1)
+    const pad = (n: number) => String(n).padStart(2, '0')
+    const startStr = `${pad(startDate.getMonth() + 1)}-${pad(startDate.getDate())} ${planStartTime}`
+    const endStr = `${pad(startDate.getMonth() + 1)}-${pad(startDate.getDate())} 20:00`
+    return { startStr, endStr }
+  }
+
   // ── Computed ──────────────────────────────────────────
 
   const day1Missing = selectedDays.length > 0 && !selectedDays.includes(1)
@@ -240,6 +272,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
       const taskLabel = isFirst
         ? `Day ${day} 复习任务`
         : isLast ? `Day ${day} 复习收口任务` : `Day ${day} 巩固回滚任务`
+      const { startStr, endStr } = computeDayTime(day)
       return {
         dayIndex: day,
         dayLabel: taskLabel,
@@ -252,20 +285,15 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
         status: 'not_started' as const,
         submittedCount: 0,
         totalStudents: 41,
-        startTime: '',
-        deadline: '',
+        startTime: startStr,
+        deadline: endStr,
         id: `${planId}-day-${day}`,
       }
     })
 
     const planData = {
       id: planId,
-      title: isDraft ? '草稿词复习计划'
-        : goal === 'quick_fix' ? '近期待巩固词复习计划'
-        : goal === 'current_unit' ? '当前单元词汇复习计划'
-        : goal === 'stage_exam' ? '阶段/考前复习计划'
-        : goal === 'weak_student' ? '薄弱学生补练计划'
-        : '自定义词汇复习计划',
+      title: planName,
       planType: isDraft ? 'draft_basket' : goal,
       className: '2023级A18班',
       wordCount: isDraft ? effectiveDraftWordCount : effectiveCandidateCount,
@@ -277,6 +305,8 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
       progressSummary: `已完成 0/${taskCount} 份任务`,
       goalLabel: isDraft ? '草稿词复习' : goalMeta.label,
       publishedAt: now,
+      planStartDate,
+      planStartTime,
       days: dayTasks,
       overview: {
         coveredWordCount: isDraft ? effectiveDraftWordCount : effectiveCandidateCount,
@@ -366,12 +396,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
     ? `当前可用高频错词仅 ${activeScenario.candidateWordCount} 个，将基于现有词汇生成复习方案。`
     : null
 
-  const planTitle = isDraft ? '草稿词复习计划'
-    : goal === 'quick_fix' ? '近期待巩固词复习计划'
-    : goal === 'current_unit' ? '当前单元词汇复习计划'
-    : goal === 'stage_exam' ? '阶段/考前复习计划'
-    : goal === 'weak_student' ? '薄弱学生补练计划'
-    : '自定义词汇复习计划'
+  const planTitle = planName
 
   const successSummary = `共生成 ${taskCount} 份练习：${reviewDaysText}`
 
@@ -906,14 +931,42 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
             <div className="space-y-5">
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 rounded-xl p-5 space-y-3">
                 <div className="flex items-center gap-2"><Sparkles size={16} className="text-blue-500" /><p className="text-sm font-semibold text-slate-800">草稿词复习方案</p></div>
+                {/* Editable plan name */}
+                <div className="flex items-center gap-2">
+                  <label className="text-xs text-slate-400 shrink-0">计划名称：</label>
+                  <input
+                    type="text"
+                    value={planName}
+                    onChange={e => setPlanName(e.target.value)}
+                    className="flex-1 px-3 py-1.5 text-xs text-slate-700 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50"
+                  />
+                </div>
                 <div className="space-y-1.5 text-[13px]">
                   <div><span className="text-slate-400">复习词表：</span><span className="font-medium text-slate-700">已选 {effectiveDraftWordCount} 个词</span></div>
                   <div><span className="text-slate-400">计划周期：</span><span className="font-medium text-slate-700">{dayCount} 天</span></div>
                   <div><span className="text-slate-400">复习日：</span><span className="font-medium text-slate-700">{reviewDaysText}</span></div>
                   <div><span className="text-slate-400">共生成：</span><span className="font-medium text-slate-700">{taskCount} 份任务</span></div>
                   <div><span className="text-slate-400">每日题量：</span><span className="font-medium text-slate-700">{wordsPerDay} 题</span></div>
+                  <div><span className="text-slate-400">覆盖词数：</span><span className="font-medium text-slate-700">{effectiveDraftWordCount} 个</span></div>
+                  <div><span className="text-slate-400">计划开始：</span><span className="font-medium text-slate-700">{planStartDate} {planStartTime}</span></div>
                   <div><span className="text-slate-400">动态回滚：</span><span className="font-medium text-emerald-600">已开启</span></div>
                   <div><span className="text-slate-400">掌握判定：</span><span className="font-medium text-slate-700">连续答对 2 次算掌握</span></div>
+                </div>
+                {/* Plan start time editor */}
+                <div className="flex items-center gap-3 bg-white/60 rounded-lg px-3 py-2 border border-blue-100">
+                  <span className="text-xs text-slate-500 shrink-0">计划开始时间：</span>
+                  <input
+                    type="date"
+                    value={planStartDate}
+                    onChange={e => setPlanStartDate(e.target.value)}
+                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400"
+                  />
+                  <input
+                    type="time"
+                    value={planStartTime}
+                    onChange={e => setPlanStartTime(e.target.value)}
+                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400"
+                  />
                 </div>
               </div>
               {/* Scenario warnings (draft preview) */}
@@ -936,14 +989,14 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
                   const isFirst = idx === 0
                   const isLast = idx === sortedSelectedDays.length - 1
-                  const prevDay = idx > 0 ? sortedSelectedDays[idx - 1] : null
                   const taskLabel = isFirst ? '复习任务' : isLast ? '复习收口任务' : '巩固回滚任务'
+                  const { startStr, endStr } = computeDayTime(day)
                   return (
                     <div key={day} className="border border-slate-200 rounded-xl px-4 py-3 bg-white">
                       <p className="text-[13px] font-semibold text-slate-700">Day {day} {taskLabel}</p>
+                      <p className="text-[11px] text-slate-500 mt-0.5">{startStr} 至 {endStr}</p>
                       <p className="text-[11px] text-slate-400 mt-0.5">
                         {mainQ} 道主复习题{rollbackQ > 0 ? ` + ${rollbackQ} 道动态回滚题` : ' · 无回滚题'}
-                        {rollbackQ > 0 && prevDay && ` · 回滚题将在 Day ${prevDay} 截止后生成`}
                       </p>
                     </div>
                   )
@@ -1008,6 +1061,16 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
               {/* Plan Summary */}
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 rounded-xl p-5 space-y-3">
                 <div className="flex items-center gap-2"><Sparkles size={16} className="text-blue-500" /><p className="text-sm font-semibold text-slate-800">方案说明</p></div>
+                {/* Editable plan name */}
+                <div className="flex items-center gap-2">
+                  <label className="text-xs text-slate-400 shrink-0">计划名称：</label>
+                  <input
+                    type="text"
+                    value={planName}
+                    onChange={e => setPlanName(e.target.value)}
+                    className="flex-1 px-3 py-1.5 text-xs text-slate-700 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50"
+                  />
+                </div>
                 <div className="space-y-1.5 text-[13px]">
                   <div><span className="text-slate-400">复习目标：</span><span className="font-medium text-slate-700">{isDraft ? '草稿词复习' : goalMeta.label}</span></div>
                   <div><span className="text-slate-400">复习范围：</span><span className="font-medium text-slate-700">{isDraft ? `已选 ${effectiveDraftWordCount} 个草稿词` : goal === 'quick_fix' ? (candidateShortage ? `当前页面筛选条件下的高频错词 · 可用 ${effectiveCandidateCount} 个词` : `当前页面筛选条件下的高频错词 · Top ${quickFixWordCount}`) : goal === 'current_unit' ? `Unit 3 — Food and Drinks · 课标词+非课标词+单元易错词` : goal === 'stage_exam' ? `${stageExamUnits.size} 个单元 · 阶段高频错词+多单元重点词` : goal === 'weak_student' ? `${weakStudentIds.size} 名学生个人薄弱词` : getVocabScopeSummary()}</span></div>
@@ -1017,13 +1080,17 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   <div><span className="text-slate-400">复习日：</span><span className="font-medium text-slate-700">{reviewDaysText}</span></div>
                   <div><span className="text-slate-400">共生成：</span><span className="font-medium text-slate-700">{taskCount} 份复习任务</span></div>
                   <div><span className="text-slate-400">每日题量：</span><span className="font-medium text-slate-700">{wordsPerDay} 题</span></div>
+                  <div><span className="text-slate-400">覆盖词数：</span><span className="font-medium text-slate-700">{isDraft ? effectiveDraftWordCount : effectiveCandidateCount} 个</span></div>
+                  <div><span className="text-slate-400">计划开始：</span><span className="font-medium text-slate-700">{planStartDate} {planStartTime}</span></div>
                   {sortedSelectedDays.map((day, idx) => {
                     const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
                     const lowRate = activeScenario?.id === 'low_answer_rate' && !activeScenario?.hasPreviousRollbackPool && idx > 0
+                    const { startStr, endStr } = computeDayTime(day)
                     return (
                       <div key={day}>
                         <span className="text-slate-400">Day {day}：</span>
                         <span className="font-medium text-slate-700">{mainQ} 道主复习题{rollbackQ > 0 ? ` + ${rollbackQ} 道动态回滚题` : lowRate ? ' · 暂不生成回滚题' : ''}</span>
+                        <span className="text-[11px] text-slate-400 ml-1">({startStr} 至 {endStr})</span>
                       </div>
                     )
                   })}
@@ -1032,6 +1099,22 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   {!isDraft && goal === 'stage_exam' && <div><span className="text-slate-400">错词范围：</span><span className="font-medium text-slate-700">{stageExamRange === '30d' ? '近 30 天' : stageExamRange === 'semester' ? '本学期' : '自定义'}</span></div>}
                   <div><span className="text-slate-400">掌握判定：</span><span className="font-medium text-slate-700">{isDraft ? '连续答对 2 次算掌握' : goal === 'custom' ? (masteryRule === 'consecutive_correct' ? '连续答对' : masteryRule === 'accumulated_correct' ? '累计答对' : '末次答对') : '连续答对 2 次算掌握'}</span></div>
                   <div><span className="text-slate-400">动态回滚：</span><span className="font-medium text-emerald-600">已开启，后续复习日根据上一复习日错误情况自动生成</span></div>
+                </div>
+                {/* Plan start time editor (insight) */}
+                <div className="flex items-center gap-3 bg-white/60 rounded-lg px-3 py-2 border border-blue-100">
+                  <span className="text-xs text-slate-500 shrink-0">计划开始时间：</span>
+                  <input
+                    type="date"
+                    value={planStartDate}
+                    onChange={e => setPlanStartDate(e.target.value)}
+                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400"
+                  />
+                  <input
+                    type="time"
+                    value={planStartTime}
+                    onChange={e => setPlanStartTime(e.target.value)}
+                    className="px-2 py-1 text-xs text-slate-700 bg-white border border-slate-200 rounded-md outline-none focus:border-blue-400"
+                  />
                 </div>
                 <p className="text-xs text-blue-500 italic leading-relaxed pt-1 border-t border-blue-100">
                   💡 {isDraft
