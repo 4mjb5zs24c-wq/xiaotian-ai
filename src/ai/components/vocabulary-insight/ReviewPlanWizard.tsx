@@ -22,7 +22,7 @@ const ERROR_WORD_RANGE_OPTIONS: { value: ErrorWordRange; label: string; desc: st
   { value: 'custom',   label: '自定义',   desc: '自定义起止日期' },
 ]
 
-const INSIGHT_STEPS = ['选择目标', '设置周期', '设置词量', '生成方案']
+const INSIGHT_STEPS = ['选择目标', '确认词汇范围', '设置词量', '预览发布']
 const DRAFT_STEPS = ['设置周期', '设置词量', '预览发布']
 
 /** Get default review days based on selected period */
@@ -293,7 +293,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                         {label}
                       </span>
                     </div>
-                    {stepNum < 4 && <div className={`flex-1 h-0.5 mx-2 mt-[-12px] rounded-full transition-colors duration-300 ${isDone ? 'bg-emerald-300' : 'bg-slate-200'}`} />}
+                    {stepNum < STEP_LABELS.length && <div className={`flex-1 h-0.5 mx-2 mt-[-12px] rounded-full transition-colors duration-300 ${isDone ? 'bg-emerald-300' : 'bg-slate-200'}`} />}
                   </div>
                 )
               })}
@@ -334,11 +334,62 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
           {step === 2 && (
             <div className="space-y-5">
               <div className="flex items-center gap-2">
-                <Calendar size={16} className="text-blue-500" />
+                {isDraft ? <Calendar size={16} className="text-blue-500" /> : <BookOpen size={16} className="text-blue-500" />}
                 <p className="text-sm font-semibold text-slate-700">
-                  {isDraft ? '设置复习周期与复习日' : '设置复习周期与复习日'}
+                  {isDraft ? '设置复习周期与复习日' : '确认词汇范围与设置周期'}
                 </p>
               </div>
+
+              {/* ── INSIGHT MODE: Goal-specific Vocab Scope (before period) ── */}
+              {!isDraft && (<>
+                {goal === 'quick_fix' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2"><BookOpen size={15} className="text-blue-500" /><p className="text-sm font-semibold text-slate-700">词汇范围</p><span className="text-[11px] text-slate-400">当前页面筛选条件下的高频错词</span></div>
+                    <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-1.5 text-xs"><div className="flex justify-between"><span className="text-slate-400">班级</span><span className="font-medium text-slate-700">2023级A18班</span></div><div className="flex justify-between"><span className="text-slate-400">时间范围</span><span className="font-medium text-slate-700">近 7 天</span></div><div className="flex justify-between"><span className="text-slate-400">候选词</span><span className="font-medium text-slate-700">筛选范围内 {activeQuickFixWordCount < quickFixWordCount ? `${activeQuickFixWordCount} 个可用高频错词` : `${quickFixWordCount}+ 个高频错词`}</span></div></div>
+                    <div><div className="flex items-center gap-1.5 mb-2"><Clock size={12} className="text-slate-400" /><p className="text-[11px] text-slate-400">时间范围</p></div><div className="flex gap-2">{ERROR_WORD_RANGE_OPTIONS.map(ro => (<button key={ro.value} onClick={() => setQuickFixRange(ro.value)} className={`flex-1 py-2.5 rounded-xl text-center transition-all duration-200 ${quickFixRange === ro.value ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-500'}`}><span className="text-xs font-semibold">{ro.label}</span></button>))}</div></div>
+                    <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 flex items-center gap-2"><Filter size={12} className="text-slate-400" /><p className="text-xs text-slate-500">词汇排序：<span className="font-medium text-slate-700">按错误率、影响学生数、错误次数综合排序</span></p></div>
+                    <div><p className="text-xs text-slate-400 mb-2">收录词汇数量</p><div className="flex gap-2">{QUICK_FIX_WORD_COUNT_OPTIONS.map(c => (<button key={c} onClick={() => setQuickFixWordCount(c)} className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${quickFixWordCount === c ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-500'}`}>Top {c}</button>))}</div></div>
+                    <div><button onClick={() => setQuickFixShowPreview(!quickFixShowPreview)} className="flex items-center gap-1.5 text-xs text-blue-500 hover:text-blue-600 font-medium"><Eye size={11} /> {quickFixShowPreview ? '收起词表' : activeQuickFixWordCount < quickFixWordCount ? `词表预览（共 ${activeQuickFixWordCount} 个词，不足 Top ${quickFixWordCount}）` : `展开词表预览（共 ${activeQuickFixWordCount} 个词）`}</button>{quickFixShowPreview && (<div className="mt-2 border border-slate-200 rounded-xl overflow-hidden"><div className="bg-slate-50 px-4 py-2 text-[10px] text-slate-400">{activeQuickFixWordCount < quickFixWordCount ? `当前可用高频错词：${activeQuickFixWordCount} 个，本次将基于 ${activeQuickFixWordCount} 个词生成复习方案` : `默认收录 Top ${quickFixWordCount} · 可删除不想复习的词，系统自动从候选池补齐`}</div><div className="divide-y divide-slate-50 max-h-[200px] overflow-y-auto">{previewWords.slice(0, quickFixWordCount).map(w => (<div key={w.id} className="flex items-center justify-between px-4 py-2 text-xs"><div className="flex items-center gap-2"><span className="font-semibold text-slate-700">{w.text}</span><span className="text-[10px] text-slate-400">得分率 {w.scoreRate}%</span></div><button onClick={() => toggleQuickFixRemovedWord(w.id)} className="text-[10px] text-slate-400 hover:text-red-500 transition-colors"><Trash2 size={11} /></button></div>))}</div></div>)}</div>
+                  </div>
+                )}
+                {goal === 'current_unit' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2"><BookOpen size={15} className="text-blue-500" /><p className="text-sm font-semibold text-slate-700">词汇范围</p><span className="text-[11px] text-slate-400">当前教材单元词汇</span></div>
+                    <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-1.5 text-xs"><div className="flex justify-between"><span className="text-slate-400">教材版本</span><span className="font-medium text-slate-700">人教版</span></div><div className="flex justify-between"><span className="text-slate-400">当前单元</span><span className="font-medium text-slate-700">Unit 3 — Food and Drinks</span></div></div>
+                    <p className="text-[11px] text-slate-400">复习范围（可多选）</p>
+                    {[{key:'required',label:'课标词',desc:'当前单元课标要求掌握的词汇',count:24},{key:'optional',label:'非课标词',desc:'当前单元课本中出现的非课标补充词汇',count:12},{key:'error',label:'当前单元易错词',desc:'本班当前单元错误率较高的词汇',count:8}].map(src => {const checked=currentUnitSources[src.key as keyof typeof currentUnitSources];return (<button key={src.key} onClick={()=>toggleCurrentUnitSource(src.key as keyof typeof currentUnitSources)} className={`w-full text-left flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-all duration-200 ${checked?'bg-blue-50 border border-blue-200':'bg-white border border-slate-200 hover:border-slate-300'}`}><div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${checked?'bg-blue-500 border-blue-500':'border-slate-300'}`}>{checked&&<Check size={10} className="text-white"/>}</div><div><span className="text-[13px] font-medium text-slate-700">{src.label}</span><span className="text-[11px] text-slate-400 ml-1">（{src.count} 个词）</span></div></button>)})}
+                    <div className="flex items-center justify-between bg-slate-50 rounded-xl px-4 py-3"><div><p className="text-xs font-medium text-slate-700">优先强化易错词</p><p className="text-[11px] text-slate-400">复习时优先安排易错词练习</p></div><button onClick={()=>setCurrentUnitPrioritize(!currentUnitPrioritize)} className={`w-9 h-5 rounded-full relative transition-colors ${currentUnitPrioritize?'bg-blue-500':'bg-slate-300'}`}><span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${currentUnitPrioritize?'left-[18px]':'left-0.5'}`}/></button></div>
+                    <button onClick={()=>setCurrentUnitShowPreview(!currentUnitShowPreview)} className="flex items-center gap-1.5 text-xs text-blue-500 hover:text-blue-600 font-medium"><Eye size={11}/> {currentUnitShowPreview?'收起词表':'查看词表（约 44 个词）'}</button>
+                    {currentUnitShowPreview&&(<div className="border border-slate-200 rounded-xl max-h-[160px] overflow-y-auto divide-y divide-slate-50">{['restaurant','comfortable','environment','delicious','temperature','government','necessary','exercise'].map(w=>(<div key={w} className="flex items-center justify-between px-4 py-2 text-xs"><span className="font-semibold text-slate-700">{w}</span><button className="text-[10px] text-slate-400 hover:text-red-500"><Trash2 size={11}/></button></div>))}</div>)}
+                  </div>
+                )}
+                {goal === 'stage_exam' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2"><BookOpen size={15} className="text-blue-500" /><p className="text-sm font-semibold text-slate-700">词汇范围</p><span className="text-[11px] text-slate-400">阶段范围内的重点词和错词</span></div>
+                    <div><p className="text-xs text-slate-500 mb-2">单元范围（可多选）</p><div className="grid grid-cols-4 gap-2">{SYNC_UNITS.map(unit=>{const checked=stageExamUnits.has(unit);return(<button key={unit} onClick={()=>toggleStageExamUnit(unit)} className={`py-2.5 rounded-xl text-xs font-medium text-center transition-all duration-150 ${checked?'bg-blue-500 text-white shadow-sm shadow-blue-200':'bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-500'}`}>{unit}</button>)})}</div></div>
+                    <div><div className="flex items-center gap-1.5 mb-2"><Clock size={12} className="text-slate-400"/><p className="text-[11px] text-slate-400">时间范围</p></div><div className="flex gap-2">{[{value:'30d',label:'近 30 天'},{value:'semester',label:'本学期'},{value:'custom',label:'自定义'}].map(ro=>(<button key={ro.value} onClick={()=>setStageExamRange(ro.value as ErrorWordRange)} className={`flex-1 py-2.5 rounded-xl text-center transition-all duration-200 ${stageExamRange===ro.value?'bg-blue-500 text-white shadow-sm shadow-blue-200':'bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-500'}`}><span className="text-xs font-semibold">{ro.label}</span></button>))}</div></div>
+                    <div><p className="text-xs text-slate-500 mb-2">词汇来源</p>{[{key:'stageErrors' as const,label:'阶段高频错词',desc:'所选单元和时间范围内的错词',checked:stageExamSources.stageErrors},{key:'keyWords' as const,label:'多单元重点词',desc:'所选单元的课标重点词汇',checked:stageExamSources.keyWords},{key:'examWords' as const,label:'课标/考纲高频词',desc:'中考课标高频词汇和短语',checked:stageExamSources.examWords}].map(src=>(<button key={src.key} onClick={()=>toggleStageExamSource(src.key)} className={`w-full text-left flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-all mb-1.5 ${src.checked?'bg-blue-50 border border-blue-200':'bg-white border border-slate-200 hover:border-slate-300'}`}><div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${src.checked?'bg-blue-500 border-blue-500':'border-slate-300'}`}>{src.checked&&<Check size={10} className="text-white"/>}</div><div><span className="text-[13px] font-medium text-slate-700">{src.label}</span><span className="text-[11px] text-slate-400 ml-1">{src.desc}</span></div></button>))}</div>
+                    <button className="flex items-center gap-1.5 text-xs text-blue-500 hover:text-blue-600 font-medium"><Eye size={11}/> 查看词表（约 120 个词）</button>
+                  </div>
+                )}
+                {goal === 'weak_student' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2"><Users size={15} className="text-blue-500" /><p className="text-sm font-semibold text-slate-700">选择补练学生</p><span className="text-[11px] text-slate-400">系统推荐薄弱学生列表</span></div>
+                    <p className="text-[11px] text-slate-400">勾选需要补练的学生，系统将自动带入每个学生的未掌握词和反复回滚仍出错的词，生成个性化补练任务（非全班统一计划）。</p>
+                    <div className="space-y-1.5">{MOCK_WEAK_STUDENTS.map(s=>{const checked=weakStudentIds.has(s.id);return(<button key={s.id} onClick={()=>toggleWeakStudent(s.id)} className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 ${checked?'bg-blue-50 border-blue-200':'bg-white border-slate-200 hover:border-slate-300'}`}><div className="flex items-center justify-between"><div className="flex items-center gap-3"><div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${checked?'bg-blue-500 border-blue-500':'border-slate-300'}`}>{checked&&<Check size={10} className="text-white"/>}</div><div><div className="flex items-center gap-2"><span className="text-[13px] font-semibold text-slate-700">{s.name}</span><span className="text-[10px] font-bold text-amber-600">{s.scoreRate}%</span><span className="text-[9px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">{s.mainIssue}</span></div><p className="text-[11px] text-slate-400 mt-0.5">薄弱词 {s.weakWordCount} 个 · 默认任务名：{s.name} + 词汇补练</p></div></div></div></button>)})}</div>
+                    {weakStudentIds.size===0&&<p className="text-[11px] text-red-400">请至少选择一名学生</p>}
+                    {weakStudentIds.size>0&&(<div className="bg-blue-50 rounded-xl p-3 border border-blue-100 text-xs text-blue-700">{weakStudentIds.size>1?`已选 ${weakStudentIds.size} 名学生，将生成 ${weakStudentIds.size} 份个性化补练任务，每个任务围绕该学生的薄弱词独立生成。`:'已选 1 名学生，将生成 1 份个性化补练任务。'}</div>)}
+                  </div>
+                )}
+                {goal === 'custom' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2"><BookOpen size={15} className="text-blue-500" /><p className="text-sm font-semibold text-slate-700">词汇范围</p><span className="text-[11px] text-slate-400">自由组合词汇来源（可多选）</span></div>
+                    <div className="space-y-2">{VOCAB_SCOPE_OPTIONS.map(opt=>{const isSelected=vocabScope.includes(opt.id);return(<div key={opt.id} className="space-y-2"><button onClick={()=>toggleVocabScope(opt.id)} className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-200 ${isSelected?'bg-blue-50 border border-blue-200':'bg-white border border-slate-200 hover:border-slate-300'}`}><div className="flex items-center gap-2.5"><div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${isSelected?'bg-blue-500 border-blue-500':'border-slate-300'}`}>{isSelected&&<Check size={10} className="text-white"/>}</div><div><span className="text-[13px] font-medium text-slate-700">{opt.label}</span><span className="text-[11px] text-slate-400 ml-2">{opt.desc}</span></div></div></button>{isSelected&&opt.id==='error_words'&&(<div className="ml-7 p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-3"><div className="flex items-center gap-1.5"><Clock size={12} className="text-slate-400"/><p className="text-[11px] text-slate-400">选择错词统计的时间段</p></div><div className="flex gap-2">{ERROR_WORD_RANGE_OPTIONS.map(ro=>(<button key={ro.value} onClick={()=>setErrorWordRange(ro.value)} className={`flex-1 py-2.5 rounded-xl text-center transition-all duration-200 ${errorWordRange===ro.value?'bg-blue-500 text-white shadow-sm shadow-blue-200':'bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-500'}`}><span className="text-xs font-semibold">{ro.label}</span></button>))}</div>{errorWordRange==='custom'&&(<div className="flex items-center gap-3 pt-1"><div className="flex-1"><p className="text-[10px] text-slate-400 mb-1">开始日期</p><input type="date" value={errorWordStartDate} onChange={e=>setErrorWordStartDate(e.target.value)} className="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 focus:outline-none focus:border-blue-300"/></div><span className="text-xs text-slate-400 mt-4">至</span><div className="flex-1"><p className="text-[10px] text-slate-400 mb-1">结束日期</p><input type="date" value={errorWordEndDate} onChange={e=>setErrorWordEndDate(e.target.value)} className="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 focus:outline-none focus:border-blue-300"/></div></div>)}</div>)}{isSelected&&opt.id==='sync_unit'&&(<div className="ml-7 p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-2.5"><p className="text-[11px] text-slate-400">选择要复习的教学单元</p><div className="grid grid-cols-4 gap-2">{SYNC_UNITS.map(unit=>(<button key={unit} onClick={()=>toggleSyncUnit(unit)} className={`py-2.5 rounded-xl text-xs font-medium text-center transition-all ${selectedSyncUnits.includes(unit)?'bg-blue-500 text-white shadow-sm':'bg-white border border-slate-200 text-slate-600 hover:border-blue-200'}`}>{unit}</button>))}</div></div>)}{isSelected&&opt.id==='platform_extended'&&(<div className="ml-7 p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-2"><p className="text-[11px] text-slate-400">选择拓展词汇专题</p>{EXTENDED_VOCAB_OPTIONS.map(item=>(<button key={item} onClick={()=>toggleExtendedVocab(item)} className={`w-full text-left flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition-all ${selectedExtendedVocabs.includes(item)?'bg-blue-50 border border-blue-200':'bg-white border border-slate-200 hover:border-slate-300'}`}><div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${selectedExtendedVocabs.includes(item)?'bg-blue-500 border-blue-500':'border-slate-300'}`}>{selectedExtendedVocabs.includes(item)&&<Check size={10} className="text-white"/>}</div><span className="text-xs text-slate-700">{item}</span></button>))}</div>)}</div>)})}</div>
+                    {vocabScope.length===0&&<p className="text-[11px] text-red-400">请至少选择一个词汇范围</p>}
+                  </div>
+                )}
+                <div className="border-t border-slate-200" />
+              </>)}
 
               {/* Selected goal / target */}
               <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
@@ -430,399 +481,24 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
           {step === 3 && (
             <div className="space-y-5">
 
-              {/* ── DRAFT MODE: skip vocab scope, just show word count / rollback / mastery ── */}
-              {/* Draft mode step 3 has NO vocab scope section */}
-
-              {/* ── INSIGHT MODE: Goal-specific vocab scope sections ── */}
-
-              {/* ═══ quick_fix: 高频错词范围 ═══ */}
-              {goal === 'quick_fix' && !isDraft && (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <BookOpen size={15} className="text-blue-500" />
-                    <p className="text-sm font-semibold text-slate-700">词汇范围</p>
-                    <span className="text-[11px] text-slate-400">当前页面筛选条件下的高频错词</span>
-                  </div>
-
-                  {/* Current filter context */}
-                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-1.5 text-xs">
-                    <div className="flex justify-between"><span className="text-slate-400">班级</span><span className="font-medium text-slate-700">2023级A18班</span></div>
-                    <div className="flex justify-between"><span className="text-slate-400">时间范围</span><span className="font-medium text-slate-700">近 7 天</span></div>
-                    <div className="flex justify-between"><span className="text-slate-400">候选词</span><span className="font-medium text-slate-700">50 个高频错词（来源于当前页面展示）</span></div>
-                  </div>
-
-                  {/* Time range selector */}
-                  <div>
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <Clock size={12} className="text-slate-400" />
-                      <p className="text-[11px] text-slate-400">时间范围（可在页面筛选基础上进一步缩小）</p>
-                    </div>
-                    <div className="flex gap-2">
-                      {ERROR_WORD_RANGE_OPTIONS.map(ro => (
-                        <button key={ro.value} onClick={() => setQuickFixRange(ro.value)}
-                          className={`flex-1 py-2.5 rounded-xl text-center transition-all duration-200
-                            ${quickFixRange === ro.value ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-500'}`}>
-                          <span className="text-xs font-semibold">{ro.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Word sorting info */}
-                  <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 flex items-center gap-2">
-                    <Filter size={12} className="text-slate-400" />
-                    <p className="text-xs text-slate-500">词汇排序：<span className="font-medium text-slate-700">按错误率、影响学生数、错误次数综合排序</span></p>
-                  </div>
-
-                  {/* Word count selector */}
-                  <div>
-                    <p className="text-xs text-slate-400 mb-2">收录词汇数量</p>
-                    <div className="flex gap-2">
-                      {QUICK_FIX_WORD_COUNT_OPTIONS.map(c => (
-                        <button key={c} onClick={() => setQuickFixWordCount(c)}
-                          className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200
-                            ${quickFixWordCount === c ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-500'}`}>
-                          Top {c}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Word preview */}
-                  <div>
-                    <button onClick={() => setQuickFixShowPreview(!quickFixShowPreview)}
-                      className="flex items-center gap-1.5 text-xs text-blue-500 hover:text-blue-600 font-medium">
-                      <Eye size={11} /> {quickFixShowPreview ? '收起词表' : `展开词表预览（${activeQuickFixWordCount} 个词）`}
-                    </button>
-                    {quickFixShowPreview && (
-                      <div className="mt-2 border border-slate-200 rounded-xl overflow-hidden">
-                        <div className="bg-slate-50 px-4 py-2 text-[10px] text-slate-400">默认收录 Top {quickFixWordCount} · 可删除不想复习的词，系统自动从候选池补齐</div>
-                        <div className="divide-y divide-slate-50 max-h-[200px] overflow-y-auto">
-                          {previewWords.slice(0, quickFixWordCount).map(w => (
-                            <div key={w.id} className="flex items-center justify-between px-4 py-2 text-xs">
-                              <div className="flex items-center gap-2">
-                                <span className="font-semibold text-slate-700">{w.text}</span>
-                                <span className="text-[10px] text-slate-400">得分率 {w.scoreRate}%</span>
-                              </div>
-                              <button onClick={() => toggleQuickFixRemovedWord(w.id)}
-                                className="text-[10px] text-slate-400 hover:text-red-500 transition-colors">
-                                <Trash2 size={11} />
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* ═══ current_unit: 当前单元词汇复习 ═══ */}
-              {goal === 'current_unit' && !isDraft && (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <BookOpen size={15} className="text-blue-500" />
-                    <p className="text-sm font-semibold text-slate-700">词汇范围</p>
-                    <span className="text-[11px] text-slate-400">当前教材单元词汇</span>
-                  </div>
-
-                  {/* Current context */}
-                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-1.5 text-xs">
-                    <div className="flex justify-between"><span className="text-slate-400">教材版本</span><span className="font-medium text-slate-700">人教版</span></div>
-                    <div className="flex justify-between"><span className="text-slate-400">当前单元</span><span className="font-medium text-slate-700">Unit 3 — Food and Drinks</span></div>
-                  </div>
-
-                  {/* Vocab source checkboxes */}
-                  <p className="text-[11px] text-slate-400">复习范围（可多选）</p>
-                  {[
-                    { key: 'required', label: '课标词', desc: '当前单元课标要求掌握的词汇', count: 24 },
-                    { key: 'optional', label: '非课标词', desc: '当前单元课本中出现的非课标补充词汇', count: 12 },
-                    { key: 'error',   label: '当前单元易错词', desc: '本班当前单元错误率较高的词汇', count: 8 },
-                  ].map(src => {
-                    const checked = currentUnitSources[src.key as keyof typeof currentUnitSources]
-                    return (
-                      <button key={src.key} onClick={() => toggleCurrentUnitSource(src.key as keyof typeof currentUnitSources)}
-                        className={`w-full text-left flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-all duration-200
-                          ${checked ? 'bg-blue-50 border border-blue-200' : 'bg-white border border-slate-200 hover:border-slate-300'}`}>
-                        <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${checked ? 'bg-blue-500 border-blue-500' : 'border-slate-300'}`}>
-                          {checked && <Check size={10} className="text-white" />}
-                        </div>
-                        <div>
-                          <span className="text-[13px] font-medium text-slate-700">{src.label}</span>
-                          <span className="text-[11px] text-slate-400 ml-1">（{src.count} 个词）</span>
-                        </div>
-                      </button>
-                    )
-                  })}
-
-                  {/* Prioritize errors toggle */}
-                  <div className="flex items-center justify-between bg-slate-50 rounded-xl px-4 py-3">
-                    <div>
-                      <p className="text-xs font-medium text-slate-700">优先强化易错词</p>
-                      <p className="text-[11px] text-slate-400">复习时优先安排易错词练习，确保薄弱环节得到更多巩固</p>
-                    </div>
-                    <button onClick={() => setCurrentUnitPrioritize(!currentUnitPrioritize)}
-                      className={`w-9 h-5 rounded-full relative transition-colors ${currentUnitPrioritize ? 'bg-blue-500' : 'bg-slate-300'}`}>
-                      <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${currentUnitPrioritize ? 'left-[18px]' : 'left-0.5'}`} />
-                    </button>
-                  </div>
-
-                  {/* Word preview */}
-                  <button onClick={() => setCurrentUnitShowPreview(!currentUnitShowPreview)}
-                    className="flex items-center gap-1.5 text-xs text-blue-500 hover:text-blue-600 font-medium">
-                    <Eye size={11} /> {currentUnitShowPreview ? '收起词表' : '查看词表（约 44 个词）'}
-                  </button>
-                  {currentUnitShowPreview && (
-                    <div className="border border-slate-200 rounded-xl max-h-[160px] overflow-y-auto divide-y divide-slate-50">
-                      {['restaurant','comfortable','environment','delicious','temperature','government','necessary','exercise'].map(w => (
-                        <div key={w} className="flex items-center justify-between px-4 py-2 text-xs">
-                          <span className="font-semibold text-slate-700">{w}</span>
-                          <button className="text-[10px] text-slate-400 hover:text-red-500"><Trash2 size={11} /></button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* ═══ stage_exam: 阶段/考前复习 ═══ */}
-              {goal === 'stage_exam' && !isDraft && (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <BookOpen size={15} className="text-blue-500" />
-                    <p className="text-sm font-semibold text-slate-700">词汇范围</p>
-                    <span className="text-[11px] text-slate-400">阶段范围内的重点词和错词</span>
-                  </div>
-
-                  {/* Unit range selection */}
-                  <div>
-                    <p className="text-xs text-slate-500 mb-2">单元范围（可多选）</p>
-                    <div className="grid grid-cols-4 gap-2">
-                      {SYNC_UNITS.map(unit => {
-                        const checked = stageExamUnits.has(unit)
-                        return (
-                          <button key={unit} onClick={() => toggleStageExamUnit(unit)}
-                            className={`py-2.5 rounded-xl text-xs font-medium text-center transition-all duration-150
-                              ${checked ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-500'}`}>
-                            {unit}
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Time range */}
-                  <div>
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <Clock size={12} className="text-slate-400" />
-                      <p className="text-[11px] text-slate-400">时间范围</p>
-                    </div>
-                    <div className="flex gap-2">
-                      {[{ value: '30d', label: '近 30 天' }, { value: 'semester', label: '本学期' }, { value: 'custom', label: '自定义' }].map(ro => (
-                        <button key={ro.value} onClick={() => setStageExamRange(ro.value as ErrorWordRange)}
-                          className={`flex-1 py-2.5 rounded-xl text-center transition-all duration-200
-                            ${stageExamRange === ro.value ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-500'}`}>
-                          <span className="text-xs font-semibold">{ro.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Vocab sources */}
-                  <div>
-                    <p className="text-xs text-slate-500 mb-2">词汇来源</p>
-                    {[
-                      { key: 'stageErrors' as const, label: '阶段高频错词', desc: '所选单元和时间范围内的错词', checked: stageExamSources.stageErrors },
-                      { key: 'keyWords' as const,    label: '多单元重点词', desc: '所选单元的课标重点词汇', checked: stageExamSources.keyWords },
-                      { key: 'examWords' as const,   label: '课标/考纲高频词', desc: '中考课标高频词汇和短语', checked: stageExamSources.examWords },
-                    ].map(src => (
-                      <button key={src.key} onClick={() => toggleStageExamSource(src.key)}
-                        className={`w-full text-left flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-all mb-1.5
-                          ${src.checked ? 'bg-blue-50 border border-blue-200' : 'bg-white border border-slate-200 hover:border-slate-300'}`}>
-                        <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${src.checked ? 'bg-blue-500 border-blue-500' : 'border-slate-300'}`}>
-                          {src.checked && <Check size={10} className="text-white" />}
-                        </div>
-                        <div>
-                          <span className="text-[13px] font-medium text-slate-700">{src.label}</span>
-                          <span className="text-[11px] text-slate-400 ml-1">{src.desc}</span>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Word preview */}
-                  <button className="flex items-center gap-1.5 text-xs text-blue-500 hover:text-blue-600 font-medium">
-                    <Eye size={11} /> 查看词表（约 120 个词）
-                  </button>
-                </div>
-              )}
-
-              {/* ═══ weak_student: 薄弱学生补练 ═══ */}
-              {goal === 'weak_student' && !isDraft && (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <Users size={15} className="text-blue-500" />
-                    <p className="text-sm font-semibold text-slate-700">选择补练学生</p>
-                    <span className="text-[11px] text-slate-400">系统推荐薄弱学生列表</span>
-                  </div>
-
-                  <p className="text-[11px] text-slate-400">
-                    勾选需要补练的学生，系统将自动带入每个学生的未掌握词和反复回滚仍出错的词，生成个性化补练任务（非全班统一计划）。
-                  </p>
-
-                  {/* Student list */}
-                  <div className="space-y-1.5">
-                    {MOCK_WEAK_STUDENTS.map(s => {
-                      const checked = weakStudentIds.has(s.id)
-                      return (
-                        <button key={s.id} onClick={() => toggleWeakStudent(s.id)}
-                          className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200
-                            ${checked ? 'bg-blue-50 border-blue-200' : 'bg-white border-slate-200 hover:border-slate-300'}`}>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                              <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${checked ? 'bg-blue-500 border-blue-500' : 'border-slate-300'}`}>
-                                {checked && <Check size={10} className="text-white" />}
-                              </div>
-                              <div>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-[13px] font-semibold text-slate-700">{s.name}</span>
-                                  <span className="text-[10px] font-bold text-amber-600">{s.scoreRate}%</span>
-                                  <span className="text-[9px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">{s.mainIssue}</span>
-                                </div>
-                                <p className="text-[11px] text-slate-400 mt-0.5">薄弱词 {s.weakWordCount} 个 · 默认任务名：{s.name} + 词汇补练</p>
-                              </div>
-                            </div>
-                          </div>
-                        </button>
-                      )
-                    })}
-                  </div>
-
-                  {weakStudentIds.size === 0 && (
-                    <p className="text-[11px] text-red-400">请至少选择一名学生</p>
-                  )}
-
-                  {/* Plan type indicator */}
-                  {weakStudentIds.size > 0 && (
-                    <div className="bg-blue-50 rounded-xl p-3 border border-blue-100 text-xs text-blue-700">
-                      {weakStudentIds.size > 1
-                        ? `已选 ${weakStudentIds.size} 名学生，将生成 ${weakStudentIds.size} 份个性化补练任务，每个任务围绕该学生的薄弱词独立生成。`
-                        : '已选 1 名学生，将生成 1 份个性化补练任务。'}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* ═══ custom: 自定义复习规划（完整词汇范围组合） ═══ */}
-              {goal === 'custom' && !isDraft && (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <BookOpen size={15} className="text-blue-500" />
-                    <p className="text-sm font-semibold text-slate-700">词汇范围</p>
-                    <span className="text-[11px] text-slate-400">自由组合词汇来源（可多选）</span>
-                  </div>
-
-                  <div className="space-y-2">
-                    {VOCAB_SCOPE_OPTIONS.map(opt => {
-                      const isSelected = vocabScope.includes(opt.id)
-                      return (
-                        <div key={opt.id} className="space-y-2">
-                          <button onClick={() => toggleVocabScope(opt.id)}
-                            className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-200
-                              ${isSelected ? 'bg-blue-50 border border-blue-200' : 'bg-white border border-slate-200 hover:border-slate-300'}`}>
-                            <div className="flex items-center gap-2.5">
-                              <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${isSelected ? 'bg-blue-500 border-blue-500' : 'border-slate-300'}`}>
-                                {isSelected && <Check size={10} className="text-white" />}
-                              </div>
-                              <div>
-                                <span className="text-[13px] font-medium text-slate-700">{opt.label}</span>
-                                <span className="text-[11px] text-slate-400 ml-2">{opt.desc}</span>
-                              </div>
-                            </div>
-                          </button>
-
-                          {/* Sub: 错词范围 */}
-                          {isSelected && opt.id === 'error_words' && (
-                            <div className="ml-7 p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-3">
-                              <div className="flex items-center gap-1.5"><Clock size={12} className="text-slate-400" /><p className="text-[11px] text-slate-400">选择错词统计的时间段</p></div>
-                              <div className="flex gap-2">
-                                {ERROR_WORD_RANGE_OPTIONS.map(ro => (
-                                  <button key={ro.value} onClick={() => setErrorWordRange(ro.value)}
-                                    className={`flex-1 py-2.5 rounded-xl text-center transition-all duration-200
-                                      ${errorWordRange === ro.value ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-500'}`}>
-                                    <span className="text-xs font-semibold">{ro.label}</span>
-                                  </button>
-                                ))}
-                              </div>
-                              {errorWordRange === 'custom' && (
-                                <div className="flex items-center gap-3 pt-1">
-                                  <div className="flex-1"><p className="text-[10px] text-slate-400 mb-1">开始日期</p>
-                                    <input type="date" value={errorWordStartDate} onChange={e => setErrorWordStartDate(e.target.value)}
-                                      className="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 focus:outline-none focus:border-blue-300" /></div>
-                                  <span className="text-xs text-slate-400 mt-4">至</span>
-                                  <div className="flex-1"><p className="text-[10px] text-slate-400 mb-1">结束日期</p>
-                                    <input type="date" value={errorWordEndDate} onChange={e => setErrorWordEndDate(e.target.value)}
-                                      className="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 focus:outline-none focus:border-blue-300" /></div>
-                                </div>
-                              )}
-                            </div>
-                          )}
-
-                          {/* Sub: 同步单元词汇 */}
-                          {isSelected && opt.id === 'sync_unit' && (
-                            <div className="ml-7 p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-2.5">
-                              <p className="text-[11px] text-slate-400">选择要复习的教学单元</p>
-                              <div className="grid grid-cols-4 gap-2">
-                                {SYNC_UNITS.map(unit => (
-                                  <button key={unit} onClick={() => toggleSyncUnit(unit)}
-                                    className={`py-2.5 rounded-xl text-xs font-medium text-center transition-all
-                                      ${selectedSyncUnits.includes(unit) ? 'bg-blue-500 text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-200'}`}>
-                                    {unit}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Sub: 拓展词汇 */}
-                          {isSelected && opt.id === 'platform_extended' && (
-                            <div className="ml-7 p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-2">
-                              <p className="text-[11px] text-slate-400">选择拓展词汇专题</p>
-                              {EXTENDED_VOCAB_OPTIONS.map(item => (
-                                <button key={item} onClick={() => toggleExtendedVocab(item)}
-                                  className={`w-full text-left flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition-all
-                                    ${selectedExtendedVocabs.includes(item) ? 'bg-blue-50 border border-blue-200' : 'bg-white border border-slate-200 hover:border-slate-300'}`}>
-                                  <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${selectedExtendedVocabs.includes(item) ? 'bg-blue-500 border-blue-500' : 'border-slate-300'}`}>
-                                    {selectedExtendedVocabs.includes(item) && <Check size={10} className="text-white" />}
-                                  </div>
-                                  <span className="text-xs text-slate-700">{item}</span>
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      )
-                    })}
-                  </div>
-                  {vocabScope.length === 0 && <p className="text-[11px] text-red-400">请至少选择一个词汇范围</p>}
-                </div>
-              )}
+{/* Vocab scope now shown at top of step 2 for insight mode */}
 
               {/* ── Shared: Words Per Day / Daily Question Count ── */}
               <div className={!isDraft && goal !== 'custom' ? '' : (goal === 'custom' ? 'pt-3 border-t border-slate-100' : '')}>
                 <div className="flex items-center gap-2 mb-3">
                   <Hash size={16} className="text-blue-500" />
                   <p className="text-sm font-semibold text-slate-700">
-                    {isDraft ? '设置每日题量' : goal === 'weak_student' ? '设置每生每次题量' : '设置每次词量'}
+                    {isDraft ? '设置每日题量' : '设置每日题量'}
                   </p>
                   {isDraft && <span className="text-[11px] text-slate-400">{draftWordCount < 20 ? '草稿词不足20个，默认30题/日' : '草稿词≥20个，默认50题/日'}</span>}
+                  {!isDraft && <span className="text-[11px] text-slate-400">每个复习日生成的练习题数量</span>}
                 </div>
                 <div className="flex gap-2">
                   {(isDraft ? [20, 30, 50, 100] : GOAL_WORD_COUNT_OPTIONS[goal]).map(w => (
                     <button key={w} onClick={() => setWordsPerDay(w)}
                       className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all duration-200
                         ${wordsPerDay === w ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-500'}`}>
-                      {w} {isDraft ? '题' : '个'}
+                      {w} 题
                     </button>
                   ))}
                 </div>
@@ -833,9 +509,8 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 <div className="flex items-center gap-2">
                   <RefreshCw size={15} className="text-blue-500" />
                   <p className="text-sm font-semibold text-slate-700">
-                    {isDraft ? '动态回滚' : '词汇回滚次数'}
+                    {isDraft ? '动态回滚' : '动态回滚'}
                   </p>
-                  {!isDraft && <span className="text-[11px] text-slate-400">错词在后续练习中重复出现的次数</span>}
                 </div>
                 {isDraft ? (
                   <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 space-y-1.5">
@@ -846,7 +521,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                       </p>
                     ))}
                   </div>
-                ) : (
+                ) : goal === 'custom' ? (
                   <div className="grid grid-cols-3 gap-2">
                     {[
                       { value: 1, label: '回滚 1 次', desc: '仅复现一轮' },
@@ -859,6 +534,15 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                         <span className="text-sm font-semibold">{opt.label}</span>
                         <span className={`text-[11px] ${rollbackCount === opt.value ? 'text-white/70' : 'text-slate-400'}`}>{opt.desc}</span>
                       </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 space-y-1.5">
+                    <p className="text-xs text-slate-700 font-medium">动态回滚：已开启</p>
+                    {sortedSelectedDays.map((day, idx) => (
+                      <p key={day} className="text-xs text-slate-600">
+                        · Day {day}{idx === 0 ? ' 无回滚题（首轮复习）' : ` 根据上一复习日错误情况自动生成回滚题（约占当天总题量的 1/5，约 ${Math.ceil(wordsPerDay / 5)} 题）`}
+                      </p>
                     ))}
                   </div>
                 )}
@@ -881,12 +565,12 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 <div className="flex items-center gap-2">
                   <Gauge size={15} className="text-blue-500" />
                   <p className="text-sm font-semibold text-slate-700">掌握判定规则</p>
-                  {!isDraft && <span className="text-[11px] text-slate-400">当学生满足此条件时，将该词标记为"已掌握"</span>}
+                  {!isDraft && goal === 'custom' && <span className="text-[11px] text-slate-400">当学生满足此条件时，将该词标记为"已掌握"</span>}
                 </div>
-                {isDraft ? (
+                {isDraft || goal !== 'custom' ? (
                   <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100">
                     <p className="text-xs text-slate-700">固定规则：<span className="font-semibold">连续答对 2 次即掌握</span></p>
-                    <p className="text-[11px] text-slate-400 mt-0.5">草稿篮复习方案默认使用此规则，不可更改。</p>
+                    <p className="text-[11px] text-slate-400 mt-0.5">通用复习方案默认使用此规则。如需自定义，请选择"自定义复习规划"。</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-3 gap-2">
@@ -919,13 +603,15 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   </>
                 ) : (
                   <>
-                    <p className="text-xs text-blue-700 font-semibold leading-relaxed">{goalMeta.label} · {wordsPerDay} 词/次 · 周期 {dayCount} 天</p>
-                    <p className="text-xs text-blue-500 leading-relaxed">复习日：<span className="font-semibold">{reviewDaysText}</span> · 共生成 <span className="font-semibold">{taskCount} 份任务</span></p>
-                    <p className="text-xs text-blue-500 leading-relaxed">共 <span className="font-semibold">{dayCount} 天</span> · <span className="font-semibold">{wordsPerDay} 词/次</span> · 覆盖面约 <span className="font-semibold">{dayCount * wordsPerDay}</span> 个词位</p>
+                    <p className="text-xs text-blue-700 font-semibold leading-relaxed">{goalMeta.label} · {taskCount} 份任务 · 每日 {wordsPerDay} 题</p>
+                    <p className="text-xs text-blue-500 leading-relaxed">复习日：<span className="font-semibold">{reviewDaysText}</span> · 周期 <span className="font-semibold">{dayCount} 天</span></p>
+                    {goal === 'quick_fix' && <p className="text-xs text-blue-500 leading-relaxed">复习词表：<span className="font-semibold">{activeQuickFixWordCount >= quickFixWordCount ? `Top ${quickFixWordCount} 高频错词` : `当前可用高频错词 ${activeQuickFixWordCount} 个`}</span></p>}
                     {goal === 'custom' && <p className="text-xs text-blue-500 leading-relaxed">词汇范围：<span className="font-semibold">{getVocabScopeSummary()}</span></p>}
                     {goal === 'weak_student' && <p className="text-xs text-blue-500 leading-relaxed">补练学生：<span className="font-semibold">{weakStudentIds.size} 名</span></p>}
+                    {goal === 'current_unit' && <p className="text-xs text-blue-500 leading-relaxed">复习词表：<span className="font-semibold">当前单元课标词 + 非课标词 + 单元易错词</span></p>}
+                    {goal === 'stage_exam' && <p className="text-xs text-blue-500 leading-relaxed">复习词表：<span className="font-semibold">{stageExamUnits.size} 个单元 · 阶段高频错词 + 多单元重点词</span></p>}
                     <p className="text-xs text-blue-500 leading-relaxed">
-                      回滚 <span className="font-semibold">{rollbackCount} 次</span> · 掌握判定：<span className="font-semibold">{masteryRule === 'consecutive_correct' ? '连续答对' : masteryRule === 'accumulated_correct' ? '累计答对' : '末次答对'}</span>
+                      动态回滚：<span className="font-semibold">已开启</span> · 掌握判定：<span className="font-semibold">连续答对 2 次即掌握</span>
                       {rollingReview && <> · <span className="font-semibold">错词滚动复现</span></>}
                     </p>
                   </>
@@ -959,7 +645,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   <div><span className="text-slate-400">计划周期：</span><span className="font-medium text-slate-700">{dayCount} 天</span></div>
                   <div><span className="text-slate-400">复习日：</span><span className="font-medium text-slate-700">{reviewDaysText}</span></div>
                   <div><span className="text-slate-400">共生成：</span><span className="font-medium text-slate-700">{taskCount} 份复习任务</span></div>
-                  <div><span className="text-slate-400">{isDraft ? '每日题量' : '每次词量'}：</span><span className="font-medium text-slate-700">{wordsPerDay} {isDraft ? '题' : '个'}</span></div>
+                  <div><span className="text-slate-400">每日题量：</span><span className="font-medium text-slate-700">{wordsPerDay} 题</span></div>
                   {sortedSelectedDays.map((day, idx) => {
                     const isFirst = idx === 0
                     const mainQ = isFirst ? wordsPerDay : Math.floor(wordsPerDay * 4 / 5)
@@ -973,7 +659,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   })}
                   {goal === 'custom' && !isDraft && <div><span className="text-slate-400">词汇范围：</span><span className="font-medium text-slate-700">{getVocabScopeSummary()}</span></div>}
                   {!isDraft && goal !== 'weak_student' && <div><span className="text-slate-400">分层策略：</span><span className="font-medium text-slate-700">{config.strategy}</span></div>}
-                  <div><span className="text-slate-400">掌握判定：</span><span className="font-medium text-slate-700">{isDraft ? '连续答对 2 次算掌握' : masteryRule === 'consecutive_correct' ? '连续答对' : masteryRule === 'accumulated_correct' ? '累计答对' : '末次答对'}</span></div>
+                  <div><span className="text-slate-400">掌握判定：</span><span className="font-medium text-slate-700">{isDraft ? '连续答对 2 次算掌握' : goal === 'custom' ? (masteryRule === 'consecutive_correct' ? '连续答对' : masteryRule === 'accumulated_correct' ? '累计答对' : '末次答对') : '连续答对 2 次算掌握'}</span></div>
                   {rollingReview && <div><span className="text-slate-400">错词复现：</span><span className="font-medium text-emerald-600">已开启（每日错词汇入次日）</span></div>}
                   <div><span className="text-slate-400">动态回滚：</span><span className="font-medium text-emerald-600">已开启，后续复习日根据上一复习日错误情况自动生成</span></div>
                 </div>
