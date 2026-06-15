@@ -205,18 +205,17 @@ function DayTaskCard({
         </div>
 
         <div className="flex items-center gap-2 shrink-0 ml-3">
-          {canView ? (
-            <button
-              onClick={() => onViewReport?.(day)}
-              className="text-[11px] text-[#4b9fe8] border border-[#b8d4f0] hover:bg-[#eaf2fb] px-3 py-1 rounded-lg font-medium whitespace-nowrap transition-colors"
-            >
-              报告
-            </button>
-          ) : (
-            <span className="text-[11px] text-[#b8cde0] border border-slate-100 px-3 py-1 rounded-lg font-medium whitespace-nowrap bg-slate-50">
-              暂不可查看
-            </span>
-          )}
+          <button
+            onClick={() => canView && onViewReport?.(day)}
+            disabled={!canView}
+            title={!canView ? '任务开始后可查看报告' : undefined}
+            className={`text-[11px] px-3 py-1 rounded-lg font-medium whitespace-nowrap transition-colors border
+              ${canView
+                ? 'text-[#4b9fe8] border-[#b8d4f0] hover:bg-[#eaf2fb]'
+                : 'text-[#b8cde0] border-slate-100 bg-slate-50 cursor-not-allowed'}`}
+          >
+            报告
+          </button>
           <button className="p-1 rounded-md text-[#b8cde0] hover:text-[#6b8aaa] hover:bg-[#f0f4f8] transition-colors">
             <MoreVertical size={14} />
           </button>

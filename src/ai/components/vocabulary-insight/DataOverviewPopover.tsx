@@ -56,17 +56,14 @@ export function DataOverviewPopover({ overview }: Props) {
     return () => document.removeEventListener('keydown', handler)
   }, [open])
 
-  // Recalculate on scroll/resize
+  // Close on any scroll — prevents misalignment with scrolled content
   useEffect(() => {
     if (!open) return
-    const handler = () => recalc()
-    window.addEventListener('scroll', handler, true)
-    window.addEventListener('resize', handler)
-    return () => {
-      window.removeEventListener('scroll', handler, true)
-      window.removeEventListener('resize', handler)
-    }
-  }, [open, recalc])
+    const close = () => setOpen(false)
+    // Capture phase catches scroll from any nested container (main content, list, etc.)
+    document.addEventListener('scroll', close, true)
+    return () => document.removeEventListener('scroll', close, true)
+  }, [open])
 
   return (
     <>
