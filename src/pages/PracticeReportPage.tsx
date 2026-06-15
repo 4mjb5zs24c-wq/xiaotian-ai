@@ -50,7 +50,7 @@ interface ReportItem {
 interface ReportGroup {
   date: string
   weekday: string
-  items: ReportItem[]
+  items: Array<ReportItem | ReviewPlanAssignmentCollection>
 }
 
 // ── Mock Data ──────────────────────────────────────────
@@ -117,6 +117,16 @@ function StatusBadge({ status }: { status: ReportItem['status'] }) {
       已结束
     </span>
   )
+}
+
+// ── Timeline helper: convert ISO date to display format ──
+
+function isoToDateParts(iso: string): { date: string; weekday: string } {
+  const d = new Date(iso)
+  const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+  const mm = String(d.getMonth() + 1).padStart(2, '0')
+  const dd = String(d.getDate()).padStart(2, '0')
+  return { date: `${d.getFullYear()}-${mm}-${dd}`, weekday: weekdays[d.getDay()] }
 }
 
 // ── Report Card ────────────────────────────────────────
@@ -241,8 +251,48 @@ export default function PracticeReportPage() {
     setPanel('practiceStageInsight', { insight, scrollTo } as Record<string, unknown>)
   }
 
-  const sortedGroups = [...mockReportGroups]
-  if (sortOrder === 'asc') sortedGroups.reverse()
+  // Merge stored plans into mock groups by publishedAt date
+  const allGroups = useMemo(() => {
+    const groups = mockReportGroups.map(g => ({ ...g, items: [...g.items] as Array<ReportItem | ReviewPlanAssignmentCollection> }))
+
+    // Insert plans into matching date groups, or create new groups
+    for (const plan of storedPlans) {
+      const { date, weekday } = isoToDateParts(plan.publishedAt)
+      const existing = groups.find(g => g.date === date)
+      if (existing) {
+        existing.items.unshift(plan) // plans first in their group
+      } else {
+        groups.push({ date, weekday, items: [plan] })
+      }
+    }
+
+    // Sort by date descending
+    groups.sort((a, b) => b.date.localeCompare(a.date))
+    return groups
+  }, [storedPlans])
+
+  const sortedGroups = sortOrder === 'asc' ? [...allGroups].reverse() : allGroups
+
+  // Filter groups by active tab
+  const filteredGroups = useMemo(() => {
+    if (activeFilter === 'all') return sortedGroups
+    return sortedGroups.map(g => ({
+      ...g,
+      items: g.items.filter(item => {
+        const isPlan = 'days' in item
+        if (activeFilter === 'review_plan') return isPlan
+        return !isPlan // homework/exam/listening/writing: skip plans for now
+      }),
+    })).filter(g => g.items.length > 0)
+  }, [sortedGroups, activeFilter])
+
+  // Total count: for "all" or "review_plan", include plans
+  const totalCount = useMemo(() => {
+    const mockCount = mockReportGroups.reduce((sum, g) => sum + g.items.length, 0)
+    if (activeFilter === 'review_plan') return storedPlans.length
+    if (activeFilter === 'all') return mockCount + storedPlans.length
+    return mockCount
+  }, [storedPlans.length, activeFilter])
 
   return (
     <div className="h-full flex flex-col min-h-0">
@@ -262,7 +312,7 @@ export default function PracticeReportPage() {
           <h2 className="text-[13px] font-semibold text-[#3a4f66] shrink-0">
             全部练习报告
             <span className="ml-1.5 text-[11px] text-[#8aabcc] font-normal">
-              {mockReportGroups.reduce((sum, g) => sum + g.items.length, 0)} 份
+              {totalCount} 份
             </span>
           </h2>
           <button
@@ -332,28 +382,9 @@ export default function PracticeReportPage() {
 
         {/* Timeline List — scrollable */}
         <div className="flex-1 overflow-y-auto min-h-0 px-5 pt-3">
-          {/* ── Review Plan Collections ── */}
-          {(activeFilter === 'all' || activeFilter === 'review_plan') && storedPlans.length > 0 && (
-            <div className="mb-4 space-y-3">
-              {storedPlans.map(plan => (
-                <ReviewPlanAssignmentCard
-                  key={plan.id}
-                  collection={plan}
-                  defaultExpanded={false}
-                  onViewReport={(dayTask: ReviewPlanDayTask) => {
-                    if (dayTask.reportUrl) navigate(dayTask.reportUrl)
-                  }}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* ── Regular Reports (placeholder filters) ── */}
-          {(activeFilter === 'all' || activeFilter === 'homework' || activeFilter === 'exam' || activeFilter === 'listening' || activeFilter === 'writing') && (
-            <>
-          {sortedGroups.map((group, gi) => (
+          {filteredGroups.map((group, gi) => (
             <div key={group.date} className="flex gap-3">
-              {gi === sortedGroups.length - 1 ? <TimelineLastMarker /> : <TimelineMarker isFirst={gi === 0} />}
+              {gi === filteredGroups.length - 1 ? <TimelineLastMarker /> : <TimelineMarker isFirst={gi === 0} />}
               <div className="flex-1 min-w-0 pb-3">
                 <div className="mb-2">
                   <span className="text-[11px] text-[#6b8aaa] font-medium">
@@ -361,15 +392,26 @@ export default function PracticeReportPage() {
                   </span>
                 </div>
                 <div className="space-y-2">
-                  {group.items.map((item) => (
-                    <ReportCard key={item.reportId} r={item} />
-                  ))}
+                  {group.items.map((item) => {
+                    // Type discrimination: ReviewPlanAssignmentCollection vs ReportItem
+                    if ('days' in item) {
+                      return (
+                        <ReviewPlanAssignmentCard
+                          key={item.id}
+                          collection={item}
+                          defaultExpanded={false}
+                          onViewReport={(dayTask: ReviewPlanDayTask) => {
+                            if (dayTask.reportUrl) navigate(dayTask.reportUrl)
+                          }}
+                        />
+                      )
+                    }
+                    return <ReportCard key={item.reportId} r={item} />
+                  })}
                 </div>
               </div>
             </div>
           ))}
-            </>
-          )}
         </div>
 
         {/* Bottom Filter Bar */}

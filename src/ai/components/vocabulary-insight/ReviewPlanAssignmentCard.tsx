@@ -1,44 +1,17 @@
 import { useState } from 'react'
-import { ChevronDown, ChevronRight, FileText, Clock, Users, Target, Check, AlertCircle } from 'lucide-react'
+import {
+  ChevronDown, ChevronRight, FileText, MoreVertical,
+} from 'lucide-react'
 import type { ReviewPlanAssignmentCollection, ReviewPlanDayTask } from '../../insights/reviewPlanAssignmentTypes'
 import { DataOverviewPopover } from './DataOverviewPopover'
 
-const COLLECTION_STATUS_STYLES: Record<string, string> = {
-  not_started: 'bg-slate-100 text-slate-500',
-  in_progress: 'bg-blue-100 text-blue-600',
-  completed: 'bg-emerald-100 text-emerald-600',
-  has_retry: 'bg-amber-100 text-amber-600',
-}
+// ── Status label/color matching existing ReportCard StatusBadge ──
 
-const COLLECTION_STATUS_LABELS: Record<string, string> = {
-  not_started: '未开始',
-  in_progress: '进行中',
-  completed: '已结束',
-  has_retry: '有待补做',
-}
-
-const DAY_STATUS_STYLES: Record<string, string> = {
-  not_started: 'bg-slate-50 text-slate-400',
-  in_progress: 'bg-blue-50 text-blue-600 font-medium',
-  expired: 'bg-red-50 text-red-500',
-  completed: 'bg-emerald-50 text-emerald-600',
-  expired_retry: 'bg-amber-50 text-amber-600',
-}
-
-const DAY_STATUS_LABELS: Record<string, string> = {
-  not_started: '未开始',
-  in_progress: '进行中',
-  expired: '已过期',
-  completed: '已结束',
-  expired_retry: '可补做',
-}
-
-const PLAN_TYPE_LABELS: Record<string, string> = {
-  quick_fix: '快速巩固近期错词',
-  current_unit: '当前单元词汇复习',
-  stage_exam: '阶段/考前复习',
-  weak_student: '薄弱学生补练',
-  draft_basket: '草稿词复习',
+const COLLECTION_STATUS: Record<string, { label: string; cls: string }> = {
+  not_started: { label: '未开始', cls: 'bg-slate-100 text-slate-400' },
+  in_progress: { label: '进行中', cls: 'bg-emerald-50 text-emerald-600' },
+  completed:   { label: '已结束', cls: 'bg-slate-100 text-slate-400' },
+  has_retry:   { label: '有待补做', cls: 'bg-amber-100 text-amber-600' },
 }
 
 interface Props {
@@ -47,97 +20,122 @@ interface Props {
   onViewReport?: (dayTask: ReviewPlanDayTask) => void
 }
 
+// ── Helpers ──────────────────────────────────────────────
+
+function fmtDate(iso: string): string {
+  if (!iso) return ''
+  const d = new Date(iso)
+  return `${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+function computeTimeRange(collection: ReviewPlanAssignmentCollection): string {
+  // Use publish date as start, dayCount days later as end
+  const start = fmtDate(collection.publishedAt)
+  const endDate = new Date(collection.publishedAt)
+  endDate.setDate(endDate.getDate() + collection.dayCount)
+  const end = `${String(endDate.getMonth() + 1).padStart(2, '0')}-${String(endDate.getDate()).padStart(2, '0')}`
+  return `${start} 09:00 至 ${end} 20:00`
+}
+
+function computeEstTime(collection: ReviewPlanAssignmentCollection): string {
+  // ~2 min per question per day
+  return `每日约${Math.round(collection.wordsPerDay * 2 / 5) * 5}min`
+}
+
+// ── Status badge (matches existing ReportCard) ────────────
+
+function StatusBadge({ status }: { status: string }) {
+  const info = COLLECTION_STATUS[status] ?? COLLECTION_STATUS.not_started
+  return (
+    <span className={`inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full font-medium ${info.cls}`}>
+      <span className="w-1.5 h-1.5 rounded-full bg-current opacity-50" />
+      {info.label}
+    </span>
+  )
+}
+
 export default function ReviewPlanAssignmentCard({ collection, defaultExpanded = false, onViewReport }: Props) {
   const [expanded, setExpanded] = useState(defaultExpanded)
   const { days, overview } = collection
-
   const reviewDaysText = collection.reviewDays.map(d => `Day ${d}`).join('、')
 
   return (
-    <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden transition-all">
-      {/* ── Card header ── */}
-      <div className="px-5 py-4">
-        <div className="flex items-start justify-between">
-          <div className="flex-1 min-w-0">
-            {/* Title + tags */}
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm font-bold text-slate-800">{collection.title}</h3>
-              <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-500 border border-indigo-100">词汇复习计划</span>
-              <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-purple-50 text-purple-500 border border-purple-100">连续任务</span>
-              <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-500 border border-emerald-100">动态回滚</span>
-            </div>
-
-            {/* Goal label */}
-            <p className="text-[11px] text-slate-400 mt-1">{PLAN_TYPE_LABELS[collection.planType] || collection.goalLabel}</p>
-
-            {/* Meta row */}
-            <div className="flex items-center gap-3 mt-2 flex-wrap text-[11px] text-slate-500">
-              <span className="flex items-center gap-1"><Users size={10} className="text-slate-400" />{collection.className}</span>
-              <span className="text-slate-300">|</span>
-              <span className="flex items-center gap-1"><Clock size={10} className="text-slate-400" />{collection.dayCount} 天</span>
-              <span className="text-slate-300">|</span>
-              <span>复习日 {reviewDaysText}</span>
-              <span className="text-slate-300">|</span>
-              <span>共 {collection.taskCount} 份任务</span>
-              <span className="text-slate-300">|</span>
-              <span>每日 {collection.wordsPerDay} 题</span>
-              <span className="text-slate-300">|</span>
-              <span className="flex items-center gap-1"><Target size={10} className="text-slate-400" />{collection.wordCount} 个词</span>
-            </div>
-
-            {/* Progress bar */}
-            <div className="mt-3 flex items-center gap-3">
-              <div className="flex-1 max-w-[200px] h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-blue-500 rounded-full transition-all duration-300"
-                  style={{ width: `${Math.round(overview.cumulativeCompletionRate * 100)}%` }}
-                />
-              </div>
-              <span className="text-[11px] text-slate-400">{collection.progressSummary}</span>
-            </div>
+    <div>
+      {/* ── Parent Collection Card (matching ReportCard style) ── */}
+      <div className="bg-white rounded-xl border border-[#e8eef4] overflow-hidden hover:shadow-sm transition-shadow">
+        {/* Header bar — same as ReportCard header */}
+        <div className="flex items-center justify-between px-4 py-2.5 bg-[#f4f7fa] border-b border-[#eef2f6]">
+          <div className="flex items-center gap-2 min-w-0">
+            <FileText size={13} className="text-[#8aabcc] shrink-0" />
+            <span className="text-[12px] font-semibold text-[#3a4f66] truncate">{collection.title}</span>
+            {/* Tags */}
+            <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-500 border border-indigo-100 shrink-0">词汇复习计划</span>
+            <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-purple-50 text-purple-500 border border-purple-100 shrink-0 hidden sm:inline">连续任务</span>
+            <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-500 border border-emerald-100 shrink-0 hidden sm:inline">动态回滚</span>
           </div>
-
-          {/* Right: status + actions */}
-          <div className="flex flex-col items-end gap-2 shrink-0 ml-4">
-            <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${COLLECTION_STATUS_STYLES[collection.status]}`}>
-              {COLLECTION_STATUS_LABELS[collection.status]}
-            </span>
-            <div className="flex items-center gap-1">
-              <button
-                onClick={() => setExpanded(!expanded)}
-                className="flex items-center gap-1 text-[11px] text-blue-500 hover:text-blue-600 font-medium px-2 py-1 rounded-lg hover:bg-blue-50 transition-colors"
-              >
-                {expanded ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
-                {expanded ? '收起任务' : '展开任务'}
-              </button>
-              <DataOverviewPopover overview={overview} />
-              <button className="text-[11px] text-slate-400 hover:text-slate-600 font-medium px-2 py-1 rounded-lg hover:bg-slate-50 transition-colors">
-                更多
-              </button>
-            </div>
+          {/* Right: time + estimated time (same as ReportCard right side) */}
+          <div className="flex items-center gap-3 text-[10px] text-[#8aabcc] shrink-0 ml-3">
+            <span>{computeTimeRange(collection)}</span>
+            <span>{computeEstTime(collection)}</span>
           </div>
         </div>
 
-        {/* Current task indicator — only when in progress */}
-        {collection.currentTaskLabel && (
-          <div className="mt-3 flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-1.5 text-[11px]">
-            <AlertCircle size={11} className="text-blue-500" />
-            <span className="text-blue-600">当前任务：<span className="font-semibold">{collection.currentTaskLabel}</span></span>
-            {collection.pendingRetryLabel && (
-              <span className="text-amber-600 font-medium">· {collection.pendingRetryLabel}</span>
-            )}
+        {/* Body — same layout as ReportCard body */}
+        <div className="px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-4 min-w-0 flex-wrap">
+            <div className="flex items-center gap-1.5 text-[11px] text-[#4a6b8a]">
+              <span className="text-[#8aabcc]">班级</span>
+              <span className="font-medium">{collection.className}</span>
+            </div>
+            <span className="text-[#d0dce8]">|</span>
+            <div className="flex items-center gap-1.5 text-[11px] text-[#4a6b8a]">
+              <span className="text-[#8aabcc]">分组</span>
+              <span className="font-medium">全班</span>
+            </div>
+            <span className="text-[#d0dce8]">|</span>
+            <div className="flex items-center gap-1.5 text-[11px]">
+              <span className="text-[#8aabcc]">完成</span>
+              <span className="font-medium text-[#3a4f66]">
+                {collection.days.filter(d => d.status === 'completed').length}
+              </span>
+              <span className="text-[#b8cde0]">/</span>
+              <span className="text-[#8aabcc]">{collection.taskCount} 份任务</span>
+            </div>
+            {/* Extra review plan meta */}
+            <span className="text-[#d0dce8]">|</span>
+            <span className="text-[11px] text-[#8aabcc]">复习日 <span className="font-medium text-[#3a4f66]">{reviewDaysText}</span></span>
+            <span className="text-[#d0dce8] hidden sm:inline">|</span>
+            <span className="text-[11px] text-[#8aabcc] hidden sm:inline">每日 <span className="font-medium text-[#3a4f66]">{collection.wordsPerDay}题</span></span>
+            <span className="text-[#d0dce8] hidden sm:inline">|</span>
+            <span className="text-[11px] text-[#8aabcc] hidden sm:inline">词表 <span className="font-medium text-[#3a4f66]">{collection.wordCount}个词</span></span>
+            <StatusBadge status={collection.status} />
           </div>
-        )}
+
+          {/* Right: actions — same style as ReportCard */}
+          <div className="flex items-center gap-2 shrink-0 ml-3">
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="flex items-center gap-1 text-[11px] text-[#4b9fe8] hover:text-[#3a8fd8] font-medium whitespace-nowrap transition-colors"
+            >
+              {expanded ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
+              {expanded ? '收起任务' : '展开任务'}
+            </button>
+            <DataOverviewPopover overview={overview} />
+            <button className="p-1 rounded-md text-[#b8cde0] hover:text-[#6b8aaa] hover:bg-[#f0f4f8] transition-colors">
+              <MoreVertical size={14} />
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* ── Expanded Day tasks ── */}
+      {/* ── Expanded Day sub-task cards ── */}
       {expanded && (
-        <div className="border-t border-slate-100 bg-slate-50/30 px-5 py-3 space-y-2">
-          <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">复习任务列表</p>
+        <div className="ml-7 mt-2 space-y-2">
           {days.map(day => (
-            <DayTaskRow
+            <DayTaskCard
               key={day.id}
               day={day}
+              collection={collection}
               onViewReport={onViewReport}
             />
           ))}
@@ -147,57 +145,83 @@ export default function ReviewPlanAssignmentCard({ collection, defaultExpanded =
   )
 }
 
-/** ── Single Day task row ── */
-function DayTaskRow({ day, onViewReport }: { day: ReviewPlanDayTask; onViewReport?: (day: ReviewPlanDayTask) => void }) {
-  const canViewReport = day.status === 'completed' || day.status === 'in_progress'
+// ── Day Sub-Task Card (matches ReportCard style, slightly indented) ──
+
+function DayTaskCard({
+  day,
+  collection,
+  onViewReport,
+}: {
+  day: ReviewPlanDayTask
+  collection: ReviewPlanAssignmentCollection
+  onViewReport?: (day: ReviewPlanDayTask) => void
+}) {
+  const canView = day.status === 'completed' || day.status === 'in_progress'
+
+  // Compute per-day time
+  const dayStart = new Date(collection.publishedAt)
+  dayStart.setDate(dayStart.getDate() + day.dayIndex - 1)
+  const dayEnd = new Date(dayStart)
+  const startStr = `${String(dayStart.getMonth() + 1).padStart(2, '0')}-${String(dayStart.getDate()).padStart(2, '0')} 09:00`
+  const endStr = `${String(dayEnd.getMonth() + 1).padStart(2, '0')}-${String(dayEnd.getDate()).padStart(2, '0')} 20:00`
+  const estMin = Math.round(collection.wordsPerDay * 2 / 5) * 5
 
   return (
-    <div className={`flex items-center justify-between px-4 py-3 rounded-xl border bg-white transition-all
-      ${day.status === 'in_progress' ? 'border-blue-200 ring-1 ring-blue-100' : 'border-slate-200'}`}>
-      <div className="flex items-center gap-3 min-w-0">
-        {/* Day badge */}
-        <div className={`w-9 h-9 rounded-lg flex items-center justify-center text-[10px] font-bold shrink-0
-          ${day.status === 'completed' ? 'bg-emerald-100 text-emerald-600'
-          : day.status === 'in_progress' ? 'bg-blue-100 text-blue-600'
-          : day.status === 'expired' || day.status === 'expired_retry' ? 'bg-amber-100 text-amber-600'
-          : 'bg-slate-100 text-slate-400'}`}>
-          D{day.dayIndex}
+    <div className="bg-white rounded-xl border border-[#e8eef4] overflow-hidden hover:shadow-sm transition-shadow">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-2.5 bg-[#f9fafb] border-b border-[#eef2f6]">
+        <div className="flex items-center gap-2 min-w-0">
+          <FileText size={12} className="text-[#8aabcc] shrink-0" />
+          <span className="text-[12px] font-semibold text-[#3a4f66] truncate">{day.dayLabel}</span>
         </div>
-
-        <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <p className="text-[13px] font-semibold text-slate-700">{day.dayLabel}</p>
-            <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${DAY_STATUS_STYLES[day.status]}`}>
-              {DAY_STATUS_LABELS[day.status]}
-            </span>
-          </div>
-          <p className="text-[11px] text-slate-400 mt-0.5">{day.questionSummary}</p>
-          <div className="flex items-center gap-2 mt-0.5 text-[10px] text-slate-400">
-            {day.status === 'not_started' ? (
-              <span>开始时间：{day.startTime}</span>
-            ) : (
-              <span className="flex items-center gap-1">
-                <Check size={9} className="text-slate-400" />
-                提交：{day.submittedCount}/{day.totalStudents}
-              </span>
-            )}
-            {day.deadline && <span className="text-slate-300">|</span>}
-            {day.deadline && <span>截止：{day.deadline}</span>}
-          </div>
+        <div className="flex items-center gap-3 text-[10px] text-[#8aabcc] shrink-0 ml-3">
+          <span>{startStr} 至 {endStr}</span>
+          <span>预计{estMin}min</span>
         </div>
       </div>
 
-      <button
-        onClick={() => onViewReport?.(day)}
-        disabled={!canViewReport}
-        className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all shrink-0
-          ${canViewReport
-            ? 'bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200'
-            : 'bg-slate-50 text-slate-300 cursor-not-allowed border border-slate-100'}`}
-      >
-        <FileText size={11} />
-        {canViewReport ? '查看报告' : '暂不可查看'}
-      </button>
+      {/* Body */}
+      <div className="px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-4 min-w-0 flex-wrap">
+          <div className="flex items-center gap-1.5 text-[11px] text-[#4a6b8a]">
+            <span className="text-[#8aabcc]">班级</span>
+            <span className="font-medium">{collection.className}</span>
+          </div>
+          <span className="text-[#d0dce8]">|</span>
+          <div className="flex items-center gap-1.5 text-[11px] text-[#4a6b8a]">
+            <span className="text-[#8aabcc]">分组</span>
+            <span className="font-medium">全班</span>
+          </div>
+          <span className="text-[#d0dce8]">|</span>
+          <div className="flex items-center gap-1.5 text-[11px]">
+            <span className="text-[#8aabcc]">完成</span>
+            <span className="font-medium text-[#3a4f66]">{day.submittedCount}</span>
+            <span className="text-[#b8cde0]">/</span>
+            <span className="text-[#8aabcc]">{day.totalStudents}人</span>
+          </div>
+          <span className="text-[#d0dce8]">|</span>
+          <span className="text-[11px] text-[#8aabcc]"><span className="font-medium text-[#3a4f66]">{day.questionSummary}</span></span>
+          <StatusBadge status={day.status} />
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0 ml-3">
+          {canView ? (
+            <button
+              onClick={() => onViewReport?.(day)}
+              className="text-[11px] text-[#4b9fe8] border border-[#b8d4f0] hover:bg-[#eaf2fb] px-3 py-1 rounded-lg font-medium whitespace-nowrap transition-colors"
+            >
+              报告
+            </button>
+          ) : (
+            <span className="text-[11px] text-[#b8cde0] border border-slate-100 px-3 py-1 rounded-lg font-medium whitespace-nowrap bg-slate-50">
+              暂不可查看
+            </span>
+          )}
+          <button className="p-1 rounded-md text-[#b8cde0] hover:text-[#6b8aaa] hover:bg-[#f0f4f8] transition-colors">
+            <MoreVertical size={14} />
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
