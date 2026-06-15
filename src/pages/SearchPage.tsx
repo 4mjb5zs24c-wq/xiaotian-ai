@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import {
   Search, Clock, Sparkles, X, BookOpen, ArrowRight,
-  FileText, Headphones, Layers, BarChart3, RotateCw, ChevronRight,
+  FileText, Headphones, Layers, BarChart3, RotateCw, ChevronRight, ChevronDown,
 } from 'lucide-react'
 import { useAIStore } from '../ai/store'
 import { matchNewSearch, mockOpenPreview, mockOpenAssignDialog, mockAddToLessonPrep, mockOpenFunction } from '../ai/search-new/searchEngine'
@@ -30,14 +30,6 @@ const QUICK_ENTRIES: { key: string; icon: React.ElementType; label: string; desc
   { key: 'wrong-review',  icon: RotateCw,      label: '错词复习',     desc: '高频错词回顾与补练',     query: '错词复习' },
 ]
 
-// ── Smart recommendations (lightweight) ──
-
-const SMART_RECS = [
-  { id: 'r1', label: 'Unit 3 词汇听写练习',        tag: '热门资源' },
-  { id: 'r2', label: '山东省中考英语真题汇编',      tag: '试卷' },
-  { id: 'r3', label: '初一下学期期末复习计划',      tag: '推荐' },
-]
-
 export default function SearchPage() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -52,8 +44,12 @@ export default function SearchPage() {
   const [searching, setSearching] = useState(false)
   const [result, setResult] = useState<NewSearchResult | null>(null)
   const [toast, setToast] = useState<string | null>(null)
+  const [showQuickEntries, setShowQuickEntries] = useState(false)
 
   const autoRunRef = useRef<string | null>(null)
+
+  // ── Mode ──
+  const isHome = !result && !searching
 
   const showToast = (msg: string) => {
     setToast(msg)
@@ -91,6 +87,7 @@ export default function SearchPage() {
     const sq = q.trim()
     if (!sq) return
     setSearching(true)
+    setShowQuickEntries(false)
 
     setTimeout(() => {
       const res = matchNewSearch(sq, ctx)
@@ -117,9 +114,15 @@ export default function SearchPage() {
   }
 
   const handleTagClick = (term: string) => {
-    setResult(null)
     setQuery(term)
     doSearch(term)
+  }
+
+  const handleClear = () => {
+    setQuery('')
+    setResult(null)
+    setSearching(false)
+    setShowQuickEntries(false)
   }
 
   const handlePreview = (item: ResourceItem) => {
@@ -163,14 +166,19 @@ export default function SearchPage() {
     doSearch(entry.searchQuery)
   }
 
+  // Count results for the hint bar
+  const resultCount = result
+    ? result.resourceGroups.reduce((sum, g) => sum + g.items.length, 0) + result.functionEntries.length
+    : 0
+
   return (
-    <div className="flex justify-center px-6">
-      <div className="flex-1 w-full py-5 space-y-5 max-w-[1080px]">
+    <div className="flex justify-center px-6 h-full">
+      <div className={`flex-1 w-full max-w-[1080px] ${isHome ? 'py-5 space-y-5' : 'py-3 space-y-0'}`}>
 
         {/* ═══════════════════════════════════════════════════════════
-            ── 1. Current Teaching Context bar ──
+            ── 1. Context bar (always visible) ──
             ═══════════════════════════════════════════════════════════ */}
-        <div className="flex items-center justify-between">
+        <div className={`flex items-center justify-between ${!isHome ? 'mb-3' : ''}`}>
           <div className="flex items-center gap-2 px-0">
             <BookOpen size={12} className="text-slate-300" />
             <span className="text-[11px] text-slate-400">当前教学：</span>
@@ -185,110 +193,222 @@ export default function SearchPage() {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            ── 2. AI Search Master Card ──
+            ── 2. Search Bar ──
             ═══════════════════════════════════════════════════════════ */}
-        <div className="bg-white rounded-2xl border border-slate-200/50 shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
-          {/* Card header — compact */}
-          <div className="px-6 pt-4 pb-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-sm shadow-blue-200/50">
-                <Sparkles size={13} className="text-white" />
-              </div>
-              <h2 className="text-[15px] font-bold text-slate-800">小天智能助手</h2>
-            </div>
-            <p className="text-[12px] text-slate-400 mt-0.5 ml-[38px]">
-              输入教学问题，我可以帮你找资源、生成练习、查看学情
-            </p>
-          </div>
 
-          {/* Search input — tighter */}
-          <div className="px-6 pb-4">
-            <div className="flex items-center gap-2">
+        {/* ── Home mode: full card ── */}
+        {isHome && (
+          <div className="bg-white rounded-2xl border border-slate-200/50 shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+            <div className="px-6 pt-4 pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-sm shadow-blue-200/50">
+                  <Sparkles size={13} className="text-white" />
+                </div>
+                <h2 className="text-[15px] font-bold text-slate-800">小天智能助手</h2>
+              </div>
+              <p className="text-[12px] text-slate-400 mt-0.5 ml-[38px]">
+                输入教学问题，我可以帮你找资源、生成练习、查看学情
+              </p>
+            </div>
+            <div className="px-6 pb-4">
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <Search size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="搜索教学资源、试卷名称，或直接输入教学需求…"
+                    className="w-full h-[52px] pl-11 pr-10 text-[14px] text-slate-800 placeholder-slate-400
+                      bg-slate-50 border border-slate-200 rounded-2xl
+                      outline-none focus:border-blue-400 focus:ring-3 focus:ring-blue-50 focus:bg-white
+                      transition-all duration-200"
+                    autoFocus
+                  />
+                  {query && (
+                    <button
+                      onClick={handleClear}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors"
+                    >
+                      <X size={14} />
+                    </button>
+                  )}
+                </div>
+                <button
+                  onClick={() => doSearch(query)}
+                  className="flex items-center gap-1.5 h-[52px] px-4 rounded-2xl text-[13px] font-semibold
+                    bg-blue-500 text-white hover:bg-blue-600 shadow-sm shadow-blue-200/50
+                    transition-all duration-200 active:scale-[0.98] shrink-0"
+                >
+                  搜索
+                  <ArrowRight size={14} />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Results mode: slim search bar ── */}
+        {!isHome && (
+          <div className="bg-white rounded-2xl border border-slate-200/50 shadow-[0_1px_3px_rgba(0,0,0,0.04)] px-4 py-3 mb-3">
+            <div className="flex items-center gap-2.5">
+              {/* Small brand */}
+              <div className="flex items-center gap-2 shrink-0">
+                <div className="w-6 h-6 rounded-md bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-sm shadow-blue-200/50">
+                  <Sparkles size={11} className="text-white" />
+                </div>
+                <span className="text-[13px] font-bold text-slate-700 hidden sm:inline">小天</span>
+              </div>
+              {/* Search input — slim */}
               <div className="relative flex-1">
-                <Search size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="搜索教学资源、试卷名称，或直接输入教学需求…"
-                  className="w-full h-[52px] pl-11 pr-10 text-[14px] text-slate-800 placeholder-slate-400
-                    bg-slate-50 border border-slate-200 rounded-2xl
-                    outline-none focus:border-blue-400 focus:ring-3 focus:ring-blue-50 focus:bg-white
+                  placeholder="继续输入搜索..."
+                  className="w-full h-[40px] pl-9 pr-8 text-[13px] text-slate-800 placeholder-slate-400
+                    bg-slate-50 border border-slate-200 rounded-xl
+                    outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50 focus:bg-white
                     transition-all duration-200"
-                  autoFocus
                 />
                 {query && (
                   <button
-                    onClick={() => { setQuery(''); setResult(null) }}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors"
+                    onClick={handleClear}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-md hover:bg-slate-100 transition-colors"
                   >
-                    <X size={14} />
+                    <X size={13} />
                   </button>
                 )}
               </div>
               <button
                 onClick={() => doSearch(query)}
-                className="flex items-center gap-1.5 h-[52px] px-4 rounded-2xl text-[13px] font-semibold
+                className="flex items-center gap-1 h-[40px] px-3.5 rounded-xl text-[12px] font-semibold
                   bg-blue-500 text-white hover:bg-blue-600 shadow-sm shadow-blue-200/50
                   transition-all duration-200 active:scale-[0.98] shrink-0"
               >
                 搜索
-                <ArrowRight size={14} />
+              </button>
+              {/* Quick entries toggle — small text only */}
+              <button
+                onClick={() => setShowQuickEntries(!showQuickEntries)}
+                className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-blue-500 font-medium shrink-0 transition-colors"
+              >
+                <ChevronDown size={12} className={`transition-transform ${showQuickEntries ? 'rotate-180' : ''}`} />
+                快捷功能
               </button>
             </div>
+            {/* Collapsible quick entries in results mode */}
+            {showQuickEntries && (
+              <div className="grid grid-cols-3 gap-2 mt-2.5 pt-2.5 border-t border-slate-100">
+                {QUICK_ENTRIES.map((entry) => {
+                  const Icon = entry.icon
+                  return (
+                    <button
+                      key={entry.key}
+                      onClick={() => handleTagClick(entry.query)}
+                      className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-lg
+                        hover:bg-blue-50 hover:text-blue-600 transition-colors text-left"
+                    >
+                      <Icon size={14} className="text-blue-500 shrink-0" />
+                      <span className="text-[11px] font-medium text-slate-600 truncate">{entry.label}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
           </div>
-        </div>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════
-            ── 3. Quick Entry Cards ──
+            ── 3. Searching indicator ──
             ═══════════════════════════════════════════════════════════ */}
-        <div>
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">常用快捷入口</span>
-            <span className="flex-1 h-px bg-slate-200/70" />
-            <button
-              onClick={() => {
-                setAIDrawerPanel('aiAssistant')
-              }}
-              className="flex items-center gap-1 text-[11px] text-blue-500 hover:text-blue-600 font-medium transition-colors"
-            >
-              更多功能
-              <ChevronRight size={12} />
-            </button>
+        {searching && (
+          <div className="flex items-center justify-center py-12">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                <Sparkles size={15} className="text-blue-500 animate-pulse" />
+              </div>
+              <span className="text-sm text-slate-400">小天正在理解你的意图...</span>
+            </div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
-            {QUICK_ENTRIES.map((entry) => {
-              const Icon = entry.icon
-              return (
-                <button
-                  key={entry.key}
-                  onClick={() => handleTagClick(entry.query)}
-                  className="flex items-start gap-3 px-4 py-3.5 bg-white rounded-xl border border-slate-200/50
-                    hover:border-blue-200 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:-translate-y-0.5
-                    transition-all duration-200 text-left group"
-                >
-                  <div className="w-8 h-8 rounded-lg bg-blue-50/80 flex items-center justify-center shrink-0
-                    group-hover:bg-blue-50 transition-colors">
-                    <Icon size={16} className="text-blue-500" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[13px] font-semibold text-slate-700 group-hover:text-blue-600 transition-colors">
-                      {entry.label}
-                    </p>
-                    <p className="text-[11px] text-slate-400 mt-0.5">{entry.desc}</p>
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-        </div>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════
-            ── 4. Recent + Smart Recommendations ──
+            ── 4. Results hint + list ──
             ═══════════════════════════════════════════════════════════ */}
-        <div className="grid grid-cols-2 gap-5">
-          {/* Recent */}
+        {result && !searching && (
+          <>
+            {/* Result hint */}
+            <div className="flex items-center gap-2 mb-3 text-[11px] text-slate-400">
+              <span>找到 <strong className="text-slate-600">{resultCount}</strong> 个结果</span>
+              <span className="text-slate-300">·</span>
+              <span>搜索词：<strong className="text-slate-600">{query}</strong></span>
+            </div>
+            <SearchResultView
+              result={result}
+              paperBasket={paperBasket}
+              onPreview={handlePreview}
+              onAssign={handleAssign}
+              onAddToPaperBasket={handleAddToPaperBasket}
+              onAddToLessonPrep={handleAddToLessonPrep}
+              onOpenFunction={handleOpenFunction}
+              onGenerateAssignments={handleGenerateAssignments}
+              onQuickEntry={handleQuickEntry}
+            />
+          </>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════
+            ── 5. Home-only: Quick Entry Cards ──
+            ═══════════════════════════════════════════════════════════ */}
+        {isHome && (
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">常用快捷入口</span>
+              <span className="flex-1 h-px bg-slate-200/70" />
+              <button
+                onClick={() => { setAIDrawerPanel('aiAssistant') }}
+                className="flex items-center gap-1 text-[11px] text-blue-500 hover:text-blue-600 font-medium transition-colors"
+              >
+                更多功能
+                <ChevronRight size={12} />
+              </button>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {QUICK_ENTRIES.map((entry) => {
+                const Icon = entry.icon
+                return (
+                  <button
+                    key={entry.key}
+                    onClick={() => handleTagClick(entry.query)}
+                    className="flex items-start gap-3 px-4 py-3.5 bg-white rounded-xl border border-slate-200/50
+                      hover:border-blue-200 hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:-translate-y-0.5
+                      transition-all duration-200 text-left group"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-blue-50/80 flex items-center justify-center shrink-0
+                      group-hover:bg-blue-50 transition-colors">
+                      <Icon size={16} className="text-blue-500" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[13px] font-semibold text-slate-700 group-hover:text-blue-600 transition-colors">
+                        {entry.label}
+                      </p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">{entry.desc}</p>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════
+            ── 6. Home-only: Recent Searches ──
+            ═══════════════════════════════════════════════════════════ */}
+        {isHome && (
           <div>
             <div className="flex items-center gap-2 mb-2.5">
               <span className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
@@ -310,64 +430,6 @@ export default function SearchPage() {
               ))}
             </div>
           </div>
-
-          {/* Smart Recommendations */}
-          <div>
-            <div className="flex items-center gap-2 mb-2.5">
-              <span className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
-                <Sparkles size={12} />
-                智能推荐
-              </span>
-            </div>
-            <div className="space-y-1.5">
-              {SMART_RECS.map((rec) => (
-                <button
-                  key={rec.id}
-                  onClick={() => handleTagClick(rec.label)}
-                  className="w-full flex items-center justify-between px-3.5 py-2 bg-white rounded-lg border border-slate-200/50
-                    hover:border-slate-300 hover:shadow-sm transition-all duration-150 text-left group"
-                >
-                  <span className="text-[12px] text-slate-600 group-hover:text-blue-600 font-medium transition-colors">
-                    {rec.label}
-                  </span>
-                  <span className="text-[10px] text-slate-400 bg-slate-50 px-1.5 py-0.5 rounded font-medium">
-                    {rec.tag}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ═══════════════════════════════════════════════════════════
-            ── Searching state ──
-            ═══════════════════════════════════════════════════════════ */}
-        {searching && (
-          <div className="flex items-center justify-center py-12">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                <Sparkles size={15} className="text-blue-500 animate-pulse" />
-              </div>
-              <span className="text-sm text-slate-400">小天正在理解你的意图...</span>
-            </div>
-          </div>
-        )}
-
-        {/* ═══════════════════════════════════════════════════════════
-            ── Results ──
-            ═══════════════════════════════════════════════════════════ */}
-        {result && !searching && (
-          <SearchResultView
-            result={result}
-            paperBasket={paperBasket}
-            onPreview={handlePreview}
-            onAssign={handleAssign}
-            onAddToPaperBasket={handleAddToPaperBasket}
-            onAddToLessonPrep={handleAddToLessonPrep}
-            onOpenFunction={handleOpenFunction}
-            onGenerateAssignments={handleGenerateAssignments}
-            onQuickEntry={handleQuickEntry}
-          />
         )}
 
         {/* ── Toast ── */}
