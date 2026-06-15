@@ -372,7 +372,15 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 </p>
               </div>
 
-              {/* ── INSIGHT MODE: Goal-specific Vocab Scope (before period) ── */}
+              {/* ── INSIGHT MODE: Selected goal (top) ── */}
+              {!isDraft && (
+                <div className="bg-slate-50 rounded-xl p-3 border border-slate-100 flex items-center justify-between">
+                  <div><span className="text-xs text-slate-400">已选目标：</span><span className="text-sm font-semibold text-slate-700">{goalMeta.label}</span></div>
+                  <button onClick={() => setStep(1)} className="text-[11px] text-blue-500 hover:text-blue-600 font-medium">更换目标</button>
+                </div>
+              )}
+
+              {/* ── INSIGHT MODE: Goal-specific Vocab Scope ── */}
               {!isDraft && (<>
                 {goal === 'quick_fix' && (
                   <div className="space-y-3">
@@ -426,22 +434,15 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 <div className="border-t border-slate-200" />
               </>)}
 
-              {/* Selected goal / target */}
-              <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                <div className="flex items-center justify-between">
+{/* Draft mode target card (insight's is at the top of this step) */}
+              {isDraft && (
+                <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
                   <div>
-                    <p className="text-xs text-slate-400 mb-1">{isDraft ? '复习目标' : '已选目标'}</p>
-                    <p className="text-sm font-semibold text-slate-700">
-                      {isDraft ? `草稿词复习（${draftWordCount} 个词）` : goalMeta.label}
-                    </p>
+                    <p className="text-xs text-slate-400 mb-1">复习目标</p>
+                    <p className="text-sm font-semibold text-slate-700">草稿词复习（{draftWordCount} 个词）</p>
                   </div>
-                  {!isDraft && (
-                    <button onClick={() => setStep(1)} className="text-[11px] text-blue-500 hover:text-blue-600 font-medium">
-                      更换目标
-                    </button>
-                  )}
                 </div>
-              </div>
+              )}
 
               {/* Period selection — draft mode only (insight moves this to step 3) */}
               {isDraft && (
@@ -521,19 +522,19 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 <p className="text-sm font-semibold text-slate-700">{isDraft ? '设置每日题量' : '复习设置'}</p>
               </div>
 
-{/* ── INSIGHT MODE: Period + Review Days (moved from step 2) ── */}
+{/* ── INSIGHT MODE: Goal + vocab summary + Period + Review Days ── */}
               {!isDraft && (
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2">
-                    <Calendar size={16} className="text-blue-500" />
-                    <p className="text-sm font-semibold text-slate-700">复习周期与复习日</p>
-                  </div>
-
+                  {/* Lightweight goal + vocab summary */}
                   <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                    <div className="flex items-center justify-between">
-                      <div><p className="text-xs text-slate-400 mb-1">已选目标</p><p className="text-sm font-semibold text-slate-700">{goalMeta.label}</p></div>
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-sm font-semibold text-slate-700">{goalMeta.label}</p>
                       <button onClick={() => setStep(1)} className="text-[11px] text-blue-500 hover:text-blue-600 font-medium">更换目标</button>
                     </div>
+                    <p className="text-xs text-slate-400">
+                      复习词表：{goal === 'quick_fix' ? (effectiveCandidateCount >= quickFixWordCount ? `Top ${quickFixWordCount} 高频错词` : `当前可用高频错词 ${effectiveCandidateCount} 个`) : goal === 'current_unit' ? '当前单元课标词 + 非课标词 + 单元易错词' : goal === 'stage_exam' ? `${stageExamUnits.size} 个单元 · 阶段高频错词 + 多单元重点词` : goal === 'weak_student' ? `${weakStudentIds.size} 名学生薄弱词` : '自定义范围'}
+                      <button onClick={() => setStep(2)} className="text-[11px] text-blue-500 hover:text-blue-600 font-medium ml-2">返回修改词表</button>
+                    </p>
                   </div>
 
                   <div>
@@ -630,17 +631,19 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   </div>
                 )}
 
-                {/* Rolling review toggle */}
-                <div className="flex items-start gap-3 bg-slate-50 rounded-xl px-4 py-3">
-                  <button onClick={() => setRollingReview(!rollingReview)}
-                    className={`mt-0.5 w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${rollingReview ? 'bg-blue-500 border-blue-500' : 'border-slate-300'}`}>
-                    {rollingReview && <Check size={10} className="text-white" />}
-                  </button>
-                  <div>
-                    <div className="flex items-center gap-2"><Repeat size={13} className="text-blue-500" /><span className="text-[13px] font-medium text-slate-700">错词滚动复现</span></div>
-                    <p className="text-[11px] text-slate-400 mt-0.5">开启后，前一天的练习中产生的错词会自动汇入到第二天的练习中，形成滚动式强化记忆</p>
+                {/* Rolling review toggle — custom or draft only */}
+                {(!isDraft && goal === 'custom') || isDraft ? (
+                  <div className="flex items-start gap-3 bg-slate-50 rounded-xl px-4 py-3">
+                    <button onClick={() => setRollingReview(!rollingReview)}
+                      className={`mt-0.5 w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${rollingReview ? 'bg-blue-500 border-blue-500' : 'border-slate-300'}`}>
+                      {rollingReview && <Check size={10} className="text-white" />}
+                    </button>
+                    <div>
+                      <div className="flex items-center gap-2"><Repeat size={13} className="text-blue-500" /><span className="text-[13px] font-medium text-slate-700">错词滚动复现</span></div>
+                      <p className="text-[11px] text-slate-400 mt-0.5">开启后，前一天的练习中产生的错词会自动汇入到第二天的练习中，形成滚动式强化记忆</p>
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
 
               {/* ── Mastery Rule ── */}
@@ -686,17 +689,18 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   </>
                 ) : (
                   <>
-                    <p className="text-xs text-blue-700 font-semibold leading-relaxed">{goalMeta.label} · {taskCount} 份任务 · 每日 {wordsPerDay} 题</p>
-                    <p className="text-xs text-blue-500 leading-relaxed">复习日：<span className="font-semibold">{reviewDaysText}</span> · 周期 <span className="font-semibold">{dayCount} 天</span></p>
+                    <p className="text-xs text-blue-700 font-semibold leading-relaxed">{goalMeta.label}</p>
                     {goal === 'quick_fix' && <p className="text-xs text-blue-500 leading-relaxed">复习词表：<span className="font-semibold">{effectiveCandidateCount >= quickFixWordCount ? `Top ${quickFixWordCount} 高频错词` : `当前可用高频错词 ${effectiveCandidateCount} 个`}</span></p>}
                     {goal === 'custom' && <p className="text-xs text-blue-500 leading-relaxed">词汇范围：<span className="font-semibold">{getVocabScopeSummary()}</span></p>}
                     {goal === 'weak_student' && <p className="text-xs text-blue-500 leading-relaxed">补练学生：<span className="font-semibold">{weakStudentIds.size} 名</span></p>}
-                    {goal === 'current_unit' && <p className="text-xs text-blue-500 leading-relaxed">复习词表：<span className="font-semibold">当前单元课标词 + 非课标词 + 单元易错词</span></p>}
+                    {goal === 'current_unit' && <p className="text-xs text-blue-500 leading-relaxed">复习词表：<span className="font-semibold">Unit 3 — Food and Drinks，约 44 个词</span></p>}
                     {goal === 'stage_exam' && <p className="text-xs text-blue-500 leading-relaxed">复习词表：<span className="font-semibold">{stageExamUnits.size} 个单元 · 阶段高频错词 + 多单元重点词</span></p>}
-                    <p className="text-xs text-blue-500 leading-relaxed">
-                      动态回滚：<span className="font-semibold">已开启</span> · 掌握判定：<span className="font-semibold">连续答对 2 次即掌握</span>
-                      {rollingReview && <> · <span className="font-semibold">错词滚动复现</span></>}
-                    </p>
+                    <p className="text-xs text-blue-500 leading-relaxed">计划周期：<span className="font-semibold">{dayCount} 天</span></p>
+                    <p className="text-xs text-blue-500 leading-relaxed">复习日：<span className="font-semibold">{reviewDaysText}</span></p>
+                    <p className="text-xs text-blue-500 leading-relaxed">共生成：<span className="font-semibold">{taskCount} 份任务</span></p>
+                    <p className="text-xs text-blue-500 leading-relaxed">每日题量：<span className="font-semibold">{wordsPerDay} 题</span></p>
+                    <p className="text-xs text-blue-500 leading-relaxed">动态回滚：<span className="font-semibold">已开启</span></p>
+                    <p className="text-xs text-blue-500 leading-relaxed">掌握判定：<span className="font-semibold">连续答对 2 次算掌握</span></p>
                   </>
                 )}
               </div>
@@ -744,7 +748,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   {!isDraft && goal === 'current_unit' && <div><span className="text-slate-400">优先强化：</span><span className="font-medium text-slate-700">{currentUnitPrioritize ? '易错词优先' : '均等分配'}</span></div>}
                   {!isDraft && goal === 'stage_exam' && <div><span className="text-slate-400">错词范围：</span><span className="font-medium text-slate-700">{stageExamRange === '30d' ? '近 30 天' : stageExamRange === 'semester' ? '本学期' : '自定义'}</span></div>}
                   <div><span className="text-slate-400">掌握判定：</span><span className="font-medium text-slate-700">{isDraft ? '连续答对 2 次算掌握' : goal === 'custom' ? (masteryRule === 'consecutive_correct' ? '连续答对' : masteryRule === 'accumulated_correct' ? '累计答对' : '末次答对') : '连续答对 2 次算掌握'}</span></div>
-                  {rollingReview && <div><span className="text-slate-400">错词复现：</span><span className="font-medium text-emerald-600">已开启（每日错词汇入次日）</span></div>}
                   <div><span className="text-slate-400">动态回滚：</span><span className="font-medium text-emerald-600">已开启，后续复习日根据上一复习日错误情况自动生成</span></div>
                 </div>
                 <p className="text-xs text-blue-500 italic leading-relaxed pt-1 border-t border-blue-100">
