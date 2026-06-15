@@ -54,8 +54,8 @@ const ResourceGroup: React.FC<ResourceGroupProps> = ({
 
       {/* Recommendation hint */}
       {(expanded && group.recommendationText) && (
-        <div className="px-5 py-2.5 bg-amber-50/60 border-y border-amber-100/60 text-[13px] text-amber-700">
-          💡 {group.recommendationText}
+        <div className="px-5 py-2.5 bg-amber-50/40 border-y border-amber-100/30 text-[12px] text-amber-600/80">
+          推荐理由：{group.recommendationText}
         </div>
       )}
 

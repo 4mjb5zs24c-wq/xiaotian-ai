@@ -113,7 +113,7 @@ export default function MainLayout() {
         {/* ── Sidebar ── */}
         <aside
           className={clsx(
-            'fixed inset-y-0 left-0 z-50 flex w-[135px] flex-col bg-gradient-to-b from-[#3b7daa] to-[#2d6488] transition-transform lg:static lg:z-auto lg:rounded-2xl lg:inset-auto overflow-hidden shrink-0 shadow-sm',
+            'fixed inset-y-0 left-0 z-50 flex w-[135px] flex-col bg-gradient-to-b from-[#4e839e] to-[#3d6d87] transition-transform lg:static lg:z-auto lg:rounded-2xl lg:inset-auto overflow-hidden shrink-0 shadow-sm',
             sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
           )}
         >
@@ -163,7 +163,7 @@ export default function MainLayout() {
                 <ChevronDown size={11} className={clsx('ml-auto transition-transform', moreOpen && 'rotate-180')} />
               </button>
               {moreOpen && (
-                <div className="absolute left-2 right-2 top-full bg-[#246283] rounded-lg py-1 shadow-lg z-10 border border-white/5">
+                <div className="absolute left-2 right-2 top-full bg-[#35667d] rounded-lg py-1 shadow-lg z-10 border border-white/5">
                   {[
                     { to: '/writing', label: '写作批改' },
                     { to: '/listening', label: '听力/听说' },

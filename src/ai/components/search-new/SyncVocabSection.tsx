@@ -72,7 +72,7 @@ const SyncVocabSection: React.FC<SyncVocabSectionProps> = ({
                 ) : (
                   <Square size={16} className="text-[#bbb]" />
                 )}
-                {allSelected ? '取消全选' : '全选本区'}
+                {allSelected ? '取消全选' : `全选${section.sectionName.replace('词汇', '词')}`}
               </button>
             </div>
 

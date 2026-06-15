@@ -251,14 +251,11 @@ export default function SearchPage() {
 
         {/* ── Results mode: slim search bar ── */}
         {!isHome && (
-          <div className="bg-white rounded-2xl border border-slate-200/50 shadow-[0_1px_3px_rgba(0,0,0,0.04)] px-4 py-3 mb-3">
+          <div className="bg-white rounded-2xl border border-slate-200/50 shadow-[0_1px_3px_rgba(0,0,0,0.04)] px-4 py-2.5 mb-3">
             <div className="flex items-center gap-2.5">
-              {/* Small brand */}
-              <div className="flex items-center gap-2 shrink-0">
-                <div className="w-6 h-6 rounded-md bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-sm shadow-blue-200/50">
-                  <Sparkles size={11} className="text-white" />
-                </div>
-                <span className="text-[13px] font-bold text-slate-700 hidden sm:inline">小天</span>
+              {/* Icon only */}
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-sm shadow-blue-200/50 shrink-0">
+                <Sparkles size={13} className="text-white" />
               </div>
               {/* Search input — slim */}
               <div className="relative flex-1">
@@ -291,13 +288,13 @@ export default function SearchPage() {
               >
                 搜索
               </button>
-              {/* Quick entries toggle — small text only */}
+              {/* Quick entries toggle — slim text button */}
               <button
                 onClick={() => setShowQuickEntries(!showQuickEntries)}
                 className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-blue-500 font-medium shrink-0 transition-colors"
               >
                 <ChevronDown size={12} className={`transition-transform ${showQuickEntries ? 'rotate-180' : ''}`} />
-                快捷功能
+                展开常用功能
               </button>
             </div>
             {/* Collapsible quick entries in results mode */}

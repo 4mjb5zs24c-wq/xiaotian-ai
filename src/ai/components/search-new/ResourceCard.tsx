@@ -61,9 +61,8 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
 
       {/* Recommend Reason */}
       {item.recommendReason && (
-        <div className="flex items-start gap-2 mb-3 p-3 rounded-xl bg-blue-50/40 border border-blue-100/50">
-          <span className="text-[13px] shrink-0">💡</span>
-          <p className="text-[13px] text-slate-600 leading-relaxed">{item.recommendReason}</p>
+        <div className="mb-3 p-3 rounded-xl bg-blue-50/30 border border-blue-100/30">
+          <p className="text-[12px] text-slate-500 leading-relaxed">推荐理由：{item.recommendReason}</p>
         </div>
       )}
 
