@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import {
   Search, Clock, Sparkles, X, BookOpen, ArrowRight,
-  FileText, Headphones, Layers, BarChart3, RotateCw, ChevronRight, ChevronDown,
+  FileText, Headphones, Layers, ChevronRight, ChevronDown,
 } from 'lucide-react'
 import { useAIStore } from '../ai/store'
 import { matchNewSearch, mockOpenPreview, mockOpenAssignDialog, mockAddToLessonPrep, mockOpenFunction } from '../ai/search-new/searchEngine'
@@ -26,8 +26,6 @@ const QUICK_ENTRIES: { key: string; icon: React.ElementType; label: string; desc
   { key: 'sync-vocab',    icon: FileText,      label: '同步词汇',     desc: '词汇表、听写与跟读',     query: '同步词汇' },
   { key: 'listening',     icon: Headphones,    label: '听力练习',     desc: '听说训练与配套素材',     query: '听力练习' },
   { key: 'flash-card',    icon: Layers,        label: '快速制卡',     desc: '一键生成词汇听写卡',     query: '快速制卡' },
-  { key: 'insight',       icon: BarChart3,     label: '查看学情',     desc: '班级练习报告与薄弱点',   query: '练习报告' },
-  { key: 'wrong-review',  icon: RotateCw,      label: '错词复习',     desc: '高频错词回顾与补练',     query: '错词复习' },
 ]
 
 export default function SearchPage() {
@@ -299,7 +297,7 @@ export default function SearchPage() {
             </div>
             {/* Collapsible quick entries in results mode */}
             {showQuickEntries && (
-              <div className="grid grid-cols-3 gap-2 mt-2.5 pt-2.5 border-t border-slate-100">
+              <div className="grid grid-cols-4 gap-2 mt-2.5 pt-2.5 border-t border-slate-100">
                 {QUICK_ENTRIES.map((entry) => {
                   const Icon = entry.icon
                   return (
@@ -374,7 +372,7 @@ export default function SearchPage() {
                 <ChevronRight size={12} />
               </button>
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-4 gap-3">
               {QUICK_ENTRIES.map((entry) => {
                 const Icon = entry.icon
                 return (

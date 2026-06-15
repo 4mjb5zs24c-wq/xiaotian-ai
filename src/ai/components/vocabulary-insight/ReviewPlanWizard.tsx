@@ -84,8 +84,17 @@ const QUICK_FIX_WORD_COUNT_OPTIONS = [20, 30, 50] as const
 export default function ReviewPlanWizard({ onClose, entrySource = 'insight', draftWordCount = 0, draftWordIds, onPublish }: Props) {
   const isDraft = entrySource === 'draftBasket'
   const navigate = useNavigate()
+
+  // ── Test scenario (dev only) ────────────────────────────
+  const [testScenarioId, setTestScenarioId] = useState<TestScenarioId>('normal')
+  const activeScenario: TestScenarioData | null = IS_DEV
+    ? TEST_SCENARIOS.find(s => s.id === testScenarioId) || null
+    : null
+
   // Use draftWordIds length as authoritative word count for draft mode
-  const effectiveDraftWordCount = isDraft ? (draftWordIds?.length ?? draftWordCount) : draftWordCount
+  const effectiveDraftWordCount = isDraft
+    ? (activeScenario?.id === 'empty_draft' ? 0 : (draftWordIds?.length ?? draftWordCount))
+    : draftWordCount
   const STEP_LABELS = isDraft ? DRAFT_STEPS : INSIGHT_STEPS
   const hasDraft = effectiveDraftWordCount > 0
   const defaultDayCount = isDraft ? 5 : (hasDraft ? 5 : REVIEW_GOAL_META['quick_fix'].defaultDays)
@@ -140,12 +149,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   const [published, setPublished] = useState(false)
   const [publishing, setPublishing] = useState(false)
   const [publishError, setPublishError] = useState<string | null>(null)
-
-  // ── Test scenario (dev only) ────────────────────────────
-  const [testScenarioId, setTestScenarioId] = useState<TestScenarioId>('normal')
-  const activeScenario: TestScenarioData | null = IS_DEV
-    ? TEST_SCENARIOS.find(s => s.id === testScenarioId) || null
-    : null
 
   // ── Computed ──────────────────────────────────────────
 
@@ -450,7 +453,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
         </div>
 
         {/* ── Dev-mode test scenario selector ── */}
-        {IS_DEV && !isDraft && !generated && (
+        {IS_DEV && !generated && (
           <div className="px-6 py-2 bg-purple-50 border-b border-purple-100 flex items-center gap-2 overflow-x-auto">
             <span className="text-[10px] font-semibold text-purple-500 uppercase tracking-wide shrink-0">测试场景</span>
             {TEST_SCENARIOS.map(s => (
@@ -734,6 +737,18 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   {isDraft && <span className="text-[11px] text-slate-400">{effectiveDraftWordCount < 20 ? '草稿词不足20个，默认30题/日' : '草稿词≥20个，默认50题/日'}</span>}
                   {!isDraft && <span className="text-[11px] text-slate-400">每个复习日生成的练习题数量</span>}
                 </div>
+                {/* Inline hint: draft shortage */}
+                {activeScenario?.id === 'draft_shortage' && (
+                  <div className="text-[11px] text-blue-600 bg-blue-50 border border-blue-100 rounded-lg px-3 py-1.5 mb-2">
+                    当前词表不足 20 个，已按轻量复习计划生成，默认 30 题/复习日。
+                  </div>
+                )}
+                {/* Inline hint: question shortage */}
+                {activeScenario?.id === 'question_shortage' && (
+                  <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5 mb-2">
+                    部分词暂无可用题，已自动跳过并补充同范围可用词。
+                  </div>
+                )}
                 <div className="flex gap-2">
                   {(isDraft ? [20, 30, 50, 100] : GOAL_WORD_COUNT_OPTIONS[goal]).map(w => (
                     <button key={w} onClick={() => setWordsPerDay(w)}
@@ -753,6 +768,18 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                     {isDraft ? '动态回滚' : '动态回滚'}
                   </p>
                 </div>
+                {/* Inline hint: rollback shortage */}
+                {activeScenario?.id === 'rollback_shortage' && (
+                  <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5">
+                    可回滚词不足，已用主复习题补齐当天题量。
+                  </div>
+                )}
+                {/* Inline hint: low answer rate */}
+                {activeScenario?.id === 'low_answer_rate' && (
+                  <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5">
+                    上一复习日有效作答率不足 50%（{Math.round(activeScenario.day1AnswerRate * 100)}%），本次回滚题已结合上一次有效回滚池和高频错词生成。
+                  </div>
+                )}
                 {isDraft ? (
                   <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 space-y-1.5">
                     <p className="text-xs text-slate-700 font-medium">动态回滚：已开启</p>
@@ -889,6 +916,20 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   <div><span className="text-slate-400">掌握判定：</span><span className="font-medium text-slate-700">连续答对 2 次算掌握</span></div>
                 </div>
               </div>
+              {/* Scenario warnings (draft preview) */}
+              {scenarioWarnings.length > 0 && (
+                <div className="space-y-1.5">
+                  {scenarioWarnings.map((w, i) => (
+                    <div key={i} className={`flex items-start gap-2 rounded-lg px-3 py-2 text-[11px]
+                      ${w.type === 'warning' ? 'bg-amber-50 border border-amber-200 text-amber-700'
+                      : w.type === 'error' ? 'bg-red-50 border border-red-200 text-red-700'
+                      : 'bg-blue-50 border border-blue-200 text-blue-700'}`}>
+                      <AlertTriangle size={12} className={`shrink-0 mt-0.5 ${w.type === 'warning' ? 'text-amber-500' : w.type === 'error' ? 'text-red-500' : 'text-blue-500'}`} />
+                      <p>{w.message}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
               <div className="space-y-2.5">
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">连续复习计划 · {dayCount} 天 · {taskCount} 份任务</p>
                 {sortedSelectedDays.map((day, idx) => {
@@ -1010,8 +1051,10 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   <div className="space-y-1.5 mb-2">
                     {scenarioWarnings.map((w, i) => (
                       <div key={i} className={`flex items-start gap-2 rounded-lg px-3 py-2 text-[11px]
-                        ${w.type === 'warning' ? 'bg-amber-50 border border-amber-200 text-amber-700' : 'bg-blue-50 border border-blue-200 text-blue-700'}`}>
-                        <AlertTriangle size={12} className={`shrink-0 mt-0.5 ${w.type === 'warning' ? 'text-amber-500' : 'text-blue-500'}`} />
+                        ${w.type === 'error' ? 'bg-red-50 border border-red-200 text-red-700'
+                        : w.type === 'warning' ? 'bg-amber-50 border border-amber-200 text-amber-700'
+                        : 'bg-blue-50 border border-blue-200 text-blue-700'}`}>
+                        <AlertTriangle size={12} className={`shrink-0 mt-0.5 ${w.type === 'error' ? 'text-red-500' : w.type === 'warning' ? 'text-amber-500' : 'text-blue-500'}`} />
                         <p>{w.message}</p>
                       </div>
                     ))}
