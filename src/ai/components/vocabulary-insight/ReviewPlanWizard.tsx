@@ -25,7 +25,7 @@ const ERROR_WORD_RANGE_OPTIONS: { value: ErrorWordRange; label: string; desc: st
   { value: 'custom',   label: '自定义',   desc: '自定义起止日期' },
 ]
 
-const INSIGHT_STEPS = ['选择目标', '确认词汇范围', '设置词量', '预览发布']
+const INSIGHT_STEPS = ['选择目标', '确认词表', '复习设置', '预览发布']
 const DRAFT_STEPS = ['设置周期', '设置词量', '预览发布']
 
 /** Get default review days based on selected period */
@@ -368,7 +368,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
               <div className="flex items-center gap-2">
                 {isDraft ? <Calendar size={16} className="text-blue-500" /> : <BookOpen size={16} className="text-blue-500" />}
                 <p className="text-sm font-semibold text-slate-700">
-                  {isDraft ? '设置复习周期与复习日' : '确认词汇范围与设置周期'}
+                  {isDraft ? '设置复习周期与复习日' : '确认词表'}
                 </p>
               </div>
 
@@ -443,57 +443,58 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 </div>
               </div>
 
-              {/* Period selection */}
-              <div>
-                <p className="text-xs text-slate-400 mb-2">计划周期</p>
-                <div className="flex gap-2">
-                  {(isDraft ? [3, 5, 7, 14] : GOAL_PERIOD_OPTIONS[goal]).map(d => (
-                    <button key={d} onClick={() => handleDayCountChange(d)}
-                      className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all duration-200
-                        ${dayCount === d ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-500'}`}>
-                      {d} 天
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Review day checkboxes */}
-              <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100 space-y-3">
+              {/* Period selection — draft mode only (insight moves this to step 3) */}
+              {isDraft && (
                 <div>
-                  <p className="text-xs font-semibold text-slate-700">复习日选择</p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
-                    勾选需要安排复习任务的日期，未勾选的日期不安排新任务，可用于学生补做
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {Array.from({ length: dayCount }, (_, i) => i + 1).map(day => {
-                    const isSelected = selectedDays.includes(day)
-                    return (
-                      <button key={day} onClick={() => toggleDay(day)}
-                        className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200
-                          ${isSelected ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-500 hover:border-blue-200 hover:text-blue-500'}`}>
-                        Day {day}
+                  <p className="text-xs text-slate-400 mb-2">计划周期</p>
+                  <div className="flex gap-2">
+                    {[3, 5, 7, 14].map(d => (
+                      <button key={d} onClick={() => handleDayCountChange(d)}
+                        className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all duration-200
+                          ${dayCount === d ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-500'}`}>
+                        {d} 天
                       </button>
-                    )
-                  })}
-                </div>
-                {/* Day 1 warning */}
-                {day1Missing && (
-                  <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                    <AlertTriangle size={14} className="text-amber-500 shrink-0 mt-0.5" />
-                    <p className="text-xs text-amber-700">建议保留 Day 1 作为首轮主复习任务，首轮不含回滚题，适合建立初始记忆。</p>
+                    ))}
                   </div>
-                )}
-                {/* Selection summary */}
-                <div className="text-xs text-blue-700 font-medium">
-                  已选 {selectedDays.length} 个复习日：{reviewDaysText} · 将生成 {selectedDays.length} 份任务
                 </div>
-                {/* Rule hint */}
-                <div className="bg-white/60 rounded-lg px-3 py-2 text-[11px] text-slate-500 space-y-0.5">
-                  <p>· 第一个复习日：仅主复习题，无动态回滚题</p>
-                  <p>· 第二个及后续复习日：主复习题 + 动态回滚题（回滚题约占总题量 1/5）</p>
+              )}
+
+              {/* Review day checkboxes — draft mode only */}
+              {isDraft && (
+                <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100 space-y-3">
+                  <div>
+                    <p className="text-xs font-semibold text-slate-700">复习日选择</p>
+                    <p className="text-[11px] text-slate-400 mt-0.5">
+                      勾选需要安排复习任务的日期，未勾选的日期不安排新任务，可用于学生补做
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {Array.from({ length: dayCount }, (_, i) => i + 1).map(day => {
+                      const isSelected = selectedDays.includes(day)
+                      return (
+                        <button key={day} onClick={() => toggleDay(day)}
+                          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200
+                            ${isSelected ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-500 hover:border-blue-200 hover:text-blue-500'}`}>
+                          Day {day}
+                        </button>
+                      )
+                    })}
+                  </div>
+                  {day1Missing && (
+                    <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                      <AlertTriangle size={14} className="text-amber-500 shrink-0 mt-0.5" />
+                      <p className="text-xs text-amber-700">建议保留 Day 1 作为首轮主复习任务，首轮不含回滚题，适合建立初始记忆。</p>
+                    </div>
+                  )}
+                  <div className="text-xs text-blue-700 font-medium">
+                    已选 {selectedDays.length} 个复习日：{reviewDaysText} · 将生成 {selectedDays.length} 份任务
+                  </div>
+                  <div className="bg-white/60 rounded-lg px-3 py-2 text-[11px] text-slate-500 space-y-0.5">
+                    <p>· 第一个复习日：仅主复习题，无动态回滚题</p>
+                    <p>· 第二个及后续复习日：主复习题 + 动态回滚题（回滚题约占总题量 1/5）</p>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="flex gap-3 pt-2">
                 <button onClick={() => { if (isDraft) setStep(2); else setStep(1) }}
@@ -511,12 +512,59 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
           )}
 
           {/* ══════════════════════════════════════════════════════════
-              STEP 3: Vocab Scope + Words Per Day + Rollback + Mastery
+              STEP 3: Period + Words Per Day + Rollback + Mastery
               ══════════════════════════════════════════════════════════ */}
           {step === 3 && (
             <div className="space-y-5">
+              <div className="flex items-center gap-2">
+                <Calendar size={16} className="text-blue-500" />
+                <p className="text-sm font-semibold text-slate-700">{isDraft ? '设置每日题量' : '复习设置'}</p>
+              </div>
 
-{/* Vocab scope now shown at top of step 2 for insight mode */}
+{/* ── INSIGHT MODE: Period + Review Days (moved from step 2) ── */}
+              {!isDraft && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Calendar size={16} className="text-blue-500" />
+                    <p className="text-sm font-semibold text-slate-700">复习周期与复习日</p>
+                  </div>
+
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                    <div className="flex items-center justify-between">
+                      <div><p className="text-xs text-slate-400 mb-1">已选目标</p><p className="text-sm font-semibold text-slate-700">{goalMeta.label}</p></div>
+                      <button onClick={() => setStep(1)} className="text-[11px] text-blue-500 hover:text-blue-600 font-medium">更换目标</button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-xs text-slate-400 mb-2">计划周期</p>
+                    <div className="flex gap-2">
+                      {GOAL_PERIOD_OPTIONS[goal].map(d => (
+                        <button key={d} onClick={() => handleDayCountChange(d)}
+                          className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all duration-200
+                            ${dayCount === d ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-500'}`}>
+                          {d} 天
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100 space-y-3">
+                    <div><p className="text-xs font-semibold text-slate-700">复习日选择</p><p className="text-[11px] text-slate-400 mt-0.5">勾选需要安排复习任务的日期，未勾选的日期不安排新任务，可用于学生补做</p></div>
+                    <div className="flex flex-wrap gap-2">
+                      {Array.from({ length: dayCount }, (_, i) => i + 1).map(day => {
+                        const isSelected = selectedDays.includes(day)
+                        return (<button key={day} onClick={() => toggleDay(day)} className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 ${isSelected ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-500 hover:border-blue-200 hover:text-blue-500'}`}>Day {day}</button>)
+                      })}
+                    </div>
+                    {day1Missing && (<div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2"><AlertTriangle size={14} className="text-amber-500 shrink-0 mt-0.5" /><p className="text-xs text-amber-700">建议保留 Day 1 作为首轮主复习任务，首轮不含回滚题，适合建立初始记忆。</p></div>)}
+                    <div className="text-xs text-blue-700 font-medium">已选 {selectedDays.length} 个复习日：{reviewDaysText} · 将生成 {selectedDays.length} 份任务</div>
+                    <div className="bg-white/60 rounded-lg px-3 py-2 text-[11px] text-slate-500 space-y-0.5"><p>· 第一个复习日：仅主复习题，无动态回滚题</p><p>· 第二个及后续复习日：主复习题 + 动态回滚题（回滚题约占总题量 1/5）</p></div>
+                  </div>
+
+                  <div className="border-t border-slate-200" />
+                </div>
+              )}
 
               {/* ── Shared: Words Per Day / Daily Question Count ── */}
               <div className={!isDraft && goal !== 'custom' ? '' : (goal === 'custom' ? 'pt-3 border-t border-slate-100' : '')}>
