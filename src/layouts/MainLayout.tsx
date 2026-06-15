@@ -110,20 +110,20 @@ export default function MainLayout() {
           />
         )}
 
-        {/* ── Sidebar ── */}
+        {/* ── Sidebar (light blue) ── */}
         <aside
           className={clsx(
-            'fixed inset-y-0 left-0 z-50 flex w-[135px] flex-col bg-gradient-to-b from-[#4e839e] to-[#3d6d87] transition-transform lg:static lg:z-auto lg:rounded-2xl lg:inset-auto overflow-hidden shrink-0 shadow-sm',
+            'fixed inset-y-0 left-0 z-50 flex w-[135px] flex-col bg-gradient-to-b from-[#ebf5ff] to-[#dcecfa] transition-transform lg:static lg:z-auto lg:rounded-2xl lg:inset-auto overflow-hidden shrink-0 border border-[#cfe3f8] shadow-[0_2px_8px_rgba(0,0,0,0.04)]',
             sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
           )}
         >
           {/* Teacher avatar */}
           <div className="flex flex-col items-center px-4 pt-6 pb-4">
-            <div className="w-11 h-11 rounded-full bg-white/12 flex items-center justify-center text-white text-base font-bold mb-2 ring-1 ring-white/8">
+            <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#1E3A5F] text-base font-bold mb-2 ring-2 ring-[#bbd9ff]">
               王
             </div>
-            <p className="text-white/85 text-sm font-medium">王老师</p>
-            <p className="text-blue-200/60 text-[11px]">英语教研组</p>
+            <p className="text-[#1E3A5F] text-sm font-medium">王老师</p>
+            <p className="text-[#6B86A8] text-[11px]">英语教研组</p>
           </div>
 
           {/* Nav items — icon on top, text below */}
@@ -142,8 +142,8 @@ export default function MainLayout() {
                   return clsx(
                     'flex flex-col items-center gap-0.5 py-2.5 rounded-xl text-[10px] font-medium transition-all duration-200',
                     active
-                      ? 'bg-white/20 text-white shadow-sm'
-                      : 'text-blue-100/75 hover:bg-white/8 hover:text-white',
+                      ? 'bg-white text-[#1677FF] border border-[#BBD9FF] shadow-[0_4px_12px_rgba(22,119,255,0.1)]'
+                      : 'text-[#4F6F95] hover:bg-white/60 hover:text-[#1677FF]',
                   )
                 }}
               >
@@ -156,14 +156,14 @@ export default function MainLayout() {
             <div className="relative">
               <button
                 onClick={() => setMoreOpen(!moreOpen)}
-                className="flex items-center gap-2 px-3 py-2.5 rounded-md text-[12px] font-medium text-blue-100/60 hover:bg-white/8 hover:text-white/90 w-full transition-colors"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-md text-[12px] font-medium text-[#4F6F95] hover:bg-white/70 hover:text-[#1677FF] w-full transition-colors"
               >
                 <MoreHorizontal size={16} />
                 更多功能
                 <ChevronDown size={11} className={clsx('ml-auto transition-transform', moreOpen && 'rotate-180')} />
               </button>
               {moreOpen && (
-                <div className="absolute left-2 right-2 top-full bg-[#35667d] rounded-lg py-1 shadow-lg z-10 border border-white/5">
+                <div className="absolute left-2 right-2 top-full bg-white rounded-lg py-1 shadow-lg z-10 border border-[#cfe3f8]">
                   {[
                     { to: '/writing', label: '写作批改' },
                     { to: '/listening', label: '听力/听说' },
@@ -173,7 +173,7 @@ export default function MainLayout() {
                       key={item.to}
                       to={item.to}
                       onClick={() => { setSidebarOpen(false); setMoreOpen(false) }}
-                      className="block px-4 py-2 text-[12px] text-blue-100/75 hover:bg-white/8 hover:text-white transition-colors"
+                      className="block px-4 py-2 text-[12px] text-[#4F6F95] hover:bg-[#f4faff] hover:text-[#1677FF] transition-colors"
                     >
                       {item.label}
                     </NavLink>
@@ -183,14 +183,14 @@ export default function MainLayout() {
             </div>
           </nav>
 
-          {/* Bottom controls — strongly dimmed */}
+          {/* Bottom controls */}
           {location.pathname !== '/' && (
             <div className="px-2.5 pb-4 space-y-0.5 mt-auto">
-              <button className="flex items-center gap-2.5 px-3 py-2 rounded-md text-[12px] text-blue-200/40 hover:text-blue-100/60 hover:bg-white/5 w-full transition-colors">
+              <button className="flex items-center gap-2.5 px-3 py-2 rounded-md text-[12px] text-[#4F6F95]/60 hover:text-[#4F6F95] hover:bg-[#f4faff] w-full transition-colors">
                 <ChevronLeft size={16} />
                 返回
               </button>
-              <button className="flex items-center gap-2.5 px-3 py-2 rounded-md text-[12px] text-blue-200/40 hover:text-blue-100/60 hover:bg-white/5 w-full transition-colors">
+              <button className="flex items-center gap-2.5 px-3 py-2 rounded-md text-[12px] text-[#4F6F95]/60 hover:text-[#4F6F95] hover:bg-[#f4faff] w-full transition-colors">
                 <Minimize2 size={16} />
                 最小化
               </button>
