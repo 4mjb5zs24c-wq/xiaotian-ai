@@ -2,6 +2,10 @@ import { useState, useMemo } from 'react'
 import { X, ChevronRight, Check, Send, ArrowLeft, Sparkles, Target, Calendar, Hash, RefreshCw, Gauge, BookOpen, Repeat, Clock, AlertTriangle, Users, Eye, Trash2, Filter } from 'lucide-react'
 import type { ReviewGoal, VocabScopeId } from '../../insights/vocabularyInsightTypes'
 import { REVIEW_GOAL_META, VOCAB_SCOPE_OPTIONS, EXTENDED_VOCAB_OPTIONS, SYNC_UNITS } from '../../insights/vocabularyInsightTypes'
+import { TEST_SCENARIOS, getScenarioWarnings, getEffectiveQuestionCount, getEffectiveRollbackCount, isCandidateShort } from './reviewPlanTestScenarios'
+import type { TestScenarioData, TestScenarioId } from './reviewPlanTestScenarios'
+
+const IS_DEV = import.meta.env.DEV
 
 interface Props {
   onClose: () => void
@@ -130,6 +134,12 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   const [rollingReview, setRollingReview] = useState(true)
   const [generated, setGenerated] = useState(false)
 
+  // ── Test scenario (dev only) ────────────────────────────
+  const [testScenarioId, setTestScenarioId] = useState<TestScenarioId>('normal')
+  const activeScenario: TestScenarioData | null = IS_DEV
+    ? TEST_SCENARIOS.find(s => s.id === testScenarioId) || null
+    : null
+
   // ── Computed ──────────────────────────────────────────
 
   const day1Missing = selectedDays.length > 0 && !selectedDays.includes(1)
@@ -137,8 +147,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   const reviewDaysText = sortedSelectedDays.map(d => `Day ${d}`).join('、')
   const taskCount = sortedSelectedDays.length
   const goalMeta = REVIEW_GOAL_META[goal]
-
-  // ── Handlers ──────────────────────────────────────────
 
   const applyGoalDefaults = (g: ReviewGoal) => {
     const meta = REVIEW_GOAL_META[g]
@@ -235,6 +243,18 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   const previewWords = MOCK_PREVIEW_WORDS.filter(w => !quickFixRemovedWords.has(w.id))
   const activeQuickFixWordCount = previewWords.length
 
+  // ── Test scenario computed values ───────────────────────
+  const scenarioWarnings = useMemo(
+    () => getScenarioWarnings(activeScenario, quickFixWordCount, wordsPerDay, activeQuickFixWordCount, dayCount),
+    [activeScenario, quickFixWordCount, wordsPerDay, activeQuickFixWordCount, dayCount]
+  )
+  const effectiveQPCount = getEffectiveQuestionCount(activeScenario, wordsPerDay)
+  const candidateShortage = isCandidateShort(activeScenario, quickFixWordCount)
+  const effectiveCandidateCount = activeScenario ? activeScenario.candidateWordCount : activeQuickFixWordCount
+  const candidateShortNotice = candidateShortage && activeScenario
+    ? `当前可用高频错词仅 ${activeScenario.candidateWordCount} 个，将基于现有词汇生成复习方案。`
+    : null
+
   return (
     <div className="fixed inset-0 z-[200] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl shadow-slate-900/10 w-[620px] max-h-[85vh] overflow-y-auto">
@@ -271,6 +291,20 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
           </div>
           <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"><X size={18} /></button>
         </div>
+
+        {/* ── Dev-mode test scenario selector ── */}
+        {IS_DEV && !isDraft && !generated && (
+          <div className="px-6 py-2 bg-purple-50 border-b border-purple-100 flex items-center gap-2 overflow-x-auto">
+            <span className="text-[10px] font-semibold text-purple-500 uppercase tracking-wide shrink-0">测试场景</span>
+            {TEST_SCENARIOS.map(s => (
+              <button key={s.id} onClick={() => setTestScenarioId(s.id)}
+                className={`text-[10px] px-2.5 py-1 rounded-lg font-medium transition-all shrink-0
+                  ${testScenarioId === s.id ? 'bg-purple-500 text-white shadow-sm' : 'bg-white text-purple-600 border border-purple-200 hover:border-purple-400'}`}>
+                {s.label}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="p-6 space-y-5">
           {/* ── Step Indicator ── */}
@@ -343,11 +377,14 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 {goal === 'quick_fix' && (
                   <div className="space-y-3">
                     <div className="flex items-center gap-2"><BookOpen size={15} className="text-blue-500" /><p className="text-sm font-semibold text-slate-700">词汇范围</p><span className="text-[11px] text-slate-400">当前页面筛选条件下的高频错词</span></div>
-                    <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-1.5 text-xs"><div className="flex justify-between"><span className="text-slate-400">班级</span><span className="font-medium text-slate-700">2023级A18班</span></div><div className="flex justify-between"><span className="text-slate-400">时间范围</span><span className="font-medium text-slate-700">近 7 天</span></div><div className="flex justify-between"><span className="text-slate-400">候选词</span><span className="font-medium text-slate-700">筛选范围内 {activeQuickFixWordCount < quickFixWordCount ? `${activeQuickFixWordCount} 个可用高频错词` : `${quickFixWordCount}+ 个高频错词`}</span></div></div>
+                    <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-1.5 text-xs"><div className="flex justify-between"><span className="text-slate-400">班级</span><span className="font-medium text-slate-700">2023级A18班</span></div><div className="flex justify-between"><span className="text-slate-400">时间范围</span><span className="font-medium text-slate-700">近 7 天</span></div><div className="flex justify-between"><span className="text-slate-400">候选词</span><span className="font-medium text-slate-700">筛选范围内 {candidateShortage ? `${effectiveCandidateCount} 个可用高频错词` : `${effectiveCandidateCount >= quickFixWordCount ? quickFixWordCount + '+' : effectiveCandidateCount} 个高频错词`}</span></div></div>
                     <div><div className="flex items-center gap-1.5 mb-2"><Clock size={12} className="text-slate-400" /><p className="text-[11px] text-slate-400">时间范围</p></div><div className="flex gap-2">{ERROR_WORD_RANGE_OPTIONS.map(ro => (<button key={ro.value} onClick={() => setQuickFixRange(ro.value)} className={`flex-1 py-2.5 rounded-xl text-center transition-all duration-200 ${quickFixRange === ro.value ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-500'}`}><span className="text-xs font-semibold">{ro.label}</span></button>))}</div></div>
                     <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 flex items-center gap-2"><Filter size={12} className="text-slate-400" /><p className="text-xs text-slate-500">词汇排序：<span className="font-medium text-slate-700">按错误率、影响学生数、错误次数综合排序</span></p></div>
                     <div><p className="text-xs text-slate-400 mb-2">收录词汇数量</p><div className="flex gap-2">{QUICK_FIX_WORD_COUNT_OPTIONS.map(c => (<button key={c} onClick={() => setQuickFixWordCount(c)} className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${quickFixWordCount === c ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-500'}`}>Top {c}</button>))}</div></div>
-                    <div><button onClick={() => setQuickFixShowPreview(!quickFixShowPreview)} className="flex items-center gap-1.5 text-xs text-blue-500 hover:text-blue-600 font-medium"><Eye size={11} /> {quickFixShowPreview ? '收起词表' : activeQuickFixWordCount < quickFixWordCount ? `词表预览（共 ${activeQuickFixWordCount} 个词，不足 Top ${quickFixWordCount}）` : `展开词表预览（共 ${activeQuickFixWordCount} 个词）`}</button>{quickFixShowPreview && (<div className="mt-2 border border-slate-200 rounded-xl overflow-hidden"><div className="bg-slate-50 px-4 py-2 text-[10px] text-slate-400">{activeQuickFixWordCount < quickFixWordCount ? `当前可用高频错词：${activeQuickFixWordCount} 个，本次将基于 ${activeQuickFixWordCount} 个词生成复习方案` : `默认收录 Top ${quickFixWordCount} · 可删除不想复习的词，系统自动从候选池补齐`}</div><div className="divide-y divide-slate-50 max-h-[200px] overflow-y-auto">{previewWords.slice(0, quickFixWordCount).map(w => (<div key={w.id} className="flex items-center justify-between px-4 py-2 text-xs"><div className="flex-1 min-w-0"><div className="flex items-center gap-2"><span className="font-semibold text-slate-700">{w.text}</span><span className="text-[9px] bg-slate-100 text-slate-500 px-1 py-0.5 rounded">{w.mainType}</span></div><div className="flex items-center gap-2 mt-0.5 text-[10px] text-slate-400"><span>来源：{w.source}</span><span className="text-slate-300">|</span><span>得分率 {w.scoreRate}%</span><span className="text-slate-300">|</span><span>{w.affectedStudentCount}人</span></div></div><button onClick={() => toggleQuickFixRemovedWord(w.id)} className="text-[10px] text-slate-400 hover:text-red-500 transition-colors shrink-0"><Trash2 size={11} /></button></div>))}</div></div>)}</div>
+                    {candidateShortNotice && (
+                      <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2"><AlertTriangle size={13} className="text-amber-500 shrink-0 mt-0.5" /><p className="text-[11px] text-amber-700">{candidateShortNotice}</p></div>
+                    )}
+                    <div><button onClick={() => setQuickFixShowPreview(!quickFixShowPreview)} className="flex items-center gap-1.5 text-xs text-blue-500 hover:text-blue-600 font-medium"><Eye size={11} /> {quickFixShowPreview ? '收起词表' : effectiveCandidateCount < quickFixWordCount ? `词表预览（共 ${effectiveCandidateCount} 个词，不足 Top ${quickFixWordCount}）` : `展开词表预览（共 ${effectiveCandidateCount} 个词）`}</button>{quickFixShowPreview && (<div className="mt-2 border border-slate-200 rounded-xl overflow-hidden"><div className="bg-slate-50 px-4 py-2 text-[10px] text-slate-400">{effectiveCandidateCount < quickFixWordCount ? `当前可用高频错词：${effectiveCandidateCount} 个，本次将基于 ${effectiveCandidateCount} 个词生成复习方案` : `默认收录 Top ${quickFixWordCount} · 可删除不想复习的词，系统自动从候选池补齐`}</div><div className="divide-y divide-slate-50 max-h-[200px] overflow-y-auto">{previewWords.slice(0, quickFixWordCount).map(w => (<div key={w.id} className="flex items-center justify-between px-4 py-2 text-xs"><div className="flex-1 min-w-0"><div className="flex items-center gap-2"><span className="font-semibold text-slate-700">{w.text}</span><span className="text-[9px] bg-slate-100 text-slate-500 px-1 py-0.5 rounded">{w.mainType}</span></div><div className="flex items-center gap-2 mt-0.5 text-[10px] text-slate-400"><span>来源：{w.source}</span><span className="text-slate-300">|</span><span>得分率 {w.scoreRate}%</span><span className="text-slate-300">|</span><span>{w.affectedStudentCount}人</span></div></div><button onClick={() => toggleQuickFixRemovedWord(w.id)} className="text-[10px] text-slate-400 hover:text-red-500 transition-colors shrink-0"><Trash2 size={11} /></button></div>))}</div></div>)}</div>
                   </div>
                 )}
                 {goal === 'current_unit' && (
@@ -603,7 +640,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   <>
                     <p className="text-xs text-blue-700 font-semibold leading-relaxed">{goalMeta.label} · {taskCount} 份任务 · 每日 {wordsPerDay} 题</p>
                     <p className="text-xs text-blue-500 leading-relaxed">复习日：<span className="font-semibold">{reviewDaysText}</span> · 周期 <span className="font-semibold">{dayCount} 天</span></p>
-                    {goal === 'quick_fix' && <p className="text-xs text-blue-500 leading-relaxed">复习词表：<span className="font-semibold">{activeQuickFixWordCount >= quickFixWordCount ? `Top ${quickFixWordCount} 高频错词` : `当前可用高频错词 ${activeQuickFixWordCount} 个`}</span></p>}
+                    {goal === 'quick_fix' && <p className="text-xs text-blue-500 leading-relaxed">复习词表：<span className="font-semibold">{effectiveCandidateCount >= quickFixWordCount ? `Top ${quickFixWordCount} 高频错词` : `当前可用高频错词 ${effectiveCandidateCount} 个`}</span></p>}
                     {goal === 'custom' && <p className="text-xs text-blue-500 leading-relaxed">词汇范围：<span className="font-semibold">{getVocabScopeSummary()}</span></p>}
                     {goal === 'weak_student' && <p className="text-xs text-blue-500 leading-relaxed">补练学生：<span className="font-semibold">{weakStudentIds.size} 名</span></p>}
                     {goal === 'current_unit' && <p className="text-xs text-blue-500 leading-relaxed">复习词表：<span className="font-semibold">当前单元课标词 + 非课标词 + 单元易错词</span></p>}
@@ -638,21 +675,20 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 <div className="flex items-center gap-2"><Sparkles size={16} className="text-blue-500" /><p className="text-sm font-semibold text-slate-800">方案说明</p></div>
                 <div className="space-y-1.5 text-[13px]">
                   <div><span className="text-slate-400">复习目标：</span><span className="font-medium text-slate-700">{isDraft ? '草稿词复习' : goalMeta.label}</span></div>
-                  <div><span className="text-slate-400">复习范围：</span><span className="font-medium text-slate-700">{isDraft ? `已选 ${draftWordCount} 个草稿词` : goal === 'quick_fix' ? `当前页面筛选条件下的高频错词 · Top ${quickFixWordCount}` : goal === 'current_unit' ? `Unit 3 — Food and Drinks · 课标词+非课标词+单元易错词` : goal === 'stage_exam' ? `${stageExamUnits.size} 个单元 · 阶段高频错词+多单元重点词` : goal === 'weak_student' ? `${weakStudentIds.size} 名学生个人薄弱词` : getVocabScopeSummary()}</span></div>
+                  <div><span className="text-slate-400">复习范围：</span><span className="font-medium text-slate-700">{isDraft ? `已选 ${draftWordCount} 个草稿词` : goal === 'quick_fix' ? (candidateShortage ? `当前页面筛选条件下的高频错词 · 可用 ${effectiveCandidateCount} 个词` : `当前页面筛选条件下的高频错词 · Top ${quickFixWordCount}`) : goal === 'current_unit' ? `Unit 3 — Food and Drinks · 课标词+非课标词+单元易错词` : goal === 'stage_exam' ? `${stageExamUnits.size} 个单元 · 阶段高频错词+多单元重点词` : goal === 'weak_student' ? `${weakStudentIds.size} 名学生个人薄弱词` : getVocabScopeSummary()}</span></div>
                   <div><span className="text-slate-400">复习对象：</span><span className="font-medium text-slate-700">{isDraft ? '全班' : goal === 'weak_student' ? `已选 ${weakStudentIds.size} 名薄弱学生` : '全班'}</span></div>
-                  <div><span className="text-slate-400">复习词表：</span><span className="font-medium text-slate-700">{isDraft ? `${draftWordCount} 个草稿词` : goal === 'quick_fix' ? (activeQuickFixWordCount >= quickFixWordCount ? `Top ${quickFixWordCount} 高频错词` : `当前可用高频错词 ${activeQuickFixWordCount} 个`) : goal === 'current_unit' ? '约 44 个词' : goal === 'stage_exam' ? '约 120 个词' : goal === 'weak_student' ? '各学生薄弱词表' : '自定义范围'}</span></div>
+                  <div><span className="text-slate-400">复习词表：</span><span className="font-medium text-slate-700">{isDraft ? `${draftWordCount} 个草稿词` : goal === 'quick_fix' ? (effectiveCandidateCount >= quickFixWordCount ? `Top ${quickFixWordCount} 高频错词` : `当前可用高频错词 ${effectiveCandidateCount} 个`) : goal === 'current_unit' ? '约 44 个词' : goal === 'stage_exam' ? '约 120 个词' : goal === 'weak_student' ? '各学生薄弱词表' : '自定义范围'}</span></div>
                   <div><span className="text-slate-400">计划周期：</span><span className="font-medium text-slate-700">{dayCount} 天</span></div>
                   <div><span className="text-slate-400">复习日：</span><span className="font-medium text-slate-700">{reviewDaysText}</span></div>
                   <div><span className="text-slate-400">共生成：</span><span className="font-medium text-slate-700">{taskCount} 份复习任务</span></div>
                   <div><span className="text-slate-400">每日题量：</span><span className="font-medium text-slate-700">{wordsPerDay} 题</span></div>
                   {sortedSelectedDays.map((day, idx) => {
-                    const isFirst = idx === 0
-                    const mainQ = isFirst ? wordsPerDay : Math.floor(wordsPerDay * 4 / 5)
-                    const rollbackQ = isFirst ? 0 : Math.ceil(wordsPerDay / 5)
+                    const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
+                    const lowRate = activeScenario?.id === 'low_answer_rate' && !activeScenario?.hasPreviousRollbackPool && idx > 0
                     return (
                       <div key={day}>
                         <span className="text-slate-400">Day {day}：</span>
-                        <span className="font-medium text-slate-700">{mainQ} 道主复习题{rollbackQ > 0 ? ` + ${rollbackQ} 道动态回滚题` : ''}</span>
+                        <span className="font-medium text-slate-700">{mainQ} 道主复习题{rollbackQ > 0 ? ` + ${rollbackQ} 道动态回滚题` : lowRate ? ' · 暂不生成回滚题' : ''}</span>
                       </div>
                     )
                   })}
@@ -675,6 +711,41 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
               {/* Task List */}
               <div className="space-y-2.5">
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">连续复习计划 · {dayCount} 天 · {taskCount} 份任务</p>
+
+                {/* ── Scenario warnings (dev only) ── */}
+                {scenarioWarnings.length > 0 && (
+                  <div className="space-y-1.5 mb-2">
+                    {scenarioWarnings.map((w, i) => (
+                      <div key={i} className={`flex items-start gap-2 rounded-lg px-3 py-2 text-[11px]
+                        ${w.type === 'warning' ? 'bg-amber-50 border border-amber-200 text-amber-700' : 'bg-blue-50 border border-blue-200 text-blue-700'}`}>
+                        <AlertTriangle size={12} className={`shrink-0 mt-0.5 ${w.type === 'warning' ? 'text-amber-500' : 'text-blue-500'}`} />
+                        <p>{w.message}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* ── Stable baseline info (when baseline shortage) ── */}
+                {activeScenario?.id === 'baseline_shortage' && (
+                  <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 space-y-1.5 mb-1">
+                    <p className="text-xs text-slate-500">
+                      当前回滚题正确率：<span className="font-semibold text-slate-700">76%</span>
+                    </p>
+                    <p className="text-xs text-slate-400">
+                      稳定基线词数量不足（{activeScenario.stableBaselineCount} 个），暂不计算整体提升
+                    </p>
+                    {activeScenario.baselineImprovementRate == null && (
+                      <p className="text-xs text-slate-400">较首次练习提升：<span className="font-medium text-slate-400">—</span></p>
+                    )}
+                  </div>
+                )}
+
+                {/* ── Effective question count hint ── */}
+                {activeScenario?.id === 'question_shortage' && (
+                  <div className="text-[11px] text-slate-400 mb-1">
+                    每日实际题量：<span className="font-semibold text-slate-500">{effectiveQPCount} 题</span>（目标 {wordsPerDay} 题）
+                  </div>
+                )}
                 {goal === 'weak_student' && !isDraft ? (
                   // weak_student: show per-student task groups
                   MOCK_WEAK_STUDENTS.filter(s => weakStudentIds.has(s.id)).map(s => (
@@ -685,9 +756,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                         <span className="text-[10px] text-slate-400">{s.weakWordCount} 个薄弱词 · 每复习日 {wordsPerDay} 题</span>
                       </div>
                       {sortedSelectedDays.map((day, idx) => {
-                        const isFirst = idx === 0
-                        const mainQ = isFirst ? wordsPerDay : Math.floor(wordsPerDay * 4 / 5)
-                        const rollbackQ = isFirst ? 0 : Math.ceil(wordsPerDay / 5)
+                        const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
                         const prevDay = idx > 0 ? sortedSelectedDays[idx - 1] : null
                         return (
                           <div key={day} className="px-4 py-2 border-b border-slate-50 last:border-0 flex items-center justify-between text-[11px]">
@@ -703,10 +772,9 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   ))
                 ) : (
                   sortedSelectedDays.map((day, idx) => {
+                    const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
                     const isFirst = idx === 0
                     const isLast = idx === sortedSelectedDays.length - 1
-                    const mainQ = isFirst ? wordsPerDay : Math.floor(wordsPerDay * 4 / 5)
-                    const rollbackQ = isFirst ? 0 : Math.ceil(wordsPerDay / 5)
                     const prevDay = idx > 0 ? sortedSelectedDays[idx - 1] : null
                     const taskLabel = isFirst ? '主复习任务' : isLast ? '复习收口任务' : '巩固回滚任务'
                     return (
