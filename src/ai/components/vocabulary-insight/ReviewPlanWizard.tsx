@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
-import { X, ChevronRight, Check, Send, ArrowLeft, Sparkles, Target, Calendar, Hash, RefreshCw, Gauge, BookOpen, Repeat, Clock, AlertTriangle, Users, Eye, Trash2, Filter } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { X, ChevronRight, Check, Send, ArrowLeft, Sparkles, Target, Calendar, Hash, RefreshCw, Gauge, BookOpen, Repeat, Clock, AlertTriangle, Users, Eye, Trash2, Filter, ExternalLink } from 'lucide-react'
 import type { ReviewGoal, VocabScopeId } from '../../insights/vocabularyInsightTypes'
 import { REVIEW_GOAL_META, VOCAB_SCOPE_OPTIONS, EXTENDED_VOCAB_OPTIONS, SYNC_UNITS } from '../../insights/vocabularyInsightTypes'
 import { TEST_SCENARIOS, getScenarioWarnings, getEffectiveQuestionCount, getEffectiveRollbackCount, isCandidateShort } from './reviewPlanTestScenarios'
@@ -82,6 +83,7 @@ const QUICK_FIX_WORD_COUNT_OPTIONS = [20, 30, 50] as const
 
 export default function ReviewPlanWizard({ onClose, entrySource = 'insight', draftWordCount = 0, onPublish }: Props) {
   const isDraft = entrySource === 'draftBasket'
+  const navigate = useNavigate()
   const STEP_LABELS = isDraft ? DRAFT_STEPS : INSIGHT_STEPS
   const hasDraft = draftWordCount > 0
   const defaultDayCount = isDraft ? 5 : (hasDraft ? 5 : REVIEW_GOAL_META['quick_fix'].defaultDays)
@@ -133,6 +135,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   // Rolling review
   const [rollingReview, setRollingReview] = useState(true)
   const [generated, setGenerated] = useState(false)
+  const [published, setPublished] = useState(false)
 
   // ── Test scenario (dev only) ────────────────────────────
   const [testScenarioId, setTestScenarioId] = useState<TestScenarioId>('normal')
@@ -196,6 +199,11 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   const handleGenerate = () => {
     setGenerated(true)
     setStep(isDraft ? 3 : 4)
+  }
+
+  const handlePublish = () => {
+    if (onPublish) { onPublish(); return }
+    setPublished(true)
   }
 
   // ── Draft-only handlers ────────────────────────────────
@@ -756,9 +764,32 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-colors">
                   上一步
                 </button>
-                <button onClick={() => { if (onPublish) onPublish(); else { alert('已成功发布词汇复习方案！'); onClose() } }}
+                <button onClick={handlePublish}
                   className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200">
                   <Send size={14} /> 确认发布
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ═══ Published success card ═══ */}
+          {published && (
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50/50 border border-emerald-200 rounded-xl p-6 space-y-4 text-center">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 mx-auto flex items-center justify-center">
+                <Check size={24} className="text-emerald-500" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-slate-800">已成功发布「{isDraft ? '草稿词复习计划' : goalMeta.label}」</p>
+                <p className="text-xs text-slate-400 mt-1">共生成 {taskCount} 份任务：{reviewDaysText}</p>
+              </div>
+              <div className="flex gap-2 justify-center">
+                <button onClick={() => { onClose(); navigate('/assignments?highlight=plan-001') }}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-all">
+                  <ExternalLink size={12} /> 查看作业列表
+                </button>
+                <button onClick={() => { onClose(); navigate('/vocabulary-insight') }}
+                  className="px-4 py-2 rounded-lg text-xs font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-all">
+                  继续查看词汇洞察
                 </button>
               </div>
             </div>
@@ -767,7 +798,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
           {/* ══════════════════════════════════════════════════════════
               STEP 4: Generated Result (insight mode only)
               ══════════════════════════════════════════════════════════ */}
-          {step === 4 && generated && !isDraft && (
+          {step === 4 && generated && !isDraft && !published && (
             <div className="space-y-5">
               {/* Plan Summary */}
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 rounded-xl p-5 space-y-3">
@@ -894,7 +925,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-colors">
                   重新制定
                 </button>
-                <button onClick={() => { if (onPublish) onPublish(); else { alert('已成功发布词汇复习方案！'); onClose() } }}
+                <button onClick={handlePublish}
                   className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200">
                   <Send size={14} /> 确认发布
                 </button>

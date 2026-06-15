@@ -166,6 +166,7 @@ export default function MainLayout() {
               {moreOpen && (
                 <div className="absolute left-2 right-2 top-full bg-[#1565a0] rounded-md py-1 shadow-lg z-10">
                   {[
+                    { to: '/assignments', label: '作业列表' },
                     { to: '/writing', label: '写作批改' },
                     { to: '/listening', label: '听力/听说' },
                     { to: '/ai-search', label: 'AI搜索' },
