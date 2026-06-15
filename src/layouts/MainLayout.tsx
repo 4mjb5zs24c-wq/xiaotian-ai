@@ -36,63 +36,63 @@ export default function MainLayout() {
   const [moreOpen, setMoreOpen] = useState(false)
 
   return (
-    <div className="flex flex-col h-screen bg-[#e8f0fe]">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-[#eef3f9] to-[#e3ebf5]">
       {/* ── Top Header ── */}
-      <header className="flex items-center h-12 px-4 bg-[#e8f0fe] shrink-0 gap-4">
+      <header className="flex items-center h-11 px-4 shrink-0 gap-4 border-b border-slate-200/40">
         <button
-          className="lg:hidden text-slate-500 hover:text-slate-700 shrink-0"
+          className="lg:hidden text-slate-400 hover:text-slate-600 shrink-0"
           onClick={() => setSidebarOpen(true)}
         >
-          <Menu size={18} />
+          <Menu size={17} />
         </button>
 
         {/* Left: branding */}
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-sm font-bold text-[#1a6fb5]">天学网</span>
-          <span className="text-[11px] text-[#8aabcc]">· 数字化教学</span>
-          <span className="text-[10px] text-slate-300 ml-1">v2.8.1</span>
+          <span className="text-sm font-bold text-[#236fa1]">天学网</span>
+          <span className="text-[10px] text-slate-400">· 数字化教学</span>
+          <span className="text-[9px] text-slate-300 ml-1">v2.8.1</span>
         </div>
 
         {/* Center: textbook & class selector */}
-        <div className="flex items-center gap-3 text-[12px] ml-6">
+        <div className="flex items-center gap-3 text-[11px] ml-6">
           <div className="flex items-center gap-1">
             <span className="text-slate-400">教材版本：</span>
-            <button className="flex items-center gap-0.5 text-slate-700 font-medium hover:text-[#1a6fb5] transition-colors">
+            <button className="flex items-center gap-0.5 text-slate-600 font-medium hover:text-[#236fa1] transition-colors">
               人教版
-              <ChevronDown size={12} />
+              <ChevronDown size={11} />
             </button>
           </div>
           <span className="text-slate-300">|</span>
           <div className="flex items-center gap-1">
             <span className="text-slate-400">当前班级：</span>
-            <button className="flex items-center gap-0.5 text-slate-700 font-medium hover:text-[#1a6fb5] transition-colors">
+            <button className="flex items-center gap-0.5 text-slate-600 font-medium hover:text-[#236fa1] transition-colors">
               初一(1)班
-              <ChevronDown size={12} />
+              <ChevronDown size={11} />
             </button>
           </div>
         </div>
 
         {/* Right: actions */}
-        <div className="ml-auto flex items-center gap-1">
-          <button className="p-1.5 rounded-md text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-colors">
-            <Bell size={16} />
+        <div className="ml-auto flex items-center gap-0.5">
+          <button className="p-1.5 rounded-md text-slate-300 hover:text-slate-500 hover:bg-white/60 transition-colors">
+            <Bell size={15} />
           </button>
-          <button className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] text-slate-500 hover:text-slate-700 hover:bg-white/60 transition-colors">
-            <Download size={13} />
+          <button className="flex items-center gap-1 px-2 py-1 rounded-md text-[10px] text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-colors">
+            <Download size={12} />
             下载APP
           </button>
-          <button className="p-1.5 rounded-md text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-colors">
-            <Menu size={16} />
+          <button className="p-1.5 rounded-md text-slate-300 hover:text-slate-500 hover:bg-white/60 transition-colors">
+            <Menu size={15} />
           </button>
           <button
             onClick={() => navigate('/ai-search')}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-500 text-white text-[11px] font-medium hover:bg-blue-600 transition-colors ml-1"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-500 text-white text-[11px] font-medium hover:bg-blue-600 transition-colors ml-1 shadow-sm shadow-blue-200"
           >
-            <Sparkles size={13} />
+            <Sparkles size={12} />
             小天AI
           </button>
           {/* Mock window controls */}
-          <span className="text-[10px] text-slate-300 ml-2 flex gap-1">
+          <span className="text-[9px] text-slate-300 ml-2 flex gap-1">
             <span className="cursor-default" title="最小化">─</span>
             <span className="cursor-default" title="最大化">□</span>
             <span className="cursor-default" title="关闭">✕</span>
@@ -110,24 +110,24 @@ export default function MainLayout() {
           />
         )}
 
-        {/* ── Blue Sidebar ── */}
+        {/* ── Sidebar ── */}
         <aside
           className={clsx(
-            'fixed inset-y-0 left-0 z-50 flex w-[135px] flex-col bg-[#1a6fb5] transition-transform lg:static lg:z-auto lg:rounded-2xl lg:inset-auto overflow-hidden shrink-0',
+            'fixed inset-y-0 left-0 z-50 flex w-[135px] flex-col bg-gradient-to-b from-[#236fa1] to-[#1a5d8a] transition-transform lg:static lg:z-auto lg:rounded-2xl lg:inset-auto overflow-hidden shrink-0 shadow-sm',
             sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
           )}
         >
           {/* Teacher avatar */}
           <div className="flex flex-col items-center px-4 pt-6 pb-4">
-            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white text-lg font-bold mb-2">
+            <div className="w-11 h-11 rounded-full bg-white/15 flex items-center justify-center text-white text-base font-bold mb-2 ring-2 ring-white/10">
               王
             </div>
-            <p className="text-white text-sm font-medium">王老师</p>
-            <p className="text-blue-200 text-[11px]">英语教研组</p>
+            <p className="text-white/90 text-sm font-medium">王老师</p>
+            <p className="text-blue-200/70 text-[11px]">英语教研组</p>
           </div>
 
           {/* Nav items — icon on top, text below */}
-          <nav className="flex-1 px-2 space-y-1 overflow-y-auto">
+          <nav className="flex-1 px-2.5 space-y-0.5 overflow-y-auto">
             {topNavItems.map(({ to, label, icon: Icon }) => (
               <NavLink
                 key={label}
@@ -135,20 +135,19 @@ export default function MainLayout() {
                 end={to === '/'}
                 onClick={() => setSidebarOpen(false)}
                 className={({ isActive }) => {
-                  // For nav items with query strings, check exact match including search params
                   const qIndex = to.indexOf('?')
                   const active = qIndex > -1
                     ? location.pathname + location.search === to
                     : isActive
                   return clsx(
-                    'flex flex-col items-center gap-0.5 py-2.5 rounded-xl text-[10px] font-medium transition-colors',
+                    'flex flex-col items-center gap-0.5 py-2.5 rounded-xl text-[10px] font-medium transition-all duration-200',
                     active
-                      ? 'bg-white/20 text-white'
-                      : 'text-blue-100 hover:bg-white/10 hover:text-white',
+                      ? 'bg-white/25 text-white shadow-sm'
+                      : 'text-blue-100/80 hover:bg-white/10 hover:text-white',
                   )
                 }}
               >
-                <Icon size={20} />
+                <Icon size={19} />
                 {label}
               </NavLink>
             ))}
@@ -157,14 +156,14 @@ export default function MainLayout() {
             <div className="relative">
               <button
                 onClick={() => setMoreOpen(!moreOpen)}
-                className="flex items-center gap-2.5 px-3 py-2.5 rounded-md text-[13px] font-medium text-blue-100 hover:bg-white/10 hover:text-white w-full transition-colors"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-md text-[12px] font-medium text-blue-100/70 hover:bg-white/10 hover:text-white w-full transition-colors"
               >
-                <MoreHorizontal size={17} />
+                <MoreHorizontal size={16} />
                 更多功能
-                <ChevronDown size={12} className={clsx('ml-auto transition-transform', moreOpen && 'rotate-180')} />
+                <ChevronDown size={11} className={clsx('ml-auto transition-transform', moreOpen && 'rotate-180')} />
               </button>
               {moreOpen && (
-                <div className="absolute left-2 right-2 top-full bg-[#1565a0] rounded-md py-1 shadow-lg z-10">
+                <div className="absolute left-2 right-2 top-full bg-[#1a5680] rounded-lg py-1 shadow-lg z-10 border border-white/5">
                   {[
                     { to: '/writing', label: '写作批改' },
                     { to: '/listening', label: '听力/听说' },
@@ -174,7 +173,7 @@ export default function MainLayout() {
                       key={item.to}
                       to={item.to}
                       onClick={() => { setSidebarOpen(false); setMoreOpen(false) }}
-                      className="block px-4 py-2 text-[12px] text-blue-100 hover:bg-white/10 hover:text-white transition-colors"
+                      className="block px-4 py-2 text-[12px] text-blue-100/80 hover:bg-white/10 hover:text-white transition-colors"
                     >
                       {item.label}
                     </NavLink>
@@ -184,15 +183,15 @@ export default function MainLayout() {
             </div>
           </nav>
 
-          {/* Bottom controls — hidden on homepage */}
+          {/* Bottom controls — dimmed, secondary */}
           {location.pathname !== '/' && (
-            <div className="px-2 pb-4 space-y-0.5">
-              <button className="flex items-center gap-2.5 px-3 py-2 rounded-md text-[13px] text-blue-100 hover:bg-white/10 hover:text-white w-full transition-colors">
-                <ChevronLeft size={17} />
+            <div className="px-2.5 pb-4 space-y-0.5 mt-auto">
+              <button className="flex items-center gap-2.5 px-3 py-2 rounded-md text-[12px] text-blue-200/50 hover:text-blue-100/70 hover:bg-white/5 w-full transition-colors">
+                <ChevronLeft size={16} />
                 返回
               </button>
-              <button className="flex items-center gap-2.5 px-3 py-2 rounded-md text-[13px] text-blue-100 hover:bg-white/10 hover:text-white w-full transition-colors">
-                <Minimize2 size={17} />
+              <button className="flex items-center gap-2.5 px-3 py-2 rounded-md text-[12px] text-blue-200/50 hover:text-blue-100/70 hover:bg-white/5 w-full transition-colors">
+                <Minimize2 size={16} />
                 最小化
               </button>
             </div>
