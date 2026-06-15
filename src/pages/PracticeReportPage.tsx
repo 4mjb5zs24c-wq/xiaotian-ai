@@ -2,25 +2,12 @@ import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ChevronRight, FileText, MoreVertical, Send, Search,
-  ArrowUpDown, Filter, LayoutGrid, List, Sparkles,
+  ArrowUpDown, Filter, LayoutGrid, List,
 } from 'lucide-react'
-import { useAIStore } from '../ai/store'
-import { generateTeachingInsight } from '../ai/insights/teachingInsightGenerator'
 import ReviewPlanAssignmentCard from '../ai/components/vocabulary-insight/ReviewPlanAssignmentCard'
 import type { ReviewPlanAssignmentCollection, ReviewPlanDayTask } from '../ai/insights/reviewPlanAssignmentTypes'
 
 // ── Types ──────────────────────────────────────────────
-
-type FilterTab = 'all' | 'review_plan' | 'homework' | 'exam' | 'listening' | 'writing'
-
-const FILTER_TABS: { key: FilterTab; label: string }[] = [
-  { key: 'all', label: '全部' },
-  { key: 'review_plan', label: '词汇复习计划' },
-  { key: 'homework', label: '普通练习' },
-  { key: 'exam', label: '试卷' },
-  { key: 'listening', label: '听力' },
-  { key: 'writing', label: '写作' },
-]
 
 function loadStoredPlans(): ReviewPlanAssignmentCollection[] {
   try {
@@ -231,10 +218,8 @@ function FilterButton({ label }: { label: string }) {
 
 export default function PracticeReportPage() {
   const navigate = useNavigate()
-  const setPanel = useAIStore((s) => s.setAIDrawerPanel)
 
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc')
-  const [activeFilter, setActiveFilter] = useState<FilterTab>('all')
   const storedPlans = useMemo(() => loadStoredPlans(), [])
 
   const [activeFilters] = useState({
@@ -246,53 +231,29 @@ export default function PracticeReportPage() {
     search: '',
   })
 
-  const handleInsightClick = (scrollTo?: string) => {
-    const insight = generateTeachingInsight('practiceStage')
-    setPanel('practiceStageInsight', { insight, scrollTo } as Record<string, unknown>)
-  }
-
   // Merge stored plans into mock groups by publishedAt date
   const allGroups = useMemo(() => {
     const groups = mockReportGroups.map(g => ({ ...g, items: [...g.items] as Array<ReportItem | ReviewPlanAssignmentCollection> }))
 
-    // Insert plans into matching date groups, or create new groups
     for (const plan of storedPlans) {
       const { date, weekday } = isoToDateParts(plan.publishedAt)
       const existing = groups.find(g => g.date === date)
       if (existing) {
-        existing.items.unshift(plan) // plans first in their group
+        existing.items.unshift(plan)
       } else {
         groups.push({ date, weekday, items: [plan] })
       }
     }
 
-    // Sort by date descending
     groups.sort((a, b) => b.date.localeCompare(a.date))
     return groups
   }, [storedPlans])
 
   const sortedGroups = sortOrder === 'asc' ? [...allGroups].reverse() : allGroups
 
-  // Filter groups by active tab
-  const filteredGroups = useMemo(() => {
-    if (activeFilter === 'all') return sortedGroups
-    return sortedGroups.map(g => ({
-      ...g,
-      items: g.items.filter(item => {
-        const isPlan = 'days' in item
-        if (activeFilter === 'review_plan') return isPlan
-        return !isPlan // homework/exam/listening/writing: skip plans for now
-      }),
-    })).filter(g => g.items.length > 0)
-  }, [sortedGroups, activeFilter])
-
-  // Total count: for "all" or "review_plan", include plans
-  const totalCount = useMemo(() => {
-    const mockCount = mockReportGroups.reduce((sum, g) => sum + g.items.length, 0)
-    if (activeFilter === 'review_plan') return storedPlans.length
-    if (activeFilter === 'all') return mockCount + storedPlans.length
-    return mockCount
-  }, [storedPlans.length, activeFilter])
+  const totalCount = useMemo(() =>
+    mockReportGroups.reduce((sum, g) => sum + g.items.length, 0) + storedPlans.length,
+  [storedPlans.length])
 
   return (
     <div className="h-full flex flex-col min-h-0">
@@ -307,7 +268,7 @@ export default function PracticeReportPage() {
           </div>
         </div>
 
-        {/* Title row + compact insight bar */}
+        {/* Title row + sort */}
         <div className="shrink-0 px-5 pb-2 flex items-center justify-between">
           <h2 className="text-[13px] font-semibold text-[#3a4f66] shrink-0">
             全部练习报告
@@ -325,66 +286,14 @@ export default function PracticeReportPage() {
           </button>
         </div>
 
-        {/* Compact Insight Bar — h-[42px] slim row */}
-        <div className="shrink-0 px-5 pb-3">
-          <button
-            onClick={() => handleInsightClick()}
-            className="w-full flex items-center gap-2.5 h-[42px] px-3 rounded-lg bg-gradient-to-r from-blue-50/60 via-indigo-50/40 to-purple-50/40 border border-blue-100/60 hover:border-blue-200 hover:bg-blue-50/80 transition-all group"
-          >
-            <div className="flex items-center justify-center w-5 h-5 rounded bg-blue-500 shrink-0">
-              <Sparkles size={11} className="text-white" />
-            </div>
-            <span className="text-[11px] font-bold text-[#3a4f66] shrink-0">阶段练习洞察</span>
-            <span className="text-[#d0dce8] text-[10px]">·</span>
-            <span className="text-[10px] text-slate-500 truncate">近两周 8 份练习</span>
-            <div className="flex items-center gap-1.5 ml-auto shrink-0">
-              {[
-                { label: '完成率', value: '82%', sub: '↓7', level: 'warning' as const, scrollTo: 'sec-trend' },
-                { label: '词汇拼写', value: '62%', sub: '关注', level: 'danger' as const, scrollTo: 'sec-radar' },
-                { label: '学生关注', value: '8人', sub: '查看', level: 'warning' as const, scrollTo: 'sec-students' },
-              ].map((item, i) => (
-                <span
-                  key={i}
-                  onClick={(e) => { e.stopPropagation(); handleInsightClick(item.scrollTo) }}
-                  className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] cursor-pointer hover:ring-1 hover:ring-current transition-all ${
-                    item.level === 'danger' ? 'text-red-500 bg-red-50' : 'text-amber-500 bg-amber-50'
-                  }`}
-                >
-                  <span className="opacity-70">{item.label}</span>
-                  <span className="font-bold">{item.value}</span>
-                  <span className="opacity-70">{item.sub}</span>
-                </span>
-              ))}
-              <span className="text-[10px] text-[#4b9fe8] group-hover:translate-x-0.5 transition-transform font-medium whitespace-nowrap ml-1">查看分析 →</span>
-            </div>
-          </button>
-        </div>
-
-        {/* Filter Tabs */}
-        <div className="shrink-0 px-5 pb-2 flex items-center gap-1.5 flex-wrap">
-          <Filter size={12} className="text-[#8aabcc] shrink-0" />
-          {FILTER_TABS.map(tab => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveFilter(tab.key)}
-              className={`text-[11px] px-2.5 py-1 rounded-lg font-medium transition-all
-                ${activeFilter === tab.key
-                  ? 'bg-blue-500 text-white shadow-sm'
-                  : 'text-[#4a6b8a] bg-[#f4f7fa] border border-[#e4ecf3] hover:border-[#b8d4f0] hover:text-[#4b9fe8]'}`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
         {/* Divider */}
         <div className="shrink-0 border-t border-[#f0f4f8]" />
 
         {/* Timeline List — scrollable */}
         <div className="flex-1 overflow-y-auto min-h-0 px-5 pt-3">
-          {filteredGroups.map((group, gi) => (
+          {sortedGroups.map((group, gi) => (
             <div key={group.date} className="flex gap-3">
-              {gi === filteredGroups.length - 1 ? <TimelineLastMarker /> : <TimelineMarker isFirst={gi === 0} />}
+              {gi === sortedGroups.length - 1 ? <TimelineLastMarker /> : <TimelineMarker isFirst={gi === 0} />}
               <div className="flex-1 min-w-0 pb-3">
                 <div className="mb-2">
                   <span className="text-[11px] text-[#6b8aaa] font-medium">
