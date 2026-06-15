@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { BarChart3, TrendingUp, Target, Percent } from 'lucide-react'
 import type { PlanDataOverview } from '../../insights/reviewPlanAssignmentTypes'
 
@@ -8,30 +9,86 @@ interface Props {
 
 export function DataOverviewPopover({ overview }: Props) {
   const [open, setOpen] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
+  const [pos, setPos] = useState({ top: 0, left: 0 })
+  const btnRef = useRef<HTMLButtonElement>(null)
+  const popRef = useRef<HTMLDivElement>(null)
+
+  const recalc = useCallback(() => {
+    if (!btnRef.current) return
+    const r = btnRef.current.getBoundingClientRect()
+    // popover width ~280px; if not enough room on the right, flip to the left
+    const popW = 280
+    const fitsRight = r.right + 8 + popW <= window.innerWidth - 8
+    setPos({
+      top: r.bottom + 6,
+      left: fitsRight ? r.right - popW : r.left + (r.width / 2) - popW,
+    })
+  }, [])
+
+  const toggle = () => {
+    if (!open) {
+      recalc()
+      setOpen(true)
+    } else {
+      setOpen(false)
+    }
+  }
 
   // Close on outside click
   useEffect(() => {
     if (!open) return
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+      if (btnRef.current?.contains(e.target as Node)) return
+      if (popRef.current?.contains(e.target as Node)) return
+      setOpen(false)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
   }, [open])
 
+  // Close on Escape
+  useEffect(() => {
+    if (!open) return
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [open])
+
+  // Recalculate on scroll/resize
+  useEffect(() => {
+    if (!open) return
+    const handler = () => recalc()
+    window.addEventListener('scroll', handler, true)
+    window.addEventListener('resize', handler)
+    return () => {
+      window.removeEventListener('scroll', handler, true)
+      window.removeEventListener('resize', handler)
+    }
+  }, [open, recalc])
+
   return (
-    <div className="relative" ref={ref}>
+    <>
       <button
-        onClick={() => setOpen(!open)}
+        ref={btnRef}
+        onClick={toggle}
         className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-blue-500 font-medium px-2 py-1 rounded-lg hover:bg-blue-50 transition-colors"
       >
         <BarChart3 size={12} />
         数据概览
       </button>
 
-      {open && (
-        <div className="absolute right-0 top-full mt-2 w-[280px] bg-white rounded-xl shadow-xl border border-slate-200 z-50 p-4 space-y-3 animate-in fade-in">
+      {open && createPortal(
+        <div
+          ref={popRef}
+          className="fixed w-[280px] bg-white rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-200/80 p-4 space-y-3"
+          style={{
+            top: Math.min(pos.top, window.innerHeight - 400),
+            left: Math.max(8, pos.left),
+            zIndex: 9999,
+          }}
+        >
           <div className="flex items-center gap-2">
             <BarChart3 size={14} className="text-blue-500" />
             <p className="text-xs font-semibold text-slate-700">计划数据概览</p>
@@ -89,9 +146,10 @@ export function DataOverviewPopover({ overview }: Props) {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
-    </div>
+    </>
   )
 }
 
