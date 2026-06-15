@@ -81,14 +81,16 @@ const MOCK_PREVIEW_WORDS = [
 
 const QUICK_FIX_WORD_COUNT_OPTIONS = [20, 30, 50] as const
 
-export default function ReviewPlanWizard({ onClose, entrySource = 'insight', draftWordCount = 0, onPublish }: Props) {
+export default function ReviewPlanWizard({ onClose, entrySource = 'insight', draftWordCount = 0, draftWordIds, onPublish }: Props) {
   const isDraft = entrySource === 'draftBasket'
   const navigate = useNavigate()
+  // Use draftWordIds length as authoritative word count for draft mode
+  const effectiveDraftWordCount = isDraft ? (draftWordIds?.length ?? draftWordCount) : draftWordCount
   const STEP_LABELS = isDraft ? DRAFT_STEPS : INSIGHT_STEPS
-  const hasDraft = draftWordCount > 0
+  const hasDraft = effectiveDraftWordCount > 0
   const defaultDayCount = isDraft ? 5 : (hasDraft ? 5 : REVIEW_GOAL_META['quick_fix'].defaultDays)
   const defaultWordsPerDay = isDraft
-    ? (draftWordCount >= 20 ? 50 : 30)
+    ? (effectiveDraftWordCount >= 20 ? 50 : 30)
     : REVIEW_GOAL_META['quick_fix'].defaultWordCount
 
   // ── State ──────────────────────────────────────────────
@@ -138,7 +140,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   const [published, setPublished] = useState(false)
   const [publishing, setPublishing] = useState(false)
   const [publishError, setPublishError] = useState<string | null>(null)
-  const [publishedPlanId, setPublishedPlanId] = useState<string>('')
 
   // ── Test scenario (dev only) ────────────────────────────
   const [testScenarioId, setTestScenarioId] = useState<TestScenarioId>('normal')
@@ -205,7 +206,10 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   }
 
   const handlePublish = () => {
-    console.log('[publishReviewPlan] click', { entrySource, isDraft, goal, dayCount, wordsPerDay, taskCount })
+    console.log('[publishReviewPlan] click', { entrySource, isDraft, goal, dayCount, wordsPerDay, taskCount, effectiveDraftWordCount })
+
+    // ── Clear any previous error first ──
+    setPublishError(null)
 
     // ── Validate ──
     if (taskCount === 0) {
@@ -216,11 +220,10 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
       setPublishError('每日题量不能为空')
       return
     }
-    if (isDraft && draftWordCount === 0) {
+    if (isDraft && effectiveDraftWordCount === 0) {
       setPublishError('当前词表为空，无法发布复习方案')
       return
     }
-    setPublishError(null)
     setPublishing(true)
 
     // ── Build plan data ──
@@ -262,7 +265,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
         : '自定义词汇复习计划',
       planType: isDraft ? 'draft_basket' : goal,
       className: '2023级A18班',
-      wordCount: isDraft ? draftWordCount : effectiveCandidateCount,
+      wordCount: isDraft ? effectiveDraftWordCount : effectiveCandidateCount,
       dayCount,
       reviewDays: sortedSelectedDays,
       taskCount,
@@ -273,7 +276,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
       publishedAt: now,
       days: dayTasks,
       overview: {
-        coveredWordCount: isDraft ? draftWordCount : effectiveCandidateCount,
+        coveredWordCount: isDraft ? effectiveDraftWordCount : effectiveCandidateCount,
         cumulativeCompletionRate: 0,
         masteryImprovement: { before: 0, after: 0, improvement: 0, available: false },
         rollbackAccuracy: { rate: 0, available: false },
@@ -299,7 +302,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
     // ── Clean up draft basket ──
     if (onPublish) onPublish()
 
-    setPublishedPlanId(planId)
     setPublishing(false)
     setPublished(true)
   }
@@ -361,25 +363,74 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
     ? `当前可用高频错词仅 ${activeScenario.candidateWordCount} 个，将基于现有词汇生成复习方案。`
     : null
 
-  return (
-    <div className="fixed inset-0 z-[200] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl shadow-slate-900/10 w-[620px] max-h-[85vh] overflow-y-auto">
+  const planTitle = isDraft ? '草稿词复习计划'
+    : goal === 'quick_fix' ? '近期待巩固词复习计划'
+    : goal === 'current_unit' ? '当前单元词汇复习计划'
+    : goal === 'stage_exam' ? '阶段/考前复习计划'
+    : goal === 'weak_student' ? '薄弱学生补练计划'
+    : '自定义词汇复习计划'
 
-        {/* ── Goal Switch Confirmation Toast ── */}
-        {goalSwitchConfirm && (
-          <div className="fixed inset-0 z-[300] bg-black/20 flex items-center justify-center">
-            <div className="bg-white rounded-xl shadow-lg p-5 w-[360px] space-y-3">
-              <div className="flex items-start gap-2.5">
-                <AlertTriangle size={16} className="text-amber-500 shrink-0 mt-0.5" />
-                <p className="text-sm text-slate-700 font-medium">切换复习目标后，词汇范围将按新目标重新推荐，是否继续？</p>
+  const successSummary = `共生成 ${taskCount} 份练习：${reviewDaysText}`
+
+  return (
+    <>
+      {/* ── Goal Switch Confirmation Toast ── */}
+      {goalSwitchConfirm && (
+        <div className="fixed inset-0 z-[300] bg-black/20 flex items-center justify-center">
+          <div className="bg-white rounded-xl shadow-lg p-5 w-[360px] space-y-3">
+            <div className="flex items-start gap-2.5">
+              <AlertTriangle size={16} className="text-amber-500 shrink-0 mt-0.5" />
+              <p className="text-sm text-slate-700 font-medium">切换复习目标后，词汇范围将按新目标重新推荐，是否继续？</p>
+            </div>
+            <div className="flex gap-2 justify-end">
+              <button onClick={() => setGoalSwitchConfirm(null)} className="px-4 py-2 rounded-lg text-xs font-medium text-slate-500 border border-slate-200 hover:bg-slate-50">取消</button>
+              <button onClick={confirmGoalSwitch} className="px-4 py-2 rounded-lg text-xs font-semibold bg-blue-500 text-white hover:bg-blue-600">确认切换</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Draft mode: published success — standalone clean modal ── */}
+      {published && isDraft ? (
+        <div className="fixed inset-0 z-[200] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl shadow-slate-900/10 w-[440px] overflow-hidden">
+            <div className="p-6 space-y-4 text-center">
+              {/* Success icon */}
+              <div className="w-14 h-14 rounded-full bg-emerald-100 mx-auto flex items-center justify-center">
+                <Check size={28} className="text-emerald-500" />
               </div>
-              <div className="flex gap-2 justify-end">
-                <button onClick={() => setGoalSwitchConfirm(null)} className="px-4 py-2 rounded-lg text-xs font-medium text-slate-500 border border-slate-200 hover:bg-slate-50">取消</button>
-                <button onClick={confirmGoalSwitch} className="px-4 py-2 rounded-lg text-xs font-semibold bg-blue-500 text-white hover:bg-blue-600">确认切换</button>
+              {/* Title */}
+              <div>
+                <h3 className="text-lg font-bold text-slate-800">发布成功</h3>
+                <p className="text-sm text-slate-600 mt-1.5">已成功发布「{planTitle}」</p>
+              </div>
+              {/* Details */}
+              <div className="bg-slate-50 rounded-xl px-4 py-3 space-y-1 text-left">
+                <p className="text-xs text-slate-500">{successSummary}</p>
+                <p className="text-xs text-slate-400">学生端将按作业日期展示对应练习。</p>
+              </div>
+              {/* Buttons */}
+              <div className="flex gap-2.5 pt-1">
+                <button
+                  onClick={() => { onClose(); navigate('/practice-reports') }}
+                  className="flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold bg-blue-500 text-white hover:bg-blue-600 shadow-sm shadow-blue-200 transition-all"
+                >
+                  查看练习报告
+                </button>
+                <button
+                  onClick={() => { onClose(); navigate('/vocabulary-insight') }}
+                  className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-all"
+                >
+                  继续查看词汇洞察
+                </button>
               </div>
             </div>
           </div>
-        )}
+        </div>
+      ) : (
+        /* ── Normal wizard (insight + draft before publish) ── */
+        <div className="fixed inset-0 z-[200] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl shadow-slate-900/10 w-[620px] max-h-[85vh] overflow-y-auto">
 
         {/* Header */}
         <div className="sticky top-0 bg-white/95 backdrop-blur-sm px-6 py-4 border-b border-slate-100 rounded-t-2xl flex items-center justify-between z-10">
@@ -390,7 +441,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
             {!generated && (
               <p className="text-xs text-slate-400 mt-0.5">
                 {isDraft
-                  ? `${STEP_LABELS.length} 步完成 · 已选 ${draftWordCount} 个词 · 周期${dayCount}天 · ${reviewDaysText}`
+                  ? `${STEP_LABELS.length} 步完成 · 已选 ${effectiveDraftWordCount} 个词 · 周期${dayCount}天 · ${reviewDaysText}`
                   : '基于当前词汇洞察结果生成复习计划'}
               </p>
             )}
@@ -545,7 +596,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
                   <div>
                     <p className="text-xs text-slate-400 mb-1">复习目标</p>
-                    <p className="text-sm font-semibold text-slate-700">草稿词复习（{draftWordCount} 个词）</p>
+                    <p className="text-sm font-semibold text-slate-700">草稿词复习（{effectiveDraftWordCount} 个词）</p>
                   </div>
                 </div>
               )}
@@ -680,7 +731,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   <p className="text-sm font-semibold text-slate-700">
                     {isDraft ? '设置每日题量' : '设置每日题量'}
                   </p>
-                  {isDraft && <span className="text-[11px] text-slate-400">{draftWordCount < 20 ? '草稿词不足20个，默认30题/日' : '草稿词≥20个，默认50题/日'}</span>}
+                  {isDraft && <span className="text-[11px] text-slate-400">{effectiveDraftWordCount < 20 ? '草稿词不足20个，默认30题/日' : '草稿词≥20个，默认50题/日'}</span>}
                   {!isDraft && <span className="text-[11px] text-slate-400">每个复习日生成的练习题数量</span>}
                 </div>
                 <div className="flex gap-2">
@@ -786,10 +837,10 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
               <div className="bg-blue-50 rounded-xl p-4 border border-blue-100 space-y-2">
                 {isDraft ? (
                   <>
-                    <p className="text-xs text-blue-700 font-semibold leading-relaxed">草稿篮 {draftWordCount} 个词 · {wordsPerDay} 题/复习日 · 周期 {dayCount} 天</p>
+                    <p className="text-xs text-blue-700 font-semibold leading-relaxed">草稿篮 {effectiveDraftWordCount} 个词 · {wordsPerDay} 题/复习日 · 周期 {dayCount} 天</p>
                     <p className="text-xs text-blue-500 leading-relaxed">复习日：<span className="font-semibold">{reviewDaysText}</span> · 共生成 <span className="font-semibold">{taskCount} 份任务</span></p>
                     <p className="text-xs text-blue-500 leading-relaxed">共 <span className="font-semibold">{dayCount} 天</span> · <span className="font-semibold">{wordsPerDay} 题/复习日</span></p>
-                    <p className="text-xs text-blue-500 leading-relaxed">词汇范围：<span className="font-semibold">复习草稿篮中的 {draftWordCount} 个词</span></p>
+                    <p className="text-xs text-blue-500 leading-relaxed">词汇范围：<span className="font-semibold">复习草稿篮中的 {effectiveDraftWordCount} 个词</span></p>
                     <p className="text-xs text-blue-500 leading-relaxed">掌握判定：<span className="font-semibold">连续答对 2 次即掌握</span></p>
                     <p className="text-[11px] text-blue-400 leading-relaxed mt-1">非复习日不安排新任务 · 发布后仅清空已使用的草稿词</p>
                   </>
@@ -829,7 +880,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 rounded-xl p-5 space-y-3">
                 <div className="flex items-center gap-2"><Sparkles size={16} className="text-blue-500" /><p className="text-sm font-semibold text-slate-800">草稿词复习方案</p></div>
                 <div className="space-y-1.5 text-[13px]">
-                  <div><span className="text-slate-400">复习词表：</span><span className="font-medium text-slate-700">已选 {draftWordCount} 个词</span></div>
+                  <div><span className="text-slate-400">复习词表：</span><span className="font-medium text-slate-700">已选 {effectiveDraftWordCount} 个词</span></div>
                   <div><span className="text-slate-400">计划周期：</span><span className="font-medium text-slate-700">{dayCount} 天</span></div>
                   <div><span className="text-slate-400">复习日：</span><span className="font-medium text-slate-700">{reviewDaysText}</span></div>
                   <div><span className="text-slate-400">共生成：</span><span className="font-medium text-slate-700">{taskCount} 份任务</span></div>
@@ -885,8 +936,8 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
             </div>
           )}
 
-          {/* ═══ Published success card ═══ */}
-          {published && (
+          {/* ═══ Published success card (insight mode only) ═══ */}
+          {published && !isDraft && (
             <div className="bg-gradient-to-br from-emerald-50 to-teal-50/50 border border-emerald-200 rounded-xl p-6 space-y-4 text-center">
               <div className="w-12 h-12 rounded-full bg-emerald-100 mx-auto flex items-center justify-center">
                 <Check size={24} className="text-emerald-500" />
@@ -896,9 +947,9 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 <p className="text-xs text-slate-400 mt-1">共生成 {taskCount} 份任务：{reviewDaysText}</p>
               </div>
               <div className="flex gap-2 justify-center">
-                <button onClick={() => { onClose(); navigate(`/assignments?highlight=${publishedPlanId}`) }}
+                <button onClick={() => { onClose(); navigate('/practice-reports') }}
                   className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-all">
-                  <ExternalLink size={12} /> 查看作业列表
+                  <ExternalLink size={12} /> 查看练习报告
                 </button>
                 <button onClick={() => { onClose(); navigate('/vocabulary-insight') }}
                   className="px-4 py-2 rounded-lg text-xs font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-all">
@@ -918,9 +969,9 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 <div className="flex items-center gap-2"><Sparkles size={16} className="text-blue-500" /><p className="text-sm font-semibold text-slate-800">方案说明</p></div>
                 <div className="space-y-1.5 text-[13px]">
                   <div><span className="text-slate-400">复习目标：</span><span className="font-medium text-slate-700">{isDraft ? '草稿词复习' : goalMeta.label}</span></div>
-                  <div><span className="text-slate-400">复习范围：</span><span className="font-medium text-slate-700">{isDraft ? `已选 ${draftWordCount} 个草稿词` : goal === 'quick_fix' ? (candidateShortage ? `当前页面筛选条件下的高频错词 · 可用 ${effectiveCandidateCount} 个词` : `当前页面筛选条件下的高频错词 · Top ${quickFixWordCount}`) : goal === 'current_unit' ? `Unit 3 — Food and Drinks · 课标词+非课标词+单元易错词` : goal === 'stage_exam' ? `${stageExamUnits.size} 个单元 · 阶段高频错词+多单元重点词` : goal === 'weak_student' ? `${weakStudentIds.size} 名学生个人薄弱词` : getVocabScopeSummary()}</span></div>
+                  <div><span className="text-slate-400">复习范围：</span><span className="font-medium text-slate-700">{isDraft ? `已选 ${effectiveDraftWordCount} 个草稿词` : goal === 'quick_fix' ? (candidateShortage ? `当前页面筛选条件下的高频错词 · 可用 ${effectiveCandidateCount} 个词` : `当前页面筛选条件下的高频错词 · Top ${quickFixWordCount}`) : goal === 'current_unit' ? `Unit 3 — Food and Drinks · 课标词+非课标词+单元易错词` : goal === 'stage_exam' ? `${stageExamUnits.size} 个单元 · 阶段高频错词+多单元重点词` : goal === 'weak_student' ? `${weakStudentIds.size} 名学生个人薄弱词` : getVocabScopeSummary()}</span></div>
                   <div><span className="text-slate-400">复习对象：</span><span className="font-medium text-slate-700">{isDraft ? '全班' : goal === 'weak_student' ? `已选 ${weakStudentIds.size} 名薄弱学生` : '全班'}</span></div>
-                  <div><span className="text-slate-400">复习词表：</span><span className="font-medium text-slate-700">{isDraft ? `${draftWordCount} 个草稿词` : goal === 'quick_fix' ? (effectiveCandidateCount >= quickFixWordCount ? `Top ${quickFixWordCount} 高频错词` : `当前可用高频错词 ${effectiveCandidateCount} 个`) : goal === 'current_unit' ? '约 44 个词' : goal === 'stage_exam' ? '约 120 个词' : goal === 'weak_student' ? '各学生薄弱词表' : '自定义范围'}</span></div>
+                  <div><span className="text-slate-400">复习词表：</span><span className="font-medium text-slate-700">{isDraft ? `${effectiveDraftWordCount} 个草稿词` : goal === 'quick_fix' ? (effectiveCandidateCount >= quickFixWordCount ? `Top ${quickFixWordCount} 高频错词` : `当前可用高频错词 ${effectiveCandidateCount} 个`) : goal === 'current_unit' ? '约 44 个词' : goal === 'stage_exam' ? '约 120 个词' : goal === 'weak_student' ? '各学生薄弱词表' : '自定义范围'}</span></div>
                   <div><span className="text-slate-400">计划周期：</span><span className="font-medium text-slate-700">{dayCount} 天</span></div>
                   <div><span className="text-slate-400">复习日：</span><span className="font-medium text-slate-700">{reviewDaysText}</span></div>
                   <div><span className="text-slate-400">共生成：</span><span className="font-medium text-slate-700">{taskCount} 份复习任务</span></div>
@@ -943,7 +994,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 </div>
                 <p className="text-xs text-blue-500 italic leading-relaxed pt-1 border-t border-blue-100">
                   💡 {isDraft
-                    ? `从草稿篮已选 ${draftWordCount} 个词生成 ${taskCount} 份连续复习任务。${sortedSelectedDays[0] ? `Day ${sortedSelectedDays[0]}` : '首个复习日'}只生成主复习题，后续复习日自动添加动态回滚题。`
+                    ? `从草稿篮已选 ${effectiveDraftWordCount} 个词生成 ${taskCount} 份连续复习任务。${sortedSelectedDays[0] ? `Day ${sortedSelectedDays[0]}` : '首个复习日'}只生成主复习题，后续复习日自动添加动态回滚题。`
                     : goal === 'weak_student'
                       ? `已为 ${weakStudentIds.size} 名薄弱学生生成个性化补练任务，每人围绕自身薄弱词独立生成复习计划。`
                       : `基于「${goalMeta.label}」目标生成 ${taskCount} 份复习任务。前期学生只会收到主复习题，后续自动根据作答情况添加动态回滚题。`}
@@ -1052,5 +1103,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
         </div>
       </div>
     </div>
+  )}
+    </>
   )
 }

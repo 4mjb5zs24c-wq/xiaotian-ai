@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ChevronRight, FileText, MoreVertical, Send, Search,
@@ -6,8 +6,29 @@ import {
 } from 'lucide-react'
 import { useAIStore } from '../ai/store'
 import { generateTeachingInsight } from '../ai/insights/teachingInsightGenerator'
+import ReviewPlanAssignmentCard from '../ai/components/vocabulary-insight/ReviewPlanAssignmentCard'
+import type { ReviewPlanAssignmentCollection, ReviewPlanDayTask } from '../ai/insights/reviewPlanAssignmentTypes'
 
 // ── Types ──────────────────────────────────────────────
+
+type FilterTab = 'all' | 'review_plan' | 'homework' | 'exam' | 'listening' | 'writing'
+
+const FILTER_TABS: { key: FilterTab; label: string }[] = [
+  { key: 'all', label: '全部' },
+  { key: 'review_plan', label: '词汇复习计划' },
+  { key: 'homework', label: '普通练习' },
+  { key: 'exam', label: '试卷' },
+  { key: 'listening', label: '听力' },
+  { key: 'writing', label: '写作' },
+]
+
+function loadStoredPlans(): ReviewPlanAssignmentCollection[] {
+  try {
+    const raw = localStorage.getItem('xiaotian_review_plans')
+    if (raw) return JSON.parse(raw) as ReviewPlanAssignmentCollection[]
+  } catch { /* ignore */ }
+  return []
+}
 
 interface ReportItem {
   reportId: string
@@ -203,6 +224,9 @@ export default function PracticeReportPage() {
   const setPanel = useAIStore((s) => s.setAIDrawerPanel)
 
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc')
+  const [activeFilter, setActiveFilter] = useState<FilterTab>('all')
+  const storedPlans = useMemo(() => loadStoredPlans(), [])
+
   const [activeFilters] = useState({
     classFilter: '初一1班',
     statusFilter: '全部状态',
@@ -286,11 +310,47 @@ export default function PracticeReportPage() {
           </button>
         </div>
 
+        {/* Filter Tabs */}
+        <div className="shrink-0 px-5 pb-2 flex items-center gap-1.5 flex-wrap">
+          <Filter size={12} className="text-[#8aabcc] shrink-0" />
+          {FILTER_TABS.map(tab => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveFilter(tab.key)}
+              className={`text-[11px] px-2.5 py-1 rounded-lg font-medium transition-all
+                ${activeFilter === tab.key
+                  ? 'bg-blue-500 text-white shadow-sm'
+                  : 'text-[#4a6b8a] bg-[#f4f7fa] border border-[#e4ecf3] hover:border-[#b8d4f0] hover:text-[#4b9fe8]'}`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
         {/* Divider */}
         <div className="shrink-0 border-t border-[#f0f4f8]" />
 
         {/* Timeline List — scrollable */}
         <div className="flex-1 overflow-y-auto min-h-0 px-5 pt-3">
+          {/* ── Review Plan Collections ── */}
+          {(activeFilter === 'all' || activeFilter === 'review_plan') && storedPlans.length > 0 && (
+            <div className="mb-4 space-y-3">
+              {storedPlans.map(plan => (
+                <ReviewPlanAssignmentCard
+                  key={plan.id}
+                  collection={plan}
+                  defaultExpanded={false}
+                  onViewReport={(dayTask: ReviewPlanDayTask) => {
+                    if (dayTask.reportUrl) navigate(dayTask.reportUrl)
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* ── Regular Reports (placeholder filters) ── */}
+          {(activeFilter === 'all' || activeFilter === 'homework' || activeFilter === 'exam' || activeFilter === 'listening' || activeFilter === 'writing') && (
+            <>
           {sortedGroups.map((group, gi) => (
             <div key={group.date} className="flex gap-3">
               {gi === sortedGroups.length - 1 ? <TimelineLastMarker /> : <TimelineMarker isFirst={gi === 0} />}
@@ -308,6 +368,8 @@ export default function PracticeReportPage() {
               </div>
             </div>
           ))}
+            </>
+          )}
         </div>
 
         {/* Bottom Filter Bar */}

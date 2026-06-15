@@ -371,7 +371,7 @@ export default function VocabularyInsightPage() {
               if (planEntrySource === 'draftBasket' && draftSelectedWordIds.length > 0) {
                 removeVocabDrafts(draftSelectedWordIds)
                 setDraftSelectedWordIds([])
-                showToast('复习方案已发布，已使用的草稿词已清空')
+                // Success is shown in a dedicated modal — no toast needed
               }
             }}
           />
