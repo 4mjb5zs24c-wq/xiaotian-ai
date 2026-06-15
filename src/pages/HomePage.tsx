@@ -12,25 +12,7 @@ import { matchIntent } from '../ai/workflows'
 import { runWorkflowRunner } from '../ai/engine'
 import type { RunnerResult, RunnerStatus } from '../ai/engine'
 import WorkflowResultDrawer from '../ai/components/WorkflowResultDrawer'
-import { generateHomeInsights } from '../ai/insights/insightRules'
-import type { InsightItem } from '../ai/insights/insightTypes'
 import { generateTeachingInsight } from '../ai/insights/teachingInsightGenerator'
-import type { TeachingInsightType } from '../ai/insights/teachingInsightTypes'
-import { MOCK_VOCAB_CONCERN_CARDS } from '../ai/insights/mockVocabularyInsight'
-import { MOCK_WRITING_CONCERN_CARDS } from '../ai/insights/mockWritingInsight'
-
-// Map insight module to TeachingInsight type + panel
-function getInsightMapping(insight: InsightItem): { panel: string; insightType: TeachingInsightType; isPage?: boolean } {
-  switch (insight.module) {
-    case 'home_wrong_word': return { panel: 'vocabStageInsight', insightType: 'vocabulary' }
-    case 'home_listening_speaking': return { panel: 'listeningStageInsight', insightType: 'listeningSpeaking' }
-    case 'home_writing': return { panel: 'writingStageInsight', insightType: 'writing' }
-    case 'exam_reminder': return { panel: 'practiceStageInsight', insightType: 'practiceStage' }
-    case 'vocabulary_insight': return { panel: '', insightType: 'vocabulary', isPage: true }
-    case 'writing_insight': return { panel: '', insightType: 'writing', isPage: true }
-    default: return { panel: 'vocabStageInsight', insightType: 'vocabulary' }
-  }
-}
 
 // ── Types ──────────────────────────────────────────────
 
@@ -98,71 +80,6 @@ const resourceModules: ResourceModule[] = [
   { label: '阅读理解', desc: '完形+阅读训练', color: '#5bb878' },
   { label: '写作素材', desc: '高分句型积累', color: '#e8a83a' },
 ]
-
-const homeInsights = generateHomeInsights({ disabledModules: ['home_wrong_word', 'home_writing', 'home_listening_speaking', 'exam_reminder'], enableExamReminder: false })
-
-// Add vocabulary insight cards to home insights
-const vocabConcernCards: InsightItem[] = MOCK_VOCAB_CONCERN_CARDS.filter(c => c.type === 'vocabulary_insight').map(c => ({
-  insightId: c.id,
-  module: 'vocabulary_insight' as InsightItem['module'],
-  title: c.summary,
-  riskLevel: c.status === '需关注' ? 'high' as const : 'medium' as const,
-  priority: c.status === '需关注' ? 1 : 2,
-  tags: ['词汇洞察'],
-  detail: '',
-  summary: c.summary,
-  suggestion: '',
-  actionLabel: '查看详情',
-  evidence: { summary: c.summary, details: [] },
-  analysis: '',
-  actions: [],
-  sourceData: {},
-  sampleInfo: { totalStudents: 42, sampleCount: 42, sampleRatio: 1, isSampleTooSmall: false },
-  createdAt: String(Date.now()),
-  status: 'active' as const,
-  scope: { type: 'class' as const, className: '初一 1 班' },
-}))
-
-// Add writing insight cards to home insights
-const writingConcernCards: InsightItem[] = MOCK_WRITING_CONCERN_CARDS.filter(c => c.type === 'writing_insight').map(c => ({
-  insightId: c.id,
-  module: 'writing_insight' as InsightItem['module'],
-  title: c.summary,
-  riskLevel: c.status === '需关注' ? 'high' as const : 'medium' as const,
-  priority: c.status === '需关注' ? 1 : 2,
-  tags: ['写作洞察'],
-  detail: '',
-  summary: c.summary,
-  suggestion: '',
-  actionLabel: '查看详情',
-  evidence: { summary: c.summary, details: [] },
-  analysis: '',
-  actions: [],
-  sourceData: {},
-  sampleInfo: { totalStudents: 42, sampleCount: 42, sampleRatio: 1, isSampleTooSmall: false },
-  createdAt: String(Date.now()),
-  status: 'active' as const,
-  scope: { type: 'class' as const, className: '初一 1 班' },
-}))
-
-// 阶段性报告洞察卡片
-const stageReportInsight: InsightItem = {
-  insightId: 'stage_report_home',
-  module: 'exam_reminder' as InsightItem['module'],
-  title: '阶段性报告分析',
-  riskLevel: 'medium' as const,
-  priority: 3,
-  scope: { className: '初一 1 班' },
-  evidence: { summary: '阶段报告诊断', details: [] },
-  analysis: '',
-  suggestion: '',
-  actions: [],
-  sourceData: {},
-  sampleInfo: { totalStudents: 42, sampleCount: 42, sampleRatio: 1, isSampleTooSmall: false },
-  createdAt: String(Date.now()),
-  status: 'active' as const,
-} as InsightItem
-const allHomeInsights = [...vocabConcernCards.slice(0, 1), ...writingConcernCards.slice(0, 1), stageReportInsight, ...homeInsights] // 词汇 → 写作 → 阶段性报告
 
 const recentReports: ReportItem[] = [
   { title: '个性化词汇练习', className: '初一1班', groupName: '全班', done: 2, total: 43, date: '2026-05-25', canRemind: true, hasReport: true },
@@ -421,57 +338,48 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* 教学洞察 — compact 3-column grid */}
+              {/* 词汇洞察 — single prominent card */}
               <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden shrink-0">
                 <div className="px-4 py-2 border-b border-[#f0f4f8] flex items-center justify-between">
-                  <h3 className="text-[12px] font-semibold text-[#3a4f66]">教学洞察</h3>
-                  <span className="text-[10px] text-[#8aabcc]">{allHomeInsights.length} 条</span>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-[12px] font-semibold text-[#3a4f66]">词汇洞察</h3>
+                    <span className="text-[10px] text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full font-medium">需关注</span>
+                  </div>
+                  <span className="text-[10px] text-[#8aabcc]">近7天</span>
                 </div>
-                <div className="p-2 grid grid-cols-3 gap-2">
-                  {allHomeInsights.map((insight) => {
-                    const isHigh = insight.riskLevel === 'high'
-                    const isMedium = insight.riskLevel === 'medium'
-                    const badgeLabel = isHigh ? '需关注' : isMedium ? '建议关注' : '一般关注'
-                    const leftBorder = isHigh
-                      ? 'border-l-[3px] border-l-red-400'
-                      : isMedium
-                        ? 'border-l-[3px] border-l-amber-400'
-                        : 'border-l-[3px] border-l-blue-300'
-                    const badgeStyle = isHigh
-                      ? 'text-red-600 bg-red-50'
-                      : isMedium
-                        ? 'text-amber-600 bg-amber-50'
-                        : 'text-blue-500 bg-blue-50'
-                    return (
-                      <button
-                        key={insight.insightId}
-                        onClick={() => {
-                          // 阶段性报告 → 打开 AI 抽屉 practiceStage 面板
-                          if (insight.insightId === 'stage_report_home') {
-                            const stageInsight = generateTeachingInsight('practiceStage')
-                            useAIStore.getState().setAIDrawerPanel('practiceStageInsight', { insight: stageInsight } as Record<string, unknown>)
-                            return
-                          }
-                          const mapping = getInsightMapping(insight)
-                          if (mapping.isPage) {
-                            if (insight.module === 'writing_insight') navigate('/writing-insight')
-                            else navigate('/vocabulary-insight')
-                            return
-                          }
-                          const teachingInsight = generateTeachingInsight(mapping.insightType)
-                          useAIStore.getState().setAIDrawerPanel(mapping.panel, { insight: teachingInsight } as Record<string, unknown>)
-                        }}
-                        className={`text-left p-2.5 rounded-lg border border-[#e8eef4] transition-all group bg-white hover:border-[#b8d4f0] hover:shadow-sm ${leftBorder}`}
-                      >
-                        <span className={`text-[9px] font-medium px-1.5 py-0.5 rounded ${badgeStyle}`}>
-                          {badgeLabel}
-                        </span>
-                        <p className="text-[11px] font-semibold text-[#3a4f66] mt-1.5 line-clamp-2 leading-tight">
-                          {insight.title}
-                        </p>
-                      </button>
-                    )
-                  })}
+                <div className="p-4">
+                  <div className="flex items-start gap-3">
+                    {/* Left accent bar */}
+                    <div className="w-1 self-stretch rounded-full bg-amber-400 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      {/* Conclusion */}
+                      <p className="text-[13px] font-semibold text-[#3a4f66] leading-snug">
+                        2023级A18班不会写类错误较集中
+                      </p>
+                      {/* Data evidence */}
+                      <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
+                        近7天产生 2,117 条词汇错误记录，识别出 <span className="font-semibold text-slate-700">50 个高频错词</span>、<span className="font-semibold text-slate-700">27 名薄弱学生</span>，主要问题为<span className="text-amber-600 font-medium">不会写</span>
+                      </p>
+                      {/* Action buttons */}
+                      <div className="flex items-center gap-2 mt-3">
+                        <button
+                          onClick={() => navigate('/vocabulary-insight')}
+                          className="text-[11px] text-[#4b9fe8] border border-[#b8d4f0] hover:bg-[#eaf2fb] px-3 py-1.5 rounded-lg font-medium transition-colors"
+                        >
+                          查看洞察
+                        </button>
+                        <button
+                          onClick={() => {
+                            const insight = generateTeachingInsight('vocabulary')
+                            useAIStore.getState().setAIDrawerPanel('vocabStageInsight', { insight, openReviewWizard: true } as Record<string, unknown>)
+                          }}
+                          className="text-[11px] text-white bg-[#4b9fe8] hover:bg-[#3a8fd8] px-3 py-1.5 rounded-lg font-medium transition-colors shadow-sm"
+                        >
+                          生成复习方案
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
