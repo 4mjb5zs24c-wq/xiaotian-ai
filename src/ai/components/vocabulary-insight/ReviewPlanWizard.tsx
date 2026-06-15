@@ -26,7 +26,7 @@ const ERROR_WORD_RANGE_OPTIONS: { value: ErrorWordRange; label: string; desc: st
 ]
 
 const INSIGHT_STEPS = ['选择目标', '确认词表', '复习设置', '预览发布']
-const DRAFT_STEPS = ['设置周期', '设置词量', '预览发布']
+const DRAFT_STEPS = ['设置周期', '设置题量', '预览发布']
 
 /** Get default review days based on selected period */
 function getDefaultReviewDays(dayCount: number): number[] {
@@ -195,7 +195,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
 
   const handleGenerate = () => {
     setGenerated(true)
-    setStep(4)
+    setStep(isDraft ? 3 : 4)
   }
 
   // ── Draft-only handlers ────────────────────────────────
@@ -308,7 +308,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
 
         <div className="p-6 space-y-5">
           {/* ── Step Indicator ── */}
-          {!generated && (
+          {(!generated || isDraft) && (
             <div className="flex items-center gap-0">
               {STEP_LABELS.map((label, idx) => {
                 const stepNum = idx + 1
@@ -515,7 +515,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
           {/* ══════════════════════════════════════════════════════════
               STEP 3: Period + Words Per Day + Rollback + Mastery
               ══════════════════════════════════════════════════════════ */}
-          {step === 3 && (
+          {step === 3 && !generated && (
             <div className="space-y-5">
               <div className="flex items-center gap-2">
                 <Calendar size={16} className="text-blue-500" />
@@ -631,8 +631,8 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   </div>
                 )}
 
-                {/* Rolling review toggle — custom or draft only */}
-                {(!isDraft && goal === 'custom') || isDraft ? (
+                {/* Rolling review toggle — custom insight only */}
+                {!isDraft && goal === 'custom' ? (
                   <div className="flex items-start gap-3 bg-slate-50 rounded-xl px-4 py-3">
                     <button onClick={() => setRollingReview(!rollingReview)}
                       className={`mt-0.5 w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${rollingReview ? 'bg-blue-500 border-blue-500' : 'border-slate-300'}`}>
@@ -684,7 +684,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                     <p className="text-xs text-blue-500 leading-relaxed">复习日：<span className="font-semibold">{reviewDaysText}</span> · 共生成 <span className="font-semibold">{taskCount} 份任务</span></p>
                     <p className="text-xs text-blue-500 leading-relaxed">共 <span className="font-semibold">{dayCount} 天</span> · <span className="font-semibold">{wordsPerDay} 题/复习日</span></p>
                     <p className="text-xs text-blue-500 leading-relaxed">词汇范围：<span className="font-semibold">复习草稿篮中的 {draftWordCount} 个词</span></p>
-                    <p className="text-xs text-blue-500 leading-relaxed">掌握判定：<span className="font-semibold">连续答对 2 次即掌握</span>{rollingReview && <> · <span className="font-semibold">错词滚动复现</span></>}</p>
+                    <p className="text-xs text-blue-500 leading-relaxed">掌握判定：<span className="font-semibold">连续答对 2 次即掌握</span></p>
                     <p className="text-[11px] text-blue-400 leading-relaxed mt-1">非复习日不安排新任务 · 发布后仅清空已使用的草稿词</p>
                   </>
                 ) : (
@@ -717,10 +717,57 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
             </div>
           )}
 
+          {/* ═══ DRAFT STEP 3 preview when generated ═══ */}
+          {step === 3 && generated && isDraft && (
+            <div className="space-y-5">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 rounded-xl p-5 space-y-3">
+                <div className="flex items-center gap-2"><Sparkles size={16} className="text-blue-500" /><p className="text-sm font-semibold text-slate-800">草稿词复习方案</p></div>
+                <div className="space-y-1.5 text-[13px]">
+                  <div><span className="text-slate-400">复习词表：</span><span className="font-medium text-slate-700">已选 {draftWordCount} 个词</span></div>
+                  <div><span className="text-slate-400">计划周期：</span><span className="font-medium text-slate-700">{dayCount} 天</span></div>
+                  <div><span className="text-slate-400">复习日：</span><span className="font-medium text-slate-700">{reviewDaysText}</span></div>
+                  <div><span className="text-slate-400">共生成：</span><span className="font-medium text-slate-700">{taskCount} 份任务</span></div>
+                  <div><span className="text-slate-400">每日题量：</span><span className="font-medium text-slate-700">{wordsPerDay} 题</span></div>
+                  <div><span className="text-slate-400">动态回滚：</span><span className="font-medium text-emerald-600">已开启</span></div>
+                  <div><span className="text-slate-400">掌握判定：</span><span className="font-medium text-slate-700">连续答对 2 次算掌握</span></div>
+                </div>
+              </div>
+              <div className="space-y-2.5">
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">连续复习计划 · {dayCount} 天 · {taskCount} 份任务</p>
+                {sortedSelectedDays.map((day, idx) => {
+                  const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
+                  const isFirst = idx === 0
+                  const isLast = idx === sortedSelectedDays.length - 1
+                  const prevDay = idx > 0 ? sortedSelectedDays[idx - 1] : null
+                  const taskLabel = isFirst ? '复习任务' : isLast ? '复习收口任务' : '巩固回滚任务'
+                  return (
+                    <div key={day} className="border border-slate-200 rounded-xl px-4 py-3 bg-white">
+                      <p className="text-[13px] font-semibold text-slate-700">Day {day} {taskLabel}</p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">
+                        {mainQ} 道主复习题{rollbackQ > 0 ? ` + ${rollbackQ} 道动态回滚题` : ' · 无回滚题'}
+                        {rollbackQ > 0 && prevDay && ` · 回滚题将在 Day ${prevDay} 截止后生成`}
+                      </p>
+                    </div>
+                  )
+                })}
+              </div>
+              <div className="flex gap-3 pt-3 border-t border-slate-100">
+                <button onClick={() => { setStep(2); setGenerated(false) }}
+                  className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 border border-slate-200 hover:bg-slate-50 transition-colors">
+                  上一步
+                </button>
+                <button onClick={() => { if (onPublish) onPublish(); else { alert('已成功发布词汇复习方案！'); onClose() } }}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm shadow-blue-200 transition-all duration-200">
+                  <Send size={14} /> 确认发布
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* ══════════════════════════════════════════════════════════
-              STEP 4: Generated Result (shared between modes)
+              STEP 4: Generated Result (insight mode only)
               ══════════════════════════════════════════════════════════ */}
-          {step === 4 && generated && (
+          {step === 4 && generated && !isDraft && (
             <div className="space-y-5">
               {/* Plan Summary */}
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 rounded-xl p-5 space-y-3">
