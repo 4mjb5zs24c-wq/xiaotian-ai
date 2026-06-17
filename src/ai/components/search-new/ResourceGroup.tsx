@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChevronDown, ChevronRight, Star, Sparkles } from 'lucide-react'
+import { ChevronDown, ChevronRight } from 'lucide-react'
 import type { ResourceGroup as ResourceGroupType } from '../../search-new/types'
 
 interface ResourceGroupProps {
@@ -36,11 +36,6 @@ const ResourceGroup: React.FC<ResourceGroupProps> = ({
             <ChevronDown size={15} className="text-slate-400" />
           ) : (
             <ChevronRight size={15} className="text-slate-400" />
-          )}
-          {group.isPrimaryMatch ? (
-            <Star size={15} className="text-blue-500" />
-          ) : (
-            <Sparkles size={15} className="text-amber-400" />
           )}
           <span className="text-sm font-semibold text-slate-800">{group.groupName}</span>
           {group.altLabel && (

@@ -5,8 +5,27 @@ import {
   FileText, Headphones, Layers, ChevronRight, ChevronDown,
 } from 'lucide-react'
 import { useAIStore } from '../ai/store'
-import { matchNewSearch, mockOpenPreview, mockOpenAssignDialog, mockAddToLessonPrep, mockOpenFunction } from '../ai/search-new/searchEngine'
-import { SearchResultView, PaperBasketBadge } from '../ai/components/search-new'
+import {
+  matchNewSearch,
+  mockOpenPreview,
+  mockOpenAssignDialog,
+  mockAddToLessonPrep,
+  mockOpenFunction,
+} from '../ai/search-new/searchEngine'
+import {
+  detectPrecisionJump,
+  enhanceSearchResult,
+  generateLoadingSteps,
+  isSemanticallyMeaningful,
+  getSearchSuggestions,
+  getCommonFunctions,
+  buildUnrecognizedMessage,
+} from '../ai/search-new/searchEnhancer'
+import {
+  SearchResultView,
+  PaperBasketBadge,
+} from '../ai/components/search-new'
+import AISearchLoading from '../ai/components/search-new/AISearchLoading'
 import type {
   NewSearchResult,
   ResourceItem,
@@ -15,6 +34,11 @@ import type {
   QuickEntry,
   PaperBasketItem,
   SearchContext,
+  EnhancedSearchResult,
+  PrecisionJumpData,
+  LoadingStep,
+  SearchSuggestion,
+  CommonFunction,
 } from '../ai/search-new/types'
 
 // ── Mock data ──
@@ -39,15 +63,32 @@ export default function SearchPage() {
   const setPendingAssignments = useAIStore((s) => s.setPendingAssignments)
 
   const [query, setQuery] = useState('')
+
+  // ── V1.1 Search States ────────────────────────────────
   const [searching, setSearching] = useState(false)
+  const [loadingSteps, setLoadingSteps] = useState<LoadingStep[]>([])
+  const [showLoading, setShowLoading] = useState(false)
+
+  // Result states
   const [result, setResult] = useState<NewSearchResult | null>(null)
+  const [enhancedResult, setEnhancedResult] = useState<EnhancedSearchResult | null>(null)
+  const [precisionJump, setPrecisionJump] = useState<PrecisionJumpData | null>(null)
+
+  // Unrecognized fallback
+  const [unrecognizedQuery, setUnrecognizedQuery] = useState<string | null>(null)
+  const [unrecognizedMessage, setUnrecognizedMessage] = useState<string>('')
+  const [fallbackSuggestions, setFallbackSuggestions] = useState<SearchSuggestion[]>([])
+  const [fallbackFunctions, setFallbackFunctions] = useState<CommonFunction[]>([])
+
   const [toast, setToast] = useState<string | null>(null)
   const [showQuickEntries, setShowQuickEntries] = useState(false)
 
   const autoRunRef = useRef<string | null>(null)
+  const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // ── Mode ──
-  const isHome = !result && !searching
+  const hasAnyResult = result || precisionJump || unrecognizedQuery
+  const isHome = !hasAnyResult && !searching
 
   const showToast = (msg: string) => {
     setToast(msg)
@@ -81,14 +122,45 @@ export default function SearchPage() {
     return /^[a-zA-Z]+$/.test(q.trim()) && q.trim().length >= 2
   }
 
+  // ═══════════════════════════════════════════════════════════
+  // V1.1 Search Flow
+  // ═══════════════════════════════════════════════════════════
+
   const doSearch = useCallback((q: string) => {
     const sq = q.trim()
     if (!sq) return
-    setSearching(true)
-    setShowQuickEntries(false)
 
-    setTimeout(() => {
+    // Clear previous state
+    setShowQuickEntries(false)
+    setResult(null)
+    setEnhancedResult(null)
+    setPrecisionJump(null)
+    setUnrecognizedQuery(null)
+
+    // ── Step 1: Check for precision jump intents ──────
+    const jump = detectPrecisionJump(sq)
+    if (jump) {
+      // Precision jump — don't run search engine
+      setPrecisionJump(jump)
+      setSearching(false)
+      setShowLoading(false)
+      return
+    }
+
+    // ── Step 2: Generate loading steps ────────────────
+    const steps = generateLoadingSteps(sq)
+    setLoadingSteps(steps)
+    setSearching(true)
+    setShowLoading(true)
+
+    // ── Step 3: Run v1.0 search + v1.1 enhance ───────
+    // Calculate total loading time to align with search
+    const totalLoadingMs = steps.reduce((sum, s) => sum + s.duration, 0) + 200 // +200ms hold
+
+    searchTimerRef.current = setTimeout(() => {
       const res = matchNewSearch(sq, ctx)
+
+      // Single English word → inject 讲词 function entry
       if (isSingleEnglishWord(sq)) {
         const wordTeachEntry: FunctionEntry = {
           id: 'func-word-teach',
@@ -101,11 +173,37 @@ export default function SearchPage() {
         }
         res.functionEntries = [wordTeachEntry, ...res.functionEntries]
       }
+
       setResult(res)
       setNewSearchResult(res)
+
+      // ── Step 4: Check for unrecognized ──────────
+      // v1.0 may route noise (e.g. "哈哈哈哈") to comprehensive resources.
+      // v1.1 overrides: if the query is not semantically meaningful, force unrecognized.
+      const semanticMatch = isSemanticallyMeaningful(sq)
+
+      if (res.isUnrecognizable || !semanticMatch) {
+        setUnrecognizedQuery(sq)
+        setUnrecognizedMessage(buildUnrecognizedMessage(sq))
+        setFallbackSuggestions(getSearchSuggestions())
+        setFallbackFunctions(getCommonFunctions())
+        setEnhancedResult(null)
+      } else {
+        // ── Step 5: Enhance normal results ──────────
+        const enhanced = enhanceSearchResult(sq, res)
+        setEnhancedResult(enhanced)
+      }
+
       setSearching(false)
-    }, 400)
+    }, totalLoadingMs)
   }, [teacherContext])
+
+  // ── Cleanup timer on unmount ────────────────────────
+  useEffect(() => {
+    return () => {
+      if (searchTimerRef.current) clearTimeout(searchTimerRef.current)
+    }
+  }, [])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') doSearch(query)
@@ -116,11 +214,25 @@ export default function SearchPage() {
     doSearch(term)
   }
 
+  const handleSuggestionClick = (term: string) => {
+    setQuery(term)
+    doSearch(term)
+  }
+
   const handleClear = () => {
     setQuery('')
     setResult(null)
+    setEnhancedResult(null)
+    setPrecisionJump(null)
+    setUnrecognizedQuery(null)
     setSearching(false)
+    setShowLoading(false)
     setShowQuickEntries(false)
+    if (searchTimerRef.current) clearTimeout(searchTimerRef.current)
+  }
+
+  const handleNavigate = (route: string) => {
+    navigate(route)
   }
 
   const handlePreview = (item: ResourceItem) => {
@@ -164,10 +276,14 @@ export default function SearchPage() {
     doSearch(entry.searchQuery)
   }
 
-  // Count results for the hint bar
+  // Count results for the hint bar (v1.0 compat)
   const resultCount = result
     ? result.resourceGroups.reduce((sum, g) => sum + g.items.length, 0) + result.functionEntries.length
     : 0
+
+  // ── Determine if slim search bar should be shown ──
+  // Always show search bar in any non-home state (results, precision jump, unrecognized, etc.)
+  const showSlimSearchBar = !isHome
 
   return (
     <div className="flex justify-center px-6 h-full">
@@ -247,15 +363,13 @@ export default function SearchPage() {
           </div>
         )}
 
-        {/* ── Results mode: slim search bar ── */}
-        {!isHome && (
+        {/* ── Slim search bar (all non-home modes) ── */}
+        {showSlimSearchBar && (
           <div className="bg-white rounded-2xl border border-slate-200/50 shadow-[0_1px_3px_rgba(0,0,0,0.04)] px-4 py-2.5 mb-3">
             <div className="flex items-center gap-2.5">
-              {/* Icon only */}
               <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-sm shadow-blue-200/50 shrink-0">
                 <Sparkles size={13} className="text-white" />
               </div>
-              {/* Search input — slim */}
               <div className="relative flex-1">
                 <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
@@ -286,7 +400,6 @@ export default function SearchPage() {
               >
                 搜索
               </button>
-              {/* Quick entries toggle — slim text button */}
               <button
                 onClick={() => setShowQuickEntries(!showQuickEntries)}
                 className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-blue-500 font-medium shrink-0 transition-colors"
@@ -295,7 +408,6 @@ export default function SearchPage() {
                 展开常用功能
               </button>
             </div>
-            {/* Collapsible quick entries in results mode */}
             {showQuickEntries && (
               <div className="grid grid-cols-4 gap-2 mt-2.5 pt-2.5 border-t border-slate-100">
                 {QUICK_ENTRIES.map((entry) => {
@@ -318,32 +430,68 @@ export default function SearchPage() {
         )}
 
         {/* ═══════════════════════════════════════════════════════════
-            ── 3. Searching indicator ──
+            ── 3. V1.1 AI Search Loading ──
             ═══════════════════════════════════════════════════════════ */}
-        {searching && (
-          <div className="flex items-center justify-center py-12">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                <Sparkles size={15} className="text-blue-500 animate-pulse" />
-              </div>
-              <span className="text-sm text-slate-400">小天正在理解你的意图...</span>
-            </div>
-          </div>
+        {showLoading && searching && (
+          <AISearchLoading
+            steps={loadingSteps}
+            onComplete={() => setShowLoading(false)}
+          />
         )}
 
         {/* ═══════════════════════════════════════════════════════════
-            ── 4. Results hint + list ──
+            ── 4. Search Results (V1.0 compat + V1.1 enhanced) ──
             ═══════════════════════════════════════════════════════════ */}
-        {result && !searching && (
+
+        {/* ── Precision Jump Result ── */}
+        {precisionJump && !searching && (
+          <SearchResultView
+            precisionJump={precisionJump}
+            paperBasket={paperBasket}
+            onPreview={handlePreview}
+            onAssign={handleAssign}
+            onAddToPaperBasket={handleAddToPaperBasket}
+            onAddToLessonPrep={handleAddToLessonPrep}
+            onOpenFunction={handleOpenFunction}
+            onGenerateAssignments={handleGenerateAssignments}
+            onQuickEntry={handleQuickEntry}
+            onNavigate={handleNavigate}
+          />
+        )}
+
+        {/* ── Unrecognized Fallback Result ── */}
+        {unrecognizedQuery && !searching && (
+          <SearchResultView
+            unrecognizedQuery={unrecognizedQuery}
+            unrecognizedMessage={unrecognizedMessage}
+            suggestions={fallbackSuggestions}
+            commonFunctions={fallbackFunctions}
+            paperBasket={paperBasket}
+            onPreview={handlePreview}
+            onAssign={handleAssign}
+            onAddToPaperBasket={handleAddToPaperBasket}
+            onAddToLessonPrep={handleAddToLessonPrep}
+            onOpenFunction={handleOpenFunction}
+            onGenerateAssignments={handleGenerateAssignments}
+            onQuickEntry={handleQuickEntry}
+            onSuggestionClick={handleSuggestionClick}
+          />
+        )}
+
+        {/* ── Normal Search Result (v1.1 enhanced or v1.0 compat) ── */}
+        {result && !searching && !precisionJump && !unrecognizedQuery && (
           <>
-            {/* Result hint */}
-            <div className="flex items-center gap-2 mb-3 text-[11px] text-slate-400">
-              <span>找到 <strong className="text-slate-600">{resultCount}</strong> 个结果</span>
-              <span className="text-slate-300">·</span>
-              <span>搜索词：<strong className="text-slate-600">{query}</strong></span>
-            </div>
+            {/* Result hint bar (v1.0 compat — v1.1 uses AIUnderstandingText instead) */}
+            {!enhancedResult && (
+              <div className="flex items-center gap-2 mb-3 text-[11px] text-slate-400">
+                <span>找到 <strong className="text-slate-600">{resultCount}</strong> 个结果</span>
+                <span className="text-slate-300">·</span>
+                <span>搜索词：<strong className="text-slate-600">{query}</strong></span>
+              </div>
+            )}
             <SearchResultView
               result={result}
+              enhancedResult={enhancedResult || undefined}
               paperBasket={paperBasket}
               onPreview={handlePreview}
               onAssign={handleAssign}
@@ -352,6 +500,8 @@ export default function SearchPage() {
               onOpenFunction={handleOpenFunction}
               onGenerateAssignments={handleGenerateAssignments}
               onQuickEntry={handleQuickEntry}
+              onSuggestionClick={handleSuggestionClick}
+              onNavigate={handleNavigate}
             />
           </>
         )}

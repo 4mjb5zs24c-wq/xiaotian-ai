@@ -372,6 +372,57 @@ export interface SearchContext {
   studentCount: number
 }
 
+// ── V1.1 Enhanced Types ──────────────────────────────────
+
+/** Precision jump intent types */
+export type PrecisionJumpIntent = 'report' | 'wrong_question' | 'lesson_prep' | 'vocab_insight'
+
+/** Precision jump card data — shown when query matches an intent that search doesn't directly handle */
+export interface PrecisionJumpData {
+  intent: PrecisionJumpIntent
+  title: string
+  description: string
+  buttonText: string
+  /** Route to navigate to. null if route is not yet confirmed (TODO). */
+  route: string | null
+  routeConfirmed: boolean
+}
+
+/** Search suggestion chip shown in unrecognized fallback */
+export interface SearchSuggestion {
+  text: string
+  query: string
+}
+
+/** Common function entry shown in unrecognized fallback */
+export interface CommonFunction {
+  key: string
+  label: string
+  query: string
+}
+
+/** V1.1 enhanced search result — wraps v1.0 NewSearchResult with additional metadata */
+export interface EnhancedSearchResult {
+  /** Original v1.0 result (preserved for compatibility) */
+  original: NewSearchResult
+  /** AI understanding text shown at top of results */
+  aiUnderstandingText: string
+  /** Smart match recommendation groups (was: primary/precise match groups) */
+  smartMatchGroups: ResourceGroup[]
+  /** Smart related recommendation groups (was: recommendation/alternative groups) */
+  smartRelatedGroups: ResourceGroup[]
+  /** Whether this is a precision jump (intercepted before search) */
+  isPrecisionJump: boolean
+  /** Precision jump data (only when isPrecisionJump is true) */
+  precisionJump?: PrecisionJumpData
+}
+
+/** Search loading step */
+export interface LoadingStep {
+  text: string
+  duration: number
+}
+
 // ── Mock Action Results ─────────────────────────────────
 
 export interface MockActionResult {

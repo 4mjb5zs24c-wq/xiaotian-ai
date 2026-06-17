@@ -12,3 +12,8 @@ export { default as NoResultsView } from './NoResultsView'
 export { default as AssignmentConfirmPanel } from './AssignmentConfirmPanel'
 export { default as SuccessFeedbackCard } from './SuccessFeedbackCard'
 export { default as PaperBasketBadge } from './PaperBasketBadge'
+// V1.1 new components
+export { default as AISearchLoading } from './AISearchLoading'
+export { default as AIUnderstandingText } from './AIUnderstandingText'
+export { default as PrecisionJumpCard } from './PrecisionJumpCard'
+export { default as UnrecognizedFallback } from './UnrecognizedFallback'
