@@ -33,6 +33,17 @@ import {
   identifyQueryIntent,
 } from './intentRegistry'
 
+export {
+  matchV1_1Intent,
+  buildAnswerCardResult,
+  buildWordListResult,
+  buildPaperResult,
+  buildWritingResult,
+  buildPracticeResult,
+} from './intentHandlers'
+
+export type { V1_1IntentId } from './intentHandlers'
+
 // ═══════════════════════════════════════════════════════════
 // 1. Dual-Group Mapping + Group Name Normalization
 // ═══════════════════════════════════════════════════════════

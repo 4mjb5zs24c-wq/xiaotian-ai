@@ -24,6 +24,7 @@ import FunctionEntryCard from './FunctionEntryCard'
 import NoResultsView from './NoResultsView'
 import PrecisionJumpCard from './PrecisionJumpCard'
 import UnrecognizedFallback from './UnrecognizedFallback'
+import MyContentCard, { isMyContentGroup, getMyContentViewAllLabel } from './MyContentCard'
 
 interface SearchResultViewProps {
   result?: NewSearchResult
@@ -33,6 +34,8 @@ interface SearchResultViewProps {
   unrecognizedMessage?: string
   suggestions?: SearchSuggestion[]
   commonFunctions?: CommonFunction[]
+  /** Search query — passed to MyContentCard for dynamic primary button */
+  query?: string
   paperBasket: PaperBasketItem[]
   onPreview: (item: ResourceItem) => void
   onAssign: (item: ResourceItem) => void
@@ -43,6 +46,8 @@ interface SearchResultViewProps {
   onQuickEntry: (entry: QuickEntry) => void
   onSuggestionClick?: (query: string) => void
   onNavigate?: (route: string) => void
+  /** Callback when my-content card quick action is clicked */
+  onMyContentAction?: (item: ResourceItem, action: string) => void
 }
 
 // ── Helpers ───────────────────────────────────────────────
@@ -123,6 +128,7 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
   unrecognizedMessage,
   suggestions,
   commonFunctions,
+  query,
   paperBasket,
   onPreview,
   onAssign,
@@ -133,11 +139,14 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
   onQuickEntry,
   onSuggestionClick,
   onNavigate,
+  onMyContentAction,
 }) => {
+  const searchQuery = query || ''
+
   // Per-section category state
   const [matchTab, setMatchTab] = useState('all')
   const [relatedTab, setRelatedTab] = useState('all')
-  // Show-all counts per section and group
+  // Show-all counts per section
   const [showAllMatch, setShowAllMatch] = useState(false)
   const [showAllRelated, setShowAllRelated] = useState(false)
 
@@ -234,11 +243,109 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
     )
   }
 
-  // ── Render items for a single ResourceGroup ────────────
+  // ── Render a single ResourceGroup ──────────────────────
   const renderGroupWrapper = (group: ResourceGroupType) => {
     const isExpanded = expandedGroups.has(group.groupId)
     const showAll = showAllGroups.has(group.groupId)
+    const isMyContent = isMyContentGroup(group.groupId)
 
+    // Function-type groups: compact entry cards (not full ResourceCards)
+    if (group.groupType === 'function') {
+      return (
+        <div key={group.groupId}>
+          {group.groupName && (
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[13px] font-semibold text-slate-700">{group.groupName}</span>
+            </div>
+          )}
+          {group.recommendationText && (
+            <p className="text-[12px] text-slate-400 mb-2">{group.recommendationText}</p>
+          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {group.items.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white border border-slate-200/60 rounded-xl px-4 py-3.5
+                  hover:border-blue-200 hover:shadow-sm transition-all duration-150"
+              >
+                <h4 className="text-[14px] font-semibold text-slate-800 mb-1">{item.title}</h4>
+                {item.recommendReason && (
+                  <p className="text-[12px] text-slate-400 mb-3">{item.recommendReason}</p>
+                )}
+                <button
+                  onClick={() => onMyContentAction?.(item, item.id === 'func-new-card' ? 'new_card' : 'third_party_card')}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[13px] font-semibold
+                    bg-blue-500 text-white hover:bg-blue-600 shadow-sm shadow-blue-200/40
+                    transition-all duration-200 active:scale-[0.98]"
+                >
+                  {item.id === 'func-new-card' ? '立即新建' : '去制作'}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    // My-content groups: compact MyContentCard in 2-col grid, no ResourceGroup wrapper
+    if (isMyContent) {
+      const visibleCount = showAll ? group.items.length : Math.min(group.displayLimit, group.items.length)
+      const hasMore = group.items.length > group.displayLimit
+      const viewAllLabel = getMyContentViewAllLabel(group.groupId)
+
+      return (
+        <div key={group.groupId}>
+          {/* My-content sub-header with "view all" link */}
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <span className="text-[13px] font-semibold text-slate-700">{group.groupName}</span>
+              <span className="text-[11px] text-slate-400">{group.items.length}条</span>
+            </div>
+            {viewAllLabel && (
+              <button
+                onClick={() => onMyContentAction?.(group.items[0], 'view_all')}
+                className="text-[11px] text-blue-500 hover:text-blue-600 font-medium transition-colors"
+              >
+                {viewAllLabel} &gt;
+              </button>
+            )}
+          </div>
+
+          {/* Recommendation text */}
+          {group.recommendationText && (
+            <div className="px-3.5 py-2 mb-2 bg-amber-50/30 border border-amber-100/30 rounded-lg text-[12px] text-slate-500">
+              推荐理由：{group.recommendationText}
+            </div>
+          )}
+
+          {/* Grid of MyContentCards */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {group.items.slice(0, visibleCount).map((item) => (
+              <MyContentCard
+                key={item.id}
+                item={item}
+                query={searchQuery}
+                onAction={onMyContentAction || (() => {})}
+              />
+            ))}
+          </div>
+
+          {/* Expand/collapse */}
+          {hasMore && (
+            <button
+              onClick={() => toggleGroupShowAll(group.groupId)}
+              className="w-full mt-2 py-2.5 text-center text-[13px] font-medium text-blue-500 hover:text-blue-600
+                border border-dashed border-slate-200 rounded-xl hover:border-blue-300 hover:bg-blue-50/50
+                transition-all duration-200"
+            >
+              {showAll ? '收起' : `查看全部 ${group.items.length} 条`}
+            </button>
+          )}
+        </div>
+      )
+    }
+
+    // Normal groups
     return (
       <ResourceGroupComp
         key={group.groupId}
@@ -275,6 +382,7 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
     const displayLimit = 5
     const visible = showAll ? items : items.slice(0, displayLimit)
     const hasMore = items.length > displayLimit
+    // Only ContentSelectResource for actual sync_vocab/sync_text (unit vocab resources)
     const isVocabOrText = items.length > 0 &&
       (items[0].type === 'sync_vocab' || items[0].type === 'sync_text')
 
@@ -311,7 +419,7 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
     )
   }
 
-  // ── Render a section ───────────────────────────────────
+  // ── Render a section (智能匹配推荐 / 智能关联推荐) ──────
   const renderSection = (
     title: string,
     icon: React.ReactNode,
@@ -326,17 +434,8 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
     const tabs = useMemo(() => buildSectionTabs(groups), [groups])
     const filtered = useMemo(() => filterGroupsByCategory(groups, activeTab), [groups, activeTab])
     const totalCount = groups.reduce((sum, g) => sum + g.items.length, 0)
-
-    // Flatten all items across filtered groups
-    const allItems = useMemo(
-      () => filtered.flatMap((g) => g.items),
-      [filtered],
-    )
-
-    // Single-type = no category-filter tabs needed (only "全部" + at most 1 type tab)
+    const allItems = useMemo(() => filtered.flatMap((g) => g.items), [filtered])
     const singleType = tabs.length <= 2
-
-    // Collect recommendation texts from filtered groups
     const recTexts = filtered
       .map((g) => g.recommendationText)
       .filter(Boolean) as string[]
@@ -355,14 +454,14 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
           <SectionFilterTabs tabs={tabs} activeKey={activeTab} onChange={onTabChange} />
         )}
 
-        {/* Recommendation text (shown outside group header for single-type) */}
+        {/* Recommendation text (single-type only) */}
         {singleType && recTexts.length > 0 && (
           <div className="px-3.5 py-2 mb-3 bg-amber-50/30 border border-amber-100/30 rounded-lg text-[12px] text-slate-500">
             推荐理由：{recTexts.join('；')}
           </div>
         )}
 
-        {/* Render: flat or with group wrappers */}
+        {/* Render */}
         {singleType ? (
           renderFlatCards(allItems, showAll, onToggleShowAll)
         ) : (

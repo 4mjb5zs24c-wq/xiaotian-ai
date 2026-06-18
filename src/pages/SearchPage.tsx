@@ -20,6 +20,12 @@ import {
   getSearchSuggestions,
   getCommonFunctions,
   buildUnrecognizedMessage,
+  matchV1_1Intent,
+  buildAnswerCardResult,
+  buildWordListResult,
+  buildPaperResult,
+  buildWritingResult,
+  buildPracticeResult,
 } from '../ai/search-new/searchEnhancer'
 import {
   SearchResultView,
@@ -140,22 +146,67 @@ export default function SearchPage() {
     // ── Step 1: Check for precision jump intents ──────
     const jump = detectPrecisionJump(sq)
     if (jump) {
-      // Precision jump — don't run search engine
       setPrecisionJump(jump)
       setSearching(false)
       setShowLoading(false)
       return
     }
 
-    // ── Step 2: Generate loading steps ────────────────
+    // ── Step 2: Check for v1.1 core intents ──────────
+    const v1_1Intent = matchV1_1Intent(sq)
+
+    if (v1_1Intent) {
+      // v1.1 intent matched — use direct result builder (skip v1.0 engine)
+      const steps = generateLoadingSteps(sq)
+      setLoadingSteps(steps)
+      setSearching(true)
+      setShowLoading(true)
+      const totalLoadingMs = steps.reduce((sum, s) => sum + s.duration, 0) + 200
+
+      searchTimerRef.current = setTimeout(() => {
+        let enhanced: EnhancedSearchResult
+
+        switch (v1_1Intent) {
+          case 'answer_card':
+            enhanced = buildAnswerCardResult(sq, ctx)
+            break
+          case 'word_list':
+          case 'dictation':
+          case 'vocabulary':
+            enhanced = buildWordListResult(sq, ctx)
+            break
+          case 'paper':
+            enhanced = buildPaperResult(sq, ctx)
+            break
+          case 'writing':
+            enhanced = buildWritingResult(sq, ctx)
+            break
+          case 'practice':
+            enhanced = buildPracticeResult(sq, ctx, false)
+            break
+          case 'unit_practice':
+            enhanced = buildPracticeResult(sq, ctx, true)
+            break
+          default:
+            enhanced = buildPracticeResult(sq, ctx, false)
+        }
+
+        setResult(enhanced.original)
+        setNewSearchResult(enhanced.original)
+        setEnhancedResult(enhanced)
+        setSearching(false)
+      }, totalLoadingMs)
+      return
+    }
+
+    // ── Step 3: v1.0 fallback — generate loading steps ──
     const steps = generateLoadingSteps(sq)
     setLoadingSteps(steps)
     setSearching(true)
     setShowLoading(true)
 
-    // ── Step 3: Run v1.0 search + v1.1 enhance ───────
-    // Calculate total loading time to align with search
-    const totalLoadingMs = steps.reduce((sum, s) => sum + s.duration, 0) + 200 // +200ms hold
+    // ── Step 4: Run v1.0 search + v1.1 enhance ───────
+    const totalLoadingMs = steps.reduce((sum, s) => sum + s.duration, 0) + 200
 
     searchTimerRef.current = setTimeout(() => {
       const res = matchNewSearch(sq, ctx)
@@ -177,9 +228,7 @@ export default function SearchPage() {
       setResult(res)
       setNewSearchResult(res)
 
-      // ── Step 4: Check for unrecognized ──────────
-      // v1.0 may route noise (e.g. "哈哈哈哈") to comprehensive resources.
-      // v1.1 overrides: if the query is not semantically meaningful, force unrecognized.
+      // ── Step 5: Check for unrecognized ──────────
       const semanticMatch = isSemanticallyMeaningful(sq)
 
       if (res.isUnrecognizable || !semanticMatch) {
@@ -189,7 +238,7 @@ export default function SearchPage() {
         setFallbackFunctions(getCommonFunctions())
         setEnhancedResult(null)
       } else {
-        // ── Step 5: Enhance normal results ──────────
+        // ── Step 6: Enhance normal results ──────────
         const enhanced = enhanceSearchResult(sq, res)
         setEnhancedResult(enhanced)
       }
@@ -233,6 +282,35 @@ export default function SearchPage() {
 
   const handleNavigate = (route: string) => {
     navigate(route)
+  }
+
+  const handleMyContentAction = (item: ResourceItem, action: string) => {
+    // Function entry actions (新建答题卡 / 三方答题卡)
+    if (action === 'new_card') {
+      showToast('新建答题卡 — 待接入新建答题卡流程（路由待确认）')
+      return
+    }
+    if (action === 'third_party_card') {
+      showToast('三方答题卡 — 待接入三方答题卡制作流程（路由待确认）')
+      return
+    }
+    // View all link
+    if (action === 'view_all') {
+      showToast(`查看全部「${item.title}」（路由待确认）`)
+      return
+    }
+    // My content quick actions
+    const actionLabels: Record<string, string> = {
+      assign: '布置',
+      download: '下载',
+      more: '更多',
+      preview: '预览',
+      detail: '查看',
+      listen_dictation: '听默写',
+      assign_dictation: '布置默写',
+      oral_reading: '跟读背诵',
+    }
+    showToast(`「${item.title}」- ${actionLabels[action] || action}（路由待确认）`)
   }
 
   const handlePreview = (item: ResourceItem) => {
@@ -447,6 +525,7 @@ export default function SearchPage() {
         {precisionJump && !searching && (
           <SearchResultView
             precisionJump={precisionJump}
+            query={query}
             paperBasket={paperBasket}
             onPreview={handlePreview}
             onAssign={handleAssign}
@@ -456,6 +535,7 @@ export default function SearchPage() {
             onGenerateAssignments={handleGenerateAssignments}
             onQuickEntry={handleQuickEntry}
             onNavigate={handleNavigate}
+            onMyContentAction={handleMyContentAction}
           />
         )}
 
@@ -466,6 +546,7 @@ export default function SearchPage() {
             unrecognizedMessage={unrecognizedMessage}
             suggestions={fallbackSuggestions}
             commonFunctions={fallbackFunctions}
+            query={query}
             paperBasket={paperBasket}
             onPreview={handlePreview}
             onAssign={handleAssign}
@@ -475,6 +556,7 @@ export default function SearchPage() {
             onGenerateAssignments={handleGenerateAssignments}
             onQuickEntry={handleQuickEntry}
             onSuggestionClick={handleSuggestionClick}
+            onMyContentAction={handleMyContentAction}
           />
         )}
 
@@ -492,6 +574,7 @@ export default function SearchPage() {
             <SearchResultView
               result={result}
               enhancedResult={enhancedResult || undefined}
+              query={query}
               paperBasket={paperBasket}
               onPreview={handlePreview}
               onAssign={handleAssign}
@@ -502,6 +585,7 @@ export default function SearchPage() {
               onQuickEntry={handleQuickEntry}
               onSuggestionClick={handleSuggestionClick}
               onNavigate={handleNavigate}
+              onMyContentAction={handleMyContentAction}
             />
           </>
         )}
