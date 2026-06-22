@@ -25,6 +25,33 @@ import {
   getDictationResourceItems,
   getAnswerCardRelatedEntries,
   getPlatformPaperResources,
+  getSpecialTopicCards,
+  getSpecialTopicResources,
+  getSpecialTopicRelated,
+  getMicroSkillResources,
+  getMicroSkillRelated,
+  getRealExamResources,
+  getRealExamRelated,
+  getMockExamResources,
+  getExamSetResources,
+  getExamSetFallbackPapers,
+  getListeningResources,
+  getListeningRelated,
+  getListeningMockResources,
+  getSpeakingResources,
+  getSpeakingFallback,
+  getTextResources,
+  getTextRelated,
+  getVideoResources,
+  getVideoRelated,
+  getThemeVideoResources,
+  getThemeVideoRelated,
+  getDubbingResources,
+  getDubbingRelated,
+  getGrammarResources,
+  getGrammarRelated,
+  getReadingResources,
+  getReadingRelated,
 } from './dataSources'
 import { deriveIntentLabel } from './intentRegistry'
 
@@ -41,6 +68,20 @@ export type V1_1IntentId =
   | 'writing'
   | 'practice'
   | 'unit_practice'
+  | 'special_topic'
+  | 'micro_skill'
+  | 'listening_mock'
+  | 'listening'
+  | 'speaking'
+  | 'real_exam'
+  | 'exam_set'
+  | 'mock_exam'
+  | 'text'
+  | 'theme_video'
+  | 'video'
+  | 'dubbing'
+  | 'grammar'
+  | 'reading'
   | null // fall through to v1.0
 
 /**
@@ -90,6 +131,80 @@ function isPracticeQuery(query: string): boolean {
   return /练习|作业|布置|留作业|发作业|做题|刷题|练一练|发给学生|课后练习|课后巩固|巩固练习|课堂练习|同步练习|同步训练|布置练习|今天作业|明天作业|推送练习/.test(q)
 }
 
+// ── Phase 3 query detectors ─────────────────────────────
+
+function isSpecialTopicQuery(q: string): boolean {
+  return /专项|专门|专业|专练|专训|专题|题型专项|词汇专项|听力专项|写作专项|阅读专项|微技能专项|专项练习|专项训练|专项资源|能力专项|专项题|专项卷|专项课/.test(q)
+}
+
+function isMicroSkillQuery(q: string): boolean {
+  return /微技能|微技能训练|微技能练习|微技能专项|阅读微技能|听力微技能|写作微技能|技能训练|小技能|技巧训练|解题技巧|做题方法/.test(q)
+}
+
+function isListeningMockQuery(q: string): boolean {
+  return /听力模拟|听力模考|听力测试|听力测评|听力考试|听力模拟题|听力模拟卷/.test(q)
+}
+
+function isListeningQuery(q: string): boolean {
+  // Exclude: 听说 (speaking), 听力模拟 (listening_mock), 听力专项 (special_topic)
+  if (/听说|听力模拟|听力模考|听力测试|听力测评|听力考试/.test(q)) return false
+  if (/听力专项/.test(q)) return false
+  return /听力|听力练习|听力训练|听力资源|听力素材|同步听力|单元听力|课本听力|听力题/.test(q)
+}
+
+function isSpeakingQuery(q: string): boolean {
+  if (/听说专项/.test(q)) return false
+  return /听说|听说练习|听说训练|听说资源|听说考试|听说模拟|听说测评|口语听说/.test(q)
+}
+
+function isRealExamQuery(q: string): boolean {
+  return /真题|历年真题|中考真题|高考真题|考试真题|真题卷|真题资源|真题库|区域真题/.test(q)
+}
+
+function isExamSetQuery(q: string): boolean {
+  return /套题|套卷|整套卷|整套题|模拟套题|模拟套卷|成套练习|一整套|成套/.test(q)
+}
+
+function isMockExamQuery(q: string): boolean {
+  // Exclude: 听力模拟 (listening_mock), 套题 (exam_set), 真题 (real_exam)
+  if (/听力模拟|听力模考/.test(q)) return false
+  if (/套题|套卷|整套/.test(q)) return false
+  if (/真题/.test(q)) return false
+  return /模拟|模拟题|模拟卷|模拟试卷|模拟练习|模考|模拟考试|冲刺|冲刺卷|冲刺练习|阶段测试|阶段检测|期中考试|期末考试|摸底考试/.test(q)
+}
+
+function isTextQuery(q: string): boolean {
+  // Exclude: 默写 (dictation), 视频, 配音
+  if (/默写/.test(q)) return false
+  if (/视频|配音/.test(q)) return false
+  return /课文|课文跟读|课文背诵|课文资源|课文练习|课文朗读|课文讲解|逐句跟读|课文读一读|跟读|背诵|朗读|读课文|跟读课文|背课文|语篇/.test(q)
+}
+
+function isThemeVideoQuery(q: string): boolean {
+  return /主题视频|话题视频|拓展视频|文化视频|主题资源|话题资源|文化拓展|拓展资源/.test(q)
+}
+
+function isVideoQuery(q: string): boolean {
+  // Exclude: 主题视频, 配音
+  if (/主题视频|话题视频|拓展视频|文化视频/.test(q)) return false
+  if (/配音/.test(q)) return false
+  return /视频|同步视频|单元视频|课堂视频|教学视频|课本视频|讲解视频|视频资源/.test(q)
+}
+
+function isDubbingQuery(q: string): boolean {
+  return /配音|趣味配音|英语配音|视频配音|配音练习|配音资源|口语配音|动画配音/.test(q)
+}
+
+function isGrammarQuery(q: string): boolean {
+  return /语法|语法练习|语法训练|语法题|语法填空|单句语法|语言知识|语言运用|时态|从句|被动语态|非谓语|宾语从句|定语从句|完形填空|选词填空|短文填空/.test(q)
+}
+
+function isReadingQuery(q: string): boolean {
+  // Exclude: 阅读专项 (special_topic)
+  if (/阅读专项/.test(q)) return false
+  return /阅读|阅读理解|阅读练习|阅读训练|英语阅读|阅读题|任务型阅读|七选五|阅读七选五|阅读材料|阅读文章/.test(q)
+}
+
 /**
  * Match a query to a v1.1 intent.
  * Returns null if the query should fall through to v1.0 searchEngine.
@@ -108,18 +223,60 @@ export function matchV1_1Intent(query: string): V1_1IntentId {
   // P1: answer_card (must be before paper to catch "试卷答题卡")
   if (isAnswerCardQuery(q)) return 'answer_card'
 
-  // P2: writing
+  // P2: special_topic (must be BEFORE writing/listening/reading to catch "写作专项"/"听力专项" etc.)
+  if (isSpecialTopicQuery(q)) return 'special_topic'
+
+  // P3: writing
   if (isWritingQuery(q)) return 'writing'
 
-  // P3: dictation > word_list > vocabulary (dictation most specific)
+  // P4: micro_skill (higher priority than special_topic sub-types)
+  if (isMicroSkillQuery(q)) return 'micro_skill'
+
+  // P5: dictation > word_list > vocabulary (dictation most specific)
   if (isDictationQuery(q)) return 'dictation'
   if (isWordListQuery(q)) return 'word_list'
   if (isVocabularyQuery(q)) return 'vocabulary'
 
-  // P4: paper (after answer_card)
+  // P6: listening_mock (must be before listening AND mock_exam)
+  if (isListeningMockQuery(q)) return 'listening_mock'
+
+  // P7: listening (must be before speaking to exclude 听说)
+  if (isListeningQuery(q)) return 'listening'
+
+  // P8: speaking
+  if (isSpeakingQuery(q)) return 'speaking'
+
+  // P9: real_exam (must be before mock_exam)
+  if (isRealExamQuery(q)) return 'real_exam'
+
+  // P10: exam_set (must be before mock_exam)
+  if (isExamSetQuery(q)) return 'exam_set'
+
+  // P11: mock_exam
+  if (isMockExamQuery(q)) return 'mock_exam'
+
+  // P12: paper (after answer_card)
   if (isPaperQuery(q)) return 'paper'
 
-  // P5: unit_practice > practice
+  // P13: text
+  if (isTextQuery(q)) return 'text'
+
+  // P14: theme_video (must be before video)
+  if (isThemeVideoQuery(q)) return 'theme_video'
+
+  // P15: video
+  if (isVideoQuery(q)) return 'video'
+
+  // P16: dubbing
+  if (isDubbingQuery(q)) return 'dubbing'
+
+  // P17: grammar
+  if (isGrammarQuery(q)) return 'grammar'
+
+  // P18: reading
+  if (isReadingQuery(q)) return 'reading'
+
+  // P19: unit_practice > practice (lowest priority for resource intents)
   if (isUnitPracticeQuery(q)) return 'unit_practice'
   if (isPracticeQuery(q)) return 'practice'
 
@@ -483,5 +640,329 @@ export function buildPracticeResult(
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups,
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// Phase 3 — Result Builders
+// ═══════════════════════════════════════════════════════════
+
+function wrapRelatedGroup(
+  items: ResourceItem[],
+  groupName: string,
+  recText?: string,
+): ResourceGroup {
+  return {
+    groupId: `grp-rel-${groupName.replace(/\s/g, '_').toLowerCase()}`,
+    groupName,
+    groupType: 'resource',
+    isPrimaryMatch: false,
+    defaultExpanded: true,
+    recommendationText: recText,
+    items,
+    displayLimit: 5,
+  }
+}
+
+function detectSpecialSubTopic(q: string): string {
+  if (/微技能/.test(q)) return 'micro_skill'
+  if (/词汇/.test(q)) return 'vocab'
+  if (/听力/.test(q)) return 'listening'
+  if (/写作|作文|应用文|读后续写/.test(q)) return 'writing'
+  if (/阅读/.test(q)) return 'reading'
+  if (/题型|完形|填空/.test(q)) return 'question_type'
+  return 'all' // generic 专项
+}
+
+// ── Special Topic ──────────────────────────────────────────
+
+export function buildSpecialTopicResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const q = query.trim()
+  const subTopic = detectSpecialSubTopic(q)
+
+  const smartMatchGroups: ResourceGroup[] = []
+  const smartRelatedGroups: ResourceGroup[] = []
+
+  if (subTopic === 'all') {
+    // Generic 专项 — show sub-topic cards
+    const cards = getSpecialTopicCards()
+    const items: ResourceItem[] = cards.map((c) => ({
+      id: c.id,
+      title: c.title,
+      type: 'special' as const,
+      tags: ['专项', c.title],
+      difficulty: 'basic' as const,
+      grade: ctx.grade || '七年级上',
+      isCurrentUnit: true,
+      canPreview: false,
+      canAssign: true,
+      canAddToPaperBasket: false,
+      canAddToLessonPrep: false,
+      isLessonPrepResource: false,
+      recommendReason: `点击进入${c.title}，查看相关资源`,
+    }))
+    smartMatchGroups.push(wrapResourcesToGroup(items, '专项分类', '选择一个专项方向，查看对应资源'))
+  } else {
+    // Specific sub-topic
+    const resources = getSpecialTopicResources(subTopic, ctx)
+    smartMatchGroups.push(wrapResourcesToGroup(resources, '智能匹配', `与「${query}」相关的专项资源`))
+
+    const related = getSpecialTopicRelated(subTopic, ctx)
+    if (related.length > 0) {
+      smartRelatedGroups.push(wrapRelatedGroup(related, '智能关联推荐', '与专项相关的补充资源'))
+    }
+  }
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups,
+    smartRelatedGroups,
+  }
+}
+
+// ── Micro Skill ────────────────────────────────────────────
+
+export function buildMicroSkillResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getMicroSkillResources(ctx)
+  const related = getMicroSkillRelated(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '微技能专项资源，聚焦单项能力训练')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '同能力方向的补充资源')] : [],
+  }
+}
+
+// ── Real Exam ─────────────────────────────────────────────
+
+export function buildRealExamResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getRealExamResources(ctx)
+  const related = getRealExamRelated(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '真题资源，按年份和地区整理')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '与真题搭配的模拟和冲刺资源')] : [],
+  }
+}
+
+// ── Mock Exam ─────────────────────────────────────────────
+
+export function buildMockExamResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getMockExamResources(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '模拟题、冲刺卷和阶段检测资源')],
+    smartRelatedGroups: [],
+  }
+}
+
+// ── Exam Set ─────────────────────────────────────────────
+
+export function buildExamSetResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getExamSetResources(ctx)
+
+  const smartMatchGroups: ResourceGroup[] = []
+
+  if (resources.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(resources, '智能匹配', '成套模拟卷和套题资源'))
+  } else {
+    // Fallback: paper hierarchy
+    const fallback = getExamSetFallbackPapers(ctx)
+    const syncPapers = fallback.filter((p) => p.type === 'unit_test')
+    const specialPapers = fallback.filter((p) => p.type === 'special')
+    const mockPapers = fallback.filter((p) => p.type === 'mock_exam')
+    if (syncPapers.length > 0) smartMatchGroups.push(wrapResourcesToGroup(syncPapers, '同步试卷', '套题降级 — 同步试卷'))
+    if (specialPapers.length > 0) smartMatchGroups.push(wrapResourcesToGroup(specialPapers, '专项试卷', '套题降级 — 专项试卷'))
+    if (mockPapers.length > 0) smartMatchGroups.push(wrapResourcesToGroup(mockPapers, '模拟试卷', '套题降级 — 模拟试卷'))
+  }
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups,
+    smartRelatedGroups: [],
+  }
+}
+
+// ── Listening ─────────────────────────────────────────────
+
+export function buildListeningResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getListeningResources(ctx)
+  const related = getListeningRelated(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '当前单元听力资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '听力专项和模拟资源')] : [],
+  }
+}
+
+// ── Listening Mock ─────────────────────────────────────────
+
+export function buildListeningMockResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getListeningMockResources(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '听力模拟和模考资源')],
+    smartRelatedGroups: [],
+  }
+}
+
+// ── Speaking ──────────────────────────────────────────────
+
+export function buildSpeakingResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getSpeakingResources(ctx)
+
+  const smartMatchGroups: ResourceGroup[] = []
+  const smartRelatedGroups: ResourceGroup[] = []
+
+  if (resources.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(resources, '智能匹配', '听说练习和测评资源'))
+  } else {
+    // Fallback — region doesn't have speaking resources
+    const fallback = getSpeakingFallback(ctx)
+    smartMatchGroups.push(wrapResourcesToGroup(fallback, '替代推荐', '当前地区暂无听说资源，以下为替代推荐'))
+  }
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups,
+    smartRelatedGroups,
+  }
+}
+
+// ── Text ──────────────────────────────────────────────────
+
+export function buildTextResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getTextResources(ctx)
+  const related = getTextRelated(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '当前单元课文资源，支持跟读、背诵和朗读')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '课文相关的词汇和听力')] : [],
+  }
+}
+
+// ── Video ─────────────────────────────────────────────────
+
+export function buildVideoResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getVideoResources(ctx)
+  const related = getVideoRelated(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '当前单元同步视频资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '拓展视频资源')] : [],
+  }
+}
+
+// ── Theme Video ─────────────────────────────────────────
+
+export function buildThemeVideoResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getThemeVideoResources(ctx)
+  const related = getThemeVideoRelated(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '主题视频和拓展资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '当前单元同步视频')] : [],
+  }
+}
+
+// ── Dubbing ──────────────────────────────────────────────
+
+export function buildDubbingResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getDubbingResources(ctx)
+  const related = getDubbingRelated(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '趣味配音资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '主题视频资源')] : [],
+  }
+}
+
+// ── Grammar ──────────────────────────────────────────────
+
+export function buildGrammarResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getGrammarResources(ctx)
+  const related = getGrammarRelated(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '语法和语言知识练习资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '语法相关的综合和模拟练习')] : [],
+  }
+}
+
+// ── Reading ─────────────────────────────────────────────
+
+export function buildReadingResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const resources = getReadingResources(ctx)
+  const related = getReadingRelated(ctx)
+
+  return {
+    ...makeBaseResult(query),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '阅读练习和训练资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '阅读相关的同步和模拟练习')] : [],
   }
 }

@@ -26,6 +26,20 @@ import {
   buildPaperResult,
   buildWritingResult,
   buildPracticeResult,
+  buildSpecialTopicResult,
+  buildMicroSkillResult,
+  buildRealExamResult,
+  buildMockExamResult,
+  buildExamSetResult,
+  buildListeningResult,
+  buildListeningMockResult,
+  buildSpeakingResult,
+  buildTextResult,
+  buildVideoResult,
+  buildThemeVideoResult,
+  buildDubbingResult,
+  buildGrammarResult,
+  buildReadingResult,
 } from '../ai/search-new/searchEnhancer'
 import {
   SearchResultView,
@@ -186,6 +200,48 @@ export default function SearchPage() {
             break
           case 'unit_practice':
             enhanced = buildPracticeResult(sq, ctx, true)
+            break
+          case 'special_topic':
+            enhanced = buildSpecialTopicResult(sq, ctx)
+            break
+          case 'micro_skill':
+            enhanced = buildMicroSkillResult(sq, ctx)
+            break
+          case 'real_exam':
+            enhanced = buildRealExamResult(sq, ctx)
+            break
+          case 'mock_exam':
+            enhanced = buildMockExamResult(sq, ctx)
+            break
+          case 'exam_set':
+            enhanced = buildExamSetResult(sq, ctx)
+            break
+          case 'listening':
+            enhanced = buildListeningResult(sq, ctx)
+            break
+          case 'listening_mock':
+            enhanced = buildListeningMockResult(sq, ctx)
+            break
+          case 'speaking':
+            enhanced = buildSpeakingResult(sq, ctx)
+            break
+          case 'text':
+            enhanced = buildTextResult(sq, ctx)
+            break
+          case 'video':
+            enhanced = buildVideoResult(sq, ctx)
+            break
+          case 'theme_video':
+            enhanced = buildThemeVideoResult(sq, ctx)
+            break
+          case 'dubbing':
+            enhanced = buildDubbingResult(sq, ctx)
+            break
+          case 'grammar':
+            enhanced = buildGrammarResult(sq, ctx)
+            break
+          case 'reading':
+            enhanced = buildReadingResult(sq, ctx)
             break
           default:
             enhanced = buildPracticeResult(sq, ctx, false)

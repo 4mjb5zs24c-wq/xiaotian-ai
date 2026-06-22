@@ -40,6 +40,20 @@ export {
   buildPaperResult,
   buildWritingResult,
   buildPracticeResult,
+  buildSpecialTopicResult,
+  buildMicroSkillResult,
+  buildRealExamResult,
+  buildMockExamResult,
+  buildExamSetResult,
+  buildListeningResult,
+  buildListeningMockResult,
+  buildSpeakingResult,
+  buildTextResult,
+  buildVideoResult,
+  buildThemeVideoResult,
+  buildDubbingResult,
+  buildGrammarResult,
+  buildReadingResult,
 } from './intentHandlers'
 
 export type { V1_1IntentId } from './intentHandlers'
