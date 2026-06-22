@@ -133,9 +133,39 @@ export function mapToDualGroups(groups: ResourceGroup[]): {
 // 2. AI Understanding Text
 // ═══════════════════════════════════════════════════════════
 
-export function generateAIUnderstandingText(query: string): string {
+const INTENT_AI_TEXT: Record<string, string> = {
+  answer_card: '你可能想找「答题卡」相关内容，已为你整理可直接使用的答题卡和创建入口。',
+  word_list: '你可能想找「词表」相关内容，已为你整理我的词表和听写默写入口。',
+  dictation: '你可能想布置「听写」练习，已为你整理听写入口、当前单元词汇和我的词表。',
+  vocabulary: '你可能想找「词汇」相关内容，已为你整理我的词表和听写默写入口。',
+  paper: '你可能想找「试卷」相关内容，已为你整理我的试卷和平台试卷资源。',
+  writing: '你可能想找「写作」练习，已为你整理应用文和读后续写入口。',
+  practice: '你可能想布置「练习」，已为你整理当前单元的同步练习资源。',
+  unit_practice: '你可能想找「单元练习」，已为你整理当前单元相关的练习和检测。',
+  special_topic: '你可能想找「专项」练习，已为你整理专项分类下的资源。',
+  micro_skill: '你可能想找「微技能」训练，已为你整理微技能相关的练习资源。',
+  real_exam: '你可能想找「真题」资源，已为你整理匹配的真题和模拟卷。',
+  mock_exam: '你可能想找「模拟」试卷，已为你整理模拟和冲刺练习资源。',
+  exam_set: '你可能想找「套题」资源，已为你整理成套练习和模拟套卷。',
+  listening_mock: '你可能想找「听力模拟」，已为你整理听力模拟和模考资源。',
+  listening: '你可能想找「听力」资源，已为你整理同步听力和听力练习。',
+  speaking: '你可能想找「听说」练习，已为你整理听说训练和口语资源。',
+  text: '你可能想找「课文」资源，已为你整理当前单元的课文和跟读内容。',
+  theme_video: '你可能想找「主题视频」，已为你整理拓展和文化视频资源。',
+  video: '你可能想找「视频」资源，已为你整理同步视频和教学视频。',
+  dubbing: '你可能想找「配音」练习，已为你整理趣味配音资源。',
+  grammar: '你可能想找「语法」练习，已为你整理语法填空和语言知识资源。',
+  reading: '你可能想找「阅读」练习，已为你整理阅读理解和七选五等资源。',
+  quiz_compose: '你可能想「选题组卷」，已为你整理组卷入口和相关资源。',
+  custom_practice: '你可能想找「自定义练习」，已为你整理可自定义布置和批改的入口。',
+}
+
+export function generateAIUnderstandingText(query: string, intentId?: string): string {
+  if (intentId && INTENT_AI_TEXT[intentId]) {
+    return `小天理解：${INTENT_AI_TEXT[intentId]}`
+  }
   const label = deriveIntentLabel(query)
-  return `小天理解你可能想找「${label}」\n已为你整理智能匹配结果，并补充相关资源。`
+  return `小天理解：你可能想找「${label}」相关内容，已为你整理智能匹配结果。`
 }
 
 // ═══════════════════════════════════════════════════════════

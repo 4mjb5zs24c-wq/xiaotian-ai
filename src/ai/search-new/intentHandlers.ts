@@ -53,7 +53,7 @@ import {
   getReadingResources,
   getReadingRelated,
 } from './dataSources'
-import { deriveIntentLabel } from './intentRegistry'
+import { generateAIUnderstandingText } from './searchEnhancer'
 
 // ═══════════════════════════════════════════════════════════
 // Intent matching
@@ -314,10 +314,10 @@ export function matchV1_1Intent(query: string): V1_1IntentId {
 // Result builders
 // ═══════════════════════════════════════════════════════════
 
-function makeBaseResult(query: string): Pick<EnhancedSearchResult, 'isPrecisionJump' | 'aiUnderstandingText'> {
+function makeBaseResult(query: string, intentId?: string): Pick<EnhancedSearchResult, 'isPrecisionJump' | 'aiUnderstandingText'> {
   return {
     isPrecisionJump: false,
-    aiUnderstandingText: `小天理解你可能想找「${deriveIntentLabel(query)}」\n已为你整理智能匹配结果，并补充相关资源。`,
+    aiUnderstandingText: generateAIUnderstandingText(query, intentId),
   }
 }
 
@@ -431,7 +431,7 @@ export function buildAnswerCardResult(
     : []
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "answer_card"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups,
@@ -488,7 +488,7 @@ export function buildWordListResult(
     }
 
     return {
-      ...makeBaseResult(query),
+      ...makeBaseResult(query, "word_list"),
       original: buildEmptyV1_0Result(query),
       smartMatchGroups,
       smartRelatedGroups,
@@ -522,7 +522,7 @@ export function buildWordListResult(
   )
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "word_list"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups,
@@ -582,7 +582,7 @@ export function buildPaperResult(
   }
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "paper"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups: [], // Paper intent has no related currently
@@ -645,7 +645,7 @@ export function buildWritingResult(
   }
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "writing"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups,
@@ -682,7 +682,7 @@ export function buildPracticeResult(
     : []
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "practice"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups,
@@ -763,7 +763,7 @@ export function buildSpecialTopicResult(
   }
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "special_topic"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups,
@@ -780,7 +780,7 @@ export function buildMicroSkillResult(
   const related = getMicroSkillRelated(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "micro_skill"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '微技能训练资源', '微技能专项资源，聚焦单项能力训练')],
     smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '能力拓展资源', '同能力方向的补充资源')] : [],
@@ -797,7 +797,7 @@ export function buildRealExamResult(
   const related = getRealExamRelated(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "real_exam"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '真题资源', '真题资源，按年份和地区整理')],
     smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '模拟与冲刺资源', '与真题搭配的模拟和冲刺资源')] : [],
@@ -813,7 +813,7 @@ export function buildMockExamResult(
   const resources = getMockExamResources(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "mock_exam"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '模拟与冲刺资源', '模拟题、冲刺卷和阶段检测资源')],
     smartRelatedGroups: [],
@@ -844,7 +844,7 @@ export function buildExamSetResult(
   }
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "exam_set"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups: [],
@@ -861,7 +861,7 @@ export function buildListeningResult(
   const related = getListeningRelated(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "listening"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '同步听力资源', '当前单元听力资源')],
     smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '听力专项资源', '听力专项和模拟资源')] : [],
@@ -877,7 +877,7 @@ export function buildListeningMockResult(
   const resources = getListeningMockResources(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "listening_mock"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '听力模拟资源', '听力模拟和模考资源')],
     smartRelatedGroups: [],
@@ -904,7 +904,7 @@ export function buildSpeakingResult(
   }
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "speaking"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups,
@@ -921,7 +921,7 @@ export function buildTextResult(
   const related = getTextRelated(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "text"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '课文资源', '当前单元课文资源，支持跟读、背诵和朗读')],
     smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '相关词汇与听力', '课文相关的词汇和听力')] : [],
@@ -938,7 +938,7 @@ export function buildVideoResult(
   const related = getVideoRelated(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "video"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '同步视频资源', '当前单元同步视频资源')],
     smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '拓展视频资源', '拓展视频资源')] : [],
@@ -955,7 +955,7 @@ export function buildThemeVideoResult(
   const related = getThemeVideoRelated(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "theme_video"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '主题视频资源', '主题视频和拓展资源')],
     smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '同步视频资源', '当前单元同步视频')] : [],
@@ -972,7 +972,7 @@ export function buildDubbingResult(
   const related = getDubbingRelated(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "dubbing"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '趣味配音资源', '趣味配音资源')],
     smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '主题视频资源', '主题视频资源')] : [],
@@ -989,7 +989,7 @@ export function buildGrammarResult(
   const related = getGrammarRelated(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "grammar"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '语法练习资源', '语法和语言知识练习资源')],
     smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '综合与模拟练习', '语法相关的综合和模拟练习')] : [],
@@ -1006,7 +1006,7 @@ export function buildReadingResult(
   const related = getReadingRelated(ctx)
 
   return {
-    ...makeBaseResult(query),
+    ...makeBaseResult(query, "reading"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups: [wrapResourcesToGroup(resources, '阅读训练资源', '阅读练习和训练资源')],
     smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '同步与模拟阅读资源', '阅读相关的同步和模拟练习')] : [],
