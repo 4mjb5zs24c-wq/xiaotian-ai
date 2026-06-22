@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main, feature/writing-insight]
+    branches: [main, feature/writing-insight, feature/smart-search-v1.1]
   workflow_dispatch:
 
 # Give the workflow permission to write to gh-pages
