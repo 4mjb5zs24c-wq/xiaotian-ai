@@ -40,6 +40,14 @@ import {
   buildDubbingResult,
   buildGrammarResult,
   buildReadingResult,
+  matchResourceNames,
+  buildNameMatchResult,
+  isStrongNameMatch,
+  isTextbookNameMatch,
+  hasExactNameMatch,
+  hasPrefixNameMatch,
+  matchRegionResources,
+  buildRegionMatchResult,
 } from '../ai/search-new/searchEnhancer'
 import {
   SearchResultView,
@@ -157,7 +165,31 @@ export default function SearchPage() {
     setPrecisionJump(null)
     setUnrecognizedQuery(null)
 
-    // ── Step 1: Check for precision jump intents ──────
+    // ── Step 1: Pre-compute all match signals ──────────
+    const nameMatch = matchResourceNames(sq, ctx)
+    const regionMatch = matchRegionResources(sq, ctx)
+    const v1_1Intent = matchV1_1Intent(sq)
+    const isIntentKeyword = v1_1Intent !== null
+
+    // ── Step 1a: Exact name match overrides everything ──
+    if (hasExactNameMatch(nameMatch)) {
+      const steps = generateLoadingSteps(sq)
+      setLoadingSteps(steps)
+      setSearching(true)
+      setShowLoading(true)
+      const totalLoadingMs = steps.reduce((sum, s) => sum + s.duration, 0) + 200
+
+      searchTimerRef.current = setTimeout(() => {
+        const enhanced = buildNameMatchResult(sq, ctx, nameMatch)
+        setResult(enhanced.original)
+        setNewSearchResult(enhanced.original)
+        setEnhancedResult(enhanced)
+        setSearching(false)
+      }, totalLoadingMs)
+      return
+    }
+
+    // ── Step 1b: Precision jump (only if no exact name match) ──
     const jump = detectPrecisionJump(sq)
     if (jump) {
       setPrecisionJump(jump)
@@ -166,8 +198,45 @@ export default function SearchPage() {
       return
     }
 
+    // ── Step 1c: Strong name match (prefix overrides intent keywords) ──
+    const hasSpecificNameMatch = isStrongNameMatch(nameMatch) || isTextbookNameMatch(nameMatch)
+    if (hasSpecificNameMatch && (!isIntentKeyword || hasPrefixNameMatch(nameMatch))) {
+      const steps = generateLoadingSteps(sq)
+      setLoadingSteps(steps)
+      setSearching(true)
+      setShowLoading(true)
+      const totalLoadingMs = steps.reduce((sum, s) => sum + s.duration, 0) + 200
+
+      searchTimerRef.current = setTimeout(() => {
+        const enhanced = buildNameMatchResult(sq, ctx, nameMatch)
+        setResult(enhanced.original)
+        setNewSearchResult(enhanced.original)
+        setEnhancedResult(enhanced)
+        setSearching(false)
+      }, totalLoadingMs)
+      return
+    }
+
+    // ── Step 1d: Region match ──
+    if (regionMatch && regionMatch.matched) {
+      const steps = generateLoadingSteps(sq)
+      setLoadingSteps(steps)
+      setSearching(true)
+      setShowLoading(true)
+      const totalLoadingMs = steps.reduce((sum, s) => sum + s.duration, 0) + 200
+
+      searchTimerRef.current = setTimeout(() => {
+        const enhanced = buildRegionMatchResult(sq, ctx, regionMatch)
+        setResult(enhanced.original)
+        setNewSearchResult(enhanced.original)
+        setEnhancedResult(enhanced)
+        setSearching(false)
+      }, totalLoadingMs)
+      return
+    }
+
     // ── Step 2: Check for v1.1 core intents ──────────
-    const v1_1Intent = matchV1_1Intent(sq)
+    // v1_1Intent already computed above
 
     if (v1_1Intent) {
       // v1.1 intent matched — use direct result builder (skip v1.0 engine)
@@ -363,8 +432,10 @@ export default function SearchPage() {
       preview: '预览',
       detail: '查看',
       listen_dictation: '听默写',
-      assign_dictation: '布置默写',
+      assign_dictation: '布置默写练习',
       oral_reading: '跟读背诵',
+      listen_recognize: '听音识词',
+      dictation_write: '单词默写',
     }
     showToast(`「${item.title}」- ${actionLabels[action] || action}（路由待确认）`)
   }

@@ -82,6 +82,8 @@ export type V1_1IntentId =
   | 'dubbing'
   | 'grammar'
   | 'reading'
+  | 'quiz_compose'
+  | 'custom_practice'
   | null // fall through to v1.0
 
 /**
@@ -101,6 +103,8 @@ function isWordListQuery(query: string): boolean {
 
 function isVocabularyQuery(query: string): boolean {
   const q = query
+  // Exclude precision jump keywords
+  if (/词汇薄弱|词汇掌握差/.test(q)) return false
   return /词汇|单词|生词|课标词|核心词|重点词|背单词|记单词|练单词|非课标词|单词练习|词汇练习|单词训练|词汇训练|单词巩固|词汇巩固/.test(q)
 }
 
@@ -113,7 +117,9 @@ function isPaperQuery(query: string): boolean {
   const q = query
   // Exclude "试卷答题卡" which should be answer_card
   if (/试卷答题卡|试卷作答卡|试卷答题纸/.test(q)) return false
-  return /试卷|卷子|卷纸|题纸|我的试卷|测试卷|检测卷|练习卷|英语试卷|单元卷|期中卷|期末卷|阶段卷|考试卷|测验卷|测试题|练习题|自己出的卷|自己组的卷|试题/.test(q)
+  // Exclude "单元卷" which should be unit_practice
+  if (/单元卷|单元检测|单元测试|单元练习/.test(q)) return false
+  return /试卷|卷子|卷纸|题纸|我的试卷|测试卷|检测卷|练习卷|英语试卷|期中卷|期末卷|阶段卷|考试卷|测验卷|测试题|练习题|自己出的卷|自己组的卷|试题/.test(q)
 }
 
 function isWritingQuery(query: string): boolean {
@@ -138,7 +144,7 @@ function isSpecialTopicQuery(q: string): boolean {
 }
 
 function isMicroSkillQuery(q: string): boolean {
-  return /微技能|微技能训练|微技能练习|微技能专项|阅读微技能|听力微技能|写作微技能|技能训练|小技能|技巧训练|解题技巧|做题方法/.test(q)
+  return /微技能|微技能训练|微技能练习|微技能专项|阅读微技能|听力微技能|写作微技能|技能训练|小技能|技巧训练|解题技巧|做题方法|方法训练/.test(q)
 }
 
 function isListeningMockQuery(q: string): boolean {
@@ -177,7 +183,7 @@ function isTextQuery(q: string): boolean {
   // Exclude: 默写 (dictation), 视频, 配音
   if (/默写/.test(q)) return false
   if (/视频|配音/.test(q)) return false
-  return /课文|课文跟读|课文背诵|课文资源|课文练习|课文朗读|课文讲解|逐句跟读|课文读一读|跟读|背诵|朗读|读课文|跟读课文|背课文|语篇/.test(q)
+  return /课文|课文跟读|课文背诵|课文资源|课文练习|课文朗读|课文讲解|逐句跟读|课文读一读|跟读|背诵|朗读|读课文|跟读课文|背课文|语篇|Section\s*[A-Da-d]/.test(q)
 }
 
 function isThemeVideoQuery(q: string): boolean {
@@ -203,6 +209,15 @@ function isReadingQuery(q: string): boolean {
   // Exclude: 阅读专项 (special_topic)
   if (/阅读专项/.test(q)) return false
   return /阅读|阅读理解|阅读练习|阅读训练|英语阅读|阅读题|任务型阅读|七选五|阅读七选五|阅读材料|阅读文章/.test(q)
+}
+
+function isQuizComposeQuery(q: string): boolean {
+  return /选题组卷|挑题组卷|题库组卷|自己组卷|组卷|选题|挑题|组一套题|组一张卷/.test(q)
+}
+
+function isCustomPracticeQuery(q: string): boolean {
+  // Exclude: matches "练习" or "作业" — must have custom/batch/自建 signals
+  return /自定义批改|自定义练习|自定义作业|自定义布置|自己出题|自己布置|自己批改|自建练习|自定义|批改|自建/.test(q)
 }
 
 /**
@@ -255,28 +270,40 @@ export function matchV1_1Intent(query: string): V1_1IntentId {
   // P11: mock_exam
   if (isMockExamQuery(q)) return 'mock_exam'
 
-  // P12: paper (after answer_card)
+  // P12: unit_practice (before paper to catch "单元卷")
+  if (isUnitPracticeQuery(q)) return 'unit_practice'
+
+  // P13: quiz_compose (before paper to catch "组卷")
+  if (isQuizComposeQuery(q)) return 'quiz_compose'
+
+  // P14: paper
   if (isPaperQuery(q)) return 'paper'
 
-  // P13: text
+  // P15: text
   if (isTextQuery(q)) return 'text'
 
-  // P14: theme_video (must be before video)
+  // P16: theme_video (must be before video)
   if (isThemeVideoQuery(q)) return 'theme_video'
 
-  // P15: video
+  // P17: video
   if (isVideoQuery(q)) return 'video'
 
-  // P16: dubbing
+  // P18: dubbing
   if (isDubbingQuery(q)) return 'dubbing'
 
-  // P17: grammar
+  // P19: grammar
   if (isGrammarQuery(q)) return 'grammar'
 
-  // P18: reading
+  // P20: reading
   if (isReadingQuery(q)) return 'reading'
 
-  // P19: unit_practice > practice (lowest priority for resource intents)
+  // P21: quiz_compose (before practice)
+  if (isQuizComposeQuery(q)) return 'quiz_compose'
+
+  // P22: custom_practice (before practice)
+  if (isCustomPracticeQuery(q)) return 'custom_practice'
+
+  // P23: unit_practice > practice (lowest priority)
   if (isUnitPracticeQuery(q)) return 'unit_practice'
   if (isPracticeQuery(q)) return 'practice'
 
@@ -341,7 +368,7 @@ export function buildAnswerCardResult(
   const myGroup = buildMyAnswerCardGroup(cards)
   const related = getAnswerCardRelatedEntries()
 
-  const smartMatchGroups: ResourceGroup[] = [myGroup]
+  const smartMatchGroups: ResourceGroup[] = [{ ...myGroup, tabKey: 'my_answer_cards', tabLabelOverrides: { my_answer_cards: '我的答题卡' } }]
 
   // New card + third-party card entries as function-type group
   const newCardGroup: ResourceGroup = {
@@ -350,6 +377,8 @@ export function buildAnswerCardResult(
     groupType: 'function',
     isPrimaryMatch: true,
     defaultExpanded: true,
+    tabKey: 'card_functions',
+    tabLabelOverrides: { card_functions: '功能入口' },
     recommendationText: '快速创建或制作答题卡',
     items: [
       {
@@ -389,7 +418,16 @@ export function buildAnswerCardResult(
   smartMatchGroups.push(newCardGroup)
 
   const smartRelatedGroups: ResourceGroup[] = related.length > 0
-    ? [wrapResourcesToGroup(related, '相关练习入口', '答题卡通常与听写、默写、写作等练习搭配使用')]
+    ? [{
+        groupId: 'answer_card_related',
+        groupName: '相关练习入口',
+        groupType: 'dictation_func',
+        isPrimaryMatch: false,
+        defaultExpanded: true,
+        recommendationText: '答题卡通常与听写、默写、写作等练习搭配使用',
+        items: related,
+        displayLimit: 5,
+      }]
     : []
 
   return {
@@ -418,27 +456,35 @@ export function buildWordListResult(
 
   // ── Dictation intent: reorder — function entries first, then unit vocab, then my word lists ──
   if (isDictSearch) {
-    // 1. Dictation function entries first (teacher's primary intent)
-    smartMatchGroups.push(
-      wrapResourcesToGroup(
-        dictItems,
-        '听写功能入口',
-        '快速创建听写练习，支持词汇听写、词句听写和篇章默写',
-      ),
-    )
+    // 1. Dictation function entries first (lightweight entry cards)
+    smartMatchGroups.push({
+      groupId: 'grp-dictation_func',
+      groupName: '听写功能入口',
+      groupType: 'dictation_func',
+      isPrimaryMatch: true,
+      defaultExpanded: true,
+      recommendationText: '快速创建听写练习，支持词汇听写、词句听写和篇章默写',
+      items: dictItems,
+      displayLimit: 3,
+      tabLabelOverrides: { vocab_practice: '听写入口' },
+    })
 
-    // 2. Unit vocabulary second (put in smartMatch so it's prominent)
-    smartMatchGroups.push(
-      wrapResourcesToGroup(
-        unitVocab,
-        '当前单元词汇',
-        '当前单元词汇资源，可用于听写和跟读练习',
-      ),
-    )
+    // 2. Unit vocabulary second (dictation-prioritized actions)
+    smartMatchGroups.push({
+      groupId: 'grp-dictation_vocab',
+      groupName: '当前单元词汇',
+      groupType: 'dictation_vocab',
+      isPrimaryMatch: true,
+      defaultExpanded: true,
+      recommendationText: '当前单元词汇资源，可用于听写和跟读练习',
+      items: unitVocab,
+      displayLimit: 5,
+      tabLabelOverrides: { sync_vocab: '当前单元词汇' },
+    })
 
-    // 3. My word lists third
+    // 3. My word lists third (my_content type for proper rendering)
     if (lists.length > 0) {
-      smartMatchGroups.push(myGroup)
+      smartMatchGroups.push({ ...myGroup, groupType: 'my_content', tabLabelOverrides: { function: '我的词表' } })
     }
 
     return {
@@ -452,19 +498,19 @@ export function buildWordListResult(
   // ── Default / word list / vocabulary / non-dictation ordering ──
   // 1. My word lists first
   if (lists.length > 0) {
-    smartMatchGroups.push(myGroup)
+    smartMatchGroups.push({ ...myGroup, tabLabelOverrides: { function: '我的词表' } })
   }
 
   // 2. Dictation entries
-  smartMatchGroups.push(
-    wrapResourcesToGroup(
-      dictItems,
-      '听写与默写入口',
-      isDefaultSearch
-        ? '适合默写训练的练习形式'
-        : '可用于听写和默写的练习形式',
-    ),
+  const dictGroup = wrapResourcesToGroup(
+    dictItems,
+    '听写与默写入口',
+    isDefaultSearch
+      ? '适合默写训练的练习形式'
+      : '可用于听写和默写的练习形式',
   )
+  dictGroup.tabLabelOverrides = { vocab_practice: '听写默写入口' }
+  smartMatchGroups.push(dictGroup)
 
   // 3. Unit vocabulary as smart related (lower prominence)
   smartRelatedGroups.push(
@@ -708,11 +754,11 @@ export function buildSpecialTopicResult(
   } else {
     // Specific sub-topic
     const resources = getSpecialTopicResources(subTopic, ctx)
-    smartMatchGroups.push(wrapResourcesToGroup(resources, '智能匹配', `与「${query}」相关的专项资源`))
+    smartMatchGroups.push(wrapResourcesToGroup(resources, '专项资源', `与「${query}」相关的专项资源`))
 
     const related = getSpecialTopicRelated(subTopic, ctx)
     if (related.length > 0) {
-      smartRelatedGroups.push(wrapRelatedGroup(related, '智能关联推荐', '与专项相关的补充资源'))
+      smartRelatedGroups.push(wrapRelatedGroup(related, '相关专项资源', '与专项相关的补充资源'))
     }
   }
 
@@ -736,8 +782,8 @@ export function buildMicroSkillResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '微技能专项资源，聚焦单项能力训练')],
-    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '同能力方向的补充资源')] : [],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '微技能训练资源', '微技能专项资源，聚焦单项能力训练')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '能力拓展资源', '同能力方向的补充资源')] : [],
   }
 }
 
@@ -753,8 +799,8 @@ export function buildRealExamResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '真题资源，按年份和地区整理')],
-    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '与真题搭配的模拟和冲刺资源')] : [],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '真题资源', '真题资源，按年份和地区整理')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '模拟与冲刺资源', '与真题搭配的模拟和冲刺资源')] : [],
   }
 }
 
@@ -769,7 +815,7 @@ export function buildMockExamResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '模拟题、冲刺卷和阶段检测资源')],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '模拟与冲刺资源', '模拟题、冲刺卷和阶段检测资源')],
     smartRelatedGroups: [],
   }
 }
@@ -785,7 +831,7 @@ export function buildExamSetResult(
   const smartMatchGroups: ResourceGroup[] = []
 
   if (resources.length > 0) {
-    smartMatchGroups.push(wrapResourcesToGroup(resources, '智能匹配', '成套模拟卷和套题资源'))
+    smartMatchGroups.push(wrapResourcesToGroup(resources, '套题资源', '成套模拟卷和套题资源'))
   } else {
     // Fallback: paper hierarchy
     const fallback = getExamSetFallbackPapers(ctx)
@@ -817,8 +863,8 @@ export function buildListeningResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '当前单元听力资源')],
-    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '听力专项和模拟资源')] : [],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '同步听力资源', '当前单元听力资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '听力专项资源', '听力专项和模拟资源')] : [],
   }
 }
 
@@ -833,7 +879,7 @@ export function buildListeningMockResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '听力模拟和模考资源')],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '听力模拟资源', '听力模拟和模考资源')],
     smartRelatedGroups: [],
   }
 }
@@ -850,11 +896,11 @@ export function buildSpeakingResult(
   const smartRelatedGroups: ResourceGroup[] = []
 
   if (resources.length > 0) {
-    smartMatchGroups.push(wrapResourcesToGroup(resources, '智能匹配', '听说练习和测评资源'))
+    smartMatchGroups.push(wrapResourcesToGroup(resources, '听说练习资源', '听说练习和测评资源'))
   } else {
     // Fallback — region doesn't have speaking resources
     const fallback = getSpeakingFallback(ctx)
-    smartMatchGroups.push(wrapResourcesToGroup(fallback, '替代推荐', '当前地区暂无听说资源，以下为替代推荐'))
+    smartMatchGroups.push(wrapResourcesToGroup(fallback, '替代推荐资源', '当前地区暂无听说资源，以下为替代推荐'))
   }
 
   return {
@@ -877,8 +923,8 @@ export function buildTextResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '当前单元课文资源，支持跟读、背诵和朗读')],
-    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '课文相关的词汇和听力')] : [],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '课文资源', '当前单元课文资源，支持跟读、背诵和朗读')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '相关词汇与听力', '课文相关的词汇和听力')] : [],
   }
 }
 
@@ -894,8 +940,8 @@ export function buildVideoResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '当前单元同步视频资源')],
-    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '拓展视频资源')] : [],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '同步视频资源', '当前单元同步视频资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '拓展视频资源', '拓展视频资源')] : [],
   }
 }
 
@@ -911,8 +957,8 @@ export function buildThemeVideoResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '主题视频和拓展资源')],
-    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '当前单元同步视频')] : [],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '主题视频资源', '主题视频和拓展资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '同步视频资源', '当前单元同步视频')] : [],
   }
 }
 
@@ -928,8 +974,8 @@ export function buildDubbingResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '趣味配音资源')],
-    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '主题视频资源')] : [],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '趣味配音资源', '趣味配音资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '主题视频资源', '主题视频资源')] : [],
   }
 }
 
@@ -945,8 +991,8 @@ export function buildGrammarResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '语法和语言知识练习资源')],
-    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '语法相关的综合和模拟练习')] : [],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '语法练习资源', '语法和语言知识练习资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '综合与模拟练习', '语法相关的综合和模拟练习')] : [],
   }
 }
 
@@ -962,7 +1008,7 @@ export function buildReadingResult(
   return {
     ...makeBaseResult(query),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '智能匹配', '阅读练习和训练资源')],
-    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '智能关联推荐', '阅读相关的同步和模拟练习')] : [],
+    smartMatchGroups: [wrapResourcesToGroup(resources, '阅读训练资源', '阅读练习和训练资源')],
+    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '同步与模拟阅读资源', '阅读相关的同步和模拟练习')] : [],
   }
 }

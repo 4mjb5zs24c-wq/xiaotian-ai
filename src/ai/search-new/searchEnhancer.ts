@@ -58,6 +58,24 @@ export {
 
 export type { V1_1IntentId } from './intentHandlers'
 
+// ── Phase 4 exports ─────────────────────────────────────
+export {
+  matchResourceNames,
+  buildNameMatchResult,
+  isStrongNameMatch,
+  isTextbookNameMatch,
+  hasExactNameMatch,
+  hasPrefixNameMatch,
+} from './nameMatcher'
+export type { NameMatchSearchResult, NameMatchResult, NameMatchLevel } from './nameMatcher'
+
+export {
+  detectRegion,
+  matchRegionResources,
+  buildRegionMatchResult,
+} from './regionMatcher'
+export type { RegionSearchResult, RegionMatchResult } from './regionMatcher'
+
 // ═══════════════════════════════════════════════════════════
 // 1. Dual-Group Mapping + Group Name Normalization
 // ═══════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react'
-import { Sparkles, Lightbulb } from 'lucide-react'
+import { Sparkles, Lightbulb, Headphones, Mic, Pen } from 'lucide-react'
 import type {
   NewSearchResult,
   ResourceItem,
@@ -53,15 +53,30 @@ interface SearchResultViewProps {
 // ── Helpers ───────────────────────────────────────────────
 
 function buildSectionTabs(groups: ResourceGroupType[]): FilterTab[] {
-  const typeMap = new Map<string, { label: string; count: number }>()
+  const tabMap = new Map<string, { label: string; count: number }>()
   for (const g of groups) {
+    // Per-group tab key: the whole group is a single tab entry
+    if (g.tabKey) {
+      const existing = tabMap.get(g.tabKey)
+      if (existing) {
+        existing.count += g.items.length
+      } else {
+        const label = g.tabLabelOverrides?.[g.tabKey]
+          || g.groupName
+          || g.tabKey
+        tabMap.set(g.tabKey, { label, count: g.items.length })
+      }
+      continue
+    }
+    // Per-item-type tabs (legacy behavior)
     for (const item of g.items) {
-      const existing = typeMap.get(item.type)
+      const existing = tabMap.get(item.type)
       if (existing) {
         existing.count++
       } else {
-        typeMap.set(item.type, {
-          label: searchResourceCategoryLabel[item.type] || item.type,
+        const overrideLabel = g.tabLabelOverrides?.[item.type]
+        tabMap.set(item.type, {
+          label: overrideLabel || searchResourceCategoryLabel[item.type] || item.type,
           count: 1,
         })
       }
@@ -69,7 +84,7 @@ function buildSectionTabs(groups: ResourceGroupType[]): FilterTab[] {
   }
   const total = groups.reduce((sum, g) => sum + g.items.length, 0)
   const tabs: FilterTab[] = [{ category: 'all', label: '全部', count: total }]
-  for (const [key, { label, count }] of typeMap) {
+  for (const [key, { label, count }] of tabMap) {
     tabs.push({ category: key as SearchResourceCategory, label, count })
   }
   return tabs
@@ -80,12 +95,14 @@ function filterGroupsByCategory(
   category: string,
 ): ResourceGroupType[] {
   if (category === 'all') return groups
-  return groups
-    .map((g) => ({
-      ...g,
-      items: g.items.filter((item) => item.type === category),
-    }))
-    .filter((g) => g.items.length > 0)
+  // Per-group tabKey filtering: keep only groups with matching tabKey
+  return groups.filter((g) => {
+    if (g.tabKey) return g.tabKey === category
+    return g.items.some((item) => item.type === category)
+  }).map((g) => {
+    if (g.tabKey) return g // keep all items in the group
+    return { ...g, items: g.items.filter((item) => item.type === category) }
+  }).filter((g) => g.items.length > 0)
 }
 
 // ── Per-section filter tabs ───────────────────────────────
@@ -249,45 +266,7 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
     const showAll = showAllGroups.has(group.groupId)
     const isMyContent = isMyContentGroup(group.groupId)
 
-    // Function-type groups: compact entry cards (not full ResourceCards)
-    if (group.groupType === 'function') {
-      return (
-        <div key={group.groupId}>
-          {group.groupName && (
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-[13px] font-semibold text-slate-700">{group.groupName}</span>
-            </div>
-          )}
-          {group.recommendationText && (
-            <p className="text-[12px] text-slate-400 mb-2">{group.recommendationText}</p>
-          )}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {group.items.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white border border-slate-200/60 rounded-xl px-4 py-3.5
-                  hover:border-blue-200 hover:shadow-sm transition-all duration-150"
-              >
-                <h4 className="text-[14px] font-semibold text-slate-800 mb-1">{item.title}</h4>
-                {item.recommendReason && (
-                  <p className="text-[12px] text-slate-400 mb-3">{item.recommendReason}</p>
-                )}
-                <button
-                  onClick={() => onMyContentAction?.(item, item.id === 'func-new-card' ? 'new_card' : 'third_party_card')}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[13px] font-semibold
-                    bg-blue-500 text-white hover:bg-blue-600 shadow-sm shadow-blue-200/40
-                    transition-all duration-200 active:scale-[0.98]"
-                >
-                  {item.id === 'func-new-card' ? '立即新建' : '去制作'}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )
-    }
-
-    // My-content groups: compact MyContentCard in 2-col grid, no ResourceGroup wrapper
+    // My-content groups: compact MyContentCard, must check BEFORE function-type
     if (isMyContent) {
       const visibleCount = showAll ? group.items.length : Math.min(group.displayLimit, group.items.length)
       const hasMore = group.items.length > group.displayLimit
@@ -341,6 +320,148 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
               {showAll ? '收起' : `查看全部 ${group.items.length} 条`}
             </button>
           )}
+        </div>
+      )
+    }
+
+    // Function-type groups: compact entry cards (新建答题卡/三方答题卡)
+    if (group.groupType === 'function') {
+      return (
+        <div key={group.groupId}>
+          {group.groupName && (
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[13px] font-semibold text-slate-700">{group.groupName}</span>
+            </div>
+          )}
+          {group.recommendationText && (
+            <p className="text-[12px] text-slate-400 mb-2">{group.recommendationText}</p>
+          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {group.items.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white border border-slate-200/60 rounded-xl px-4 py-3.5
+                  hover:border-blue-200 hover:shadow-sm transition-all duration-150"
+              >
+                <h4 className="text-[14px] font-semibold text-slate-800 mb-1">{item.title}</h4>
+                {item.recommendReason && (
+                  <p className="text-[12px] text-slate-400 mb-3">{item.recommendReason}</p>
+                )}
+                <button
+                  onClick={() => onMyContentAction?.(item, item.id === 'func-new-card' ? 'new_card' : 'third_party_card')}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[13px] font-semibold
+                    bg-blue-500 text-white hover:bg-blue-600 shadow-sm shadow-blue-200/40
+                    transition-all duration-200 active:scale-[0.98]"
+                >
+                  {item.id === 'func-new-card' ? '立即新建' : '去制作'}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    // Dictation function entries — lightweight compact cards
+    if (group.groupType === 'dictation_func') {
+      return (
+        <div key={group.groupId}>
+          {group.groupName && (
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[13px] font-semibold text-slate-700">{group.groupName}</span>
+            </div>
+          )}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {group.items.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white border border-slate-200/60 rounded-xl px-4 py-3
+                  hover:border-blue-200 hover:shadow-sm transition-all duration-150"
+              >
+                <h4 className="text-[14px] font-semibold text-slate-800 mb-1">{item.title}</h4>
+                {item.recommendReason && (
+                  <p className="text-[11px] text-slate-400 mb-2.5 line-clamp-2">{item.recommendReason}</p>
+                )}
+                <button
+                  onClick={() => onAssign(item)}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-semibold
+                    bg-blue-500 text-white hover:bg-blue-600 shadow-sm shadow-blue-200/40
+                    transition-all duration-200 active:scale-[0.98]"
+                >
+                  去布置
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    // Dictation vocab — unit vocabulary with dictation-prioritized actions
+    if (group.groupType === 'dictation_vocab') {
+      return (
+        <div key={group.groupId}>
+          {group.groupName && (
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[13px] font-semibold text-slate-700">{group.groupName}</span>
+            </div>
+          )}
+          {group.recommendationText && (
+            <p className="text-[12px] text-slate-400 mb-2">{group.recommendationText}</p>
+          )}
+          <div className="space-y-3">
+            {group.items.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white border border-slate-200/60 rounded-xl px-4 py-3.5
+                  hover:border-blue-200 hover:shadow-sm transition-all duration-150"
+              >
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <h4 className="text-[14px] font-semibold text-slate-800">{item.title}</h4>
+                  {item.questionCount != null && (
+                    <span className="text-[11px] text-slate-400 shrink-0">词汇量：{item.questionCount}个</span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    onClick={() => onMyContentAction?.(item, 'listen_dictation')}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-semibold
+                      bg-blue-500 text-white hover:bg-blue-600 shadow-sm shadow-blue-200/40
+                      transition-all duration-200 active:scale-[0.98]"
+                  >
+                    <Headphones size={13} />
+                    单词听写
+                  </button>
+                  <button
+                    onClick={() => onMyContentAction?.(item, 'listen_recognize')}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium
+                      text-slate-600 bg-white border border-slate-200 hover:border-blue-300 hover:text-blue-600
+                      hover:bg-blue-50/50 transition-all duration-200"
+                  >
+                    <Mic size={13} />
+                    听音识词
+                  </button>
+                  <button
+                    onClick={() => onMyContentAction?.(item, 'dictation_write')}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium
+                      text-slate-600 bg-white border border-slate-200 hover:border-blue-300 hover:text-blue-600
+                      hover:bg-blue-50/50 transition-all duration-200"
+                  >
+                    <Pen size={13} />
+                    单词默写
+                  </button>
+                  <button
+                    onClick={() => onMyContentAction?.(item, 'more')}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium
+                      text-slate-600 bg-white border border-slate-200 hover:border-blue-300 hover:text-blue-600
+                      hover:bg-blue-50/50 transition-all duration-200"
+                  >
+                    更多
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )
     }
@@ -435,7 +556,9 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
     const filtered = useMemo(() => filterGroupsByCategory(groups, activeTab), [groups, activeTab])
     const totalCount = groups.reduce((sum, g) => sum + g.items.length, 0)
     const allItems = useMemo(() => filtered.flatMap((g) => g.items), [filtered])
-    const singleType = tabs.length <= 2
+    // Single group + single type → flat render; multi-group → per-group render
+    // (even if items share same type, different groupTypes need different rendering)
+    const singleType = tabs.length <= 2 && filtered.length === 1
     const recTexts = filtered
       .map((g) => g.recommendationText)
       .filter(Boolean) as string[]

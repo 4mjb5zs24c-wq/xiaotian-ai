@@ -75,12 +75,15 @@ export interface FilterTab {
 // ── Resource Group Type ─────────────────────────────────
 
 export type ResourceGroupType =
-  | 'resource'       // 普通资源组
-  | 'sync_vocab'     // 同步词汇（内容选择型）
-  | 'sync_text'      // 同步课文（内容选择型）
-  | 'function'       // 功能入口组
-  | 'paper'          // 试卷组
-  | 'alternative'    // 替代推荐组
+  | 'resource'          // 普通资源组
+  | 'sync_vocab'        // 同步词汇（内容选择型）
+  | 'sync_text'         // 同步课文（内容选择型）
+  | 'function'          // 功能入口组
+  | 'paper'             // 试卷组
+  | 'alternative'       // 替代推荐组
+  | 'my_content'        // 我的内容（词表/答题卡/试卷）
+  | 'dictation_func'    // 听写功能入口（轻量级）
+  | 'dictation_vocab'   // 听写场景下的单元词汇
 
 // ── Resource Item ───────────────────────────────────────
 
@@ -132,6 +135,11 @@ export interface ResourceGroup {
   matchCategory?: SearchResourceCategory
   /** Label for alternative recommendations: 当前单元/同年级推荐/非当前单元 */
   altLabel?: '当前单元' | '同年级推荐' | '非当前单元'
+  /** Override tab labels for items in this group. Maps item.type → display label. */
+  tabLabelOverrides?: Record<string, string>
+  /** Per-group tab key — when set, the tab represents this whole group rather than individual item types.
+   *  Enables distinct tabs for groups whose items share the same type (e.g. my_content vs function). */
+  tabKey?: string
 }
 
 // ── Sync Vocab Data ─────────────────────────────────────

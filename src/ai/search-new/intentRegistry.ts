@@ -335,7 +335,7 @@ export const INTENT_REGISTRY: IntentRecord[] = [
   defineIntent({
     intentId: 'quiz_compose',
     label: '选题组卷',
-    priority: 22,
+    priority: 4,
     category: 'function',
     primaryKeywords: ['选题组卷', '挑题组卷', '题库组卷', '自己组卷'],
     aliases: ['组卷', '选题', '挑题', '组一套题', '组一张卷'],
@@ -344,7 +344,7 @@ export const INTENT_REGISTRY: IntentRecord[] = [
   defineIntent({
     intentId: 'custom_practice',
     label: '自定义练习',
-    priority: 23,
+    priority: 5,
     category: 'function',
     primaryKeywords: ['自定义批改', '自定义练习', '自定义作业', '自定义布置', '自己出题', '自己布置', '自建练习'],
     aliases: ['自定义', '批改', '自建'],

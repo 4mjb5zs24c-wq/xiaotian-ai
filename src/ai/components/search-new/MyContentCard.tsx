@@ -103,32 +103,32 @@ function getActions(item: ResourceItem, query: string): QuickAction[] {
   }
 
   // Word list — primary button changes based on query
-  const isDictation = /听写|听/.test(query)
+  const isDictation = /听写|听默|听词/.test(query)
   const isDefault = /默写|默/.test(query)
 
   if (isDictation) {
     return [
       { key: 'listen_dictation', label: '听默写', icon: <Headphones size={13} />, isPrimary: true },
-      { key: 'assign_dictation', label: '布置默写', icon: <FileText size={13} />, isPrimary: false },
-      { key: 'oral_reading', label: '跟读背诵', icon: <BookOpen size={13} />, isPrimary: false },
+      { key: 'assign_dictation', label: '布置默写练习', icon: <FileText size={13} />, isPrimary: false },
+      { key: 'oral_reading', label: '布置跟读背诵', icon: <BookOpen size={13} />, isPrimary: false },
       { key: 'more', label: '更多', icon: <MoreHorizontal size={13} />, isPrimary: false },
     ]
   }
 
   if (isDefault) {
     return [
-      { key: 'assign_dictation', label: '布置默写', icon: <FileText size={13} />, isPrimary: true },
+      { key: 'assign_dictation', label: '布置默写练习', icon: <FileText size={13} />, isPrimary: true },
       { key: 'listen_dictation', label: '听默写', icon: <Headphones size={13} />, isPrimary: false },
-      { key: 'oral_reading', label: '跟读背诵', icon: <BookOpen size={13} />, isPrimary: false },
+      { key: 'oral_reading', label: '布置跟读背诵', icon: <BookOpen size={13} />, isPrimary: false },
       { key: 'more', label: '更多', icon: <MoreHorizontal size={13} />, isPrimary: false },
     ]
   }
 
   // Default: 词汇/单词/词表
   return [
-    { key: 'assign_dictation', label: '布置默写', icon: <FileText size={13} />, isPrimary: true },
+    { key: 'assign_dictation', label: '布置默写练习', icon: <FileText size={13} />, isPrimary: true },
     { key: 'listen_dictation', label: '听默写', icon: <Headphones size={13} />, isPrimary: false },
-    { key: 'oral_reading', label: '跟读背诵', icon: <BookOpen size={13} />, isPrimary: false },
+    { key: 'oral_reading', label: '布置跟读背诵', icon: <BookOpen size={13} />, isPrimary: false },
     { key: 'detail', label: '查看', icon: <ChevronRight size={13} />, isPrimary: false },
   ]
 }

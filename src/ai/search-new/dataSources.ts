@@ -91,7 +91,7 @@ export function buildMyAnswerCardGroup(cards: ResourceItem[]): ResourceGroup {
   return {
     groupId: 'my_answer_cards',
     groupName: cards.length > 0 ? '我的答题卡' : '',
-    groupType: 'function',
+    groupType: 'my_content',
     isPrimaryMatch: true,
     defaultExpanded: true,
     recommendationText:
@@ -168,7 +168,7 @@ export function buildMyWordListGroup(lists: ResourceItem[]): ResourceGroup {
   return {
     groupId: 'my_wordlists',
     groupName: lists.length > 0 ? '我的词表' : '',
-    groupType: 'function',
+    groupType: 'my_content',
     isPrimaryMatch: true,
     defaultExpanded: true,
     recommendationText:
@@ -1158,5 +1158,156 @@ export function getReadingRelated(ctx: SearchContext): ResourceItem[] {
   return [
     { ...base, id: 'rel-rd-1', title: `${unit} 同步练习`, type: 'comprehensive', tags: ['同步练习', unit], difficulty: 'basic', questionCount: 15, duration: '20分钟', recommendReason: '同步综合练习' },
     { ...base, id: 'rel-rd-2', title: '模拟阅读练习', type: 'mock_exam', tags: ['模拟', '阅读'], difficulty: 'advanced', questionCount: 20, duration: '30分钟', canAddToPaperBasket: true, recommendReason: '模拟环境阅读训练' },
+  ]
+}
+
+// ═══════════════════════════════════════════════════════════
+// Phase 4 — Textbook / Chapter Data
+// ═══════════════════════════════════════════════════════════
+
+export interface TextbookChapter {
+  id: string
+  name: string
+  /** Names that can match this chapter (aliases, section names, etc.) */
+  matchNames: string[]
+  /** Resource types available under this chapter */
+  resourceTypes: ('text' | 'vocab' | 'listening' | 'practice' | 'video')[]
+  /** Is this the current teaching unit? */
+  isCurrentUnit: boolean
+  /** Parent textbook name */
+  textbook: string
+}
+
+export function getTextbookChapters(ctx: SearchContext): TextbookChapter[] {
+  const textbook = ctx.textbook || '人教版'
+  const currentUnit = ctx.unit || 'Unit 3'
+
+  return [
+    {
+      id: 'unit-1',
+      name: 'Unit 1',
+      matchNames: ['Unit 1', 'unit1', 'Unit1'],
+      resourceTypes: ['text', 'vocab', 'listening', 'practice', 'video'],
+      isCurrentUnit: currentUnit === 'Unit 1',
+      textbook,
+    },
+    {
+      id: 'unit-1-section-a',
+      name: 'Section A',
+      matchNames: ['Section A', 'section a', 'SectionA', 'sectionA'],
+      resourceTypes: ['text', 'vocab', 'listening'],
+      isCurrentUnit: currentUnit === 'Unit 1',
+      textbook,
+    },
+    {
+      id: 'unit-1-section-b',
+      name: 'Section B',
+      matchNames: ['Section B', 'section b', 'SectionB', 'sectionB'],
+      resourceTypes: ['text', 'vocab', 'practice'],
+      isCurrentUnit: currentUnit === 'Unit 1',
+      textbook,
+    },
+    {
+      id: 'unit-1-text',
+      name: 'Happy Holiday',
+      matchNames: ['Happy Holiday', 'happy holiday', 'Happy holiday'],
+      resourceTypes: ['text', 'listening'],
+      isCurrentUnit: currentUnit === 'Unit 1',
+      textbook,
+    },
+    {
+      id: 'unit-2',
+      name: 'Unit 2',
+      matchNames: ['Unit 2', 'unit2', 'Unit2'],
+      resourceTypes: ['text', 'vocab', 'listening', 'practice', 'video'],
+      isCurrentUnit: currentUnit === 'Unit 2',
+      textbook,
+    },
+    {
+      id: 'unit-3',
+      name: 'Unit 3',
+      matchNames: ['Unit 3', 'unit3', 'Unit3'],
+      resourceTypes: ['text', 'vocab', 'listening', 'practice', 'video'],
+      isCurrentUnit: currentUnit === 'Unit 3',
+      textbook,
+    },
+    {
+      id: 'unit-3-section-a',
+      name: 'Section A',
+      matchNames: ['Section A', 'section a', 'SectionA'],
+      resourceTypes: ['text', 'vocab', 'listening'],
+      isCurrentUnit: currentUnit === 'Unit 3',
+      textbook,
+    },
+    {
+      id: 'unit-3-section-b',
+      name: 'Section B',
+      matchNames: ['Section B', 'section b', 'SectionB'],
+      resourceTypes: ['text', 'vocab', 'practice'],
+      isCurrentUnit: currentUnit === 'Unit 3',
+      textbook,
+    },
+    {
+      id: 'unit-3-text',
+      name: 'Food and Drinks',
+      matchNames: ['Food and Drinks', 'food and drinks', 'Food And Drinks'],
+      resourceTypes: ['text', 'listening'],
+      isCurrentUnit: currentUnit === 'Unit 3',
+      textbook,
+    },
+  ]
+}
+
+export interface TextbookInfo {
+  name: string
+  aliases: string[]
+}
+
+export function getAvailableTextbooks(): TextbookInfo[] {
+  return [
+    { name: '人教版', aliases: ['人教版', '人教', 'PEP', 'pep'] },
+    { name: '仁爱版', aliases: ['仁爱版', '仁爱', 'Project English'] },
+    { name: '外研版', aliases: ['外研版', '外研', 'FLTRP'] },
+    { name: '北师大版', aliases: ['北师大版', '北师大', 'BNUP'] },
+    { name: '冀教版', aliases: ['冀教版', '冀教'] },
+  ]
+}
+
+// ═══════════════════════════════════════════════════════════
+// Phase 4 — Region Papers
+// ═══════════════════════════════════════════════════════════
+
+export interface RegionPaper {
+  id: string
+  title: string
+  region: string
+  resourceType: 'paper' | 'realExam' | 'mockExam' | 'finalExam' | 'midtermExam'
+  year?: string
+}
+
+export function getRegionPapers(ctx: SearchContext): RegionPaper[] {
+  const grade = ctx.grade || '七年级上'
+  return [
+    { id: 'rp-bj-1', title: `北京中考真题 (${grade})`, region: '北京', resourceType: 'realExam', year: '2024' },
+    { id: 'rp-bj-2', title: `北京期末模拟卷 (${grade})`, region: '北京', resourceType: 'mockExam', year: '2024' },
+    { id: 'rp-bj-3', title: `北京海淀期末试卷 (${grade})`, region: '海淀', resourceType: 'finalExam', year: '2024' },
+    { id: 'rp-bj-4', title: `北京朝阳模拟试卷 (${grade})`, region: '朝阳', resourceType: 'mockExam', year: '2024' },
+    { id: 'rp-hd-1', title: `海淀期末试卷 (${grade})`, region: '海淀', resourceType: 'finalExam', year: '2024' },
+    { id: 'rp-hd-2', title: `海淀模拟试卷 (${grade})`, region: '海淀', resourceType: 'mockExam', year: '2024' },
+    { id: 'rp-cy-1', title: `朝阳期末试卷 (${grade})`, region: '朝阳', resourceType: 'finalExam', year: '2024' },
+    { id: 'rp-sz-1', title: `深圳模拟试卷 (${grade})`, region: '深圳', resourceType: 'mockExam', year: '2024' },
+    { id: 'rp-sz-2', title: `深圳中考真题 (${grade})`, region: '深圳', resourceType: 'realExam', year: '2023' },
+    { id: 'rp-gz-1', title: `广州中考真题 (${grade})`, region: '广州', resourceType: 'realExam', year: '2024' },
+    { id: 'rp-sh-1', title: `上海中考真题 (${grade})`, region: '上海', resourceType: 'realExam', year: '2024' },
+    { id: 'rp-sd-1', title: `山东中考真题 (${grade})`, region: '山东', resourceType: 'realExam', year: '2024' },
+    { id: 'rp-sd-2', title: `山东模拟试卷 (${grade})`, region: '山东', resourceType: 'mockExam', year: '2024' },
+    { id: 'rp-yn-1', title: `云南中考真题 (${grade})`, region: '云南', resourceType: 'realExam', year: '2024' },
+    { id: 'rp-yn-2', title: `云南模拟试卷 (${grade})`, region: '云南', resourceType: 'mockExam', year: '2023' },
+    { id: 'rp-js-1', title: `江苏中考真题 (${grade})`, region: '江苏', resourceType: 'realExam', year: '2024' },
+    { id: 'rp-zj-1', title: `浙江中考真题 (${grade})`, region: '浙江', resourceType: 'realExam', year: '2024' },
+    { id: 'rp-hn-1', title: `河南中考真题 (${grade})`, region: '河南', resourceType: 'realExam', year: '2024' },
+    { id: 'rp-hb-1', title: `河北中考真题 (${grade})`, region: '河北', resourceType: 'realExam', year: '2024' },
+    { id: 'rp-gd-1', title: `广东中考真题 (${grade})`, region: '广东', resourceType: 'realExam', year: '2024' },
+    { id: 'rp-sc-1', title: `四川中考真题 (${grade})`, region: '四川', resourceType: 'realExam', year: '2024' },
   ]
 }
