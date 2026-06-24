@@ -1,7 +1,7 @@
 /**
- * 词汇复习方案 — 测试场景（仅 dev/demo 模式）
+ * 词汇能力提升方案 — 测试场景（仅 dev/demo 模式）
  *
- * 用于验证候选词不足、题目不足、回滚词不足、有效作答率不足、稳定基线词不足时的提示和降级逻辑。
+ * 用于验证候选词不足、题目不足、有效作答率不足、稳定基线词不足时的提示和降级逻辑。
  */
 
 export type TestScenarioId =
@@ -9,7 +9,6 @@ export type TestScenarioId =
   | 'draft_shortage'
   | 'candidate_shortage'
   | 'question_shortage'
-  | 'rollback_shortage'
   | 'low_answer_rate'
   | 'baseline_shortage'
   | 'empty_draft'
@@ -67,17 +66,6 @@ export const TEST_SCENARIOS: TestScenarioData[] = [
     candidateWordCount: 50,
     availableQuestionCount: 22,
     availableRollbackCount: 6,
-    day1AnswerRate: 0.72,
-    hasPreviousRollbackPool: true,
-    stableBaselineCount: 8,
-    baselineImprovementRate: 0.18,
-  },
-  {
-    id: 'rollback_shortage',
-    label: '回滚词不足',
-    candidateWordCount: 50,
-    availableQuestionCount: 30,
-    availableRollbackCount: 3,
     day1AnswerRate: 0.72,
     hasPreviousRollbackPool: true,
     stableBaselineCount: 8,
@@ -173,31 +161,13 @@ export function getScenarioWarnings(
       }
       break
     }
-    case 'rollback_shortage': {
-      const expected = Math.ceil(wordsPerDay / 5)
-      const actual = scenario.availableRollbackCount
-      if (actual < expected) {
-        warnings.push({
-          type: 'warning',
-          message: `回滚词不足 ${expected} 道，已用主复习题补齐当天题量。`,
-        })
-      }
-      break
-    }
     case 'low_answer_rate': {
       const rate = scenario.day1AnswerRate
       if (rate < 0.5) {
-        if (scenario.hasPreviousRollbackPool) {
-          warnings.push({
-            type: 'warning',
-            message: `上一复习日有效作答率不足 50%（${Math.round(rate * 100)}%），本次回滚题已结合上一次有效回滚池生成；不足部分由主复习题补齐。`,
-          })
-        } else {
-          warnings.push({
-            type: 'warning',
-            message: `上一复习日有效作答率不足 50%（${Math.round(rate * 100)}%），暂不生成动态回滚题，已用主复习题补齐。`,
-          })
-        }
+        warnings.push({
+          type: 'warning',
+          message: `上一闯关有效作答率不足 50%（${Math.round(rate * 100)}%），已用主复习题补齐当天题量。`,
+        })
       }
       break
     }
@@ -206,13 +176,6 @@ export function getScenarioWarnings(
         warnings.push({
           type: 'warning',
           message: `稳定基线词数量不足（${scenario.stableBaselineCount} 个），暂不计算整体提升。`,
-        })
-      }
-      // Also show current accuracy if available
-      if (scenario.baselineImprovementRate == null) {
-        warnings.push({
-          type: 'info',
-          message: '当前回滚题正确率：76%',
         })
       }
       break
@@ -245,35 +208,11 @@ export function getEffectiveQuestionCount(
   return wordsPerDay
 }
 
-/** Get effective rollback count for a given day index (0 = first day) */
+/** @deprecated 不再使用动态回滚，始终返回 0 回滚题 */
 export function getEffectiveRollbackCount(
-  scenario: TestScenarioData | null,
+  _scenario: TestScenarioData | null,
   wordsPerDay: number,
-  dayIndex: number,
+  _dayIndex: number,
 ): { mainQ: number; rollbackQ: number } {
-  if (dayIndex === 0) return { mainQ: wordsPerDay, rollbackQ: 0 }
-
-  const expectedRollback = Math.ceil(wordsPerDay / 5)
-  const mainQ = Math.floor(wordsPerDay * 4 / 5)
-
-  if (!scenario || scenario.id === 'normal') {
-    return { mainQ, rollbackQ: expectedRollback }
-  }
-
-  if (scenario.id === 'rollback_shortage') {
-    const actual = scenario.availableRollbackCount
-    // If rollback words are insufficient, use fewer rollback + more main review
-    return { mainQ: wordsPerDay - actual, rollbackQ: actual }
-  }
-
-  if (scenario.id === 'low_answer_rate') {
-    if (scenario.hasPreviousRollbackPool) {
-      // Partially from previous pool, rest from main review
-      return { mainQ, rollbackQ: expectedRollback }
-    }
-    // No rollback at all
-    return { mainQ: wordsPerDay, rollbackQ: 0 }
-  }
-
-  return { mainQ, rollbackQ: expectedRollback }
+  return { mainQ: wordsPerDay, rollbackQ: 0 }
 }

@@ -12,7 +12,7 @@ import { matchIntent } from '../ai/workflows'
 import { runWorkflowRunner } from '../ai/engine'
 import type { RunnerResult, RunnerStatus } from '../ai/engine'
 import WorkflowResultDrawer from '../ai/components/WorkflowResultDrawer'
-import ReviewPlanWizard from '../ai/components/vocabulary-insight/ReviewPlanWizard'
+import StageVocabPlanModal from '../ai/components/vocabulary-insight/StageVocabPlanModal'
 
 // ── Types ──────────────────────────────────────────────
 
@@ -106,6 +106,7 @@ export default function HomePage() {
 
   // ── Workflow Runner state ──
   const [wfDrawerOpen, setWfDrawerOpen] = useState(false)
+  const [stageVocabPlanOpen, setStageVocabPlanOpen] = useState(false)
   const [wfStatus, setWfStatus] = useState<RunnerStatus>('idle')
   const [wfResult, setWfResult] = useState<RunnerResult | null>(null)
   const [wfStepNames, setWfStepNames] = useState<string[]>([])
@@ -116,7 +117,6 @@ export default function HomePage() {
   const setNewSearchResult = useAIStore((s) => s.setNewSearchResult)
 
   // ── Review Plan Wizard (homepage entry) ──
-  const [showReviewPlan, setShowReviewPlan] = useState(false)
 
   const openAISearch = (query?: string) => {
     if (query) {
@@ -341,44 +341,43 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* 词汇洞察 — single prominent card */}
-              <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden shrink-0">
-                <div className="px-4 py-2 border-b border-[#f0f4f8] flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+              {/* 词汇 — 两个并列卡片 */}
+              <div className="grid grid-cols-2 gap-3 shrink-0">
+                {/* 左侧：词汇洞察 */}
+                <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden flex flex-col">
+                  <div className="px-4 py-2.5 border-b border-[#f0f4f8]">
                     <h3 className="text-[12px] font-semibold text-[#3a4f66]">词汇洞察</h3>
-                    <span className="text-[10px] text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full font-medium">需关注</span>
                   </div>
-                  <span className="text-[10px] text-[#8aabcc]">近7天</span>
+                  <div className="flex-1 p-4 flex flex-col">
+                    <p className="text-[11px] text-slate-500 leading-relaxed">
+                      近7天 <span className="font-semibold text-slate-600">50 个高频错词</span>，<span className="font-semibold text-slate-600">27 名薄弱学生</span>
+                    </p>
+                    <div className="flex-1" />
+                    <button
+                      onClick={() => navigate('/vocabulary-insight')}
+                      className="text-[11px] text-[#4b9fe8] border border-[#b8d4f0] hover:bg-[#eaf2fb] px-3 py-1.5 rounded-lg font-medium transition-colors self-start"
+                    >
+                      查看词汇洞察
+                    </button>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <div className="flex items-start gap-3">
-                    {/* Left accent bar */}
-                    <div className="w-1 self-stretch rounded-full bg-amber-400 shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      {/* Conclusion */}
-                      <p className="text-[13px] font-semibold text-[#3a4f66] leading-snug">
-                        2023级A18班不会写类错误较集中
-                      </p>
-                      {/* Data evidence */}
-                      <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
-                        近7天产生 2,117 条词汇错误记录，识别出 <span className="font-semibold text-slate-700">50 个高频错词</span>、<span className="font-semibold text-slate-700">27 名薄弱学生</span>，主要问题为<span className="text-amber-600 font-medium">不会写</span>
-                      </p>
-                      {/* Action buttons */}
-                      <div className="flex items-center gap-2 mt-3">
-                        <button
-                          onClick={() => navigate('/vocabulary-insight')}
-                          className="text-[11px] text-[#4b9fe8] border border-[#b8d4f0] hover:bg-[#eaf2fb] px-3 py-1.5 rounded-lg font-medium transition-colors"
-                        >
-                          查看洞察
-                        </button>
-                        <button
-                          onClick={() => setShowReviewPlan(true)}
-                          className="text-[11px] text-white bg-[#4b9fe8] hover:bg-[#3a8fd8] px-3 py-1.5 rounded-lg font-medium transition-colors shadow-sm"
-                        >
-                          生成复习方案
-                        </button>
-                      </div>
-                    </div>
+
+                {/* 右侧：阶段词汇复习方案 */}
+                <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden flex flex-col">
+                  <div className="px-4 py-2.5 border-b border-[#f0f4f8]">
+                    <h3 className="text-[12px] font-semibold text-[#3a4f66]">阶段词汇复习方案</h3>
+                  </div>
+                  <div className="flex-1 p-4 flex flex-col">
+                    <p className="text-[11px] text-slate-500 leading-relaxed">
+                      适用于期中、期末、高三一轮等复习场景，按复习范围生成方案
+                    </p>
+                    <div className="flex-1" />
+                    <button
+                      onClick={() => setStageVocabPlanOpen(true)}
+                      className="text-[11px] text-white bg-[#4b9fe8] hover:bg-[#3a8fd8] px-3 py-1.5 rounded-lg font-medium transition-colors shadow-sm self-start"
+                    >
+                      生成复习方案
+                    </button>
                   </div>
                 </div>
               </div>
@@ -460,13 +459,12 @@ export default function HomePage() {
         onAssign={handleAssign}
       />
 
-      {/* ── Review Plan Wizard (homepage entry: insight mode, default quick_fix) ── */}
-      {showReviewPlan && (
-        <ReviewPlanWizard
-          onClose={() => setShowReviewPlan(false)}
-          entrySource="insight"
-        />
-      )}
+      {/* ── Stage Vocab Plan Modal ── */}
+      <StageVocabPlanModal
+        open={stageVocabPlanOpen}
+        onClose={() => setStageVocabPlanOpen(false)}
+      />
+
     </>
   )
 }

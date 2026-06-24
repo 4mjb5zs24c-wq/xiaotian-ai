@@ -1,9 +1,9 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
-  ChevronDown, ChevronRight, FileText, MoreVertical,
+  ChevronDown, ChevronRight, FileText, MoreVertical, BarChart3,
 } from 'lucide-react'
 import type { ReviewPlanAssignmentCollection, ReviewPlanDayTask } from '../../insights/reviewPlanAssignmentTypes'
-import { DataOverviewPopover } from './DataOverviewPopover'
 
 // ── Status label/color matching existing ReportCard StatusBadge ──
 
@@ -63,8 +63,9 @@ function StatusBadge({ status }: { status: string }) {
 
 export default function ReviewPlanAssignmentCard({ collection, defaultExpanded = false, onViewReport }: Props) {
   const [expanded, setExpanded] = useState(defaultExpanded)
-  const { days, overview } = collection
-  const reviewDaysText = collection.reviewDays.map(d => `Day ${d}`).join('、')
+  const navigate = useNavigate()
+  const { days } = collection
+  const reviewDaysText = collection.days.map((_, i) => `词汇闯关 ${i + 1}`).join('、')
 
   return (
     <div>
@@ -78,7 +79,6 @@ export default function ReviewPlanAssignmentCard({ collection, defaultExpanded =
             {/* Tags */}
             <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-500 border border-indigo-100 shrink-0">词汇复习计划</span>
             <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-purple-50 text-purple-500 border border-purple-100 shrink-0 hidden sm:inline">连续任务</span>
-            <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-500 border border-emerald-100 shrink-0 hidden sm:inline">动态回滚</span>
           </div>
           {/* Right: time + estimated time (same as ReportCard right side) */}
           <div className="flex items-center gap-3 text-[10px] text-[#8aabcc] shrink-0 ml-3">
@@ -127,7 +127,13 @@ export default function ReviewPlanAssignmentCard({ collection, defaultExpanded =
               {expanded ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
               {expanded ? '收起任务' : '展开任务'}
             </button>
-            <DataOverviewPopover overview={overview} />
+            <button
+              onClick={() => navigate(`/vocab-plan-report/${collection.id}`)}
+              className="flex items-center gap-1 text-[11px] text-[#4b9fe8] hover:text-[#3a8fd8] font-medium px-2 py-1 rounded-lg hover:bg-blue-50 transition-colors"
+            >
+              <BarChart3 size={12} />
+              方案报告
+            </button>
             <button className="p-1 rounded-md text-[#b8cde0] hover:text-[#6b8aaa] hover:bg-[#f0f4f8] transition-colors">
               <MoreVertical size={14} />
             </button>

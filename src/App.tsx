@@ -26,6 +26,8 @@ import ManualComposePage from './pages/ManualComposePage'
 import WordTeachingPage from './pages/WordTeachingPage'
 import VocabularyInsightPage from './pages/VocabularyInsightPage'
 import WritingInsightPage from './pages/WritingInsightPage'
+import StageVocabPlanPage from './pages/StageVocabPlanPage'
+import VocabPlanReportPage from './pages/VocabPlanReportPage'
 
 export default function App() {
   return (
@@ -48,6 +50,8 @@ export default function App() {
           <Route path="manual-compose" element={<ManualComposePage />} />
           <Route path="vocabulary-insight" element={<VocabularyInsightPage />} />
           <Route path="writing-insight" element={<WritingInsightPage />} />
+          <Route path="stage-vocab-plan" element={<StageVocabPlanPage />} />
+          <Route path="vocab-plan-report/:planId" element={<VocabPlanReportPage />} />
         </Route>
         {/* Immersive pages — no sidebar */}
         <Route path="vocabulary-pk" element={<VocabularyPkPage />} />

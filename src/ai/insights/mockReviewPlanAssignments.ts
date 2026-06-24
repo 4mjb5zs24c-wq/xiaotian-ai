@@ -16,14 +16,14 @@ export const MOCK_REVIEW_PLAN_ASSIGNMENTS: ReviewPlanAssignmentCollection[] = [
     wordsPerDay: 30,
     status: 'in_progress',
     progressSummary: '已完成 1/3 份任务',
-    currentTaskLabel: 'Day 3 巩固回滚任务',
+    currentTaskLabel: '词汇闯关 2',
     pendingRetryLabel: '待补做：3 人',
     publishedAt: '2026-06-12T09:00:00Z',
     goalLabel: '快速巩固近期错词',
     days: [
       {
         dayIndex: 1,
-        dayLabel: 'Day 1 复习任务',
+        dayLabel: '词汇闯关 1',
         taskType: 'main',
         questionSummary: '30 道主复习题',
         mainQuestionCount: 30,
@@ -38,9 +38,9 @@ export const MOCK_REVIEW_PLAN_ASSIGNMENTS: ReviewPlanAssignmentCollection[] = [
       },
       {
         dayIndex: 3,
-        dayLabel: 'Day 3 巩固回滚任务',
+        dayLabel: '词汇闯关 2',
         taskType: 'consolidation',
-        questionSummary: '24 道主复习题 + 6 道动态回滚题',
+        questionSummary: '24 道主复习题',
         mainQuestionCount: 24,
         rollbackQuestionCount: 6,
         status: 'in_progress',
@@ -53,9 +53,9 @@ export const MOCK_REVIEW_PLAN_ASSIGNMENTS: ReviewPlanAssignmentCollection[] = [
       },
       {
         dayIndex: 5,
-        dayLabel: 'Day 5 复习收口任务',
+        dayLabel: '词汇闯关 3',
         taskType: 'closeout',
-        questionSummary: '24 道主复习题 + 6 道动态回滚题',
+        questionSummary: '24 道主复习题',
         mainQuestionCount: 24,
         rollbackQuestionCount: 6,
         status: 'not_started',
@@ -99,7 +99,7 @@ export const MOCK_REVIEW_PLAN_ASSIGNMENTS: ReviewPlanAssignmentCollection[] = [
     days: [
       {
         dayIndex: 1,
-        dayLabel: 'Day 1 复习任务',
+        dayLabel: '词汇闯关 1',
         taskType: 'main',
         questionSummary: '50 道主复习题',
         mainQuestionCount: 50,
@@ -113,9 +113,9 @@ export const MOCK_REVIEW_PLAN_ASSIGNMENTS: ReviewPlanAssignmentCollection[] = [
       },
       {
         dayIndex: 3,
-        dayLabel: 'Day 3 巩固回滚任务',
+        dayLabel: '词汇闯关 2',
         taskType: 'consolidation',
-        questionSummary: '40 道主复习题 + 10 道动态回滚题',
+        questionSummary: '40 道主复习题',
         mainQuestionCount: 40,
         rollbackQuestionCount: 10,
         status: 'not_started',
@@ -127,9 +127,9 @@ export const MOCK_REVIEW_PLAN_ASSIGNMENTS: ReviewPlanAssignmentCollection[] = [
       },
       {
         dayIndex: 5,
-        dayLabel: 'Day 5 巩固回滚任务',
+        dayLabel: '词汇闯关 3',
         taskType: 'consolidation',
-        questionSummary: '40 道主复习题 + 10 道动态回滚题',
+        questionSummary: '40 道主复习题',
         mainQuestionCount: 40,
         rollbackQuestionCount: 10,
         status: 'not_started',
@@ -141,9 +141,9 @@ export const MOCK_REVIEW_PLAN_ASSIGNMENTS: ReviewPlanAssignmentCollection[] = [
       },
       {
         dayIndex: 7,
-        dayLabel: 'Day 7 复习收口任务',
+        dayLabel: '词汇闯关 4',
         taskType: 'closeout',
-        questionSummary: '40 道主复习题 + 10 道动态回滚题',
+        questionSummary: '40 道主复习题',
         mainQuestionCount: 40,
         rollbackQuestionCount: 10,
         status: 'not_started',
@@ -186,7 +186,7 @@ export const MOCK_REVIEW_PLAN_ASSIGNMENTS: ReviewPlanAssignmentCollection[] = [
     days: [
       {
         dayIndex: 1,
-        dayLabel: 'Day 1 复习任务',
+        dayLabel: '词汇闯关 1',
         taskType: 'main',
         questionSummary: '30 道主复习题',
         mainQuestionCount: 30,
@@ -201,9 +201,9 @@ export const MOCK_REVIEW_PLAN_ASSIGNMENTS: ReviewPlanAssignmentCollection[] = [
       },
       {
         dayIndex: 3,
-        dayLabel: 'Day 3 巩固回滚任务',
+        dayLabel: '词汇闯关 2',
         taskType: 'consolidation',
-        questionSummary: '24 道主复习题 + 6 道动态回滚题',
+        questionSummary: '24 道主复习题',
         mainQuestionCount: 24,
         rollbackQuestionCount: 6,
         status: 'completed',
@@ -216,9 +216,9 @@ export const MOCK_REVIEW_PLAN_ASSIGNMENTS: ReviewPlanAssignmentCollection[] = [
       },
       {
         dayIndex: 5,
-        dayLabel: 'Day 5 复习收口任务',
+        dayLabel: '词汇闯关 3',
         taskType: 'closeout',
-        questionSummary: '24 道主复习题 + 6 道动态回滚题',
+        questionSummary: '24 道主复习题',
         mainQuestionCount: 24,
         rollbackQuestionCount: 6,
         status: 'completed',

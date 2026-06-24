@@ -16,7 +16,7 @@ export default function VocabularyInsightHeader({ timeRange, onTimeRangeChange, 
           <Brain size={17} className="text-white" />
         </div>
         <div>
-          <h1 className="text-lg font-bold text-slate-800 tracking-tight">词汇洞察</h1>
+          <h1 className="text-lg font-bold text-slate-800 tracking-tight">词汇能力洞察</h1>
           <div className="flex items-center gap-2">
             <span className="flex items-center gap-1 text-xs text-slate-500">
               <BookOpen size={11} className="text-slate-400" />

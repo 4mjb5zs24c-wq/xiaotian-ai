@@ -73,7 +73,7 @@ export function DataOverviewPopover({ overview }: Props) {
         className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-blue-500 font-medium px-2 py-1 rounded-lg hover:bg-blue-50 transition-colors"
       >
         <BarChart3 size={12} />
-        数据概览
+        方案报告
       </button>
 
       {open && createPortal(
@@ -88,7 +88,7 @@ export function DataOverviewPopover({ overview }: Props) {
         >
           <div className="flex items-center gap-2">
             <BarChart3 size={14} className="text-blue-500" />
-            <p className="text-xs font-semibold text-slate-700">计划数据概览</p>
+            <p className="text-xs font-semibold text-slate-700">方案报告概览</p>
           </div>
 
           <div className="space-y-2.5">
@@ -128,20 +128,6 @@ export function DataOverviewPopover({ overview }: Props) {
               )}
             </div>
 
-            {/* 4. Rollback accuracy */}
-            <div className="bg-slate-50 rounded-lg px-3 py-2">
-              <div className="flex items-center gap-1.5">
-                <Target size={11} className="text-amber-500" />
-                <span className="text-[10px] text-slate-400">回滚题正确率</span>
-              </div>
-              {overview.rollbackAccuracy.available ? (
-                <div className="mt-1">
-                  <span className="text-[13px] font-bold text-amber-600">{overview.rollbackAccuracy.rate}%</span>
-                </div>
-              ) : (
-                <p className="text-[11px] text-slate-400 mt-0.5">Day 3 后生成</p>
-              )}
-            </div>
           </div>
         </div>,
         document.body,

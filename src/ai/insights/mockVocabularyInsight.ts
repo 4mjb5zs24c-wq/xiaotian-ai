@@ -337,7 +337,7 @@ export const MOCK_VOCABULARY_INSIGHT: VocabularyInsightData = {
   classId: 'class-7-3', className: '2023级A18班',
   unitId: 'unit-3', unitName: 'Unit 3 — Food and Drinks',
   timeRange: '7d', updatedAt: '今天 10:30',
-  summary: '系统统计显示，主要问题集中在不会写，建议优先处理20个核心错词。近7天41名学生参与词汇练习，累计产生2117条词汇错误记录，涉及1247个已练词汇。根据错误次数、影响学生数和得分率，识别出50个高频错词、27名薄弱学生。',
+  summary: '近7天词汇练习中，本班在词汇运用表达上相对薄弱，部分学生存在不会写、不会用等问题，建议优先处理20个核心错词。近7天41名学生参与词汇练习，累计产生2117条词汇错误记录，涉及1247个已练词汇。根据错误次数、影响学生数和得分率，识别出50个高频错词、27名薄弱学生。',
   summaryStats: {
     studentCount: 41, errorRecordCount: 2117, practicedWordCount: 1247,
     highFrequencyWordCount: 50, weakStudentCount: 27, mainWeakType: '不会写',
@@ -353,6 +353,12 @@ export const MOCK_VOCABULARY_INSIGHT: VocabularyInsightData = {
     { id: 'rec-2', title: '重点学生跟进', content: '27名学生词汇掌握不稳定，其中20名学生集中错在高频拼写词。', actionLabel: '为薄弱学生布置个性化词汇练习', actionDesc: '布置专项练习' },
     { id: 'rec-3', title: '练习建议', content: '建议生成一份拼写/默写专项练习，覆盖20个核心错词，预计10–15分钟完成。', actionLabel: '预览后可一键布置给全班或薄弱学生。', actionDesc: '预览练习' },
   ],
+  abilityScores: {
+    recognition: 58,
+    contextual_understanding: 72,
+    expression: 45,
+    learning_strategy: 65,
+  },
 }
 
 // ══════════════════════════════════════════════════════════════

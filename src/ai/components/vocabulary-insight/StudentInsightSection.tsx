@@ -7,12 +7,11 @@ interface Props {
   onToggleShowAllWeak: () => void; onToggleStudent: (id: string) => void
   onExpandStudent: (id: string) => void
   onMockAction: (action: string) => void; onReviewPlan: () => void
-  onAddWordToDraft?: (wordText: string, wordId: string) => void
 }
 
 export default function StudentInsightSection({
   weakStudents, goodStudents, expandedStudentId,
-  onExpandStudent, onMockAction, onAddWordToDraft,
+  onExpandStudent, onMockAction,
 }: Props) {
   const sortedGood = [...goodStudents].sort((a, b) => b.scoreRate - a.scoreRate)
   const sortedWeak = [...weakStudents].sort((a, b) => a.scoreRate - b.scoreRate)
@@ -62,13 +61,6 @@ export default function StudentInsightSection({
                         className="text-[10px] px-2 py-1 rounded font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors">查看错词</button>
                       <button onClick={() => onMockAction('布置个性化练习')}
                         className="text-[10px] px-2 py-1 rounded font-medium text-white bg-blue-500 hover:bg-blue-600 transition-colors">布置个性化练习</button>
-                      {onAddWordToDraft && (
-                        <button onClick={() => {
-                          w.weakWords.slice(0, 5).forEach(wordText => onAddWordToDraft(wordText, ''))
-                          onMockAction('加入复习草稿篮')
-                        }}
-                          className="text-[10px] px-2 py-1 rounded font-medium text-slate-500 bg-slate-100 hover:bg-slate-200 transition-colors">错词加入草稿篮</button>
-                      )}
                     </div>
                   </div>
                 )}

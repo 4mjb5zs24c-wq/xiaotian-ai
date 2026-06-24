@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { X, ChevronRight, ChevronDown, Check, Send, ArrowLeft, Sparkles, Target, Calendar, Hash, RefreshCw, Gauge, BookOpen, Repeat, Clock, AlertTriangle, Users, Eye, Trash2, Filter, ExternalLink } from 'lucide-react'
+import { X, ChevronRight, ChevronDown, Check, Send, ArrowLeft, Sparkles, Target, Calendar, Hash, BookOpen, Clock, AlertTriangle, Users, Eye, Trash2, Filter, ExternalLink } from 'lucide-react'
 import type { ReviewGoal, VocabScopeId } from '../../insights/vocabularyInsightTypes'
 import { REVIEW_GOAL_META, VOCAB_SCOPE_OPTIONS, EXTENDED_VOCAB_OPTIONS, SYNC_UNITS } from '../../insights/vocabularyInsightTypes'
 import { TEST_SCENARIOS, getScenarioWarnings, getEffectiveQuestionCount, getEffectiveRollbackCount, isCandidateShort } from './reviewPlanTestScenarios'
@@ -108,10 +108,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   const [goal, setGoal] = useState<ReviewGoal>('quick_fix')
   const [dayCount, setDayCount] = useState(defaultDayCount)
   const [wordsPerDay, setWordsPerDay] = useState(defaultWordsPerDay)
-  const [rollbackCount, setRollbackCount] = useState(REVIEW_GOAL_META['quick_fix'].defaultRollback)
-  const [masteryRule, setMasteryRule] = useState<'consecutive_correct' | 'accumulated_correct' | 'last_test_correct'>(
-    REVIEW_GOAL_META['quick_fix'].masteryRule === '累计答对 3 次' ? 'accumulated_correct' : 'consecutive_correct'
-  )
 
   // Review day selection (both draft and insight modes)
   const [selectedDays, setSelectedDays] = useState<number[]>(() => isDraft ? getDefaultReviewDays(5) : REVIEW_GOAL_META['quick_fix'].defaultReviewDays)
@@ -144,7 +140,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
   const [weakStudentIds, setWeakStudentIds] = useState<Set<string>>(new Set(['s1', 's2', 's3']))
 
   // Rolling review
-  const [rollingReview, setRollingReview] = useState(true)
   const [generated, setGenerated] = useState(false)
   const [published, setPublished] = useState(false)
   const [publishing, setPublishing] = useState(false)
@@ -159,11 +154,9 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
     : '词汇复习计划'
   const [planName, setPlanName] = useState(defaultPlanName)
 
-  // ── Custom Day task labels ──
-  const getDefaultDayLabel = (day: number, idx: number, total: number) => {
-    if (idx === 0) return `Day ${day} 复习任务`
-    if (idx === total - 1) return `Day ${day} 复习收口任务`
-    return `Day ${day} 巩固回滚任务`
+  // ── Custom task labels ──
+  const getDefaultDayLabel = (_day: number, idx: number, _total: number) => {
+    return `词汇闯关 ${idx + 1}`
   }
   const [dayLabels, setDayLabels] = useState<Record<number, string>>({})
   const [showFullRules, setShowFullRules] = useState(false)
@@ -193,9 +186,8 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
 
   // ── Computed ──────────────────────────────────────────
 
-  const day1Missing = selectedDays.length > 0 && !selectedDays.includes(1)
   const sortedSelectedDays = useMemo(() => [...selectedDays].sort((a, b) => a - b), [selectedDays])
-  const reviewDaysText = sortedSelectedDays.map(d => `Day ${d}`).join('、')
+  const reviewDaysText = sortedSelectedDays.map((_, i) => `词汇闯关 ${i + 1}`).join('、')
   const taskCount = sortedSelectedDays.length
   const goalMeta = REVIEW_GOAL_META[goal]
 
@@ -203,8 +195,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
     const meta = REVIEW_GOAL_META[g]
     setDayCount(meta.defaultDays)
     setWordsPerDay(meta.defaultWordCount)
-    setRollbackCount(meta.defaultRollback)
-    setMasteryRule(meta.masteryRule === '累计答对 3 次' ? 'accumulated_correct' : 'consecutive_correct')
     setSelectedDays([...meta.defaultReviewDays])
   }
 
@@ -285,9 +275,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
         dayIndex: day,
         dayLabel: taskLabel,
         taskType,
-        questionSummary: rollbackQ > 0
-          ? `${mainQ} 道主复习题 + ${rollbackQ} 道动态回滚题`
-          : `${mainQ} 道主复习题`,
+        questionSummary: `${mainQ} 道主复习题`,
         mainQuestionCount: mainQ,
         rollbackQuestionCount: rollbackQ,
         status: 'not_started' as const,
@@ -611,7 +599,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 {goal === 'weak_student' && (
                   <div className="space-y-3">
                     <div className="flex items-center gap-2"><Users size={15} className="text-blue-500" /><p className="text-sm font-semibold text-slate-700">选择补练学生</p><span className="text-[11px] text-slate-400">系统推荐薄弱学生列表</span></div>
-                    <p className="text-[11px] text-slate-400">勾选需要补练的学生，系统将自动带入每个学生的未掌握词和反复回滚仍出错的词，生成个性化补练任务（非全班统一计划）。</p>
+                    <p className="text-[11px] text-slate-400">勾选需要补练的学生，系统将自动带入每个学生的未掌握词和反复出错的词，生成个性化补练任务（非全班统一计划）。</p>
                     <div className="space-y-1.5">{MOCK_WEAK_STUDENTS.map(s=>{const checked=weakStudentIds.has(s.id);return(<button key={s.id} onClick={()=>toggleWeakStudent(s.id)} className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 ${checked?'bg-blue-50 border-blue-200':'bg-white border-slate-200 hover:border-slate-300'}`}><div className="flex items-center justify-between"><div className="flex items-center gap-3"><div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${checked?'bg-blue-500 border-blue-500':'border-slate-300'}`}>{checked&&<Check size={10} className="text-white"/>}</div><div><div className="flex items-center gap-2"><span className="text-[13px] font-semibold text-slate-700">{s.name}</span><span className="text-[10px] font-bold text-amber-600">{s.scoreRate}%</span><span className="text-[9px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">{s.mainIssue}</span></div><p className="text-[11px] text-slate-400 mt-0.5">薄弱词 {s.weakWordCount} 个 · 默认任务名：{s.name} + 词汇补练</p></div></div></div></button>)})}</div>
                     {weakStudentIds.size===0&&<p className="text-[11px] text-red-400">请至少选择一名学生</p>}
                     {weakStudentIds.size>0&&(<div className="bg-blue-50 rounded-xl p-3 border border-blue-100 text-xs text-blue-700">{weakStudentIds.size>1?`已选 ${weakStudentIds.size} 名学生，将生成 ${weakStudentIds.size} 份个性化补练任务，每个任务围绕该学生的薄弱词独立生成。`:'已选 1 名学生，将生成 1 份个性化补练任务。'}</div>)}
@@ -669,23 +657,16 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                         <button key={day} onClick={() => toggleDay(day)}
                           className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200
                             ${isSelected ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-500 hover:border-blue-200 hover:text-blue-500'}`}>
-                          Day {day}
+                          第 {day} 天
                         </button>
                       )
                     })}
                   </div>
-                  {day1Missing && (
-                    <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                      <AlertTriangle size={14} className="text-amber-500 shrink-0 mt-0.5" />
-                      <p className="text-xs text-amber-700">建议保留 Day 1 作为首轮主复习任务，首轮不含回滚题，适合建立初始记忆。</p>
-                    </div>
-                  )}
                   <div className="text-xs text-blue-700 font-medium">
                     已选 {selectedDays.length} 个复习日：{reviewDaysText} · 将生成 {selectedDays.length} 份任务
                   </div>
-                  <div className="bg-white/60 rounded-lg px-3 py-2 text-[11px] text-slate-500 space-y-0.5">
-                    <p>· 第一个复习日：仅主复习题，无动态回滚题</p>
-                    <p>· 第二个及后续复习日：主复习题 + 动态回滚题（回滚题约占总题量 1/5）</p>
+                  <div className="bg-white/60 rounded-lg px-3 py-2 text-[11px] text-slate-500">
+                    <p>· 每个闯关包含主复习题</p>
                   </div>
                 </div>
               )}
@@ -755,7 +736,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                         return (<button key={day} onClick={() => toggleDay(day)} className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 ${isSelected ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'bg-white border border-slate-200 text-slate-500 hover:border-blue-200 hover:text-blue-500'}`}>Day {day}</button>)
                       })}
                     </div>
-                    {day1Missing && (<div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2"><AlertTriangle size={14} className="text-amber-500 shrink-0 mt-0.5" /><p className="text-xs text-amber-700">建议保留 Day 1 作为首轮主复习任务，首轮不含回滚题，适合建立初始记忆。</p></div>)}
                     <div className="text-xs text-blue-700 font-medium">已选 {selectedDays.length} 个复习日：{reviewDaysText} · 将生成 {selectedDays.length} 份任务</div>
                   </div>
 
@@ -788,87 +768,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 </div>
               </div>
 
-              {/* ── Rollback: compact ── */}
-              <div className="pt-3 border-t border-slate-100">
-                <div className="flex items-center gap-2 mb-2">
-                  <RefreshCw size={15} className="text-blue-500" />
-                  <p className="text-sm font-semibold text-slate-700">动态回滚</p>
-                  <span className="text-[11px] text-emerald-600 font-medium">已开启</span>
-                </div>
-                {activeScenario?.id === 'rollback_shortage' && (
-                  <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5 mb-2">可回滚词不足，已用主复习题补齐当天题量。</div>
-                )}
-                {activeScenario?.id === 'low_answer_rate' && (
-                  <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5 mb-2">上一复习日有效作答率不足 50%，本次回滚题已结合上一次有效回滚池和高频错词生成。</div>
-                )}
-                {goal === 'custom' ? (
-                  /* Custom: show rollback count selector + rolling review toggle */
-                  <div className="space-y-3">
-                    <div className="grid grid-cols-3 gap-2">
-                      {[
-                        { value: 1, label: '回滚 1 次', desc: '仅复现一轮' },
-                        { value: 2, label: '回滚 2 次', desc: '两轮持续巩固' },
-                        { value: 3, label: '回滚 3 次', desc: '三轮强化记忆' },
-                      ].map(opt => (
-                        <button key={opt.value} onClick={() => setRollbackCount(opt.value as 1 | 2 | 3)}
-                          className={`flex flex-col items-center gap-1 py-3 px-2 rounded-xl text-center transition-all duration-200
-                            ${rollbackCount === opt.value ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-500'}`}>
-                          <span className="text-sm font-semibold">{opt.label}</span>
-                          <span className={`text-[11px] ${rollbackCount === opt.value ? 'text-white/70' : 'text-slate-400'}`}>{opt.desc}</span>
-                        </button>
-                      ))}
-                    </div>
-                    <div className="flex items-start gap-3 bg-slate-50 rounded-xl px-4 py-3">
-                      <button onClick={() => setRollingReview(!rollingReview)}
-                        className={`mt-0.5 w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${rollingReview ? 'bg-blue-500 border-blue-500' : 'border-slate-300'}`}>
-                        {rollingReview && <Check size={10} className="text-white" />}
-                      </button>
-                      <div>
-                        <div className="flex items-center gap-2"><Repeat size={13} className="text-blue-500" /><span className="text-[13px] font-medium text-slate-700">错词滚动复现</span></div>
-                        <p className="text-[11px] text-slate-400 mt-0.5">开启后，前一天的错词自动汇入第二天的练习中</p>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  /* Non-custom: compact description, no per-day list */
-                  <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 space-y-1.5 text-xs">
-                    <p className="text-slate-600">从第 2 个复习日起，系统根据上一复习日的错词情况自动生成回滚题，约占当天总题量的 <span className="font-semibold">1/5</span>。</p>
-                    <p className="text-slate-500">· 每日 {wordsPerDay} 题时：约 <span className="font-semibold">{Math.ceil(wordsPerDay / 5)} 道</span>回滚题</p>
-                    <p className="text-slate-400 text-[11px]">首个复习日无回滚题；回滚题将在前一复习日截止后自动生成。</p>
-                  </div>
-                )}
-              </div>
-
-              {/* ── Mastery Rule: compact ── */}
-              <div className="pt-3 border-t border-slate-100">
-                <div className="flex items-center gap-2 mb-2">
-                  <Gauge size={15} className="text-blue-500" />
-                  <p className="text-sm font-semibold text-slate-700">掌握判定</p>
-                  {goal === 'custom' && <span className="text-[11px] text-slate-400">当学生满足此条件时，将该词标记为"已掌握"</span>}
-                </div>
-                {isDraft || goal !== 'custom' ? (
-                  <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 text-xs text-slate-600">
-                    <span className="font-semibold text-slate-700">连续答对 2 次即掌握</span>
-                    <span className="text-slate-400 ml-2">已掌握词不再进入后续回滚池</span>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { value: 'consecutive_correct', label: '连续答对', desc: '连续 2 次正确即掌握' },
-                      { value: 'accumulated_correct', label: '累计答对', desc: '累计 3 次正确即掌握' },
-                      { value: 'last_test_correct', label: '末次答对', desc: '最后一次正确即掌握' },
-                    ].map(opt => (
-                      <button key={opt.value} onClick={() => setMasteryRule(opt.value as typeof masteryRule)}
-                        className={`flex flex-col items-center gap-1 py-3 px-2 rounded-xl text-center transition-all duration-200
-                          ${masteryRule === opt.value ? 'bg-blue-500 text-white shadow-sm shadow-blue-200' : 'border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-500'}`}>
-                        <span className="text-sm font-semibold">{opt.label}</span>
-                        <span className={`text-[11px] ${masteryRule === opt.value ? 'text-white/70' : 'text-slate-400'}`}>{opt.desc}</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
               {/* ── Compact one-line summary ── */}
               <div className="bg-blue-50 rounded-lg px-4 py-2.5 border border-blue-100 text-xs text-blue-700">
                 <span className="font-semibold">{isDraft ? '草稿词' : goalMeta.label}</span>
@@ -878,8 +777,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 <span>{selectedDays.length} 个复习日</span>
                 <span className="text-slate-400 mx-1">·</span>
                 <span>每日 {wordsPerDay} 题</span>
-                <span className="text-slate-400 mx-1">·</span>
-                <span>动态回滚已开启</span>
               </div>
 
               <div className="flex gap-3 pt-2">
@@ -928,7 +825,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   <span className="shrink-0 w-16 text-slate-400">题量规则：</span>
                   <div>
                     <span className="text-slate-700 font-medium">每日 {wordsPerDay} 题</span>
-                    <span className="text-slate-400"> · Day 1 主复习，Day {sortedSelectedDays.slice(1).map(d => d).join('/')} 主复习 + 动态回滚</span>
+                    <span className="text-slate-400"> · {reviewDaysText} 连续巩固</span>
                   </div>
                 </div>
                 {/* Collapsible full rules */}
@@ -939,8 +836,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                 {showFullRules && (
                   <div className="bg-white/60 rounded-lg px-3 py-2 text-[11px] text-slate-500 space-y-1 border border-blue-100">
                     <p>· 复习词表：已选 {effectiveDraftWordCount} 个词</p>
-                    <p>· 动态回滚：已开启，后续复习日按前一复习日错词自动生成，约占当天题量 1/5</p>
-                    <p>· 掌握判定：连续答对 2 次算掌握</p>
+                    <p>· 错词将在后续闯关中复现巩固</p>
                     <p>· 班级：2023级A18班 · 全班</p>
                   </div>
                 )}
@@ -963,23 +859,21 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
 
               {/* ── Task List ── */}
               <div className="space-y-2.5">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">连续复习计划 · {dayCount} 天 · {taskCount} 份任务</p>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">词汇能力提升方案 · {taskCount} 份任务</p>
                 {sortedSelectedDays.map((day, idx) => {
-                  const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
+                  const { mainQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
                   const { startStr, endStr } = computeDayTime(day)
                   const defaultLabel = getDefaultDayLabel(day, idx, sortedSelectedDays.length)
-                  const prevDay = idx > 0 ? sortedSelectedDays[idx - 1] : null
                   return (
                     <div key={day} className="border border-slate-200 rounded-xl px-4 py-3 bg-white space-y-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-blue-500 shrink-0">Day {day}</span>
+                        <span className="text-xs font-bold text-blue-500 shrink-0">词汇闯关 {idx + 1}</span>
                         <input type="text" value={dayLabels[day] ?? defaultLabel} onChange={e => setDayLabels(prev => ({ ...prev, [day]: e.target.value }))}
                           className="flex-1 px-2 py-1 text-[13px] font-semibold text-slate-700 bg-slate-50 border border-transparent hover:border-slate-200 rounded-md outline-none focus:border-blue-400 focus:bg-white transition-colors" />
                       </div>
                       <p className="text-[11px] text-slate-400 ml-7">{startStr} 至 {endStr}</p>
                       <p className="text-[11px] text-slate-400 ml-7">
-                        {mainQ} 道主复习题{rollbackQ > 0 ? ` + ${rollbackQ} 道动态回滚题` : ' · 无回滚题'}
-                        {rollbackQ > 0 && prevDay && ` · 回滚题将在 Day ${prevDay} 截止后生成`}
+                        {mainQ} 道主复习题
                       </p>
                     </div>
                   )
@@ -1076,7 +970,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   <span className="shrink-0 w-16 text-slate-400">题量规则：</span>
                   <div>
                     <span className="text-slate-700 font-medium">每日 {wordsPerDay} 题</span>
-                    <span className="text-slate-400"> · Day 1 主复习，后续 Day 主复习 + 动态回滚（约占 1/5）</span>
+                    <span className="text-slate-400"> · 连续巩固</span>
                   </div>
                 </div>
                 {/* Collapsible full rules */}
@@ -1090,8 +984,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                     <p>· 复习范围：{isDraft ? `已选 ${effectiveDraftWordCount} 个草稿词` : goal === 'quick_fix' ? (candidateShortage ? `高频错词 · 可用 ${effectiveCandidateCount} 个` : `高频错词 · Top ${quickFixWordCount}`) : goal === 'current_unit' ? 'Unit 3 — Food and Drinks' : goal === 'stage_exam' ? `${stageExamUnits.size} 个单元 · 高频错词+多单元重点词` : goal === 'weak_student' ? `${weakStudentIds.size} 名学生薄弱词` : '自定义范围'}</p>
                     <p>· 复习对象：{isDraft ? '全班' : goal === 'weak_student' ? `已选 ${weakStudentIds.size} 名薄弱学生` : '全班'}</p>
                     <p>· 复习词表：{isDraft ? `${effectiveDraftWordCount} 个词` : goal === 'quick_fix' ? `${effectiveCandidateCount} 个` : goal === 'current_unit' ? '约 44 个词' : goal === 'stage_exam' ? '约 120 个词' : '自定义范围'}</p>
-                    <p>· 动态回滚：已开启，后续复习日按前一复习日错词自动生成，约占当天题量 1/5</p>
-                    <p>· 掌握判定：{isDraft ? '连续答对 2 次算掌握' : goal === 'custom' ? (masteryRule === 'consecutive_correct' ? '连续答对' : masteryRule === 'accumulated_correct' ? '累计答对' : '末次答对') : '连续答对 2 次算掌握'}</p>
                     {goal === 'custom' && !isDraft && <p>· 词汇来源：{getVocabScopeSummary()}</p>}
                     <p>· 班级：2023级A18班</p>
                   </div>
@@ -1116,7 +1008,6 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
               {/* Baseline info */}
               {activeScenario?.id === 'baseline_shortage' && (
                 <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 text-[11px] text-slate-500 space-y-1">
-                  <p>当前回滚题正确率：<span className="font-semibold text-slate-700">76%</span></p>
                   <p>稳定基线词数量不足（{activeScenario.stableBaselineCount} 个），暂不计算整体提升</p>
                 </div>
               )}
@@ -1126,7 +1017,7 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
 
               {/* ── Task List ── */}
               <div className="space-y-2.5">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">连续复习计划 · {dayCount} 天 · {taskCount} 份任务</p>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">词汇能力提升方案 · {taskCount} 份任务</p>
                 {goal === 'weak_student' ? (
                   MOCK_WEAK_STUDENTS.filter(s => weakStudentIds.has(s.id)).map(s => (
                     <div key={s.id} className="border border-slate-200 rounded-xl overflow-hidden">
@@ -1136,17 +1027,17 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                         <span className="text-[10px] text-slate-400">{s.weakWordCount} 个薄弱词 · 每复习日 {wordsPerDay} 题</span>
                       </div>
                       {sortedSelectedDays.map((day, idx) => {
-                        const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
+                        const { mainQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
                         const { startStr, endStr } = computeDayTime(day)
                         const defaultLabel = getDefaultDayLabel(day, idx, sortedSelectedDays.length)
                         return (
                           <div key={day} className="px-4 py-2 border-b border-slate-50 last:border-0">
                             <div className="flex items-center gap-2">
-                              <span className="text-[11px] font-bold text-blue-500 shrink-0">Day {day}</span>
+                              <span className="text-[11px] font-bold text-blue-500 shrink-0">{defaultLabel}</span>
                               <input type="text" value={dayLabels[day] ?? defaultLabel} onChange={e => setDayLabels(prev => ({ ...prev, [day]: e.target.value }))}
                                 className="flex-1 px-2 py-0.5 text-[11px] font-semibold text-slate-700 bg-transparent border border-transparent hover:border-slate-200 rounded outline-none focus:border-blue-400 focus:bg-white transition-colors" />
                             </div>
-                            <div className="text-[10px] text-slate-400 ml-7 mt-0.5">{startStr} 至 {endStr} · {mainQ} 题{rollbackQ > 0 ? ` + ${rollbackQ} 回滚` : ''}</div>
+                            <div className="text-[10px] text-slate-400 ml-7 mt-0.5">{startStr} 至 {endStr} · {mainQ} 题</div>
                           </div>
                         )
                       })}
@@ -1154,21 +1045,19 @@ export default function ReviewPlanWizard({ onClose, entrySource = 'insight', dra
                   ))
                 ) : (
                   sortedSelectedDays.map((day, idx) => {
-                    const { mainQ, rollbackQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
+                    const { mainQ } = getEffectiveRollbackCount(activeScenario, wordsPerDay, idx)
                     const { startStr, endStr } = computeDayTime(day)
                     const defaultLabel = getDefaultDayLabel(day, idx, sortedSelectedDays.length)
-                    const prevDay = idx > 0 ? sortedSelectedDays[idx - 1] : null
                     return (
                       <div key={day} className="border border-slate-200 rounded-xl px-4 py-3 bg-white space-y-1.5">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-bold text-blue-500 shrink-0">Day {day}</span>
+                          <span className="text-xs font-bold text-blue-500 shrink-0">词汇闯关 {idx + 1}</span>
                           <input type="text" value={dayLabels[day] ?? defaultLabel} onChange={e => setDayLabels(prev => ({ ...prev, [day]: e.target.value }))}
                             className="flex-1 px-2 py-1 text-[13px] font-semibold text-slate-700 bg-slate-50 border border-transparent hover:border-slate-200 rounded-md outline-none focus:border-blue-400 focus:bg-white transition-colors" />
                         </div>
                         <p className="text-[11px] text-slate-400 ml-7">{startStr} 至 {endStr}</p>
                         <p className="text-[11px] text-slate-400 ml-7">
-                          {mainQ} 道主复习题{rollbackQ > 0 ? ` + ${rollbackQ} 道动态回滚题` : ' · 无回滚题'}
-                          {rollbackQ > 0 && prevDay && ` · 回滚题将在 Day ${prevDay} 截止后生成`}
+                          {mainQ} 道主复习题
                         </p>
                       </div>
                     )

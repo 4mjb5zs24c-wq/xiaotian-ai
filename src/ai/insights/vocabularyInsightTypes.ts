@@ -329,6 +329,8 @@ export interface VocabularyInsightData {
     studentCount: number; errorRecordCount: number; practicedWordCount: number
     highFrequencyWordCount: number; weakStudentCount: number; mainWeakType: string
   }
+  /** 4 大词汇能力维度得分 (0-100) */
+  abilityScores?: Record<string, number>
 }
 
 // ── Low-value word types to filter out ──────────────────
