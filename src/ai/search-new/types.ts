@@ -212,10 +212,8 @@ export interface UsageOption {
   unavailableReason?: string
 }
 
-/** Vocab usage option IDs */
+/** Vocab usage option IDs — platform-supported practice forms only */
 export type VocabUsageId =
-  | 'word_practice'      // 单词
-  | 'usage_practice'     // 用法
   | 'oral_reading'     // 口语跟读
   | 'en_to_cn_select'  // 看英选中
   | 'dictation_write'  // 单词默写
@@ -230,8 +228,6 @@ export type TextUsageId =
   | 'passage_recite'    // 整篇背诵
 
 export const VOCAB_USAGES: UsageOption[] = [
-  { id: 'word_practice', label: '单词', available: true },
-  { id: 'usage_practice', label: '用法', available: true },
   { id: 'oral_reading', label: '口语跟读', available: true },
   { id: 'en_to_cn_select', label: '看英选中', available: true },
   { id: 'dictation_write', label: '单词默写', available: true },
