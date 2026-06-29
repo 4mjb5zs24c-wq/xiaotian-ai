@@ -2,7 +2,8 @@ import { useState, useCallback, useEffect, useRef } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import {
   Search, Clock, Sparkles, X, BookOpen, ArrowRight,
-  FileText, Headphones, Layers, ChevronRight, ChevronDown,
+  FileText, Headphones, Layers, ChevronDown,
+  PenTool, Bookmark, Mic, FileSearch, GraduationCap,
 } from 'lucide-react'
 import { useAIStore } from '../ai/store'
 import {
@@ -23,6 +24,7 @@ import {
   matchV1_1Intent,
   buildAnswerCardResult,
   buildWordListResult,
+  buildVocabPaperResult,
   buildPaperResult,
   buildWritingResult,
   buildPracticeResult,
@@ -33,7 +35,9 @@ import {
   buildExamSetResult,
   buildListeningResult,
   buildListeningMockResult,
+  buildListeningPaperResult,
   buildSpeakingResult,
+  buildSpeakingPaperResult,
   buildTextResult,
   buildVideoResult,
   buildThemeVideoResult,
@@ -45,22 +49,18 @@ import {
   isStrongNameMatch,
   isTextbookNameMatch,
   hasExactNameMatch,
-  hasPrefixNameMatch,
   matchRegionResources,
   buildRegionMatchResult,
 } from '../ai/search-new/searchEnhancer'
 import {
   SearchResultView,
-  PaperBasketBadge,
 } from '../ai/components/search-new'
 import AISearchLoading from '../ai/components/search-new/AISearchLoading'
 import type {
   NewSearchResult,
   ResourceItem,
   FunctionEntry,
-  AssignmentDraft,
   QuickEntry,
-  PaperBasketItem,
   SearchContext,
   EnhancedSearchResult,
   PrecisionJumpData,
@@ -74,21 +74,22 @@ import type {
 const recentSearches = ['Unit 1 资源', '同步词汇', '山东省24年中考真题', '听力练习', '同步练习']
 
 const QUICK_ENTRIES: { key: string; icon: React.ElementType; label: string; desc: string; query: string }[] = [
-  { key: 'unit-resources', icon: BookOpen,     label: '当前单元资源', desc: '同步教材课件与练习',     query: '当前单元资源' },
-  { key: 'sync-vocab',    icon: FileText,      label: '同步词汇',     desc: '词汇表、听写与跟读',     query: '同步词汇' },
-  { key: 'listening',     icon: Headphones,    label: '听力练习',     desc: '听说训练与配套素材',     query: '听力练习' },
-  { key: 'flash-card',    icon: Layers,        label: '快速制卡',     desc: '一键生成词汇听写卡',     query: '快速制卡' },
+  { key: 'unit-vocab',      icon: FileText,      label: '查看当前单元词汇', desc: '当前单元词汇与听写',         query: '当前单元词汇' },
+  { key: 'unit3-dictation', icon: Headphones,    label: '生成 Unit3 词汇听写', desc: 'Unit3 词汇听写与默写',    query: 'Unit3 词汇听写' },
+  { key: 'sync-resources',  icon: Layers,        label: '查同步资源',       desc: '当前单元同步资源',           query: '当前单元同步资源' },
+  { key: 'wrong-questions', icon: Bookmark,      label: '查错题本',         desc: '错题统计与错题明细',         query: '错题' },
+  { key: 'vocab-insight',   icon: GraduationCap, label: '查看词汇洞察',     desc: '班级错词与薄弱词汇分析',     query: '词汇薄弱' },
+  { key: 'listening-res',   icon: Mic,           label: '查听力资源',       desc: '听力练习与听说训练',         query: '听力' },
+  { key: 'speaking-res',    icon: Mic,           label: '查听说资源',       desc: '听说练习与听说测评',         query: '听说' },
+  { key: 'writing-res',     icon: PenTool,       label: '查作文资源',       desc: '写作练习与应用文批改',       query: '作文' },
+  { key: 'paper-res',       icon: FileSearch,    label: '查试卷资源',       desc: '试卷、真题与模拟卷',         query: '试卷' },
 ]
 
 export default function SearchPage() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const teacherContext = useAIStore((s) => s.teacherContext)
-  const paperBasket = useAIStore((s) => s.paperBasket)
-  const addToPaperBasket = useAIStore((s) => s.addToPaperBasket)
   const setNewSearchResult = useAIStore((s) => s.setNewSearchResult)
-  const setAIDrawerPanel = useAIStore((s) => s.setAIDrawerPanel)
-  const setPendingAssignments = useAIStore((s) => s.setPendingAssignments)
 
   const [query, setQuery] = useState('')
 
@@ -146,8 +147,17 @@ export default function SearchPage() {
     }
   }, [])
 
-  const isSingleEnglishWord = (q: string): boolean => {
-    return /^[a-zA-Z]+$/.test(q.trim()) && q.trim().length >= 2
+  const isEnglishWordQuery = (q: string): boolean => {
+    const trimmed = q.trim()
+    // Single English word (>=2 letters)
+    if (/^[a-zA-Z]{2,}$/.test(trimmed)) return true
+    // Multiple English words separated by spaces or common punctuation
+    const cleaned = trimmed.replace(/[,，、\s]+/g, ' ').replace(/[.!?;:]+/g, '').trim()
+    if (/^[a-zA-Z\s]+$/.test(cleaned)) {
+      const words = cleaned.split(/\s+/).filter(w => w.length >= 2)
+      return words.length >= 2
+    }
+    return false
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -198,9 +208,13 @@ export default function SearchPage() {
       return
     }
 
-    // ── Step 1c: Strong name match (prefix overrides intent keywords) ──
+    // ── Step 1c: Strong name match ──
+    // Only bypass intent when: (a) no intent keyword detected, OR
+    // (b) there's an EXACT name match (user typed full resource name)
+    // Prefix/contains name matches should NOT override detected intents
     const hasSpecificNameMatch = isStrongNameMatch(nameMatch) || isTextbookNameMatch(nameMatch)
-    if (hasSpecificNameMatch && (!isIntentKeyword || hasPrefixNameMatch(nameMatch))) {
+    const shouldBypassIntent = hasSpecificNameMatch && (!isIntentKeyword || hasExactNameMatch(nameMatch))
+    if (shouldBypassIntent) {
       const steps = generateLoadingSteps(sq)
       setLoadingSteps(steps)
       setSearching(true)
@@ -258,6 +272,9 @@ export default function SearchPage() {
           case 'vocabulary':
             enhanced = buildWordListResult(sq, ctx)
             break
+          case 'vocab_paper':
+            enhanced = buildVocabPaperResult(sq, ctx)
+            break
           case 'paper':
             enhanced = buildPaperResult(sq, ctx)
             break
@@ -291,8 +308,14 @@ export default function SearchPage() {
           case 'listening_mock':
             enhanced = buildListeningMockResult(sq, ctx)
             break
+          case 'listening_paper':
+            enhanced = buildListeningPaperResult(sq, ctx)
+            break
           case 'speaking':
             enhanced = buildSpeakingResult(sq, ctx)
+            break
+          case 'speaking_paper':
+            enhanced = buildSpeakingPaperResult(sq, ctx)
             break
           case 'text':
             enhanced = buildTextResult(sq, ctx)
@@ -336,8 +359,8 @@ export default function SearchPage() {
     searchTimerRef.current = setTimeout(() => {
       const res = matchNewSearch(sq, ctx)
 
-      // Single English word → inject 讲词 function entry
-      if (isSingleEnglishWord(sq)) {
+      // English word(s) → inject 讲词 function entry
+      if (isEnglishWordQuery(sq)) {
         const wordTeachEntry: FunctionEntry = {
           id: 'func-word-teach',
           name: '讲词',
@@ -345,7 +368,7 @@ export default function SearchPage() {
           category: '词汇教学',
           recommendReason: `打开「${sq}」全屏讲词页，查看词义、例句、搭配和教学资源`,
           actionType: 'open_page',
-          openTarget: `/word-teaching/${encodeURIComponent(sq)}`,
+          openTarget: `/word-teaching/${encodeURIComponent(sq.trim())}`,
         }
         res.functionEntries = [wordTeachEntry, ...res.functionEntries]
       }
@@ -448,19 +471,12 @@ export default function SearchPage() {
     showToast(mockOpenAssignDialog(item).message)
   }
 
-  const handleAddToPaperBasket = (item: ResourceItem) => {
-    const basketItem: PaperBasketItem = {
-      id: `pb-${item.id}-${Date.now()}`,
-      resourceId: item.id,
-      title: item.title,
-      type: item.type,
-      addedAt: Date.now(),
-    }
-    addToPaperBasket(basketItem)
-  }
-
   const handleAddToLessonPrep = (item: ResourceItem) => {
     showToast(mockAddToLessonPrep(item).message)
+  }
+
+  const handleEnter = (item: ResourceItem) => {
+    showToast(`已进入平台课本教学页面：${item.title}`)
   }
 
   const handleOpenFunction = (entry: FunctionEntry) => {
@@ -471,9 +487,9 @@ export default function SearchPage() {
     showToast(mockOpenFunction(entry).message)
   }
 
-  const handleGenerateAssignments = (assignments: AssignmentDraft[]) => {
-    setPendingAssignments(assignments)
-    setAIDrawerPanel('assignmentConfirmNew', { assignments })
+  // 同步词汇/课文：选择内容+练习形式后直接打开布置弹窗（不再生成草稿）
+  const handleContentAssign = (item: ResourceItem) => {
+    showToast(`已打开教师端现有布置弹窗：${item.title}`)
   }
 
   const handleQuickEntry = (entry: QuickEntry) => {
@@ -505,10 +521,6 @@ export default function SearchPage() {
               {teacherContext.textbook} · {teacherContext.grade} · {teacherContext.unit} · {teacherContext.className}
             </span>
           </div>
-          <PaperBasketBadge
-            count={paperBasket.length}
-            onClick={() => setAIDrawerPanel('basket')}
-          />
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
@@ -610,27 +622,25 @@ export default function SearchPage() {
                 className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-blue-500 font-medium shrink-0 transition-colors"
               >
                 <ChevronDown size={12} className={`transition-transform ${showQuickEntries ? 'rotate-180' : ''}`} />
-                展开常用功能
+                {showQuickEntries ? '收起' : '查看更多功能'}
               </button>
             </div>
-            {showQuickEntries && (
-              <div className="grid grid-cols-4 gap-2 mt-2.5 pt-2.5 border-t border-slate-100">
-                {QUICK_ENTRIES.map((entry) => {
-                  const Icon = entry.icon
-                  return (
-                    <button
-                      key={entry.key}
-                      onClick={() => handleTagClick(entry.query)}
-                      className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-lg
-                        hover:bg-blue-50 hover:text-blue-600 transition-colors text-left"
-                    >
-                      <Icon size={14} className="text-blue-500 shrink-0" />
-                      <span className="text-[11px] font-medium text-slate-600 truncate">{entry.label}</span>
-                    </button>
-                  )
-                })}
-              </div>
-            )}
+            <div className="grid grid-cols-3 gap-2 mt-2.5 pt-2.5 border-t border-slate-100">
+              {QUICK_ENTRIES.slice(0, showQuickEntries ? 9 : 3).map((entry) => {
+                const Icon = entry.icon
+                return (
+                  <button
+                    key={entry.key}
+                    onClick={() => handleTagClick(entry.query)}
+                    className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-lg
+                      hover:bg-blue-50 hover:text-blue-600 transition-colors text-left"
+                  >
+                    <Icon size={14} className="text-blue-500 shrink-0" />
+                    <span className="text-[11px] font-medium text-slate-600 truncate">{entry.label}</span>
+                  </button>
+                )
+              })}
+            </div>
           </div>
         )}
 
@@ -653,13 +663,12 @@ export default function SearchPage() {
           <SearchResultView
             precisionJump={precisionJump}
             query={query}
-            paperBasket={paperBasket}
             onPreview={handlePreview}
             onAssign={handleAssign}
-            onAddToPaperBasket={handleAddToPaperBasket}
+            onEnter={handleEnter}
             onAddToLessonPrep={handleAddToLessonPrep}
+            onContentAssign={handleContentAssign}
             onOpenFunction={handleOpenFunction}
-            onGenerateAssignments={handleGenerateAssignments}
             onQuickEntry={handleQuickEntry}
             onNavigate={handleNavigate}
             onMyContentAction={handleMyContentAction}
@@ -674,13 +683,12 @@ export default function SearchPage() {
             suggestions={fallbackSuggestions}
             commonFunctions={fallbackFunctions}
             query={query}
-            paperBasket={paperBasket}
             onPreview={handlePreview}
             onAssign={handleAssign}
-            onAddToPaperBasket={handleAddToPaperBasket}
+            onEnter={handleEnter}
             onAddToLessonPrep={handleAddToLessonPrep}
+            onContentAssign={handleContentAssign}
             onOpenFunction={handleOpenFunction}
-            onGenerateAssignments={handleGenerateAssignments}
             onQuickEntry={handleQuickEntry}
             onSuggestionClick={handleSuggestionClick}
             onMyContentAction={handleMyContentAction}
@@ -702,13 +710,12 @@ export default function SearchPage() {
               result={result}
               enhancedResult={enhancedResult || undefined}
               query={query}
-              paperBasket={paperBasket}
               onPreview={handlePreview}
               onAssign={handleAssign}
-              onAddToPaperBasket={handleAddToPaperBasket}
+              onEnter={handleEnter}
               onAddToLessonPrep={handleAddToLessonPrep}
+              onContentAssign={handleContentAssign}
               onOpenFunction={handleOpenFunction}
-              onGenerateAssignments={handleGenerateAssignments}
               onQuickEntry={handleQuickEntry}
               onSuggestionClick={handleSuggestionClick}
               onNavigate={handleNavigate}
@@ -726,15 +733,15 @@ export default function SearchPage() {
               <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">常用快捷入口</span>
               <span className="flex-1 h-px bg-slate-200/70" />
               <button
-                onClick={() => { setAIDrawerPanel('aiAssistant') }}
+                onClick={() => setShowQuickEntries(!showQuickEntries)}
                 className="flex items-center gap-1 text-[11px] text-blue-500 hover:text-blue-600 font-medium transition-colors"
               >
-                更多功能
-                <ChevronRight size={12} />
+                {showQuickEntries ? '收起' : '查看更多功能'}
+                <ChevronDown size={12} className={`transition-transform ${showQuickEntries ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <div className="grid grid-cols-4 gap-3">
-              {QUICK_ENTRIES.map((entry) => {
+            <div className="grid grid-cols-3 gap-3">
+              {QUICK_ENTRIES.slice(0, showQuickEntries ? 9 : 3).map((entry) => {
                 const Icon = entry.icon
                 return (
                   <button

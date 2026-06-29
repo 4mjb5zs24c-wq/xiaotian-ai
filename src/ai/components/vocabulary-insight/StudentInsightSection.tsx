@@ -11,7 +11,8 @@ interface Props {
 
 export default function StudentInsightSection({
   weakStudents, goodStudents, expandedStudentId,
-  onExpandStudent, onMockAction,
+  onExpandStudent,
+  // P2: onMockAction — 布置个性化练习保留入口，本期不做
 }: Props) {
   const sortedGood = [...goodStudents].sort((a, b) => b.scoreRate - a.scoreRate)
   const sortedWeak = [...weakStudents].sort((a, b) => a.scoreRate - b.scoreRate)
@@ -47,21 +48,29 @@ export default function StudentInsightSection({
                     {isExpanded ? <ChevronDown size={11} className="text-slate-400 shrink-0" /> : <ChevronRight size={11} className="text-slate-400 shrink-0" />}
                   </div>
                   <p className="text-[10px] text-slate-400 mt-0.5 truncate">
-                    主要错词：{w.weakWords.slice(0, 3).join('、')}{w.weakWords.length > 3 ? '等' : ''}
-                  </p>
-                  <p className="text-[10px] text-slate-400 truncate">
-                    主要问题：{w.mainErrorTypes.slice(0, 2).join(' · ')}
+                    主要问题：{w.mainErrorTypes.slice(0, 2).join(' · ')} · 涉及高频错词：{w.weakWords.length} 个
                   </p>
                 </div>
                 {isExpanded && (
                   <div className="px-3 py-2 border-t border-blue-100 bg-blue-50/20 space-y-1.5">
-                    <p className="text-[10px] text-slate-500">{w.typicalContext}</p>
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <button onClick={() => onMockAction('查看错词')}
-                        className="text-[10px] px-2 py-1 rounded font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors">查看错词</button>
-                      <button onClick={() => onMockAction('布置个性化练习')}
-                        className="text-[10px] px-2 py-1 rounded font-medium text-white bg-blue-500 hover:bg-blue-600 transition-colors">布置个性化练习</button>
+                    <p className="text-[10px] font-semibold text-slate-600">主要错词</p>
+                    <div className="space-y-0.5">
+                      {w.weakWords.slice(0, 8).map((word, i) => (
+                        <div key={i} className="flex items-center gap-2 text-[10px]">
+                          <span className="text-slate-400 w-4 shrink-0">{i + 1}.</span>
+                          <span className="font-medium text-slate-700">{word}</span>
+                          <span className="text-slate-400">
+                            {w.mainErrorTypes[i % w.mainErrorTypes.length]}
+                          </span>
+                        </div>
+                      ))}
+                      {w.weakWords.length > 8 && (
+                        <p className="text-[10px] text-slate-400 ml-4">还有 {w.weakWords.length - 8} 个错词</p>
+                      )}
                     </div>
+                    {/* P2 后续能力：布置个性化练习 — 当前版本主干预动作是生成词汇提升方案，学生洞察默认只做问题查看 */}
+                    {/* <button onClick={() => onMockAction('布置个性化练习')}
+                      className="text-[10px] px-2 py-1 rounded font-medium text-white bg-blue-500 hover:bg-blue-600 transition-colors">布置个性化练习</button> */}
                   </div>
                 )}
               </div>

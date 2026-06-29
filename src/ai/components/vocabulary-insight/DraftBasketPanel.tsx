@@ -144,9 +144,9 @@ export default function DraftBasketPanel({
 
                   {isExpanded && (
                     <div className="px-4 py-2.5 border-t border-blue-100 bg-blue-50/20 space-y-1 text-xs text-slate-500">
-                      <p>主归因：{item.mainType}</p>
+                      <p>错因：{item.mainType}</p>
                       <p>影响学生：{item.affectedStudentCount} 人</p>
-                      {item.scoreRate != null && <p>得分率：{item.scoreRate}%</p>}
+                      {item.errorRate != null ? <p>错误率：{item.errorRate}%</p> : item.scoreRate != null ? <p>错误率：{100 - item.scoreRate}%</p> : null}
                       <p>加入时间：{new Date(item.addedAt).toLocaleString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
                     </div>
                   )}

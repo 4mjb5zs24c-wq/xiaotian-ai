@@ -6,7 +6,7 @@ interface Props {
   timeRange: TimeRange; onTimeRangeChange: (r: TimeRange) => void; className: string; updatedAt: string
 }
 
-const RANGES: TimeRange[] = ['7d', '14d', '30d', 'semester', 'current_unit']
+const RANGES: TimeRange[] = ['7d', '14d', '30d', 'current_unit']
 
 export default function VocabularyInsightHeader({ timeRange, onTimeRangeChange, className, updatedAt }: Props) {
   return (

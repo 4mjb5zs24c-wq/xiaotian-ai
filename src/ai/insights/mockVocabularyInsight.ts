@@ -4,6 +4,7 @@
 import type {
   HomeTeachingConcernCard, VocabularyInsightData, ErrorTypeItem,
   WeakWordItem, WeakStudentItem, GoodStudentItem, InterventionRecord,
+  TimeRange,
 } from './vocabularyInsightTypes'
 
 // ══════════════════════════════════════════════════════════════
@@ -89,8 +90,10 @@ export const MOCK_WEAK_WORDS: WeakWordItem[] = [
     priorityScore: 90,
     wrongForms: [
       { text: 'inspiree', students: 8, count: 15 },
-      { text: 'inspair', students: 6, count: 12 },
       { text: 'inspir', students: 4, count: 8 },
+    ],
+    mispronunciations: [
+      { text: '/ɪnˈspaɪə/ → /ɪnˈspeə/', students: 6, count: 12 },
     ],
     evidences: [
       { studentName: '张晓明', source: '冲刺训练（十二）', wrongAnswer: 'inspiree', correctAnswer: 'inspire', questionId: 'q-004', questionType: '听取信息题', date: '2026-06-10', question: '听音频写出对应英文单词。' },
@@ -172,7 +175,7 @@ export const MOCK_WEAK_WORDS: WeakWordItem[] = [
   {
     id: 'ww-008', text: 'recommend', itemType: 'word',
     scoreRate: 45, errorRate: 55, errorCount: 20, affectedStudentCount: 11,
-    mainErrorType: 'contextual_usage', severity: '中高',
+    mainErrorType: 'contextual_usage', severity: '高',
     errorTypes: [{ type: 'contextual_usage', label: '不会用', percent: 100 }],
     typicalMistakes: [], sourceTasks: ['选词填空', '句子翻译'], source: '选词填空',
     aiReason: '该词在语境应用类题目中错误较多，学生对搭配或语境使用掌握不稳定，建议结合例句和语篇练习巩固。',
@@ -186,13 +189,17 @@ export const MOCK_WEAK_WORDS: WeakWordItem[] = [
   {
     id: 'ww-009', text: 'restaurant', itemType: 'word',
     scoreRate: 50, errorRate: 50, errorCount: 24, affectedStudentCount: 12,
-    mainErrorType: 'pronunciation', severity: '中高',
+    mainErrorType: 'pronunciation', severity: '高',
     errorTypes: [{ type: 'pronunciation', label: '读不准', percent: 100 }],
     typicalMistakes: [], sourceTasks: ['听取信息题'], source: '听取信息题',
     aiReason: '该词主要来自听力类练习，学生在听辨多音节词时错误较多，建议结合音频进行跟读和辨音训练。',
     recommendedActions: ['发起课后PK', '加入复习方案'],
     priorityScore: 72,
     wrongForms: [{ text: 'restarant', students: 7, count: 14 }, { text: 'restaraunt', students: 5, count: 10 }],
+    mispronunciations: [
+      { text: '/ˈrestrɒnt/ → /rɪˈstɔːrənt/', students: 12, count: 24 },
+      { text: '/ˈrestərənt/ → /ˈrestərɒnt/', students: 8, count: 16 },
+    ],
     evidences: [
       { studentName: '赵子涵', source: 'Unit 3 听音识词', wrongAnswer: 'restarant', correctAnswer: 'restaurant', questionId: 'q-013', questionType: '听取信息题', date: '2026-06-10', question: '听音频选出正确拼写。' },
     ],
@@ -200,13 +207,16 @@ export const MOCK_WEAK_WORDS: WeakWordItem[] = [
   {
     id: 'ww-010', text: 'delicious', itemType: 'word',
     scoreRate: 55, errorRate: 45, errorCount: 22, affectedStudentCount: 11,
-    mainErrorType: 'pronunciation', severity: '中高',
+    mainErrorType: 'pronunciation', severity: '中',
     errorTypes: [{ type: 'pronunciation', label: '读不准', percent: 70 }, { type: 'spelling', label: '不会写', percent: 30 }],
     typicalMistakes: [], sourceTasks: ['听取信息题', '单词默写'], source: '听取信息题',
     aiReason: '该词主要来自听力、跟读类练习，学生在听辨环节错误较多，建议结合音频进行跟读和辨音训练。',
     recommendedActions: ['发起课后PK', '加入复习方案'],
     priorityScore: 68,
     wrongForms: [{ text: 'delisous', students: 6, count: 12 }, { text: 'delisious', students: 5, count: 10 }],
+    mispronunciations: [
+      { text: '/dɪˈlɪʃəs/ → /dɪˈliːʃəs/', students: 6, count: 14 },
+    ],
     evidences: [
       { studentName: '马天宇', source: 'Unit 3 听音识词', wrongAnswer: 'delisous', correctAnswer: 'delicious', questionId: 'q-014', questionType: '听取信息题', date: '2026-06-10', question: '听音频选出正确拼写。' },
     ],
@@ -214,7 +224,7 @@ export const MOCK_WEAK_WORDS: WeakWordItem[] = [
   {
     id: 'ww-011', text: 'menu', itemType: 'word',
     scoreRate: 60, errorRate: 40, errorCount: 16, affectedStudentCount: 8,
-    mainErrorType: 'new_word', severity: '中高',
+    mainErrorType: 'new_word', severity: '中',
     errorTypes: [{ type: 'new_word', label: '生词', percent: 100 }],
     typicalMistakes: [], sourceTasks: ['词义选择'], source: '词义选择',
     aiReason: '该词在词义理解类题目中错误较多，学生对词义记忆模糊，容易与其他词混淆。',
@@ -252,6 +262,39 @@ export const MOCK_WEAK_WORDS: WeakWordItem[] = [
     recommendedActions: [], priorityScore: 2,
   },
 ]
+
+// ══════════════════════════════════════════════════════════════
+// 2b. Mock score fields helper
+
+/**
+ * 基于现有 mock 字段（errorCount + errorRate）推导 totalActualScore / totalFullScore。
+ *
+ * 有效作答定义：有提交、有评分结果、可归属到该词的作答记录。
+ * 得分率 = totalActualScore ÷ totalFullScore
+ * 错误率 = 1 - 得分率
+ * 多空题按空算小题。
+ *
+ * 推导公式：
+ *   totalFullScore ≈ errorCount ÷ (errorRate ÷ 100)   （总作答次数 ≈ 错误次数 ÷ 错误率）
+ *   totalActualScore = totalFullScore - errorCount      （实际得分 = 总作答 - 错误）
+ *
+ * 如果已有接口返回真实的 totalActualScore / totalFullScore 字段，
+ * 则不需要此推导函数，直接使用接口数据。
+ */
+function enrichMockWordScores(words: WeakWordItem[]): WeakWordItem[] {
+  return words.map(w => {
+    if (w.totalActualScore != null && w.totalFullScore != null) return w
+    const errRate = (w.errorRate ?? 0) / 100
+    const errCount = w.errorCount ?? 0
+    if (errCount <= 0 || errRate <= 0) return { ...w, totalFullScore: 0, totalActualScore: 0 }
+    const totalFull = Math.round(errCount / errRate)
+    const totalActual = totalFull - errCount
+    return { ...w, totalFullScore: totalFull, totalActualScore: totalActual }
+  })
+}
+
+// 预计算：mock 词条带上 totalActualScore / totalFullScore
+const ENRICHED_MOCK_WEAK_WORDS = enrichMockWordScores(MOCK_WEAK_WORDS)
 
 // ══════════════════════════════════════════════════════════════
 // 3. Students
@@ -337,14 +380,14 @@ export const MOCK_VOCABULARY_INSIGHT: VocabularyInsightData = {
   classId: 'class-7-3', className: '2023级A18班',
   unitId: 'unit-3', unitName: 'Unit 3 — Food and Drinks',
   timeRange: '7d', updatedAt: '今天 10:30',
-  summary: '近7天词汇练习中，本班在词汇运用表达上相对薄弱，部分学生存在不会写、不会用等问题，建议优先处理20个核心错词。近7天41名学生参与词汇练习，累计产生2117条词汇错误记录，涉及1247个已练词汇。根据错误次数、影响学生数和得分率，识别出50个高频错词、27名薄弱学生。',
+  summary: '小天已为您识别出，近7天词汇练习中本班在词汇运用表达维度相对薄弱，涉及41名学生、2117条词汇错误记录，已为您识别出50个高频错词和27名薄弱学生。',
   summaryStats: {
     studentCount: 41, errorRecordCount: 2117, practicedWordCount: 1247,
     highFrequencyWordCount: 50, weakStudentCount: 27, mainWeakType: '不会写',
   },
   metrics: { practicedWordCount: 1247, weakWordCount: 50, weakStudentCount: 27, mainWeakType: '不会写' },
   errorTypes: MOCK_ERROR_TYPES,
-  weakWords: MOCK_WEAK_WORDS,
+  weakWords: ENRICHED_MOCK_WEAK_WORDS,
   weakStudents: MOCK_WEAK_STUDENTS,
   goodStudents: MOCK_GOOD_STUDENTS,
   interventionRecords: [],
@@ -353,6 +396,11 @@ export const MOCK_VOCABULARY_INSIGHT: VocabularyInsightData = {
     { id: 'rec-2', title: '重点学生跟进', content: '27名学生词汇掌握不稳定，其中20名学生集中错在高频拼写词。', actionLabel: '为薄弱学生布置个性化词汇练习', actionDesc: '布置专项练习' },
     { id: 'rec-3', title: '练习建议', content: '建议生成一份拼写/默写专项练习，覆盖20个核心错词，预计10–15分钟完成。', actionLabel: '预览后可一键布置给全班或薄弱学生。', actionDesc: '预览练习' },
   ],
+  /**
+   * 词汇能力维度得分 (0-100) — 当前为 mock 值
+   * 正式环境按 DP 映射表（题型+错因+学段→对应能力）计算
+   * 四个维度：recognition(词汇识记) contextual_understanding(语境理解) expression(词汇运用表达) learning_strategy(词汇学习策略)
+   */
   abilityScores: {
     recognition: 58,
     contextual_understanding: 72,
@@ -362,19 +410,117 @@ export const MOCK_VOCABULARY_INSIGHT: VocabularyInsightData = {
 }
 
 // ══════════════════════════════════════════════════════════════
+// 5b. Time-range-specific mock data
+// ══════════════════════════════════════════════════════════════
+
+function shufflePick<T>(arr: T[], n: number, seedStart = 0): T[] {
+  // Deterministic shuffle using index rotation, caps at arr.length to prevent duplicates
+  const rotated = [...arr]
+  for (let i = 0; i < seedStart % arr.length; i++) {
+    rotated.push(rotated.shift()!)
+  }
+  return rotated.slice(0, Math.min(n, arr.length))
+}
+
+export function getMockDataByTimeRange(timeRange: TimeRange): VocabularyInsightData {
+  const base = { ...MOCK_VOCABULARY_INSIGHT }
+
+  switch (timeRange) {
+    case '7d':
+      return { ...base, timeRange: '7d', updatedAt: '今天 10:30' }
+
+    case '14d': {
+      return {
+        ...base,
+        timeRange: '14d',
+        updatedAt: '今天 10:45',
+        summary: '小天已为您识别出，近14天词汇练习中本班在词汇识记与运用表达维度存在薄弱，涉及41名学生、3892条词汇错误记录，已为您识别出14个高频错词和32名薄弱学生。',
+        summaryStats: {
+          studentCount: 41, errorRecordCount: 3892, practicedWordCount: 2115,
+          highFrequencyWordCount: 14, weakStudentCount: 32, mainWeakType: '不会写',
+        },
+        metrics: { practicedWordCount: 2115, weakWordCount: 14, weakStudentCount: 32, mainWeakType: '不会写' },
+        weakWords: shufflePick(ENRICHED_MOCK_WEAK_WORDS, 14, 3),
+        weakStudents: shufflePick(MOCK_WEAK_STUDENTS, 8, 1).map(s => ({ ...s, scoreRate: Math.max(s.scoreRate - 2, 10) })),
+        goodStudents: MOCK_GOOD_STUDENTS,
+        abilityScores: {
+          recognition: 55,
+          contextual_understanding: 70,
+          expression: 43,
+          learning_strategy: 63,
+        },
+      }
+    }
+
+    case '30d': {
+      return {
+        ...base,
+        timeRange: '30d',
+        updatedAt: '今天 11:00',
+        summary: '小天已为您识别出，近30天词汇练习中本班词汇识记是最薄弱的维度，涉及41名学生、6843条词汇错误记录，已为您识别出14个高频错词和38名薄弱学生。',
+        summaryStats: {
+          studentCount: 41, errorRecordCount: 6843, practicedWordCount: 3512,
+          highFrequencyWordCount: 14, weakStudentCount: 38, mainWeakType: '不会写',
+        },
+        metrics: { practicedWordCount: 3512, weakWordCount: 14, weakStudentCount: 38, mainWeakType: '不会写' },
+        weakWords: shufflePick(ENRICHED_MOCK_WEAK_WORDS, 14, 7),
+        weakStudents: shufflePick(MOCK_WEAK_STUDENTS, 8, 3).map(s => ({ ...s, scoreRate: Math.max(s.scoreRate - 4, 8) })),
+        goodStudents: MOCK_GOOD_STUDENTS.slice(0, 4),
+        abilityScores: {
+          recognition: 48,
+          contextual_understanding: 68,
+          expression: 40,
+          learning_strategy: 58,
+        },
+      }
+    }
+
+    case 'current_unit': {
+      const unitWords = ENRICHED_MOCK_WEAK_WORDS.filter(w => w.source?.includes('Unit 3'))
+      const unitWords2 = unitWords.length >= 20 ? unitWords : ENRICHED_MOCK_WEAK_WORDS.slice(0, 35)
+      return {
+        ...base,
+        timeRange: 'current_unit',
+        unitId: 'unit-3',
+        unitName: 'Unit 3 — Food and Drinks',
+        updatedAt: '今天 09:15',
+        summary: '小天已为您识别出，当前单元 Unit 3 词汇练习中本班在词汇运用表达维度相对薄弱，涉及41名学生、896条词汇错误记录，已为您识别出35个高频错词和18名薄弱学生。',
+        summaryStats: {
+          studentCount: 41, errorRecordCount: 896, practicedWordCount: 328,
+          highFrequencyWordCount: 35, weakStudentCount: 18, mainWeakType: '不会用',
+        },
+        metrics: { practicedWordCount: 328, weakWordCount: 35, weakStudentCount: 18, mainWeakType: '不会用' },
+        weakWords: unitWords2,
+        weakStudents: MOCK_WEAK_STUDENTS.slice(0, 6).map(s => ({ ...s, scoreRate: Math.min(s.scoreRate + 8, 90) })),
+        goodStudents: MOCK_GOOD_STUDENTS.slice(0, 5),
+        abilityScores: {
+          recognition: 68,
+          contextual_understanding: 78,
+          expression: 58,
+          learning_strategy: 72,
+        },
+      }
+    }
+
+    default:
+      return { ...base, timeRange, updatedAt: '今天 10:30' }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
 // 6. Intervention Records
 // ══════════════════════════════════════════════════════════════
 
 export const MOCK_INTERVENTION_RECORDS: InterventionRecord[] = [
   {
-    id: 'ir-001', time: '2026-06-10 14:30', type: '词汇复习方案', name: '2023级A18班高频错词巩固计划',
-    target: '全班', taskCount: 3, status: '已完成', completionSummary: '3/3 任务完成，41 人参与',
+    id: 'ir-001', time: '2026-06-10 14:30', type: '词汇提升方案', name: '近7天高频错词提升方案',
+    target: '全班', taskCount: 2, status: '已完成', completionSummary: '2 份词汇闯关完成，41 人参与',
     effectSummary: { beforeScoreRate: 52, afterScoreRate: 68, stillWeakWords: ['AI/artificial intelligence', 'inspire'], improvedStudents: 14, needMorePracticeStudents: 4, suggestion: '重点错词得分率 52%→68%。仍有部分学生掌握不稳定，建议继续安排错词默写。' },
   },
   {
-    id: 'ir-002', time: '2026-06-09 10:00', type: '默写', name: '2023级A18班错词默写单',
-    target: '全班', taskCount: 1, status: '已完成', completionSummary: '1/1 任务完成，全体参与',
-    effectSummary: { beforeScoreRate: 45, afterScoreRate: 58, stillWeakWords: ['delicious', 'restaurant'], improvedStudents: 16, needMorePracticeStudents: 2, suggestion: '默写后整体提升明显，但读不准类多音节词仍需强化听写。' },
+    id: 'ir-002', time: '2026-06-16 10:00', type: '词汇提升方案', name: '近7天高频错词提升方案',
+    target: '全班', taskCount: 2, status: '进行中', completionSummary: '1/2 词汇闯关完成，38 人参与',
+    effectSummary: { beforeScoreRate: 45, afterScoreRate: 58, stillWeakWords: ['delicious', 'restaurant'], improvedStudents: 16, needMorePracticeStudents: 2, suggestion: '首次闯关后整体提升明显，但仍需关注多音节词的听写巩固。' },
   },
 ]
 

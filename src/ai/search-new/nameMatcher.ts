@@ -497,14 +497,14 @@ export function buildNameMatchResult(
         source: tbName,
         isCurrentUnit: true,
         canPreview: false,
-        canAssign: false,
-        canAddToPaperBasket: false,
+        canAssign: true,
+        canEnter: true,
         canAddToLessonPrep: false,
         isLessonPrepResource: false,
         recommendReason: `匹配到教材「${tbName}」`,
       }],
       '教材匹配',
-      `匹配到教材「${tbName}」，请选择具体单元查看资源`,
+      `匹配到教材「${tbName}」，可布置课本内容或进入课本教学页面`,
     ))
   }
 

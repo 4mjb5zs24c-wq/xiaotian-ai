@@ -19,8 +19,6 @@ import {
   RecommendedWritingResourcesSection,
 } from '../ai/components/writing-insight'
 import type { WritingIssueItem, ExcellentWriting, GeneratedSample, RecommendedWritingResource } from '../ai/insights/writingInsightTypes'
-import type { PaperBasketItem } from '../ai/search-new/types'
-import { useAIStore } from '../ai/store'
 import InsightSideNav from '../ai/components/InsightSideNav'
 import { ChevronDown } from 'lucide-react'
 
@@ -49,9 +47,7 @@ export default function WritingInsightPage() {
   const [showSampleGenerator, setShowSampleGenerator] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
 
-  // Paper basket
-  const paperBasket = useAIStore((s) => s.paperBasket)
-  const addToPaperBasket = useAIStore((s) => s.addToPaperBasket)
+  // 试卷篮本期不支持，使用 toast 替代
 
   const weakStudentsRef = useRef<HTMLDivElement>(null)
   const excellentRef = useRef<HTMLDivElement>(null)
@@ -101,18 +97,12 @@ export default function WritingInsightPage() {
     showToast(`已打开布置对话框：${r.title}`)
   }
 
+  // 试卷篮本期不支持，改为 toast 提示
   const handleAddToPaperBasket = (r: RecommendedWritingResource) => {
-    const basketItem: PaperBasketItem = {
-      id: `pb-wr-${r.id}-${Date.now()}`,
-      resourceId: r.id,
-      title: r.title,
-      type: 'writing_practice',
-      addedAt: Date.now(),
-    }
-    addToPaperBasket(basketItem)
+    showToast(`已为「${r.title}」准备布置，请通过平台布置功能完成`)
   }
 
-  const isInBasket = (r: RecommendedWritingResource) => paperBasket.some(pb => pb.resourceId === r.id)
+  const isInBasket = (_r: RecommendedWritingResource) => false
 
   return (
     <div className="flex justify-center px-6">

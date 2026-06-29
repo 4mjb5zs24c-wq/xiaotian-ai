@@ -4,9 +4,7 @@ import type {
   NewSearchResult,
   ResourceItem,
   FunctionEntry,
-  AssignmentDraft,
   QuickEntry,
-  PaperBasketItem,
   EnhancedSearchResult,
   PrecisionJumpData,
   SearchSuggestion,
@@ -36,13 +34,12 @@ interface SearchResultViewProps {
   commonFunctions?: CommonFunction[]
   /** Search query — passed to MyContentCard for dynamic primary button */
   query?: string
-  paperBasket: PaperBasketItem[]
   onPreview: (item: ResourceItem) => void
   onAssign: (item: ResourceItem) => void
-  onAddToPaperBasket: (item: ResourceItem) => void
+  onEnter?: (item: ResourceItem) => void
   onAddToLessonPrep: (item: ResourceItem) => void
+  onContentAssign?: (item: ResourceItem) => void
   onOpenFunction: (entry: FunctionEntry) => void
-  onGenerateAssignments: (assignments: AssignmentDraft[]) => void
   onQuickEntry: (entry: QuickEntry) => void
   onSuggestionClick?: (query: string) => void
   onNavigate?: (route: string) => void
@@ -146,13 +143,12 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
   suggestions,
   commonFunctions,
   query,
-  paperBasket,
   onPreview,
   onAssign,
-  onAddToPaperBasket,
+  onEnter,
   onAddToLessonPrep,
+  onContentAssign,
   onOpenFunction,
-  onGenerateAssignments,
   onQuickEntry,
   onSuggestionClick,
   onNavigate,
@@ -196,11 +192,6 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
       return next
     })
   }, [])
-
-  const isInPaperBasket = useCallback(
-    (item: ResourceItem) => paperBasket.some((pb) => pb.resourceId === item.id),
-    [paperBasket],
-  )
 
   // ── Precision Jump ─────────────────────────────────────
   if (precisionJump && onNavigate) {
@@ -252,7 +243,7 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
           isUnrecognizable={effectiveResult.isUnrecognizable}
           onPreview={onPreview}
           onAssign={onAssign}
-          onAddToPaperBasket={onAddToPaperBasket}
+          onEnter={onEnter}
           onAddToLessonPrep={onAddToLessonPrep}
           onQuickEntry={onQuickEntry}
         />
@@ -293,7 +284,7 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
           {/* Recommendation text */}
           {group.recommendationText && (
             <div className="px-3.5 py-2 mb-2 bg-amber-50/30 border border-amber-100/30 rounded-lg text-[12px] text-slate-500">
-              推荐理由：{group.recommendationText}
+              匹配说明：{group.recommendationText}
             </div>
           )}
 
@@ -479,7 +470,7 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
       >
         {group.groupType === 'sync_vocab' || group.groupType === 'sync_text' ? (
           group.items.map((item) => (
-            <ContentSelectResource key={item.id} item={item} onGenerateAssignments={onGenerateAssignments} />
+            <ContentSelectResource key={item.id} item={item} onContentAssign={onContentAssign} />
           ))
         ) : (
           group.items.map((item) => (
@@ -488,9 +479,8 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
               item={item}
               onPreview={onPreview}
               onAssign={onAssign}
-              onAddToPaperBasket={onAddToPaperBasket}
+              onEnter={onEnter}
               onAddToLessonPrep={onAddToLessonPrep}
-              isInPaperBasket={isInPaperBasket(item)}
             />
           ))
         )}
@@ -512,16 +502,15 @@ const SearchResultView: React.FC<SearchResultViewProps> = ({
         <div className={isVocabOrText ? 'space-y-3' : 'grid grid-cols-1 lg:grid-cols-2 gap-3'}>
           {visible.map((item) => (
             isVocabOrText ? (
-              <ContentSelectResource key={item.id} item={item} onGenerateAssignments={onGenerateAssignments} />
+              <ContentSelectResource key={item.id} item={item} onContentAssign={onContentAssign} />
             ) : (
               <ResourceCard
                 key={item.id}
                 item={item}
                 onPreview={onPreview}
                 onAssign={onAssign}
-                onAddToPaperBasket={onAddToPaperBasket}
+                onEnter={onEnter}
                 onAddToLessonPrep={onAddToLessonPrep}
-                isInPaperBasket={isInPaperBasket(item)}
               />
             )
           ))}

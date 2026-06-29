@@ -22,7 +22,7 @@ export default function StageVocabPlanPage() {
             <p className="text-xs text-slate-400">适用于期中、期末、高三一轮等复习场景，按年级与复习范围生成阶段词汇复习方案。</p>
           </div>
         </div>
-        <StageVocabPlanModal embedded open onClose={() => navigate(-1)} />
+        <StageVocabPlanModal open onClose={() => navigate(-1)} />
       </div>
     </div>
   )

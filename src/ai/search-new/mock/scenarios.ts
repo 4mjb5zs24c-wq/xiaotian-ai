@@ -202,7 +202,7 @@ export function scenarioSyncVocab(
     matchedTypes: ['sync_vocab'],
     expandedTypes: ['sync_vocab'],
     foldedTypes: [],
-    message: `已为你找到 ${unitLabel} 同步词汇内容，可选择课标词、非课标词和语块后，布置听写、默写、跟读或选词类练习。`,
+    message: `已为你找到 ${unitLabel} 同步词汇内容，可选择词汇、语块和固定搭配后，布置听写、默写、跟读或选词类练习。`,
   }
 
   const filterTabs: FilterTab[] = [
@@ -219,7 +219,7 @@ export function scenarioSyncVocab(
       defaultExpanded: true,
       displayLimit: 1,
       recommendationText:
-        `这是当前 ${unitLabel} 的同步词汇内容，可选择课标词、非课标词和语块后，布置听写、默写、跟读或选词类练习。`,
+        `这是当前 ${unitLabel} 的同步词汇内容，可选择词汇、语块和固定搭配后，布置听写、默写、跟读或选词类练习。`,
       items: [syncVocabItem],
     },
   ]

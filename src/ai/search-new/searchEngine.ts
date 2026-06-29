@@ -188,11 +188,8 @@ export function matchNewSearch(
     return SCENARIO_MAP.listening(orig, ctx)
   }
 
-  // 5g. 听说搜索 — check for no-results scenario
+  // 5g. 听说搜索 — 按资源是否存在判断，不再按地区判断
   if (/听说练习|听说训练|听说资源|听说/.test(q)) {
-    if (ctx.region === 'default' && /Unit\s*1/.test(q)) {
-      return SCENARIO_MAP.no_speaking_region(orig, ctx)
-    }
     return SCENARIO_MAP.listening(orig, ctx)
   }
 
@@ -327,14 +324,6 @@ export function mockOpenAssignDialog(resource: ResourceItem): MockActionResult {
   }
 }
 
-export function mockAddToPaperBasket(resource: ResourceItem): MockActionResult {
-  return {
-    type: 'paper_basket',
-    message: `已加入试卷篮：${resource.title}`,
-    resource,
-  }
-}
-
 export function mockAddToLessonPrep(resource: ResourceItem): MockActionResult {
   return {
     type: 'lesson_prep',
@@ -348,5 +337,93 @@ export function mockOpenFunction(entry: FunctionEntry): MockActionResult {
     type: 'function',
     message: `已打开教师端已有页面：${entry.name}`,
     entry,
+  }
+}
+
+// ── Tag Search ─────────────────────────────────────────────
+
+import {
+  matchTagQuery,
+  getTagResources,
+  getTagFallback,
+} from './dataSources'
+
+export function matchTagResources(
+  query: string,
+  ctx: SearchContext,
+): NewSearchResult | null {
+  const match = matchTagQuery(query)
+  if (!match) return null
+
+  const resources = getTagResources(match.tagId, ctx)
+  const { isNoResults, isUnrecognizable } = resources.length > 0
+    ? { isNoResults: false, isUnrecognizable: false }
+    : { isNoResults: true, isUnrecognizable: false }
+
+  // 多标签时按意图优先级和资源相关性排序（当前 mock 只有单标签命中）
+  const sorted = resources
+
+  // Fallback: tag exists but no resources
+  if (sorted.length === 0) {
+    const fallbackItems = getTagFallback(ctx)
+    return {
+      intent: {
+        query,
+        recognizedIntent: '标签搜索',
+        searchType: 'resource',
+        context: `命中卷库标签（${match.matchLevel === 'exact' ? '精确' : '弱'}匹配）`,
+        matchedTypes: [],
+        expandedTypes: [],
+        foldedTypes: [],
+        message: `标签下暂无资源，以下为替代推荐`,
+      },
+      filterTabs: [],
+      resourceGroups: [{
+        groupId: 'tag-fallback',
+        groupName: '替代推荐资源',
+        groupType: 'alternative',
+        isPrimaryMatch: true,
+        defaultExpanded: true,
+        recommendationText: '该标签下暂无资源，以下为替代推荐',
+        items: fallbackItems,
+        displayLimit: 5,
+      }],
+      functionEntries: [],
+      isNoResults: true,
+      isUnrecognizable: false,
+    }
+  }
+
+  const zone = match.matchLevel === 'exact' ? '智能匹配区' : '推荐关联区'
+
+  return {
+    intent: {
+      query,
+      recognizedIntent: '标签搜索',
+      searchType: 'resource',
+      context: `命中卷库标签（${match.matchLevel === 'exact' ? '精确' : '弱'}匹配）`,
+      matchedTypes: match.matchLevel === 'exact' ? (sorted.map(r => r.type) as any) : [],
+      expandedTypes: match.matchLevel === 'exact' ? [] : (sorted.map(r => r.type) as any),
+      foldedTypes: [],
+      message: match.matchLevel === 'exact'
+        ? `标签精确命中，资源进入${zone}`
+        : `标签弱命中，资源进入${zone}`,
+    },
+    filterTabs: [],
+    resourceGroups: [{
+      groupId: `tag-${match.tagId}`,
+      groupName: zone,
+      groupType: 'resource',
+      isPrimaryMatch: match.matchLevel === 'exact',
+      defaultExpanded: true,
+      recommendationText: match.matchLevel === 'exact'
+        ? '标签精确命中，为你匹配以下资源'
+        : `你可能在找与「${query}」相关的资源`,
+      items: sorted,
+      displayLimit: 5,
+    }],
+    functionEntries: [],
+    isNoResults,
+    isUnrecognizable,
   }
 }

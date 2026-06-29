@@ -10,7 +10,7 @@ interface NoResultsViewProps {
   isUnrecognizable?: boolean
   onPreview: (item: ResourceItem) => void
   onAssign: (item: ResourceItem) => void
-  onAddToPaperBasket: (item: ResourceItem) => void
+  onEnter?: (item: ResourceItem) => void
   onAddToLessonPrep: (item: ResourceItem) => void
   onQuickEntry: (entry: QuickEntry) => void
 }
@@ -27,7 +27,7 @@ const NoResultsView: React.FC<NoResultsViewProps> = ({
   isUnrecognizable,
   onPreview,
   onAssign,
-  onAddToPaperBasket,
+  onEnter,
   onAddToLessonPrep,
   onQuickEntry,
 }) => {
@@ -94,7 +94,7 @@ const NoResultsView: React.FC<NoResultsViewProps> = ({
                   item={item}
                   onPreview={onPreview}
                   onAssign={onAssign}
-                  onAddToPaperBasket={onAddToPaperBasket}
+                  onEnter={onEnter}
                   onAddToLessonPrep={onAddToLessonPrep}
                 />
               ))}

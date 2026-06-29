@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { TrendingUp, Clock, Users, ChevronDown, ChevronRight } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { TrendingUp, Clock, Users, ChevronDown, ChevronRight, FileText } from 'lucide-react'
 import type { InterventionRecord } from '../../insights/vocabularyInsightTypes'
 
 interface Props { records: InterventionRecord[] }
@@ -11,6 +12,7 @@ const STATUS_STYLES: Record<string, { dot: string }> = {
 }
 
 export default function InterventionRecordSection({ records }: Props) {
+  const navigate = useNavigate()
   if (records.length === 0) return null
   const [expandedId, setExpandedId] = useState<string | null>(null)
 
@@ -58,6 +60,14 @@ export default function InterventionRecordSection({ records }: Props) {
                     <p className="text-xs text-slate-400">仍薄弱：{r.effectSummary.stillWeakWords.join('、')}</p>
                   )}
                   <p className="text-xs text-slate-500 leading-relaxed">{r.effectSummary.suggestion}</p>
+                  <div className="pt-1.5 border-t border-slate-200">
+                    <button
+                      onClick={() => navigate(`/vocab-plan-report/${r.id}`)}
+                      className="flex items-center gap-1 text-[10px] text-[#4b9fe8] border border-[#b8d4f0] hover:bg-[#eaf2fb] px-2 py-1 rounded-md font-medium transition-colors"
+                    >
+                      <FileText size={10} />报告
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

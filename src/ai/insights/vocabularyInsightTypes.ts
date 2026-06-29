@@ -18,11 +18,12 @@ export interface HomeTeachingConcernCard {
 
 // ── Time Range ──────────────────────────────────────────
 
-export type TimeRange = '7d' | '14d' | '30d' | 'semester' | 'current_unit' | 'custom'
+/** PRD §6.2 仅定义 4 个时间范围选项 */
+export type TimeRange = '7d' | '14d' | '30d' | 'current_unit'
 
 export const TIME_RANGE_LABELS: Record<TimeRange, string> = {
-  '7d': '近 7 天', '14d': '近 14 天', '30d': '近 30 天',
-  semester: '本学期', current_unit: '当前单元', custom: '自定义时间范围',
+  '7d': '近7天', '14d': '近14天', '30d': '近30天',
+  current_unit: '当前单元',
 }
 
 // ── 4 类平台归因 ───────────────────────────────────────
@@ -69,13 +70,12 @@ export const VOCAB_ISSUE_RULES = {
     { condition: '听力/跟读来源中出现音近词或听辨错误', rule: '读不准' },
   ],
 
-  /** 严重程度规则 */
+  /** 严重程度规则 — 按错误率划分（PRD §8.9） */
   severityRules: {
-    '极高': { maxScoreRate: 30, minAffectedStudents: 10 },
-    '高':   { maxScoreRate: 50, minAffectedStudents: 8 },
-    '中高': { maxScoreRate: 65 },
-    '中':   { maxScoreRate: 80 },
-    '低':   { maxScoreRate: 101 },
+    '极高': { minErrorRate: 70, desc: '错误率 ≥ 70%' },
+    '高':   { minErrorRate: 50, desc: '错误率 50–70%' },
+    '中':   { minErrorRate: 30, desc: '错误率 30–50%' },
+    '低':   { minErrorRate: 0,  desc: '错误率 < 30%' },
   },
 
   /** 归因分析文案模板 */
@@ -108,21 +108,20 @@ export function getReasonForIssue(et: VocabularyErrorType): string {
 
 // ── Severity ──────────────────────────────────────────
 
-export type Severity = '极高' | '高' | '中高' | '中' | '低'
+export type Severity = '极高' | '高' | '中' | '低'
 
-export function calcSeverity(scoreRate: number, affectedStudents: number): Severity {
+/** 按错误率计算严重程度（PRD §8.9） */
+export function calcSeverity(errorRate: number): Severity {
   const rules = VOCAB_ISSUE_RULES.severityRules
-  if (scoreRate <= rules['极高'].maxScoreRate && affectedStudents >= rules['极高'].minAffectedStudents) return '极高'
-  if (scoreRate <= rules['高'].maxScoreRate || affectedStudents >= rules['高'].minAffectedStudents) return '高'
-  if (scoreRate <= rules['中高'].maxScoreRate) return '中高'
-  if (scoreRate <= rules['中'].maxScoreRate) return '中'
+  if (errorRate >= rules['极高'].minErrorRate) return '极高'
+  if (errorRate >= rules['高'].minErrorRate) return '高'
+  if (errorRate >= rules['中'].minErrorRate) return '中'
   return '低'
 }
 
 export const SEVERITY_STYLES: Record<Severity, { bg: string; text: string; border: string }> = {
   '极高': { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-200' },
   '高':   { bg: 'bg-orange-50', text: 'text-orange-600', border: 'border-orange-200' },
-  '中高': { bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-200' },
   '中':   { bg: 'bg-slate-50', text: 'text-slate-500', border: 'border-slate-200' },
   '低':   { bg: 'bg-slate-50', text: 'text-slate-400', border: 'border-slate-200' },
 }
@@ -150,8 +149,20 @@ export interface WrongForm {
   count: number
 }
 
+/** 错音（PRD §9.2）— 与常见错误写法分开展示 */
+export interface MispronunciationItem {
+  /** 错误读音 / 错读形式 */
+  text: string
+  /** 涉及学生数 */
+  students: number
+  /** 出现次数 */
+  count: number
+}
+
 export interface ErrorEvidence {
   studentName: string
+  /** 学生 ID — 查看原题接口入参 */
+  studentId?: string
   source: string
   wrongAnswer: string
   correctAnswer: string
@@ -159,6 +170,10 @@ export interface ErrorEvidence {
   questionId?: string
   questionType?: string
   date?: string
+  /** 作答记录 ID — 查看原题接口优先使用，避免同一学生同一题多次作答时取错记录 */
+  answerRecordId?: string
+  /** 关联词汇 ID — 查看原题接口入参 */
+  wordId?: string
 }
 
 // ── Intervention Recommendation ───────────────────────
@@ -185,6 +200,8 @@ export interface VocabularyMetrics {
 
 export interface WeakWordItem {
   id: string
+  /** 平台词汇唯一标识 — 用于去重，由后端返回 */
+  wordId?: string
   text: string
   itemType: 'word' | 'chunk'
   scoreRate: number
@@ -202,9 +219,15 @@ export interface WeakWordItem {
   priorityScore: number
   severity?: Severity
   wrongForms?: WrongForm[]
+  /** 错音列表（PRD §9.2）— 与常见错误写法分开展示 */
+  mispronunciations?: MispronunciationItem[]
   evidences?: ErrorEvidence[]
   /** 练习来源类型 */
   source?: string
+  /** 该词所有有效作答小题实际得分之和（聚合用） */
+  totalActualScore?: number
+  /** 该词所有有效作答小题满分之和（聚合用） */
+  totalFullScore?: number
 }
 
 // ── Typical Mistake Detail ────────────────────────────

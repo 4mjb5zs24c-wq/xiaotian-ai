@@ -22,7 +22,9 @@ import {
   getUnitVocabularyResources,
   getUnitPracticeResources,
   getWritingResourceItems,
+  getWritingPaperResources,
   getDictationResourceItems,
+  getVocabPaperResources,
   getAnswerCardRelatedEntries,
   getPlatformPaperResources,
   getSpecialTopicCards,
@@ -38,7 +40,11 @@ import {
   getListeningResources,
   getListeningRelated,
   getListeningMockResources,
+  getListeningPaperResources,
+  getListeningMyPapers,
   getSpeakingResources,
+  getSpeakingPaperResources,
+  getSpeakingMyPapers,
   getSpeakingFallback,
   getTextResources,
   getTextRelated,
@@ -64,6 +70,7 @@ export type V1_1IntentId =
   | 'word_list'
   | 'dictation'
   | 'vocabulary'
+  | 'vocab_paper'
   | 'paper'
   | 'writing'
   | 'practice'
@@ -72,7 +79,9 @@ export type V1_1IntentId =
   | 'micro_skill'
   | 'listening_mock'
   | 'listening'
+  | 'listening_paper'
   | 'speaking'
+  | 'speaking_paper'
   | 'real_exam'
   | 'exam_set'
   | 'mock_exam'
@@ -93,7 +102,7 @@ export type V1_1IntentId =
  */
 function isDictationQuery(query: string): boolean {
   const q = query
-  return /听写|默写|听默|默一下|默词|默课文|听词|听些|词句听写|篇章默写|词组听写|句子听写/.test(q)
+  return /听写|默写|听默|听\/默写|默一下|默词|默课文|听词|听些|词句听写|篇章默写|词组听写|句子听写/.test(q)
 }
 
 function isWordListQuery(query: string): boolean {
@@ -105,12 +114,33 @@ function isVocabularyQuery(query: string): boolean {
   const q = query
   // Exclude precision jump keywords
   if (/词汇薄弱|词汇掌握差/.test(q)) return false
-  return /词汇|单词|生词|课标词|核心词|重点词|背单词|记单词|练单词|非课标词|单词练习|词汇练习|单词训练|词汇训练|单词巩固|词汇巩固/.test(q)
+  // Exclude vocab paper queries (handled separately)
+  if (/词汇试卷|词汇练习卷|词汇专项试卷|同步词汇试卷|词汇题/.test(q)) return false
+  return /词汇|单词|生词|课标词|核心词|重点词|背单词|记单词|练单词|非课标词|单词练习|词汇练习|单词训练|词汇训练|单词巩固|词汇巩固|当前单元词汇|单元词汇/.test(q)
+}
+
+/** Check if query is a vocabulary paper search — must be before general vocabulary */
+function isVocabPaperQuery(q: string): boolean {
+  return /词汇试卷|词汇练习卷|词汇专项试卷|同步词汇试卷|词汇题/.test(q)
+}
+
+/** Check if query is English word(s) — single or multiple words, ignoring punctuation and spaces */
+function isEnglishWordQuery(q: string): boolean {
+  const trimmed = q.trim()
+  // Single English word (>=2 letters)
+  if (/^[a-zA-Z]{2,}$/.test(trimmed)) return true
+  // Multiple English words separated by spaces or common punctuation
+  const cleaned = trimmed.replace(/[,，、\s]+/g, ' ').replace(/[.!?;:]+/g, '').trim()
+  if (/^[a-zA-Z\s]+$/.test(cleaned)) {
+    const words = cleaned.split(/\s+/).filter(w => w.length >= 2)
+    return words.length >= 2
+  }
+  return false
 }
 
 function isAnswerCardQuery(query: string): boolean {
   const q = query
-  return /答题卡|答题纸|作答卡|作答纸|答题卷|答题页|试卷答题卡|试卷作答卡|试卷答题纸|纸质答题卡|纸质作答|制卡|快速制卡|新建答题卡|自制答题卡|三方卡|第三方卡|批卡|扫卡|扫描卡|扫描答题卡|线下考试|纸笔练习|纸质练习|上传答题卡|答提卡|打题卡|答题咔/.test(q)
+  return /答题卡|答题纸|作答卡|作答纸|答题卷|答题页|试卷答题卡|试卷作答卡|试卷答题纸|纸质答题卡|纸质作答|制卡|快速制卡|新建答题卡|自制答题卡|三方卡|第三方卡|批卡|扫卡|扫描卡|扫描答题卡|线下考试|纸笔练习|纸质练习|上传答题卡|拍照批改|扫描批改|拍照|扫描|纸质|答提卡|打题卡|答题咔/.test(q)
 }
 
 function isPaperQuery(query: string): boolean {
@@ -151,16 +181,35 @@ function isListeningMockQuery(q: string): boolean {
   return /听力模拟|听力模考|听力测试|听力测评|听力考试|听力模拟题|听力模拟卷/.test(q)
 }
 
+/** 听力试卷类：听力+模拟/套题/套卷/试卷/真题/期末卷 */
+function isListeningPaperQuery(q: string): boolean {
+  // Must contain 听力 AND one of the paper/exam-type keywords
+  if (!/听力/.test(q)) return false
+  return /听力模拟|听力套题|听力套卷|听力试卷|听力真题|听力期末卷/.test(q)
+}
+
 function isListeningQuery(q: string): boolean {
-  // Exclude: 听说 (speaking), 听力模拟 (listening_mock), 听力专项 (special_topic)
-  if (/听说|听力模拟|听力模考|听力测试|听力测评|听力考试/.test(q)) return false
+  // Exclude: 听说 (speaking), 听力模拟类 (listening_mock or listening_paper)
+  if (/听说/.test(q)) return false
+  if (isListeningMockQuery(q)) return false
+  if (isListeningPaperQuery(q)) return false
+  // Exclude 听力专项 (handled by special_topic)
   if (/听力专项/.test(q)) return false
   return /听力|听力练习|听力训练|听力资源|听力素材|同步听力|单元听力|课本听力|听力题/.test(q)
 }
 
+/** 听说试卷类：听说+模拟/套题/套卷/试卷/真题/期末卷 */
+function isSpeakingPaperQuery(q: string): boolean {
+  if (!/听说/.test(q)) return false
+  return /听说模拟|听说套题|听说套卷|听说试卷|听说真题|听说期末卷/.test(q)
+}
+
 function isSpeakingQuery(q: string): boolean {
+  // Exclude 听说专项 (handled by special_topic)
   if (/听说专项/.test(q)) return false
-  return /听说|听说练习|听说训练|听说资源|听说考试|听说模拟|听说测评|口语听说/.test(q)
+  // Exclude 听说试卷类
+  if (isSpeakingPaperQuery(q)) return false
+  return /听说|听说练习|听说训练|听说资源|听说考试|听说测评|口语听说/.test(q)
 }
 
 function isRealExamQuery(q: string): boolean {
@@ -247,16 +296,26 @@ export function matchV1_1Intent(query: string): V1_1IntentId {
   // P4: micro_skill (higher priority than special_topic sub-types)
   if (isMicroSkillQuery(q)) return 'micro_skill'
 
-  // P5: dictation > word_list > vocabulary (dictation most specific)
+  // P5: dictation > word_list > vocab_paper > vocabulary (dictation most specific)
   if (isDictationQuery(q)) return 'dictation'
   if (isWordListQuery(q)) return 'word_list'
+  // Vocab paper before general vocabulary (词汇试卷 vs 词汇)
+  if (isVocabPaperQuery(q)) return 'vocab_paper'
+  // English words (single or multi-word) → vocabulary
+  if (isEnglishWordQuery(q)) return 'vocabulary'
   if (isVocabularyQuery(q)) return 'vocabulary'
 
   // P6: listening_mock (must be before listening AND mock_exam)
   if (isListeningMockQuery(q)) return 'listening_mock'
 
+  // P6b: listening_paper (听力+试卷类：听力模拟/套题/套卷/试卷/真题/期末卷)
+  if (isListeningPaperQuery(q)) return 'listening_paper'
+
   // P7: listening (must be before speaking to exclude 听说)
   if (isListeningQuery(q)) return 'listening'
+
+  // P7b: speaking_paper (听说+试卷类)
+  if (isSpeakingPaperQuery(q)) return 'speaking_paper'
 
   // P8: speaking
   if (isSpeakingQuery(q)) return 'speaking'
@@ -325,11 +384,17 @@ function wrapResourcesToGroup(
   items: ResourceItem[],
   groupName: string,
   recText?: string,
+  groupType?: ResourceGroup['groupType'],
 ): ResourceGroup {
+  // Infer groupType from first item when it carries content data (sync_vocab / sync_text)
+  const inferredType = groupType
+    ?? ((items.length > 0 && (items[0].type === 'sync_vocab' || items[0].type === 'sync_text'))
+      ? items[0].type as ResourceGroup['groupType']
+      : 'resource')
   return {
     groupId: `grp-${groupName.replace(/\s/g, '_').toLowerCase()}`,
     groupName,
-    groupType: 'resource',
+    groupType: inferredType,
     isPrimaryMatch: true,
     defaultExpanded: true,
     recommendationText: recText,
@@ -448,13 +513,16 @@ export function buildWordListResult(
   const myGroup = buildMyWordListGroup(lists)
   const dictItems = getDictationResourceItems()
   const unitVocab = getUnitVocabularyResources(ctx)
-  const isDictSearch = /听写|听/.test(query)
-  const isDefaultSearch = /默写|默/.test(query)
+  const isDictSearch = isDictationQuery(query)
+  const isWlSearch = isWordListQuery(query)
+  const isEngWord = isEnglishWordQuery(query)
+  // Vocabulary intent: not dictation, not word_list → vocabulary/english word path
+  const isVocabSearch = !isDictSearch && !isWlSearch
 
   const smartMatchGroups: ResourceGroup[] = []
   const smartRelatedGroups: ResourceGroup[] = []
 
-  // ── Dictation intent: reorder — function entries first, then unit vocab, then my word lists ──
+  // ── Dictation intent: function entries → unit vocab → my word lists ──
   if (isDictSearch) {
     // 1. Dictation function entries first (lightweight entry cards)
     smartMatchGroups.push({
@@ -482,20 +550,131 @@ export function buildWordListResult(
       tabLabelOverrides: { sync_vocab: '当前单元词汇' },
     })
 
-    // 3. My word lists third (my_content type for proper rendering)
+    // 3. My word lists third
     if (lists.length > 0) {
       smartMatchGroups.push({ ...myGroup, groupType: 'my_content', tabLabelOverrides: { function: '我的词表' } })
     }
 
     return {
-      ...makeBaseResult(query, "word_list"),
+      ...makeBaseResult(query, "dictation"),
       original: buildEmptyV1_0Result(query),
       smartMatchGroups,
       smartRelatedGroups,
     }
   }
 
-  // ── Default / word list / vocabulary / non-dictation ordering ──
+  // ── English word query: 讲词入口 → then vocab results ──
+  if (isEngWord) {
+    // Build 讲词/单词教学 entry
+    const wordTeachItem: ResourceItem = {
+      id: 'func-word-teach-search',
+      title: `讲词 — ${query.trim()}`,
+      type: 'function',
+      tags: ['讲词', '单词教学', '词汇'],
+      difficulty: 'basic',
+      grade: ctx.grade || '七年级上',
+      isCurrentUnit: true,
+      canPreview: false,
+      canAssign: false,
+      canAddToPaperBasket: false,
+      canAddToLessonPrep: false,
+      isLessonPrepResource: false,
+      recommendReason: `查看「${query.trim()}」全屏讲词页，含词义、例句、搭配和教学资源`,
+    }
+    smartMatchGroups.push(wrapResourcesToGroup(
+      [wordTeachItem],
+      '讲词 / 单词教学入口',
+      `打开「${query.trim()}」单词教学页，查看详细讲解`,
+    ))
+
+    // Then fall through to vocabulary ordering below
+  }
+
+  // ── Vocabulary / English word ordering ──
+  // 1. 当前单元词汇 (primary, with full content selection)
+  // 2. 听写与默写入口
+  // 3. 我的词表
+  // 4. 关联推荐：词汇试卷、答题卡等（弱关联，不出现在主结果前列）
+  if (isVocabSearch || isEngWord) {
+    // 1. Unit vocabulary first — show full content (词汇/语块/固定搭配) with selection
+    const unitLabel = ctx.unit || '当前单元'
+    smartMatchGroups.push(
+      wrapResourcesToGroup(
+        unitVocab,
+        `${unitLabel} — 当前单元词汇`,
+        `${unitLabel} 同步词汇内容，可选择词汇、语块和固定搭配后，布置听写、默写、跟读或选词类练习`,
+        'sync_vocab',
+      ),
+    )
+
+    // 2. Dictation entries
+    const dictGroup = wrapResourcesToGroup(
+      dictItems,
+      '听写与默写入口',
+      '可用于当前单元词汇的听写、默写练习形式',
+      'dictation_func',
+    )
+    dictGroup.tabLabelOverrides = { vocab_practice: '听写默写入口' }
+    smartMatchGroups.push(dictGroup)
+
+    // 3. My word lists
+    if (lists.length > 0) {
+      smartMatchGroups.push({ ...myGroup, tabLabelOverrides: { function: '我的词表' } })
+    }
+
+    // 4. Related: 词汇试卷 → 答题卡 → 纸质练习 → 弱关联 (弱关联不出现在主结果前列)
+    smartRelatedGroups.push(
+      wrapRelatedGroup(
+        [
+          {
+            id: 'rel-vocab-paper',
+            title: `${unitLabel} 词汇专项试卷`,
+            type: 'unit_test',
+            tags: ['词汇试卷', unitLabel],
+            difficulty: 'medium',
+            grade: ctx.grade || '七年级上',
+            source: ctx.textbook || '人教版',
+            isCurrentUnit: true,
+            questionCount: 30,
+            duration: '40分钟',
+            canPreview: true,
+            canAssign: true,
+            canAddToPaperBasket: false,
+            canAddToLessonPrep: false,
+            isLessonPrepResource: false,
+            recommendReason: '当前单元词汇专项检测试卷',
+          },
+          {
+            id: 'rel-vocab-answer-card',
+            title: '词汇听写答题卡',
+            type: 'function',
+            tags: ['答题卡', '词汇听写'],
+            difficulty: 'basic',
+            grade: ctx.grade || '七年级上',
+            source: '我的',
+            isCurrentUnit: true,
+            canPreview: true,
+            canAssign: true,
+            canAddToPaperBasket: false,
+            canAddToLessonPrep: false,
+            isLessonPrepResource: false,
+            recommendReason: '可用于词汇听写的纸质答题卡',
+          },
+        ],
+        '词汇关联资源',
+        '你可能还会用到词汇试卷和答题卡资源',
+      ),
+    )
+
+    return {
+      ...makeBaseResult(query, "vocabulary"),
+      original: buildEmptyV1_0Result(query),
+      smartMatchGroups,
+      smartRelatedGroups,
+    }
+  }
+
+  // ── Word list ordering ──
   // 1. My word lists first
   if (lists.length > 0) {
     smartMatchGroups.push({ ...myGroup, tabLabelOverrides: { function: '我的词表' } })
@@ -505,9 +684,7 @@ export function buildWordListResult(
   const dictGroup = wrapResourcesToGroup(
     dictItems,
     '听写与默写入口',
-    isDefaultSearch
-      ? '适合默写训练的练习形式'
-      : '可用于听写和默写的练习形式',
+    '可用于听写和默写的练习形式',
   )
   dictGroup.tabLabelOverrides = { vocab_practice: '听写默写入口' }
   smartMatchGroups.push(dictGroup)
@@ -523,6 +700,90 @@ export function buildWordListResult(
 
   return {
     ...makeBaseResult(query, "word_list"),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups,
+    smartRelatedGroups,
+  }
+}
+
+// ── Vocab Paper ────────────────────────────────────────
+
+export function buildVocabPaperResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const vocabPapers = getVocabPaperResources(ctx)
+  const myPapers = getMyPapers(ctx)
+  const myVocabPapers = myPapers.filter((p) => /词汇/.test(p.title))
+  const dictItems = getDictationResourceItems()
+  const lists = getMyWordLists(ctx)
+  const unitVocab = getUnitVocabularyResources(ctx)
+  const unitLabel = ctx.unit || '当前单元'
+
+  const smartMatchGroups: ResourceGroup[] = []
+  const smartRelatedGroups: ResourceGroup[] = []
+
+  // 1. 同步词汇试卷
+  const syncVocabPapers = vocabPapers.filter((p) => p.type === 'unit_test')
+  if (syncVocabPapers.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(
+      syncVocabPapers,
+      `${unitLabel} 同步词汇试卷`,
+      '与当前单元同步的词汇检测试卷',
+    ))
+  }
+
+  // 2. 专项词汇试卷
+  const specialVocabPapers = vocabPapers.filter((p) => p.type === 'special')
+  if (specialVocabPapers.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(
+      specialVocabPapers,
+      '词汇专项试卷',
+      '聚焦词汇能力的专项试卷',
+    ))
+  }
+
+  // 3. 综合词汇试卷
+  const compVocabPapers = vocabPapers.filter((p) => p.type === 'comprehensive')
+  if (compVocabPapers.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(
+      compVocabPapers,
+      '词汇综合试卷',
+      '词汇综合能力检测试卷',
+    ))
+  }
+
+  // 4. 我的试卷中含"词汇"的
+  if (myVocabPapers.length > 0) {
+    smartMatchGroups.push({
+      ...buildMyPaperGroup(myVocabPapers),
+      groupName: '我的词汇试卷',
+    })
+  }
+
+  // Related: 听写/默写入口 → 我的词表 → 当前单元词汇
+  smartRelatedGroups.push(wrapRelatedGroup(
+    dictItems,
+    '听写与默写入口',
+    '可用于词汇练习的听写、默写功能',
+  ))
+
+  if (lists.length > 0) {
+    smartRelatedGroups.push({
+      ...buildMyWordListGroup(lists),
+      groupName: '我的词表',
+      isPrimaryMatch: false,
+    })
+  }
+
+  smartRelatedGroups.push(wrapRelatedGroup(
+    unitVocab,
+    '当前单元词汇',
+    '当前单元同步词汇内容，可用于复习和巩固',
+  ))
+
+  return {
+    ...makeBaseResult(query, "vocab_paper"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups,
@@ -593,53 +854,69 @@ export function buildPaperResult(
 
 export function buildWritingResult(
   query: string,
-  _ctx: SearchContext,
+  ctx: SearchContext,
 ): EnhancedSearchResult {
   const writingItems = getWritingResourceItems()
+  const writingPapers = getWritingPaperResources(ctx)
   const q = query.trim()
 
   let smartMatchGroups: ResourceGroup[] = []
   let smartRelatedGroups: ResourceGroup[] = []
 
   if (/应用文/.test(q)) {
-    // 应用文: main → 应用文, related → 读后续写
+    // 应用文: main → 自定义应用文入口 + 应用文写作专项试卷
     smartMatchGroups = [
       wrapResourcesToGroup(
         [writingItems[0]],
-        '自定义应用文',
-        '支持书信、通知、日记等常见应用文体裁',
+        '自定义应用文入口',
+        '支持书信、通知、日记等常见应用文体裁，可自定义题目和要求',
+      ),
+      wrapResourcesToGroup(
+        [writingPapers[0]],
+        '应用文写作专项试卷',
+        '应用文写作专项训练试卷',
       ),
     ]
     smartRelatedGroups = [
       wrapResourcesToGroup(
         [writingItems[1]],
-        '自定义读后续写',
+        '自定义读后续写入口',
         '你可能也会用到读后续写练习',
       ),
     ]
   } else if (/读后续写|续写/.test(q)) {
-    // 读后续写: main → 读后续写, related → 应用文
+    // 读后续写: main → 自定义读后续写入口 + 读后续写专项试卷
     smartMatchGroups = [
       wrapResourcesToGroup(
         [writingItems[1]],
-        '自定义读后续写',
-        '提供阅读材料，训练读写综合能力',
+        '自定义读后续写入口',
+        '提供阅读材料，训练学生读写综合能力',
+      ),
+      wrapResourcesToGroup(
+        [writingPapers[1]],
+        '读后续写专项试卷',
+        '读后续写专项训练试卷',
       ),
     ]
     smartRelatedGroups = [
       wrapResourcesToGroup(
         [writingItems[0]],
-        '自定义应用文',
+        '自定义应用文入口',
         '你可能也会用到应用文写作',
       ),
     ]
   } else {
-    // 作文/写作: both in smart match
+    // 作文/写作/书面表达: 展示应用文、读后续写入口 + 当前学段写作专项试卷
     smartMatchGroups = [
       wrapResourcesToGroup(
         writingItems,
         '写作练习入口',
         '支持应用文和读后续写两种写作训练方式',
+      ),
+      wrapResourcesToGroup(
+        writingPapers,
+        '写作专项试卷',
+        '当前学段可用的写作专项试卷',
       ),
     ]
   }
@@ -714,6 +991,7 @@ function detectSpecialSubTopic(q: string): string {
   if (/微技能/.test(q)) return 'micro_skill'
   if (/词汇/.test(q)) return 'vocab'
   if (/听力/.test(q)) return 'listening'
+  if (/听说|口语/.test(q)) return 'speaking'
   if (/写作|作文|应用文|读后续写/.test(q)) return 'writing'
   if (/阅读/.test(q)) return 'reading'
   if (/题型|完形|填空/.test(q)) return 'question_type'
@@ -851,24 +1129,59 @@ export function buildExamSetResult(
   }
 }
 
-// ── Listening ─────────────────────────────────────────────
+// ── Listening (general: 听力/听力练习/听力资源) ──────────
+// Order: sync listening → special listening → mock/exam listening
+// Related: my papers(听力), textbook, speaking alternative
 
 export function buildListeningResult(
   query: string,
   ctx: SearchContext,
 ): EnhancedSearchResult {
-  const resources = getListeningResources(ctx)
-  const related = getListeningRelated(ctx)
+  const syncResources = getListeningResources(ctx)
+  const specialResources = getListeningRelated(ctx) // currently returns 听力专项 + 听力模拟
+  const paperResources = getListeningPaperResources(ctx)
+  const myListeningPapers = getListeningMyPapers(ctx)
+
+  const smartMatchGroups: ResourceGroup[] = []
+  const smartRelatedGroups: ResourceGroup[] = []
+
+  // 1. 同步听力资源
+  smartMatchGroups.push(wrapResourcesToGroup(syncResources, '同步听力资源', '当前单元同步听力训练'))
+
+  // 2. 听力专项资源
+  if (specialResources.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(specialResources, '听力专项资源', '听力专项和模拟资源'))
+  }
+
+  // 3. 模拟/试卷听力资源
+  if (paperResources.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(paperResources, '听力试卷与模拟', '听力模拟、套题和真题试卷'))
+  }
+
+  // Related: my papers(听力), 听说替代
+  if (myListeningPapers.length > 0) {
+    smartRelatedGroups.push(wrapRelatedGroup(myListeningPapers, '我的听力试卷', '你的试卷中含"听力"的资源'))
+  }
+
+  // 听说替代推荐
+  const speakingFallback = getSpeakingFallback(ctx)
+  if (speakingFallback.length > 0) {
+    smartRelatedGroups.push(wrapRelatedGroup(
+      [speakingFallback[0]], // just one representative item
+      '听说替代推荐',
+      '暂无听说资源时可使用听力替代',
+    ))
+  }
 
   return {
     ...makeBaseResult(query, "listening"),
     original: buildEmptyV1_0Result(query),
-    smartMatchGroups: [wrapResourcesToGroup(resources, '同步听力资源', '当前单元听力资源')],
-    smartRelatedGroups: related.length > 0 ? [wrapRelatedGroup(related, '听力专项资源', '听力专项和模拟资源')] : [],
+    smartMatchGroups,
+    smartRelatedGroups,
   }
 }
 
-// ── Listening Mock ─────────────────────────────────────────
+// ── Listening Mock (听力模拟) ─────────────────────────────
 
 export function buildListeningMockResult(
   query: string,
@@ -884,7 +1197,60 @@ export function buildListeningMockResult(
   }
 }
 
-// ── Speaking ──────────────────────────────────────────────
+// ── Listening Paper (听力+试卷类) ────────────────────────
+// Order: mock/exam listening → special listening → sync listening → my papers(听力)
+
+export function buildListeningPaperResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const paperResources = getListeningPaperResources(ctx)
+  const specialResources = getListeningRelated(ctx)
+  const syncResources = getListeningResources(ctx)
+  const myListeningPapers = getListeningMyPapers(ctx)
+
+  const smartMatchGroups: ResourceGroup[] = []
+  const smartRelatedGroups: ResourceGroup[] = []
+
+  // 1. 模拟/试卷听力资源 (primary for paper-type queries)
+  if (paperResources.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(paperResources, '听力试卷与模拟', '听力模拟、套题和真题试卷'))
+  }
+
+  // 2. 听力专项资源
+  if (specialResources.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(specialResources, '听力专项资源', '听力专项和模拟资源'))
+  }
+
+  // 3. 同步听力资源
+  smartMatchGroups.push(wrapResourcesToGroup(syncResources, '同步听力资源', '当前单元同步听力训练'))
+
+  // 4. 我的听力试卷
+  if (myListeningPapers.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(myListeningPapers, '我的听力试卷', '你的试卷中含"听力"的资源'))
+  }
+
+  // Related: 听说替代
+  const speakingFallback = getSpeakingFallback(ctx)
+  if (speakingFallback.length > 0) {
+    smartRelatedGroups.push(wrapRelatedGroup(
+      [speakingFallback[0]],
+      '听说替代推荐',
+      '暂无听说资源时可使用听力替代',
+    ))
+  }
+
+  return {
+    ...makeBaseResult(query, "listening_paper"),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups,
+    smartRelatedGroups,
+  }
+}
+
+// ── Speaking (general: 听说/听说练习/听说资源) ─────────────
+// Order: sync speaking → special speaking → mock/exam speaking
+// Related: my papers(听说), textbook, listening alternative
 
 export function buildSpeakingResult(
   query: string,
@@ -903,8 +1269,71 @@ export function buildSpeakingResult(
     smartMatchGroups.push(wrapResourcesToGroup(fallback, '替代推荐资源', '当前地区暂无听说资源，以下为替代推荐'))
   }
 
+  // Related: my papers(听说) + listening alternative
+  const mySpeakingPapers = getSpeakingMyPapers(ctx)
+  if (mySpeakingPapers.length > 0) {
+    smartRelatedGroups.push(wrapRelatedGroup(mySpeakingPapers, '我的听说试卷', '你的试卷中含"听说"的资源'))
+  }
+
+  // 听力替代
+  const listeningResources = getListeningResources(ctx)
+  if (listeningResources.length > 0) {
+    smartRelatedGroups.push(wrapRelatedGroup(
+      [listeningResources[0]],
+      '听力替代推荐',
+      '暂无足够听说资源时可用听力替代',
+    ))
+  }
+
   return {
     ...makeBaseResult(query, "speaking"),
+    original: buildEmptyV1_0Result(query),
+    smartMatchGroups,
+    smartRelatedGroups,
+  }
+}
+
+// ── Speaking Paper (听说+试卷类) ──────────────────────────
+// Order: mock/exam speaking → special speaking → sync speaking → my papers(听说)
+
+export function buildSpeakingPaperResult(
+  query: string,
+  ctx: SearchContext,
+): EnhancedSearchResult {
+  const paperResources = getSpeakingPaperResources(ctx)
+  const syncResources = getSpeakingResources(ctx)
+  const mySpeakingPapers = getSpeakingMyPapers(ctx)
+
+  const smartMatchGroups: ResourceGroup[] = []
+  const smartRelatedGroups: ResourceGroup[] = []
+
+  // 1. 模拟/试卷听说资源 (primary for paper-type queries)
+  if (paperResources.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(paperResources, '听说试卷与模拟', '听说模拟、套题和真题试卷'))
+  }
+
+  // 2. 同步听说资源
+  if (syncResources.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(syncResources, '听说练习资源', '听说练习和测评资源'))
+  }
+
+  // 3. 我的听说试卷
+  if (mySpeakingPapers.length > 0) {
+    smartMatchGroups.push(wrapResourcesToGroup(mySpeakingPapers, '我的听说试卷', '你的试卷中含"听说"的资源'))
+  }
+
+  // Related: 听力替代
+  const listeningResources = getListeningResources(ctx)
+  if (listeningResources.length > 0) {
+    smartRelatedGroups.push(wrapRelatedGroup(
+      [listeningResources[0]],
+      '听力替代推荐',
+      '暂无足够听说资源时可用听力替代',
+    ))
+  }
+
+  return {
+    ...makeBaseResult(query, "speaking_paper"),
     original: buildEmptyV1_0Result(query),
     smartMatchGroups,
     smartRelatedGroups,

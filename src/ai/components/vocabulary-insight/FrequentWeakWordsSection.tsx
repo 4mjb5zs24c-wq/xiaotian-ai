@@ -116,7 +116,7 @@ export default function FrequentWeakWordsSection({
         {visible.map(w => {
           const isSelected = selectedIds.has(w.id)
           const isExpanded = expandedWordId === w.id
-          const sev = w.severity || calcSeverity(w.scoreRate, w.affectedStudentCount)
+          const sev = w.severity || calcSeverity(w.errorRate)
           const sevStyle = SEVERITY_STYLES[sev]
 
           return (
@@ -198,7 +198,7 @@ function WordRow({
               <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-purple-50 text-purple-500 border border-purple-100">语块</span>
             )}
             <span className="text-[13px] text-slate-500">
-              得分率 <span className="font-semibold text-slate-700">{word.scoreRate}%</span>
+              错误率 <span className="font-semibold text-slate-700">{word.errorRate}%</span>
             </span>
             <span className="text-slate-300">·</span>
             <span className="text-[13px] text-slate-400 flex items-center gap-1">
@@ -212,7 +212,7 @@ function WordRow({
             )}
             {/* Severity badge */}
             <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-md border ${severityStyle.bg} ${severityStyle.text} ${severityStyle.border}`}
-              title="严重程度由得分率、错误次数、影响人数综合计算。">
+              title="严重程度由错误率划分：≥70%极高、50-70%高、30-50%中、<30%低。">
               严重程度：{severity}
             </span>
           </div>

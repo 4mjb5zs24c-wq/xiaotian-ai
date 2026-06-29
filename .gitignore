@@ -23,6 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 .vite-pid
+.vite/
+
+# Claude worktrees
+.claude/worktrees/
 
 # Local Netlify folder
 .netlify

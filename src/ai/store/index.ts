@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import type { WorkflowUIRresult } from '../workflows/workflowTypes'
-import type { NewSearchResult, PaperBasketItem, AssignmentDraft } from '../search-new/types'
+import type { NewSearchResult, AssignmentDraft } from '../search-new/types'
 
 // ── Types ──────────────────────────────────────────────
 
@@ -103,14 +103,6 @@ interface AIStore {
   newSearchResult: NewSearchResult | null
   setNewSearchResult: (result: NewSearchResult | null) => void
 
-  // Paper Basket (separate from practice basket, localStorage persisted)
-  paperBasket: PaperBasketItem[]
-  addToPaperBasket: (item: PaperBasketItem) => void
-  removeFromPaperBasket: (id: string) => void
-  clearPaperBasket: () => void
-  paperBasketToast: string | null
-  dismissPaperBasketToast: () => void
-
   // Pending Assignments (multi-assignment flow)
   pendingAssignments: AssignmentDraft[]
   setPendingAssignments: (assignments: AssignmentDraft[]) => void
@@ -136,24 +128,7 @@ export interface VocabDraftItem {
   classId: string
   expireAt: number      // 7 days after added
   scoreRate?: number
-}
-
-// ── Paper Basket localStorage Persistence ────────────────
-
-const PAPER_BASKET_KEY = 'xiaotian_paper_basket'
-
-function loadPaperBasket(): PaperBasketItem[] {
-  try {
-    const raw = localStorage.getItem(PAPER_BASKET_KEY)
-    if (raw) return JSON.parse(raw) as PaperBasketItem[]
-  } catch { /* ignore corrupt data */ }
-  return []
-}
-
-function savePaperBasket(items: PaperBasketItem[]): void {
-  try {
-    localStorage.setItem(PAPER_BASKET_KEY, JSON.stringify(items))
-  } catch { /* ignore quota errors */ }
+  errorRate?: number
 }
 
 // ── Vocab Draft Basket localStorage Persistence ──────────
@@ -258,31 +233,6 @@ export const useAIStore = create<AIStore>((set) => ({
   // New Search V2
   newSearchResult: null,
   setNewSearchResult: (result) => set({ newSearchResult: result }),
-
-  // Paper Basket (with localStorage persistence)
-  paperBasket: loadPaperBasket(),
-  addToPaperBasket: (item) =>
-    set((s) => {
-      const exists = s.paperBasket.some((i) => i.resourceId === item.resourceId)
-      if (exists) {
-        return { paperBasketToast: '该资源已在试卷篮中' }
-      }
-      const updated = [...s.paperBasket, item]
-      savePaperBasket(updated)
-      return { paperBasket: updated, paperBasketToast: '已加入试卷篮' }
-    }),
-  removeFromPaperBasket: (id) =>
-    set((s) => {
-      const updated = s.paperBasket.filter((i) => i.id !== id)
-      savePaperBasket(updated)
-      return { paperBasket: updated }
-    }),
-  clearPaperBasket: () => {
-    savePaperBasket([])
-    set({ paperBasket: [] })
-  },
-  paperBasketToast: null,
-  dismissPaperBasketToast: () => set({ paperBasketToast: null }),
 
   // Pending Assignments
   pendingAssignments: [],

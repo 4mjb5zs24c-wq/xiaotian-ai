@@ -1,14 +1,13 @@
 import React from 'react'
-import { Eye, Send, FolderPlus, BookOpen, Check } from 'lucide-react'
+import { Eye, Send, BookOpen, LogIn } from 'lucide-react'
 import type { ResourceItem } from '../../search-new/types'
 
 interface ResourceCardProps {
   item: ResourceItem
   onPreview: (item: ResourceItem) => void
   onAssign: (item: ResourceItem) => void
-  onAddToPaperBasket: (item: ResourceItem) => void
   onAddToLessonPrep: (item: ResourceItem) => void
-  isInPaperBasket?: boolean
+  onEnter?: (item: ResourceItem) => void
 }
 
 const difficultyLabel: Record<string, string> = {
@@ -27,9 +26,8 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
   item,
   onPreview,
   onAssign,
-  onAddToPaperBasket,
   onAddToLessonPrep,
-  isInPaperBasket = false,
+  onEnter,
 }) => {
   return (
     <div className="bg-white border border-slate-100 rounded-xl p-4 hover:border-slate-200 hover:shadow-sm transition-all duration-200">
@@ -59,10 +57,10 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
         {item.source && <span className="text-slate-400">{item.source}</span>}
       </div>
 
-      {/* Recommend Reason */}
+      {/* Match Reason */}
       {item.recommendReason && (
         <div className="mb-3 p-3 rounded-xl bg-blue-50/30 border border-blue-100/30">
-          <p className="text-[12px] text-slate-500 leading-relaxed">推荐理由：{item.recommendReason}</p>
+          <p className="text-[12px] text-slate-500 leading-relaxed">匹配说明：{item.recommendReason}</p>
         </div>
       )}
 
@@ -90,27 +88,15 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
             布置
           </button>
         )}
-        {item.canAddToPaperBasket && (
+        {item.canEnter && onEnter && (
           <button
-            onClick={() => onAddToPaperBasket(item)}
-            disabled={isInPaperBasket}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all duration-200
-              ${isInPaperBasket
-                ? 'bg-emerald-50 text-emerald-600 border border-emerald-200 cursor-default'
-                : 'text-slate-600 bg-white border border-slate-200 hover:border-blue-300 hover:text-blue-600'
-              }`}
+            onClick={() => onEnter(item)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-medium
+              text-slate-600 bg-white border border-slate-200 hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50/50
+              transition-all duration-200"
           >
-            {isInPaperBasket ? (
-              <>
-                <Check size={13} />
-                已加入
-              </>
-            ) : (
-              <>
-                <FolderPlus size={13} />
-                加入试卷篮
-              </>
-            )}
+            <LogIn size={13} />
+            进入
           </button>
         )}
         {item.isLessonPrepResource && item.canAddToLessonPrep && (

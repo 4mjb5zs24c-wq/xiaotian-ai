@@ -3,15 +3,82 @@ import {
   ArrowLeft, Download, TrendingUp, TrendingDown, Minus,
   Users, Target, AlertTriangle, CheckCircle2,
 } from 'lucide-react'
-import { ABILITY_DIMENSION_META } from '../ai/insights/vocabularyAbilityTypes'
 import type { VocabAbilityDimension } from '../ai/insights/vocabularyAbilityTypes'
+import VocabAbilityRadar from '../ai/components/vocabulary-insight/VocabAbilityRadar'
 
 // ══════════════════════════════════════════════════════════════
 // Mock report data
 // ══════════════════════════════════════════════════════════════
 
-const MOCK_REPORT = {
-  planName: '一周巩固方案',
+type PlanType = 'weakWords' | 'stageReview'
+
+/** demo: 从 planId 推断方案类型 */
+function getPlanType(planId: string): PlanType {
+  return planId.includes('stage') ? 'stageReview' : 'weakWords'
+}
+
+const MOCK_REPORT_WEAK_WORDS = {
+  planType: 'weakWords' as PlanType,
+  planName: '高频错词提升方案',
+  className: '2023级A18班',
+  status: '已完成' as const,
+  progress: '已完成 2/2 份任务',
+  updatedAt: '2026-06-24 10:30',
+  reviewScope: '人教版 · 八年级下册 · 按错词范围',
+  metrics: {
+    overallCompletionRate: 0.96,
+    overallAccuracy: 0.74,
+    accuracyBefore: 0.58,
+    accuracyAfter: 0.74,
+    accuracyChange: 16,
+    baselineLabel: '较方案前',
+    hasBaseline: true,
+    trendDirection: 'up' as const,
+    primaryWeakAbility: '词汇运用表达',
+    attentionStudentCount: 4,
+  },
+  abilityScoresBefore: { recognition: 52, contextual_understanding: 68, expression: 40, learning_strategy: 62 } as Record<VocabAbilityDimension, number>,
+  abilityScoresAfter:  { recognition: 68, contextual_understanding: 74, expression: 58, learning_strategy: 65 } as Record<VocabAbilityDimension, number>,
+  stageTrends: [
+    { stage: '错词回滚 1', completionRate: 0.93, accuracy: 0.62, studentCount: 38, totalStudents: 41, published: true },
+    { stage: '错词回滚 2', completionRate: 1.0, accuracy: 0.74, studentCount: 40, totalStudents: 41, published: true },
+  ],
+  attentionStudents: [
+    { name: '张同学', overallAccuracy: 0.46, completionRate: 1.0, missedCount: 0, status: '需重点关注' as const, reason: '正确率低于班级平均' },
+    { name: '李同学', overallAccuracy: 0.40, completionRate: 0.5, missedCount: 1, status: '需重点关注' as const, reason: '未完成任务，且正确率低于班级平均' },
+    { name: '王同学', overallAccuracy: 0.55, completionRate: 1.0, missedCount: 0, status: '略有改善' as const, reason: '仍低于班级平均，建议继续观察' },
+    { name: '赵同学', overallAccuracy: 0.53, completionRate: 1.0, missedCount: 0, status: '需重点关注' as const, reason: '正确率提升不明显' },
+  ],
+  weakContents: {
+    topWords: [
+      { word: 'AI/artificial intelligence', errorRate: 0.78, studentCount: 18, mainIssue: '不会写', ability: '词汇运用表达' },
+      { word: 'efficiency', errorRate: 0.72, studentCount: 15, mainIssue: '不会写', ability: '词汇识记' },
+      { word: 'delicious', errorRate: 0.68, studentCount: 13, mainIssue: '读不准', ability: '语境理解' },
+      { word: 'restaurant', errorRate: 0.65, studentCount: 12, mainIssue: '读不准', ability: '语境理解' },
+      { word: 'perseverance', errorRate: 0.62, studentCount: 11, mainIssue: '不会写', ability: '词汇运用表达' },
+      { word: 'recommend', errorRate: 0.58, studentCount: 10, mainIssue: '生词', ability: '词汇识记' },
+      { word: 'atmosphere', errorRate: 0.55, studentCount: 9, mainIssue: '生词', ability: '词汇识记' },
+      { word: 'Beijing', errorRate: 0.52, studentCount: 9, mainIssue: '不会写', ability: '词汇运用表达' },
+      { word: 'vegetable', errorRate: 0.48, studentCount: 8, mainIssue: '读不准', ability: '语境理解' },
+      { word: 'inspire', errorRate: 0.45, studentCount: 7, mainIssue: '读不准', ability: '语境理解' },
+    ],
+    topWeakQuestionTypes: [
+      { type: '默写', scoreRate: 0.42, attempts: 380, studentCount: 41 },
+      { type: '听写', scoreRate: 0.55, attempts: 320, studentCount: 38 },
+      { type: '词形变化题', scoreRate: 0.60, attempts: 280, studentCount: 35 },
+    ],
+    primaryWeakAbilities: ['词汇运用表达', '词汇识记'],
+  },
+  suggestions: [
+    '建议继续安排拼写和默写练习，特别是多音节词的音形对应训练。',
+    '对于 4 名改善不足的学生，可布置个性化词汇闯关进行针对性巩固。',
+    '后续可结合学生复习行为，进一步关注词汇学习策略表现。',
+  ],
+}
+
+const MOCK_REPORT_STAGE = {
+  planType: 'stageReview' as PlanType,
+  planName: '阶段词汇能力提升方案',
   className: '2023级A18班',
   status: '已完成' as const,
   progress: '已完成 2/2 份任务',
@@ -31,12 +98,6 @@ const MOCK_REPORT = {
     primaryWeakAbility: '词汇运用表达',
     attentionStudentCount: 4,
   },
-
-  findings: [
-    '方案整体正确率从 58% 提升至 74%，提升 16 个百分点，效果显著。',
-    '词汇运用表达和词汇识记两个维度改善较明显，学生拼写和语境运用能力有所提升。',
-    '仍有 4 名学生正确率提升不足 5 个百分点，建议重点关注。',
-  ],
 
   // ── Ability before/after ──
   abilityScoresBefore: { recognition: 52, contextual_understanding: 68, expression: 40, learning_strategy: 62 } as Record<VocabAbilityDimension, number>,
@@ -171,93 +232,14 @@ function StageTrendLineChart({ trends }: {
 }
 
 // ══════════════════════════════════════════════════════════════
-// Horizontal comparison bars for ability before/after
-// ══════════════════════════════════════════════════════════════
-
-function AbilityComparisonBars({
-  before, after, status, hasBaseline,
-}: {
-  before: Record<VocabAbilityDimension, number>
-  after: Record<VocabAbilityDimension, number>
-  status: string
-  hasBaseline: boolean
-}) {
-  const DIMS: VocabAbilityDimension[] = ['recognition', 'contextual_understanding', 'expression', 'learning_strategy']
-  const diffs = DIMS.map(dim => after[dim] - before[dim])
-  const maxDiff = Math.max(...diffs)
-
-  // Labels vary by report status
-  const beforeLabel = hasBaseline ? '方案前' : '首次闯关'
-  const afterLabel = status === '已完成' ? '方案后' : '当前'
-
-  return (
-    <div className="space-y-3">
-      {DIMS.map((dim, _i) => {
-        const meta = ABILITY_DIMENSION_META[dim]
-        const b = before[dim]
-        const a = after[dim]
-        const diff = a - b
-        const isTop = diff === maxDiff && diff > 0
-
-        return (
-          <div key={dim} className="flex items-center gap-4">
-            {/* Label */}
-            <div className="w-[100px] shrink-0 text-right">
-              <p className="text-[12px] font-semibold text-slate-700">{meta.label}</p>
-            </div>
-
-            {/* Bars */}
-            <div className="flex-1 space-y-1">
-              {/* Before */}
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] text-slate-400 w-[56px] shrink-0">{beforeLabel}</span>
-                <div className="flex-1 h-5 bg-slate-100 rounded-full overflow-hidden">
-                  <div className="h-full rounded-full bg-slate-300" style={{ width: `${b}%` }} />
-                </div>
-                <span className="text-[10px] font-medium text-slate-500 w-8 shrink-0">{b}%</span>
-              </div>
-              {/* After */}
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] text-slate-400 w-[56px] shrink-0">{afterLabel}</span>
-                <div className="flex-1 h-5 bg-slate-100 rounded-full overflow-hidden">
-                  <div className="h-full rounded-full" style={{ width: `${a}%`, backgroundColor: meta.color }} />
-                </div>
-                <span className="text-[10px] font-bold w-8 shrink-0" style={{ color: meta.color }}>{a}%</span>
-              </div>
-            </div>
-
-            {/* Delta */}
-            <div className="w-[90px] shrink-0 flex items-center gap-1.5">
-              <span className={`text-[11px] font-semibold ${diff > 0 ? 'text-emerald-600' : diff < 0 ? 'text-red-500' : 'text-slate-400'}`}>
-                {diff > 0 ? `+${diff}pp` : diff < 0 ? `${diff}pp` : '持平'}
-              </span>
-              {isTop && (
-                <span className="text-[9px] text-emerald-600 bg-emerald-50 px-1 py-0.5 rounded font-medium">提升最明显</span>
-              )}
-            </div>
-          </div>
-        )
-      })}
-
-      <div className="flex items-center gap-4 pt-2 border-t border-slate-100 text-[10px] text-slate-400">
-        <span className="w-[100px] shrink-0" />
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1"><div className="w-3 h-2 rounded-full bg-slate-300" />{beforeLabel}</div>
-          <div className="flex items-center gap-1"><div className="w-3 h-2 rounded-full bg-blue-500" />{afterLabel}</div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ══════════════════════════════════════════════════════════════
 // Component
 // ══════════════════════════════════════════════════════════════
 
 export default function VocabPlanReportPage() {
   const navigate = useNavigate()
-  const { planId: _planId } = useParams<{ planId: string }>()
-  const report = MOCK_REPORT
+  const { planId = '' } = useParams<{ planId: string }>()
+  const planType = getPlanType(planId)
+  const report = planType === 'stageReview' ? MOCK_REPORT_STAGE : MOCK_REPORT_WEAK_WORDS
   const m = report.metrics
 
   const TrendIcon = m.trendDirection === 'up' ? TrendingUp : m.trendDirection === 'down' ? TrendingDown : Minus
@@ -275,8 +257,18 @@ export default function VocabPlanReportPage() {
               <ArrowLeft size={18} />
             </button>
             <div className="flex-1">
-              <h1 className="text-lg font-bold text-slate-800">{report.planName} · 方案报告</h1>
-              <div className="flex items-center gap-2 mt-1 text-[11px] text-slate-400 flex-wrap">
+              <h1 className="text-lg font-bold text-slate-800">
+                {planType === 'stageReview' ? '阶段词汇能力提升方案报告' : '词汇提升方案报告'}
+              </h1>
+              <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                {planType === 'stageReview'
+                  ? '基于阶段词汇能力提升方案，展示复习范围、练习完成情况、词汇能力变化和阶段提升效果。'
+                  : '基于本次高频错词提升方案，展示练习完成后错词掌握变化、薄弱词改善情况和整体练习表现。'
+                }
+              </p>
+              <div className="flex items-center gap-2 mt-2 text-[11px] text-slate-400 flex-wrap">
+                <span>方案名称：{report.planName}</span>
+                <span className="text-slate-300">|</span>
                 <span>班级：{report.className}</span>
                 <span className="text-slate-300">|</span>
                 <span>复习范围：{report.reviewScope}</span>
@@ -313,27 +305,14 @@ export default function VocabPlanReportPage() {
           </div>
         </div>
 
-        {/* ===== 3. Core Findings ===== */}
-        <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm p-5">
-          <h2 className="text-sm font-semibold text-slate-700 mb-3">核心发现</h2>
-          <ul className="space-y-2">
-            {report.findings.map((f, i) => (
-              <li key={i} className="flex items-start gap-2 text-[13px] text-slate-600">
-                <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">{i + 1}</span>
-                {f}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* ===== 3. Vocabulary Ability Performance Comparison — Radar Chart ===== */}
+        <VocabAbilityRadar
+          scores={report.abilityScoresAfter}
+          beforeScores={report.abilityScoresBefore}
+          title="词汇能力变化"
+        />
 
-        {/* ===== 4. Vocabulary Ability Performance Comparison ===== */}
-        <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm p-5">
-          <h2 className="text-sm font-semibold text-slate-700 mb-4">词汇能力表现对比</h2>
-
-          <AbilityComparisonBars before={report.abilityScoresBefore} after={report.abilityScoresAfter} status={report.status} hasBaseline={report.metrics.hasBaseline} />
-        </div>
-
-        {/* ===== 5. Practice Performance Trends ===== */}
+        {/* ===== 4. Practice Performance Trends ===== */}
         <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm p-5">
           <h2 className="text-sm font-semibold text-slate-700 mb-4">练习表现趋势</h2>
 
@@ -361,7 +340,7 @@ export default function VocabPlanReportPage() {
           </div>
         </div>
 
-        {/* ===== 6. Students Needing Attention ===== */}
+        {/* ===== 5. Students Needing Attention ===== */}
         <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm p-5">
           <h2 className="text-sm font-semibold text-slate-700 mb-4">待关注学生</h2>
           <div className="space-y-2">
@@ -386,7 +365,7 @@ export default function VocabPlanReportPage() {
           </div>
         </div>
 
-        {/* ===== 7. High-Frequency Weak Content ===== */}
+        {/* ===== 6. High-Frequency Weak Content ===== */}
         <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm p-5">
           <h2 className="text-sm font-semibold text-slate-700 mb-4">高频薄弱内容</h2>
 
@@ -436,7 +415,7 @@ export default function VocabPlanReportPage() {
           </div>
         </div>
 
-        {/* ===== 8. Follow-up Suggestions ===== */}
+        {/* ===== 7. Follow-up Suggestions ===== */}
         <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm p-5">
           <h2 className="text-sm font-semibold text-slate-700 mb-3">后续建议</h2>
           <ul className="space-y-2">
@@ -449,7 +428,7 @@ export default function VocabPlanReportPage() {
           </ul>
         </div>
 
-        {/* ===== 9. Download PDF ===== */}
+        {/* ===== 8. Download PDF ===== */}
         <div className="flex justify-center pb-8">
           <button className="flex items-center gap-2 px-6 py-2.5 rounded-lg text-[13px] font-semibold text-white bg-blue-500 hover:bg-blue-600 shadow-sm transition-colors">
             <Download size={14} />下载 PDF 报告

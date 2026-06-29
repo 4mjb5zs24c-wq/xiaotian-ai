@@ -40,8 +40,8 @@ import GeneratedContentEditPanel from './GeneratedContentEditPanel'
 import ResourceRecommendationPanel from './ResourceRecommendationPanel'
 import ResourceDetailPreviewPanel from './ResourceDetailPreviewPanel'
 import type { RecommendedResource } from '../resources/resourceTypes'
-import { SearchResultView, PaperBasketBadge } from './search-new'
-import type { ResourceItem, FunctionEntry, AssignmentDraft, AssignmentSettings, QuickEntry, PaperBasketItem, GeneratedAssignment } from '../search-new/types'
+import { SearchResultView } from './search-new'
+import type { ResourceItem, FunctionEntry, AssignmentDraft, AssignmentSettings, QuickEntry, GeneratedAssignment } from '../search-new/types'
 import { mockOpenPreview, mockOpenAssignDialog, mockAddToLessonPrep, mockOpenFunction } from '../search-new/searchEngine'
 import { matchNewSearch } from '../search-new/searchEngine'
 import AssignmentConfirmPanelNew from './search-new/AssignmentConfirmPanel'
@@ -56,7 +56,7 @@ export default function AIAssistantDrawer() {
   const panelData = useAIStore((s) => s.aiDrawerPanelData)
   const setPanel = useAIStore((s) => s.setAIDrawerPanel)
   const teacherContext = useAIStore((s) => s.teacherContext)
-  const paperBasketCount = useAIStore((s) => s.paperBasket.length)
+  // 试卷篮本期不支持，count 固定为 0
 
   // Panel history stack: push current panel before opening a sub-panel
   const [panelStack, setPanelStack] = useState<Array<{ type: string; data: Record<string, unknown> | null }>>([])
@@ -158,7 +158,7 @@ export default function AIAssistantDrawer() {
       case 'vocabStageInsight': return '词汇掌握洞察'
       case 'listeningStageInsight': return '听说能力洞察'
       case 'writingStageInsight': return '写作表现洞察'
-      case 'searchResultNew': return 'AI 搜索结果'
+      case 'searchResultNew': return '搜索结果'
       case 'assignmentConfirmNew': return '待发布作业确认'
       case 'assignmentSuccess': return '布置成功'
       default: return ''
@@ -194,10 +194,6 @@ export default function AIAssistantDrawer() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <PaperBasketBadge
-                count={paperBasketCount}
-                onClick={() => openSubPanel('basket')}
-              />
               <button onClick={handleClose} className="p-2 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
                 <X size={17} />
               </button>
@@ -450,28 +446,16 @@ export default function AIAssistantDrawer() {
               <div className="p-4">
                 <SearchResultView
                   result={result}
-                  paperBasket={useAIStore.getState().paperBasket}
                   onPreview={(item: ResourceItem) => showToast(mockOpenPreview(item).message)}
                   onAssign={(item: ResourceItem) => {
                     const mockResult = mockOpenAssignDialog(item)
                     showToast(mockResult.message)
                   }}
-                  onAddToPaperBasket={(item: ResourceItem) => {
-                    const basketItem: PaperBasketItem = {
-                      id: `pb-${item.id}-${Date.now()}`,
-                      resourceId: item.id,
-                      title: item.title,
-                      type: item.type,
-                      addedAt: Date.now(),
-                    }
-                    useAIStore.getState().addToPaperBasket(basketItem)
-                  }}
                   onAddToLessonPrep={(item: ResourceItem) => showToast(mockAddToLessonPrep(item).message)}
-                  onOpenFunction={(entry: FunctionEntry) => showToast(mockOpenFunction(entry).message)}
-                  onGenerateAssignments={(assignments: AssignmentDraft[]) => {
-                    useAIStore.getState().setPendingAssignments(assignments)
-                    openSubPanel('assignmentConfirmNew', { assignments })
+                  onContentAssign={(item: ResourceItem) => {
+                    showToast(`已打开教师端现有布置弹窗：${item.title}`)
                   }}
+                  onOpenFunction={(entry: FunctionEntry) => showToast(mockOpenFunction(entry).message)}
                   onQuickEntry={(entry: QuickEntry) => {
                     const ctx = {
                       textbook: teacherContext.textbook,
@@ -657,11 +641,9 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function BasketView({ onAssign }: { onAssign: (item: { id: string; title: string; reason: string }) => void }) {
   const practiceBasket = useAIStore((s) => s.practiceBasket)
-  const paperBasket = useAIStore((s) => s.paperBasket)
   const removeFromPracticeBasket = useAIStore((s) => s.removeFromBasket)
-  const removeFromPaperBasket = useAIStore((s) => s.removeFromPaperBasket)
+  // 试卷篮本期不支持，仅展示练习篮
 
-  // Merge both baskets into a unified view
   const mergedItems = [
     ...practiceBasket.map(item => ({
       id: 'id' in item ? String(item.id) : '',
@@ -670,14 +652,6 @@ function BasketView({ onAssign }: { onAssign: (item: { id: string; title: string
       difficulty: 'difficulty' in item ? String(item.difficulty) : '',
       tags: 'tags' in item ? (item.tags as string[]) : [],
       source: 'practice' as const,
-    })),
-    ...paperBasket.map(item => ({
-      id: item.id,
-      title: item.title,
-      reason: '',
-      difficulty: '',
-      tags: [item.type],
-      source: 'paper' as const,
     })),
   ]
 
@@ -708,12 +682,11 @@ function BasketView({ onAssign }: { onAssign: (item: { id: string; title: string
                   <div className="flex items-center gap-2 mt-1.5">
                     {difficulty && <span className="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">{difficulty === 'basic' ? '基础' : difficulty === 'medium' ? '中等' : '进阶'}</span>}
                     {tags.slice(0, 2).map((t) => <span key={t} className="text-[10px] text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded">{t}</span>)}
-                    {source === 'paper' && <span className="text-[10px] text-amber-500 bg-amber-50 px-1.5 py-0.5 rounded">试卷篮</span>}
                   </div>
                 </div>
                 <div className="flex items-center gap-1 shrink-0 ml-3">
                   <button onClick={() => onAssign({ id, title, reason })} className="text-[11px] text-blue-500 hover:text-blue-600 font-medium px-2 py-1">布置</button>
-                  <button onClick={() => source === 'paper' ? removeFromPaperBasket(id) : removeFromPracticeBasket(id)} className="text-[11px] text-slate-400 hover:text-red-500 font-medium px-2 py-1">删除</button>
+                  <button onClick={() => removeFromPracticeBasket(id)} className="text-[11px] text-slate-400 hover:text-red-500 font-medium px-2 py-1">删除</button>
                 </div>
               </div>
             </div>

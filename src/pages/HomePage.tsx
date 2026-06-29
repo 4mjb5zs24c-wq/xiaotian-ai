@@ -7,7 +7,6 @@ import {
   Edit3, Zap, ChevronLeft, Play,
 } from 'lucide-react'
 import { useAIStore } from '../ai/store'
-import { matchNewSearch } from '../ai/search-new/searchEngine'
 import { matchIntent } from '../ai/workflows'
 import { runWorkflowRunner } from '../ai/engine'
 import type { RunnerResult, RunnerStatus } from '../ai/engine'
@@ -48,6 +47,8 @@ interface ReportItem {
   hasReport: boolean
   hasFullscreenExplain?: boolean
   isNew?: boolean
+  /** 词汇方案报告 ID — 有则为方案报告，点「方案报告」进入完整报告页 */
+  planId?: string
 }
 
 const practiceModules: PracticeModule[] = [
@@ -82,7 +83,7 @@ const resourceModules: ResourceModule[] = [
 ]
 
 const recentReports: ReportItem[] = [
-  { title: '个性化词汇练习', className: '初一1班', groupName: '全班', done: 2, total: 43, date: '2026-05-25', canRemind: true, hasReport: true },
+  { title: '个性化词汇练习', className: '初一1班', groupName: '全班', done: 2, total: 43, date: '2026-05-25', canRemind: true, hasReport: true, planId: 'ir-001' },
   { title: '冲刺训练（四十一）', className: '初一1班', groupName: '指定分组', done: 1, total: 1, date: '2026-05-24', canRemind: false, hasReport: true, hasFullscreenExplain: true },
   { title: '冲刺训练（一）（新）', className: '初一1班', groupName: '指定分组', done: 0, total: 7, date: '2026-05-23', canRemind: false, hasReport: true, hasFullscreenExplain: true, isNew: true },
   { title: '试题（六）', className: '初一1班', groupName: '全班', done: 0, total: 43, date: '2026-05-22', canRemind: true, hasReport: true },
@@ -113,23 +114,12 @@ export default function HomePage() {
 
   // ── AI search ──
   const [aiQuery, setAiQuery] = useState('')
-  const setAIDrawerPanel = useAIStore((s) => s.setAIDrawerPanel)
-  const setNewSearchResult = useAIStore((s) => s.setNewSearchResult)
 
   // ── Review Plan Wizard (homepage entry) ──
 
   const openAISearch = (query?: string) => {
     if (query) {
-      const ctx = {
-        textbook: teacherContext.textbook,
-        unit: teacherContext.unit,
-        grade: teacherContext.grade,
-        className: teacherContext.className,
-        studentCount: teacherContext.studentCount,
-      }
-      const result = matchNewSearch(query, ctx)
-      setNewSearchResult(result)
-      setAIDrawerPanel('searchResultNew', { query })
+      navigate(`/ai-search?query=${encodeURIComponent(query)}&autoRun=1`)
     } else {
       navigate('/ai-search')
     }
@@ -343,40 +333,40 @@ export default function HomePage() {
 
               {/* 词汇 — 两个并列卡片 */}
               <div className="grid grid-cols-2 gap-3 shrink-0">
-                {/* 左侧：词汇洞察 */}
+                {/* 左侧：词汇能力洞察 */}
                 <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden flex flex-col">
                   <div className="px-4 py-2.5 border-b border-[#f0f4f8]">
-                    <h3 className="text-[12px] font-semibold text-[#3a4f66]">词汇洞察</h3>
+                    <h3 className="text-[12px] font-semibold text-[#3a4f66]">词汇能力洞察</h3>
                   </div>
                   <div className="flex-1 p-4 flex flex-col">
                     <p className="text-[11px] text-slate-500 leading-relaxed">
-                      近7天 <span className="font-semibold text-slate-600">50 个高频错词</span>，<span className="font-semibold text-slate-600">27 名薄弱学生</span>
+                      基于错词数据，分析班级词汇能力素养薄弱项
                     </p>
                     <div className="flex-1" />
                     <button
                       onClick={() => navigate('/vocabulary-insight')}
                       className="text-[11px] text-[#4b9fe8] border border-[#b8d4f0] hover:bg-[#eaf2fb] px-3 py-1.5 rounded-lg font-medium transition-colors self-start"
                     >
-                      查看词汇洞察
+                      词汇能力洞察
                     </button>
                   </div>
                 </div>
 
-                {/* 右侧：阶段词汇复习方案 */}
+                {/* 右侧：阶段词汇能力提升方案 */}
                 <div className="bg-white rounded-2xl border border-[#e8eef4] shadow-sm overflow-hidden flex flex-col">
                   <div className="px-4 py-2.5 border-b border-[#f0f4f8]">
-                    <h3 className="text-[12px] font-semibold text-[#3a4f66]">阶段词汇复习方案</h3>
+                    <h3 className="text-[12px] font-semibold text-[#3a4f66]">阶段词汇能力提升方案</h3>
                   </div>
                   <div className="flex-1 p-4 flex flex-col">
                     <p className="text-[11px] text-slate-500 leading-relaxed">
-                      适用于期中、期末、高三一轮等复习场景，按复习范围生成方案
+                      一键生成阶段/考前词汇能力阶段提升方案
                     </p>
                     <div className="flex-1" />
                     <button
                       onClick={() => setStageVocabPlanOpen(true)}
                       className="text-[11px] text-white bg-[#4b9fe8] hover:bg-[#3a8fd8] px-3 py-1.5 rounded-lg font-medium transition-colors shadow-sm self-start"
                     >
-                      生成复习方案
+                      阶段词汇能力提升方案
                     </button>
                   </div>
                 </div>
@@ -423,10 +413,10 @@ export default function HomePage() {
                           )}
                           {r.hasReport && (
                             <button
-                              onClick={() => navigate('/practice-reports')}
+                              onClick={() => navigate(r.planId ? `/vocab-plan-report/${r.planId}` : '/practice-reports')}
                               className="text-[11px] text-[#4b9fe8] hover:text-[#3a8fd8] font-medium whitespace-nowrap transition-colors"
                             >
-                              报告
+                              {r.planId ? '方案报告' : '报告'}
                             </button>
                           )}
                         </div>
@@ -463,6 +453,7 @@ export default function HomePage() {
       <StageVocabPlanModal
         open={stageVocabPlanOpen}
         onClose={() => setStageVocabPlanOpen(false)}
+        showInitialLoading
       />
 
     </>

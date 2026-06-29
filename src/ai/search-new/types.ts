@@ -105,10 +105,13 @@ export interface ResourceItem {
   /** Action availability */
   canPreview: boolean
   canAssign: boolean
-  canAddToPaperBasket: boolean
+  /** @deprecated 本期智能搜索不支持试卷篮 */
+  canAddToPaperBasket?: boolean
   canAddToLessonPrep: boolean
   /** For dubbing/video — show "加入备课" button */
   isLessonPrepResource: boolean
+  /** Whether "进入" button should be shown (for 课本) */
+  canEnter?: boolean
   /** Content data for sync vocab/text resources */
   contentData?: SyncVocabData | SyncTextData
   /** Paper metadata (for paper_name search) */
@@ -160,7 +163,7 @@ export interface ChunkItem {
 
 export interface VocabSection {
   sectionId: string
-  sectionName: string  // e.g. "课标词汇", "非课标词汇", "语块"
+  sectionName: string  // e.g. "词汇", "语块", "固定搭配"
   items: (VocabWord | ChunkItem)[]
   selectedIds: string[]
   defaultLimit: number
@@ -211,6 +214,8 @@ export interface UsageOption {
 
 /** Vocab usage option IDs */
 export type VocabUsageId =
+  | 'word_practice'      // 单词
+  | 'usage_practice'     // 用法
   | 'oral_reading'     // 口语跟读
   | 'en_to_cn_select'  // 看英选中
   | 'dictation_write'  // 单词默写
@@ -225,6 +230,8 @@ export type TextUsageId =
   | 'passage_recite'    // 整篇背诵
 
 export const VOCAB_USAGES: UsageOption[] = [
+  { id: 'word_practice', label: '单词', available: true },
+  { id: 'usage_practice', label: '用法', available: true },
   { id: 'oral_reading', label: '口语跟读', available: true },
   { id: 'en_to_cn_select', label: '看英选中', available: true },
   { id: 'dictation_write', label: '单词默写', available: true },
@@ -323,16 +330,6 @@ export interface QuickEntry {
   icon: string  // Lucide icon name
   /** Quick search query to trigger */
   searchQuery: string
-}
-
-// ── Paper Basket ────────────────────────────────────────
-
-export interface PaperBasketItem {
-  id: string
-  resourceId: string
-  title: string
-  type: SearchResourceCategory
-  addedAt: number
 }
 
 // ── Search Intent Summary ───────────────────────────────
@@ -434,7 +431,7 @@ export interface LoadingStep {
 // ── Mock Action Results ─────────────────────────────────
 
 export interface MockActionResult {
-  type: 'preview' | 'assign' | 'paper_basket' | 'lesson_prep' | 'function'
+  type: 'preview' | 'assign' | 'lesson_prep' | 'function'
   message: string
   resource?: ResourceItem
   entry?: FunctionEntry

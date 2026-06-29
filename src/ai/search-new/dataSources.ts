@@ -112,9 +112,9 @@ export function getMyWordLists(_ctx: SearchContext): ResourceItem[] {
   return [
     {
       id: 'my-wordlist-1',
-      title: 'Unit 3 课标词汇表',
+      title: 'Unit 3 词汇表',
       type: 'function',
-      tags: ['词表', '词条', '课标词', 'Unit 3'],
+      tags: ['词表', '词条', 'Unit 3'],
       difficulty: 'basic',
       grade: '七年级上',
       source: '自建',
@@ -305,7 +305,7 @@ export function getUnitVocabularyResources(ctx: SearchContext): ResourceItem[] {
       id: `unit-vocab-${unit.replace(/\s/g, '-').toLowerCase()}`,
       title: `${unit} 同步词汇`,
       type: 'sync_vocab',
-      tags: ['同步词汇', unit, '课标词'],
+      tags: ['同步词汇', unit],
       difficulty: 'basic',
       grade: ctx.grade || '七年级上',
       source: ctx.textbook || '人教版',
@@ -326,29 +326,20 @@ function buildMockSyncVocabData(_unit: string): SyncVocabData {
   return {
     sections: [
       {
-        sectionId: 'std',
-        sectionName: '课标词汇',
+        sectionId: 'vocab',
+        sectionName: '词汇',
         items: [
           { id: 'w1', word: 'welcome', chinese: '欢迎', phonetic: '/ˈwelkəm/' },
           { id: 'w2', word: 'class', chinese: '班级；课', phonetic: '/klɑːs/' },
           { id: 'w3', word: 'grade', chinese: '年级', phonetic: '/ɡreɪd/' },
           { id: 'w4', word: 'friend', chinese: '朋友', phonetic: '/frend/' },
           { id: 'w5', word: 'teacher', chinese: '老师', phonetic: '/ˈtiːtʃə(r)/' },
+          { id: 'w6', word: 'canteen', chinese: '食堂', phonetic: '/kænˈtiːn/' },
+          { id: 'w7', word: 'dormitory', chinese: '宿舍', phonetic: '/ˈdɔːmɪtri/' },
         ],
         selectedIds: [],
         defaultLimit: 5,
         expanded: true,
-      },
-      {
-        sectionId: 'non-std',
-        sectionName: '非课标词汇',
-        items: [
-          { id: 'n1', word: 'canteen', chinese: '食堂', phonetic: '/kænˈtiːn/' },
-          { id: 'n2', word: 'dormitory', chinese: '宿舍', phonetic: '/ˈdɔːmɪtri/' },
-        ],
-        selectedIds: [],
-        defaultLimit: 5,
-        expanded: false,
       },
       {
         sectionId: 'chunks',
@@ -356,6 +347,18 @@ function buildMockSyncVocabData(_unit: string): SyncVocabData {
         items: [
           { id: 'c1', text: 'in the morning', translation: '在早上' },
           { id: 'c2', text: 'have lunch', translation: '吃午饭' },
+        ],
+        selectedIds: [],
+        defaultLimit: 5,
+        expanded: false,
+      },
+      {
+        sectionId: 'collocations',
+        sectionName: '固定搭配',
+        items: [
+          { id: 'fc1', text: 'have breakfast', translation: '吃早饭' },
+          { id: 'fc2', text: 'go to school', translation: '去上学' },
+          { id: 'fc3', text: 'get up', translation: '起床' },
         ],
         selectedIds: [],
         defaultLimit: 5,
@@ -541,33 +544,66 @@ export function getWritingResourceItems(): ResourceItem[] {
   return [
     {
       id: 'res-app-writing',
-      title: '自定义应用文',
+      title: '自定义应用文入口',
       type: 'writing_practice',
-      tags: ['写作', '应用文'],
+      tags: ['写作', '应用文', '入口'],
       difficulty: 'medium',
       grade: '七年级上',
       isCurrentUnit: true,
       canPreview: false,
       canAssign: true,
-      canAddToPaperBasket: false,
       canAddToLessonPrep: false,
       isLessonPrepResource: false,
-      recommendReason: '支持书信、通知、日记等常见应用文体裁',
+      recommendReason: '支持书信、通知、日记等常见应用文体裁，可自定义题目和要求',
     },
     {
       id: 'res-cont-writing',
-      title: '自定义读后续写',
+      title: '自定义读后续写入口',
       type: 'writing_practice',
-      tags: ['写作', '读后续写'],
+      tags: ['写作', '读后续写', '入口'],
       difficulty: 'medium',
       grade: '七年级上',
       isCurrentUnit: true,
       canPreview: false,
       canAssign: true,
-      canAddToPaperBasket: false,
       canAddToLessonPrep: false,
       isLessonPrepResource: false,
       recommendReason: '提供阅读材料，训练学生读写综合能力',
+    },
+  ]
+}
+
+/** 写作专项试卷 — 应用文和读后续写的专项试卷资源 */
+export function getWritingPaperResources(_ctx: SearchContext): ResourceItem[] {
+  const grade = _ctx.grade || '七年级上'
+  return [
+    {
+      id: 'res-app-writing-paper',
+      title: '应用文写作专项试卷',
+      type: 'writing_practice',
+      tags: ['写作专项', '应用文', '试卷'],
+      difficulty: 'medium',
+      grade,
+      isCurrentUnit: true,
+      canPreview: true,
+      canAssign: true,
+      canAddToLessonPrep: false,
+      isLessonPrepResource: false,
+      recommendReason: '应用文写作专项训练试卷，涵盖书信、通知、日记等题材',
+    },
+    {
+      id: 'res-cont-writing-paper',
+      title: '读后续写专项试卷',
+      type: 'writing_practice',
+      tags: ['写作专项', '读后续写', '试卷'],
+      difficulty: 'advanced',
+      grade,
+      isCurrentUnit: true,
+      canPreview: true,
+      canAssign: true,
+      canAddToLessonPrep: false,
+      isLessonPrepResource: false,
+      recommendReason: '读后续写专项训练试卷，训练读写综合能力',
     },
   ]
 }
@@ -623,6 +659,21 @@ export function getDictationResourceItems(): ResourceItem[] {
       isLessonPrepResource: false,
       recommendReason: '可自定义篇章内容的默写或填空练习',
     },
+  ]
+}
+
+// ═══════════════════════════════════════════════════════════
+// 7b. 词汇试卷资源
+// ═══════════════════════════════════════════════════════════
+
+export function getVocabPaperResources(ctx: SearchContext): ResourceItem[] {
+  const unit = ctx.unit || 'Unit 3'
+  const grade = ctx.grade || '七年级上'
+  const base = { grade, source: ctx.textbook || '人教版', isCurrentUnit: true, canPreview: true, canAssign: true, canAddToPaperBasket: false, canAddToLessonPrep: false, isLessonPrepResource: false }
+  return [
+    { ...base, id: 'vp-1', title: `${unit} 词汇同步检测卷`, type: 'unit_test', tags: ['词汇试卷', '同步', unit], difficulty: 'medium', questionCount: 30, duration: '40分钟', recommendReason: '当前单元词汇同步检测试卷' },
+    { ...base, id: 'vp-2', title: '初中英语词汇专项卷', type: 'special', tags: ['词汇专项', '试卷'], difficulty: 'medium', questionCount: 50, duration: '60分钟', recommendReason: '词汇拼写与辨析专项试卷' },
+    { ...base, id: 'vp-3', title: `${grade} 词汇综合练习卷`, type: 'comprehensive', tags: ['词汇', '综合', grade], difficulty: 'medium', questionCount: 40, duration: '50分钟', recommendReason: '词汇综合能力检测' },
   ]
 }
 
@@ -806,6 +857,7 @@ export function getSpecialTopicCards(): SpecialTopicCard[] {
     { id: 'st-type', title: '题型专项', subTopicId: 'question_type' },
     { id: 'st-vocab', title: '词汇专项', subTopicId: 'vocab' },
     { id: 'st-listening', title: '听力专项', subTopicId: 'listening' },
+    { id: 'st-speaking', title: '听说专项', subTopicId: 'speaking' },
     { id: 'st-writing', title: '写作专项', subTopicId: 'writing' },
     { id: 'st-reading', title: '阅读专项', subTopicId: 'reading' },
     { id: 'st-micro', title: '微技能专项', subTopicId: 'micro_skill' },
@@ -842,6 +894,13 @@ export function getSpecialTopicResources(subTopicId: string, ctx: SearchContext)
         { ...base, id: 'sp-read-2', title: '七选五专项训练', type: 'reading_practice', tags: ['阅读专项', '七选五'], difficulty: 'advanced', questionCount: 10, duration: '20分钟', recommendReason: '七选五题型专项突破' },
         { ...base, id: 'sp-read-3', title: '任务型阅读专项', type: 'reading_practice', tags: ['阅读专项', '任务型阅读'], difficulty: 'medium', questionCount: 8, duration: '18分钟', recommendReason: '任务型阅读信息提取训练' },
       ]
+    case 'speaking': {
+      const spkRes = getSpeakingResources(ctx)
+      if (spkRes.length > 0) return spkRes
+      // 无听说资源时展示听力替代，标注为替代推荐
+      const fallback = getSpeakingFallback(ctx)
+      return fallback.map(f => ({ ...f, recommendReason: `替代推荐：${f.recommendReason || '听力替代资源'}` }))
+    }
     case 'micro_skill':
       return getMicroSkillResources(ctx)
     case 'question_type':
@@ -1008,18 +1067,12 @@ export function getListeningMockResources(ctx: SearchContext): ResourceItem[] {
 
 export function getSpeakingResources(ctx: SearchContext): ResourceItem[] {
   const grade = ctx.grade || '七年级上'
-  const region = ctx.region || 'default'
-  const base = { grade, source: ctx.textbook || '人教版', isCurrentUnit: true, canPreview: true, canAssign: true, canAddToPaperBasket: false, canAddToLessonPrep: false, isLessonPrepResource: false }
+  const base = { grade, source: ctx.textbook || '人教版', isCurrentUnit: true, canPreview: true, canAssign: true, canAddToLessonPrep: false, isLessonPrepResource: false }
 
-  if (region === 'default') {
-    return [
-      { ...base, id: 'spk-1', title: `${ctx.unit || 'Unit 3'} 听说练习`, type: 'speaking_practice', tags: ['听说', ctx.unit || 'Unit 3'], difficulty: 'basic', duration: '15分钟', recommendReason: '当前单元听说训练' },
-    ]
-  }
   return [
-    { ...base, id: 'spk-1', title: `${ctx.unit || 'Unit 3'} 听说练习`, type: 'speaking_practice', tags: ['听说', ctx.unit || 'Unit 3', region], difficulty: 'basic', duration: '15分钟', recommendReason: '当前单元听说训练' },
-    { ...base, id: 'spk-2', title: `${grade}听说模拟测评`, type: 'speaking_practice', tags: ['听说模拟', '测评', region], difficulty: 'medium', questionCount: 15, duration: '20分钟', recommendReason: '听说考试模拟测评' },
-    { ...base, id: 'spk-3', title: '听说专项训练', type: 'speaking_practice', tags: ['听说专项', region], difficulty: 'medium', questionCount: 12, duration: '18分钟', recommendReason: '听说能力专项提升' },
+    { ...base, id: 'spk-1', title: `${ctx.unit || 'Unit 3'} 听说练习`, type: 'speaking_practice', tags: ['听说', ctx.unit || 'Unit 3'], difficulty: 'basic', duration: '15分钟', recommendReason: '当前单元听说训练' },
+    { ...base, id: 'spk-2', title: `${grade}听说模拟测评`, type: 'speaking_practice', tags: ['听说模拟', '测评'], difficulty: 'medium', questionCount: 15, duration: '20分钟', recommendReason: '听说考试模拟测评' },
+    { ...base, id: 'spk-3', title: '听说专项训练', type: 'speaking_practice', tags: ['听说专项'], difficulty: 'medium', questionCount: 12, duration: '18分钟', recommendReason: '听说能力专项提升' },
   ]
 }
 
@@ -1032,6 +1085,44 @@ export function getSpeakingFallback(ctx: SearchContext): ResourceItem[] {
     { ...base, id: 'spk-fb-2', title: `${unit} 课文跟读`, type: 'sync_text', tags: ['跟读', unit], difficulty: 'basic', recommendReason: '听说替代 — 口语跟读训练' },
     { ...base, id: 'spk-fb-3', title: '趣味配音练习', type: 'dubbing', tags: ['配音', '口语'], difficulty: 'basic', recommendReason: '听说替代 — 趣味口语训练' },
   ]
+}
+
+// ═══════════════════════════════════════════════════════════
+// 12b. 听力试卷类资源 & 听说试卷类资源
+// ═══════════════════════════════════════════════════════════
+
+export function getListeningPaperResources(ctx: SearchContext): ResourceItem[] {
+  const grade = ctx.grade || '七年级上'
+  const base = { grade, isCurrentUnit: false, canPreview: true, canAssign: true, canAddToPaperBasket: true, canAddToLessonPrep: false, isLessonPrepResource: false }
+  return [
+    { ...base, id: 'lp-1', title: `${grade}听力模拟试卷（一）`, type: 'listening_mock', tags: ['听力模拟', '模考'], difficulty: 'medium', source: '系统', questionCount: 20, duration: '25分钟', recommendReason: '听力全真模拟试卷' },
+    { ...base, id: 'lp-2', title: `${grade}听力模拟试卷（二）`, type: 'listening_mock', tags: ['听力模拟', '模考'], difficulty: 'medium', source: '系统', questionCount: 20, duration: '25分钟', recommendReason: '听力进阶模拟试卷' },
+    { ...base, id: 'lp-3', title: `${grade}听力套卷`, type: 'listening_mock', tags: ['听力套卷'], difficulty: 'advanced', source: '系统', questionCount: 30, duration: '40分钟', recommendReason: '完整听力套卷训练' },
+    { ...base, id: 'lp-4', title: '中考听力真题汇编', type: 'listening_mock', tags: ['听力真题', '中考'], difficulty: 'advanced', source: '真题改编', questionCount: 25, duration: '30分钟', recommendReason: '中考听力真题精选' },
+    { ...base, id: 'lp-5', title: `${grade}期末听力试卷`, type: 'listening_mock', tags: ['听力', '期末'], difficulty: 'medium', source: '系统', questionCount: 20, duration: '25分钟', recommendReason: '期末听力专项检测' },
+  ]
+}
+
+export function getListeningMyPapers(ctx: SearchContext): ResourceItem[] {
+  const allPapers = getMyPapers(ctx)
+  return allPapers.filter((p) => /听力/.test(p.title))
+}
+
+export function getSpeakingPaperResources(ctx: SearchContext): ResourceItem[] {
+  const grade = ctx.grade || '七年级上'
+  const base = { grade, isCurrentUnit: false, canPreview: true, canAssign: true, canAddToPaperBasket: true, canAddToLessonPrep: false, isLessonPrepResource: false }
+  return [
+    { ...base, id: 'sp-1', title: `${grade}听说模拟测评（一）`, type: 'speaking_practice', tags: ['听说模拟', '测评'], difficulty: 'medium', source: '系统', questionCount: 15, duration: '20分钟', recommendReason: '听说全真模拟测评' },
+    { ...base, id: 'sp-2', title: `${grade}听说模拟测评（二）`, type: 'speaking_practice', tags: ['听说模拟', '测评'], difficulty: 'medium', source: '系统', questionCount: 15, duration: '20分钟', recommendReason: '听说进阶模拟测评' },
+    { ...base, id: 'sp-3', title: `${grade}听说套卷`, type: 'speaking_practice', tags: ['听说套卷'], difficulty: 'advanced', source: '系统', questionCount: 20, duration: '30分钟', recommendReason: '完整听说套卷训练' },
+    { ...base, id: 'sp-4', title: '中考听说真题汇编', type: 'speaking_practice', tags: ['听说真题', '中考'], difficulty: 'advanced', source: '真题改编', questionCount: 18, duration: '25分钟', recommendReason: '中考听说真题精选' },
+    { ...base, id: 'sp-5', title: `${grade}期末听说试卷`, type: 'speaking_practice', tags: ['听说', '期末'], difficulty: 'medium', source: '系统', questionCount: 15, duration: '20分钟', recommendReason: '期末听说专项检测' },
+  ]
+}
+
+export function getSpeakingMyPapers(ctx: SearchContext): ResourceItem[] {
+  const allPapers = getMyPapers(ctx)
+  return allPapers.filter((p) => /听说/.test(p.title))
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1078,7 +1169,7 @@ export function getVideoRelated(_ctx: SearchContext): ResourceItem[] {
 
 export function getThemeVideoResources(ctx: SearchContext): ResourceItem[] {
   const grade = ctx.grade || '七年级上'
-  const base = { grade, isCurrentUnit: true, canPreview: true, canAssign: true, canAddToPaperBasket: false, canAddToLessonPrep: true, isLessonPrepResource: true }
+  const base = { grade, isCurrentUnit: true, canPreview: true, canAssign: true, canAddToLessonPrep: false, isLessonPrepResource: false }
   return [
     { ...base, id: 'tv-1', title: '主题视频 — 校园生活', type: 'sync_video', tags: ['主题视频', '校园'], difficulty: 'basic', source: '系统', recommendReason: '校园生活主题拓展视频' },
     { ...base, id: 'tv-2', title: '主题视频 — 节日文化', type: 'sync_video', tags: ['主题视频', '文化'], difficulty: 'basic', source: '系统', recommendReason: '中外节日文化对比视频' },
@@ -1310,4 +1401,97 @@ export function getRegionPapers(ctx: SearchContext): RegionPaper[] {
     { id: 'rp-gd-1', title: `广东中考真题 (${grade})`, region: '广东', resourceType: 'realExam', year: '2024' },
     { id: 'rp-sc-1', title: `四川中考真题 (${grade})`, region: '四川', resourceType: 'realExam', year: '2024' },
   ]
+}
+
+// ═══════════════════════════════════════════════════════════
+// Phase 5 — 卷库标签命中搜索 (TAG-001)
+// ═══════════════════════════════════════════════════════════
+
+export interface TagResource {
+  tagId: string
+  tagName: string
+  /** Aliases that can also match this tag (弱命中) */
+  aliases: string[]
+}
+
+/** All available volume library tags (mock data) */
+export function getAvailableTags(): TagResource[] {
+  return [
+    { tagId: 'tag-zkzt', tagName: '中考真题', aliases: ['真题', '中考', '中考试题'] },
+    { tagId: 'tag-ydzx', tagName: '阅读专项', aliases: ['阅读', '阅读训练', '阅读练习'] },
+    { tagId: 'tag-stzx', tagName: '听说专项', aliases: ['听说', '听力专项'] },
+    { tagId: 'tag-qmj', tagName: '期末卷', aliases: ['期末', '期末考试', '期末试卷'] },
+    { tagId: 'tag-yftk', tagName: '语法填空', aliases: ['语法', '填空', '短文填空'] },
+  ]
+}
+
+/** Get resources under a specific tag */
+export function getTagResources(tagId: string, ctx: SearchContext): ResourceItem[] {
+  const grade = ctx.grade || '七年级上'
+  const base = { grade, isCurrentUnit: true, canPreview: true, canAssign: true, canAddToLessonPrep: false, isLessonPrepResource: false }
+
+  switch (tagId) {
+    case 'tag-zkzt':
+      return [
+        { ...base, id: 'tg-zk-1', title: '2024年中考英语真题汇编', type: 'real_exam', tags: ['中考真题', '真题'], difficulty: 'advanced', source: '系统', questionCount: 60, duration: '120分钟', recommendReason: '命中卷库标签：中考真题' },
+        { ...base, id: 'tg-zk-2', title: '中考英语历年真题精选', type: 'real_exam', tags: ['中考真题', '精选'], difficulty: 'advanced', source: '系统', questionCount: 55, duration: '100分钟', recommendReason: '命中卷库标签：中考真题' },
+      ]
+    case 'tag-ydzx':
+      return [
+        { ...base, id: 'tg-yd-1', title: '阅读理解专项训练（一）', type: 'reading_practice', tags: ['阅读专项', '阅读'], difficulty: 'medium', questionCount: 15, duration: '25分钟', recommendReason: '命中卷库标签：阅读专项' },
+        { ...base, id: 'tg-yd-2', title: '阅读七选五专项练习', type: 'reading_practice', tags: ['阅读专项', '七选五'], difficulty: 'medium', questionCount: 10, duration: '20分钟', recommendReason: '命中卷库标签：阅读专项' },
+      ]
+    case 'tag-stzx':
+      return [
+        { ...base, id: 'tg-st-1', title: '听说专项训练（基础）', type: 'speaking_practice', tags: ['听说专项', '听说'], difficulty: 'basic', duration: '12分钟', recommendReason: '命中卷库标签：听说专项' },
+        { ...base, id: 'tg-st-2', title: '听说专项训练（进阶）', type: 'speaking_practice', tags: ['听说专项', '听说'], difficulty: 'medium', duration: '18分钟', recommendReason: '命中卷库标签：听说专项' },
+      ]
+    case 'tag-qmj':
+      return [
+        { ...base, id: 'tg-qm-1', title: `${grade}期末考试卷`, type: 'mock_exam', tags: ['期末卷', '期末'], difficulty: 'medium', source: '系统', questionCount: 50, duration: '90分钟', recommendReason: '命中卷库标签：期末卷' },
+        { ...base, id: 'tg-qm-2', title: `${grade}期末模拟试卷`, type: 'mock_exam', tags: ['期末卷', '模拟'], difficulty: 'medium', source: '系统', questionCount: 45, duration: '80分钟', recommendReason: '命中卷库标签：期末卷' },
+      ]
+    case 'tag-yftk':
+      return [
+        { ...base, id: 'tg-yf-1', title: '语法填空专项练习', type: 'grammar_practice', tags: ['语法填空', '语法'], difficulty: 'medium', questionCount: 20, duration: '25分钟', recommendReason: '命中卷库标签：语法填空' },
+        { ...base, id: 'tg-yf-2', title: '短文语法填空精选', type: 'grammar_practice', tags: ['语法填空', '短文填空'], difficulty: 'medium', questionCount: 15, duration: '20分钟', recommendReason: '命中卷库标签：语法填空' },
+      ]
+    default:
+      return []
+  }
+}
+
+/** Fallback for empty tag results */
+export function getTagFallback(ctx: SearchContext): ResourceItem[] {
+  const unit = ctx.unit || 'Unit 3'
+  const grade = ctx.grade || '七年级上'
+  const base = { grade, isCurrentUnit: true, canPreview: true, canAssign: true, canAddToLessonPrep: false, isLessonPrepResource: false }
+  return [
+    { ...base, id: 'tg-fb-1', title: `${unit} 综合练习`, type: 'comprehensive', tags: ['综合练习', unit], difficulty: 'medium', questionCount: 20, duration: '30分钟', recommendReason: '标签下无资源，推荐综合练习' },
+    { ...base, id: 'tg-fb-2', title: `${unit} 单元检测`, type: 'unit_test', tags: ['单元检测', unit], difficulty: 'medium', questionCount: 25, duration: '40分钟', recommendReason: '标签下无资源，推荐单元检测' },
+  ]
+}
+
+/** Check if query hits a tag, and at what match level */
+export function matchTagQuery(query: string): { tagId: string; matchLevel: 'exact' | 'weak' } | null {
+  const tags = getAvailableTags()
+  const q = query.trim()
+
+  // Exact match first
+  for (const tag of tags) {
+    if (q.includes(tag.tagName)) {
+      return { tagId: tag.tagId, matchLevel: 'exact' }
+    }
+  }
+
+  // Weak match via aliases
+  for (const tag of tags) {
+    for (const alias of tag.aliases) {
+      if (q.includes(alias) && alias.length >= 2) {
+        return { tagId: tag.tagId, matchLevel: 'weak' }
+      }
+    }
+  }
+
+  return null
 }

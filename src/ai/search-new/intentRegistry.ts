@@ -66,82 +66,7 @@ function defineIntent(def: IntentDefinition): IntentRecord {
 // ═══════════════════════════════════════════════════════════
 
 export const INTENT_REGISTRY: IntentRecord[] = [
-  // ── Precision Jump Intents (priority 0 — checked BEFORE search engine) ──
-
-  defineIntent({
-    intentId: 'report',
-    label: '报告 / 学情',
-    loadingLabel: '教学管理',
-    category: 'jump',
-    priority: 0,
-    primaryKeywords: ['报告', '练习报告', '学情', '完成率', '未完成', '班级报告', '最近报告', '提交情况', '平均分', '错题分析'],
-    aliases: [],
-    typos: [],
-    jumpData: {
-      intent: 'report',
-      title: '报告 / 学情',
-      description: '练习报告、完成情况和学情分析目前仍在报告列表中查看。\n你可以前往报告列表，按练习名称、班级、时间等条件查找对应报告。',
-      buttonText: '去报告列表',
-      route: '/practice-reports',
-      routeConfirmed: true,
-    },
-  }),
-  defineIntent({
-    intentId: 'wrong_question',
-    label: '错题 / 错题本',
-    loadingLabel: '教学管理',
-    category: 'jump',
-    priority: 0,
-    primaryKeywords: ['错题本', '错题统计', '错题练习', '错题记录', '学生错题', '班级错题'],
-    aliases: ['错题'],
-    typos: [],
-    jumpData: {
-      intent: 'wrong_question',
-      title: '错题 / 错题本',
-      description: '错题统计和错题明细目前仍在错题本中查看。\n你可前往错题本，按班级、题型、知识点查看错题分布。',
-      buttonText: '去错题本',
-      route: '/wrong-questions',
-      routeConfirmed: true,
-    },
-  }),
-  defineIntent({
-    intentId: 'lesson_prep',
-    label: '备课',
-    loadingLabel: '教学管理',
-    category: 'jump',
-    priority: 0,
-    primaryKeywords: ['我的备课', '备课资源', '加入备课', '课堂备课', '课前准备', '备课夹', '备课内容'],
-    aliases: ['备课'],
-    typos: [],
-    jumpData: {
-      intent: 'lesson_prep',
-      title: '备课',
-      description: '备课资源和备课夹目前仍在"我的备课"中查看和管理。\n你可前往我的备课，查看已加入备课的资源。',
-      buttonText: '去我的备课',
-      route: null,
-      routeConfirmed: false,
-    },
-  }),
-  defineIntent({
-    intentId: 'vocab_insight',
-    label: '错词 / 词汇薄弱',
-    loadingLabel: '教学管理',
-    category: 'jump',
-    priority: 0,
-    primaryKeywords: ['错词复习', '词汇薄弱', '易错词', '不会的词', '单词错误', '词汇掌握差'],
-    aliases: ['错词', '错音', '读不准'],
-    typos: [],
-    jumpData: {
-      intent: 'vocab_insight',
-      title: '错词 / 词汇薄弱',
-      description: '已为你推荐词汇洞察，可查看班级错词情况、薄弱词汇和复习建议。',
-      buttonText: '查看词汇洞察',
-      route: '/vocabulary-insight',
-      routeConfirmed: true,
-    },
-  }),
-
-  // ── Resource / Function Intents (checked AFTER jump intents) ──
+  // ── Resource / Function Intents ──
 
   defineIntent({
     intentId: 'answer_card',
@@ -149,7 +74,7 @@ export const INTENT_REGISTRY: IntentRecord[] = [
     priority: 1,
     category: 'function',
     primaryKeywords: ['答题卡', '答题纸', '作答卡', '作答纸', '答题卷', '答题页', '纸质答题卡', '纸质作答', '试卷答题卡', '试卷作答卡', '试卷答题纸'],
-    aliases: ['制卡', '快速制卡', '新建答题卡', '自制答题卡', '三方卡', '第三方卡', '批卡', '扫卡', '扫描卡', '扫描答题卡', '线下考试', '纸笔练习', '纸质练习', '上传答题卡'],
+    aliases: ['制卡', '快速制卡', '新建答题卡', '自制答题卡', '三方卡', '第三方卡', '批卡', '扫卡', '扫描卡', '扫描答题卡', '线下考试', '纸笔练习', '纸质练习', '上传答题卡', '拍照批改', '扫描批改', '拍照', '扫描', '纸质', '指', '批卡', '扫卡'],
     typos: ['答提卡', '打题卡', '答题咔'],
   }),
   defineIntent({
@@ -248,7 +173,7 @@ export const INTENT_REGISTRY: IntentRecord[] = [
     priority: 12,
     category: 'resource',
     primaryKeywords: ['词汇听写', '词汇默写', '词句听写', '单词听写', '单词默写', '课文默写', '篇章默写', '段落默写', '句子听写', '词组听写', '短语听写', '语篇默写'],
-    aliases: ['听写', '默写', '听默', '听默写', '默单词', '默词', '默一下', '默课文', '听词', '听单词'],
+    aliases: ['听写', '默写', '听默', '听默写', '默单词', '默词', '默一下', '默课文', '听词', '听单词', '听/默写'],
     typos: ['听些'],
   }),
   defineIntent({
@@ -435,22 +360,14 @@ export const INTENT_REGISTRY: IntentRecord[] = [
 // ═══════════════════════════════════════════════════════════
 
 const SORTED_BY_PRIORITY = [...INTENT_REGISTRY].sort((a, b) => a.priority - b.priority)
-const JUMP_INTENTS = INTENT_REGISTRY.filter((i) => i.category === 'jump')
-// NON_LEGACY is kept for future use (e.g., search suggestions auto-generation)
 
 // ═══════════════════════════════════════════════════════════
 // Public API
 // ═══════════════════════════════════════════════════════════
 
-export function detectPrecisionJump(query: string): PrecisionJumpData | null {
-  const q = query.trim()
-  if (!q) return null
-
-  for (const intent of JUMP_INTENTS) {
-    if (intent.matchRegex.test(q) && intent.jumpData) {
-      return { ...intent.jumpData }
-    }
-  }
+export function detectPrecisionJump(_query: string): PrecisionJumpData | null {
+  // 精准跳转本期已移除（练习报告/学情/完成率/未完成/未批阅 不作为搜索意图）
+  // 这些输入进入通用兜底或提示使用平台原有入口
   return null
 }
 
@@ -465,7 +382,14 @@ export function isSemanticallyMeaningful(query: string): boolean {
       continue
     }
     if (intent.intentId === 'english_word') {
+      // Single English word (>=2 letters)
       if (/^[a-zA-Z]{2,}$/.test(q)) return true
+      // Multiple English words separated by spaces or common punctuation
+      const cleaned = q.replace(/[,，、\s]+/g, ' ').replace(/[.!?;:]+/g, '').trim()
+      if (/^[a-zA-Z\s]+$/.test(cleaned)) {
+        const words = cleaned.split(/\s+/).filter(w => w.length >= 2)
+        if (words.length >= 2) return true
+      }
       continue
     }
     if (intent.intentId === 'search_help') {
@@ -501,7 +425,14 @@ export function identifyQueryIntent(query: string): string | null {
       continue
     }
     if (intent.intentId === 'english_word') {
+      // Single English word
       if (/^[a-zA-Z]{2,}$/.test(q)) return '词汇'
+      // Multi-word English
+      const cleaned = q.replace(/[,，、\s]+/g, ' ').replace(/[.!?;:]+/g, '').trim()
+      if (/^[a-zA-Z\s]+$/.test(cleaned)) {
+        const words = cleaned.split(/\s+/).filter(w => w.length >= 2)
+        if (words.length >= 2) return '词汇'
+      }
       continue
     }
 

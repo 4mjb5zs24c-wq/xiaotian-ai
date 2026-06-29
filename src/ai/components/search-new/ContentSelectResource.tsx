@@ -1,99 +1,18 @@
 import React, { useState, useCallback } from 'react'
 import { Send, Info } from 'lucide-react'
-import type { ResourceItem, SyncVocabData, SyncTextData, VocabUsageId, TextUsageId, AssignmentDraft, TextTreeNode } from '../../search-new/types'
+import type { ResourceItem, SyncVocabData, SyncTextData, TextTreeNode } from '../../search-new/types'
 import SyncVocabSection from './SyncVocabSection'
 import SyncTextSection from './SyncTextSection'
 import UsageSelector from './UsageSelector'
 
 interface ContentSelectResourceProps {
   item: ResourceItem
-  onGenerateAssignments: (assignments: AssignmentDraft[]) => void
+  onContentAssign?: (item: ResourceItem) => void
 }
 
-/**
- * Generates assignment drafts for sync vocab by collecting selected content
- * and pairing with selected usages.
- */
-function generateVocabAssignments(
-  item: ResourceItem,
-  selectedIds: Set<string>,
-  selectedUsages: string[],
-  usageLabels: Record<string, string>,
-): AssignmentDraft[] {
-  const assignments: AssignmentDraft[] = []
-  let idx = 0
+// 草稿生成逻辑已移除 — 本期同步词汇/课文选择内容+练习形式后直接打开布置弹窗
 
-  for (const usageId of selectedUsages) {
-    idx++
-    assignments.push({
-      id: `draft-${item.id}-${usageId}-${idx}`,
-      title: `${item.title} — ${usageLabels[usageId] || usageId}`,
-      usageType: usageId as VocabUsageId,
-      usageLabel: usageLabels[usageId] || usageId,
-      contentCount: selectedIds.size,
-      contentIds: Array.from(selectedIds),
-    })
-  }
-
-  return assignments
-}
-
-/**
- * Generates assignment drafts for sync text, grouped by leaf node.
- * Each leaf node's selected items × each usage = one assignment.
- */
-function generateTextAssignments(
-  tree: TextTreeNode[],
-  selectedIds: Set<string>,
-  selectedUsages: string[],
-  usageLabels: Record<string, string>,
-): AssignmentDraft[] {
-  const assignments: AssignmentDraft[] = []
-
-  // Find all leaf nodes and their selected items
-  function collectLeafSelections(node: TextTreeNode, parentName: string): void {
-    if (node.isLeafNode) {
-      const selectedInNode = node.items.filter((i) => selectedIds.has(i.id))
-      if (selectedInNode.length > 0) {
-        for (const usageId of selectedUsages) {
-          assignments.push({
-            id: `draft-${node.nodeId}-${usageId}-${assignments.length}`,
-            title: `${parentName} ${node.nodeName} — ${usageLabels[usageId] || usageId}`,
-            nodeName: node.nodeName,
-            usageType: usageId as TextUsageId,
-            usageLabel: usageLabels[usageId] || usageId,
-            contentCount: selectedInNode.length,
-            contentIds: selectedInNode.map((i) => i.id),
-          })
-        }
-      }
-    } else {
-      const newParent = parentName ? `${parentName} ${node.nodeName}` : node.nodeName
-      node.children.forEach((c) => collectLeafSelections(c, newParent))
-    }
-  }
-
-  tree.forEach((n) => collectLeafSelections(n, ''))
-
-  return assignments
-}
-
-const VOCAB_USAGE_LABELS: Record<string, string> = {
-  oral_reading: '口语跟读',
-  en_to_cn_select: '看英选中',
-  dictation_write: '单词默写',
-  cn_to_en_select: '看中选英',
-  listening_dictation: '单词听写',
-  listen_recognize: '听音识词',
-}
-
-const TEXT_USAGE_LABELS: Record<string, string> = {
-  sentence_reading: '逐句跟读',
-  passage_reading: '整篇跟读',
-  passage_recite: '整篇背诵',
-}
-
-const ContentSelectResource: React.FC<ContentSelectResourceProps> = ({ item, onGenerateAssignments }) => {
+const ContentSelectResource: React.FC<ContentSelectResourceProps> = ({ item, onContentAssign }) => {
   const isVocab = item.type === 'sync_vocab'
   const vocabData = isVocab ? (item.contentData as SyncVocabData | undefined) : undefined
   const textData = !isVocab ? (item.contentData as SyncTextData | undefined) : undefined
@@ -200,18 +119,10 @@ const ContentSelectResource: React.FC<ContentSelectResourceProps> = ({ item, onG
     })
   }, [])
 
-  // Generate assignments
+  // 选择练习形式后，直接打开平台已有布置弹窗（不再生成草稿）
   const handleGenerate = () => {
     if (selectedIds.size === 0 || selectedUsages.length === 0) return
-
-    let drafts: AssignmentDraft[] = []
-    if (isVocab && vocabData) {
-      drafts = generateVocabAssignments(item, selectedIds, selectedUsages, VOCAB_USAGE_LABELS)
-    } else if (!isVocab && textData) {
-      drafts = generateTextAssignments(textData.tree, selectedIds, selectedUsages, TEXT_USAGE_LABELS)
-    }
-
-    onGenerateAssignments(drafts)
+    onContentAssign?.(item)
   }
 
   const canGenerate = selectedIds.size > 0 && selectedUsages.length > 0
@@ -299,7 +210,7 @@ const ContentSelectResource: React.FC<ContentSelectResourceProps> = ({ item, onG
             <span>
               已选择 <strong className="text-blue-500">{selectedIds.size}</strong> 个内容，
               <strong className="text-blue-500">{selectedUsages.length}</strong> 种练习形式，
-              将生成 <strong className="text-blue-500">{computedAssignments}</strong> 条独立作业
+              将布置 <strong className="text-blue-500">{computedAssignments}</strong> 条独立作业
             </span>
           )}
         </div>
@@ -313,7 +224,7 @@ const ContentSelectResource: React.FC<ContentSelectResourceProps> = ({ item, onG
             }`}
         >
           <Send size={13} />
-          生成练习
+          布置
         </button>
       </div>
     </div>

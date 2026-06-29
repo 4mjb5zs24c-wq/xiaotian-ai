@@ -20,12 +20,12 @@ const METRICS: MetricDef[] = [
   },
   {
     key: 'weakWordCount', label: '高频错词', suffix: '个',
-    tip: '按错误次数、影响学生数、得分率综合排序后筛选出的重点错词。',
+    tip: '按错误率、涉及学生数、错误次数综合排序后筛选出的重点错词。',
     clickable: true, trend: 'warn', trendLabel: '需关注',
   },
   {
     key: 'weakStudentCount', label: '薄弱学生', suffix: '人',
-    tip: '当前时间范围内，词汇得分率偏低，且错误词数量达到阈值的学生。',
+    tip: '当前时间范围内，词汇错误率偏高，且错误词数量达到阈值的学生。',
     clickable: true, trend: 'down', trendLabel: '较上月 +2',
   },
   {
